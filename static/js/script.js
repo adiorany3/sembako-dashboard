@@ -708,3 +708,64 @@ function renderBluechipTable() {
         tbody.appendChild(tr);
     });
 }
+
+// ============ AI Analysis (Groq) ============
+let aiAnalysisCache = null;
+let aiAnalysisTime = null;
+
+async function openAiAnalysis() {
+    const content = document.getElementById('ai-analysis-content');
+    const loading = '<div class="loading">🤖 Mengambil analisis dari Groq AI...</div>';
+    content.innerHTML = loading;
+
+    try {
+        const response = await fetch('/api/ai-analysis');
+        const data = await response.json();
+
+        if (data.status === 'success') {
+            // Format the analysis text
+            let formatted = data.analysis;
+            formatted = formatted.replace(/\n/g, '<br>');
+            formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            formatted = formatted.replace(/#{1,3}\s*(.*)/g, '<h4>$1</h4>');
+            formatted = formatted.replace(/- (.*)/g, '• $1<br>');
+
+            content.innerHTML = `
+                <div class="ai-analysis-box">
+                    <div class="ai-meta">
+                        <span class="ai-badge">🤖 Groq Llama 3.1 8B</span>
+                        <span class="ai-time">${data.timestamp}</span>
+                    </div>
+                    <div class="ai-text">${formatted}</div>
+                </div>
+            `;
+
+            aiAnalysisCache = data.analysis;
+            aiAnalysisTime = data.timestamp;
+
+            // Update summary items
+            updateAISummary();
+        } else {
+            content.innerHTML = `<div class="error">Error: ${data.error}</div>`;
+        }
+    } catch (e) {
+        content.innerHTML = `<div class="error">Gagal mengambil data: ${e.message}</div>`;
+    }
+}
+
+async function refreshAiAnalysis() {
+    openAiAnalysis();
+}
+
+function updateAISummary() {
+    // Extract key metrics from AI analysis or available data
+    // IHSG
+    if (sahamData.ihsg && sahamData.ihsg.length > 0) {
+        const latest = sahamData.ihsg[sahamData.ihsg.length - 1];
+        document.getElementById('ai-ihsg').textContent = latest.ihsg ? latest.ihsg.toLocaleString() : '-';
+    }
+}
+
+function closeAiModal() {
+    document.getElementById('ai-modal').style.display = 'none';
+}

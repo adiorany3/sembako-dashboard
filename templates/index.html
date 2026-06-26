@@ -39,6 +39,7 @@
             <button class="tab-btn" data-tab="pertanian">🌾 Pertanian</button>
             <button class="tab-btn" data-tab="peternakan">🐔 Peternakan</button>
             <button class="tab-btn" data-tab="saham">📈 Saham</button>
+            <button class="tab-btn" data-tab="ai-analysis">🤖 AI Analysis</button>
         </nav>
 
         <!-- Content Area -->
@@ -347,12 +348,64 @@
                     </table>
                 </div>
             </section>
+
+            <!-- AI Analysis Tab -->
+            <section class="tab-content" id="ai-analysis">
+                <div class="card">
+                    <h3>🤖 AI Market Analysis (Powered by Groq)</h3>
+                    <p class="subtitle">Analisis otomatis dari semua data market menggunakan AI</p>
+                    <button class="btn btn-primary" onclick="openAiAnalysis()">🔍 Get AI Analysis</button>
+                    <div id="ai-analysis-content" class="ai-result">
+                        <p class="hint">Klik tombol di atas untuk mendapatkan analisis AI</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>📊 Market Summary</h3>
+                    <div class="summary-grid">
+                        <div class="summary-item">
+                            <span class="summary-label">IHSG</span>
+                            <span class="summary-value" id="ai-ihsg">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Top Mover</span>
+                            <span class="summary-value" id="ai-top-mover">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">BTC</span>
+                            <span class="summary-value" id="ai-btc">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Emas 1gr</span>
+                            <span class="summary-value" id="ai-emas">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>💡 Quick Recommendations</h3>
+                    <div id="ai-recommendations">
+                        <p class="hint">Dapatkan AI Analysis untuk melihat rekomendasi</p>
+                    </div>
+                </div>
+            </section>
         </main>
 
         <!-- Footer -->
         <footer class="footer">
             <p>📊 Dashboard Bot Adioranye v1.0 | Last updated: <span id="footer-time">-</span></p>
         </footer>
+
+        <!-- AI Analysis Modal -->
+        <div id="ai-modal" class="modal">
+            <div class="modal-content">
+                <span class="modal-close" onclick="closeAiModal()">&times;</span>
+                <h2>🤖 AI Market Analysis</h2>
+                <div id="ai-loading" class="loading">Mengambil analisis dari Groq AI...</div>
+                <div id="ai-result"></div>
+                <button class="btn" onclick="refreshAiAnalysis()">🔄 Refresh Analysis</button>
+            </div>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
