@@ -365,7 +365,10 @@ def health():
     return jsonify({"status": "healthy", "timestamp": datetime.now().isoformat()})
 
 # ============ AI-Powered Analysis using Groq ============
-GROQ_API_KEY = "gsk_zrHQCDRHDIJdnorfQdJfWGdybFIFQlLylXJiemdFOqiVqJKUsYT2XJGXzNbvFbjBziBkmmM"
+# Set GROQ_API_KEY environment variable on VPS
+# export GROQ_API_KEY="your_key_here"
+import os
+GROQ_API_KEY = os.environ.get('GROQ_API_KEY', '')
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 
 @app.route('/api/ai-analysis')
