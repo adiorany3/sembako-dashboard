@@ -6,3 +6,4 @@ venv/
 .env
 *.xlsx~
 .DS_Store
+config.py
