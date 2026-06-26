@@ -102,13 +102,13 @@ def get_sembako():
                 "ayam_ras": row[14],
                 "ayam_kampung": row[15],
                 "daging_sapi": row[16],
-                "gas_elpiji": row[18] if len(row) > 18 else None,
-                "garam_bata": row[19] if len(row) > 19 else None,
-                "garam_halus": row[20] if len(row) > 20 else None,
-                "susu_km_bendera": row[21] if len(row) > 21 else None,
-                "susu_km_indomilk": row[22] if len(row) > 22 else None,
-                "susu_bubuk_bendera": row[23] if len(row) > 23 else None,
-                "susu_bubuk_indomilk": row[24] if len(row) > 24 else None,
+                "gas_elpiji": row[17] if len(row) > 17 else None,
+                "garam_bata": row[18] if len(row) > 18 else None,
+                "garam_halus": row[19] if len(row) > 19 else None,
+                "susu_km_bendera": row[20] if len(row) > 20 else None,
+                "susu_km_indomilk": row[21] if len(row) > 21 else None,
+                "susu_bubuk_bendera": row[22] if len(row) > 22 else None,
+                "susu_bubuk_indomilk": row[23] if len(row) > 23 else None,
             })
     
     return jsonify({"data": result, "last_update": last_update})
