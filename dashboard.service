@@ -1,0 +1,15 @@
+[Unit]
+Description=Dashboard Monitoring Flask App
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/sembako
+Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin"
+ExecStart=/usr/bin/python3 /root/sembako/app.py
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

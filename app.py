@@ -1,0 +1,250 @@
+#!/usr/bin/env python3
+"""
+Dashboard Backend - Flask API
+Aggregates all monitoring data (sembako, crypto, cuaca, emas, keuangan)
+"""
+import os
+import json
+import openpyxl
+from datetime import datetime
+from flask import Flask, render_template, jsonify, request
+from flask_cors import CORS
+import sys
+
+sys.path.insert(0, os.path.expanduser("~/sembako"))
+
+app = Flask(__name__)
+CORS(app)
+
+DATA_DIR = os.path.expanduser("~/sembako")
+
+# ============ Helper Functions ============
+
+def load_excel_data(filename, sheet_name=None):
+    """Load data from Excel file."""
+    path = os.path.join(DATA_DIR, filename)
+    if not os.path.exists(path):
+        return None, None
+    
+    try:
+        wb = openpyxl.load_workbook(path, data_only=True)
+        if sheet_name:
+            ws = wb[sheet_name]
+        else:
+            ws = wb.active
+        
+        data = []
+        for row in ws.iter_rows(min_row=2, values_only=True):
+            if row[0]:  # Skip empty rows
+                data.append(row)
+        
+        # Get file modification time
+        file_mtime = os.path.getmtime(path)
+        file_date = datetime.fromtimestamp(file_mtime).strftime('%d %b %Y, %H:%M')
+        
+        return data[-10:] if data else [], file_date
+    except Exception as e:
+        print(f"Error loading {filename}: {e}")
+        return [], None
+
+
+def get_file_last_update(filename):
+    """Get last update time for a file."""
+    path = os.path.join(DATA_DIR, filename)
+    if os.path.exists(path):
+        mtime = os.path.getmtime(path)
+        return datetime.fromtimestamp(mtime).strftime('%d %b %Y, %H:%M')
+    return None
+
+def load_json_data(filename):
+    """Load JSON data."""
+    path = os.path.join(DATA_DIR, filename)
+    if os.path.exists(path):
+        try:
+            with open(path) as f:
+                return json.load(f)
+        except:
+            return {}
+    return {}
+
+# ============ API Routes ============
+
+@app.route('/')
+def index():
+    """Serve dashboard."""
+    return render_template('index.html')
+
+@app.route('/api/sembako')
+def get_sembako():
+    """Get latest sembako prices."""
+    data, last_update = load_excel_data('harga_sembako.xlsx', 'Harga')
+    if not data:
+        return jsonify({"error": "Data not found"}), 404
+    
+    result = []
+    for row in data[-5:]:  # Last 5 days
+        if row[0]:
+            result.append({
+                "tanggal": str(row[0]),
+                "beras_premium": row[1],
+                "beras_medium": row[2],
+                "minyak_goreng": row[3],
+                "gula_pasir": row[4],
+                "garam": row[5],
+                "tepung_terigu": row[6],
+                "cabai_merah": row[7],
+                "cabai_rawit": row[8],
+                "bawang_merah": row[9],
+                "bawang_putih": row[10],
+                "minyak_tanah": row[11],
+                "telur_ras": row[12],
+                "telur_kampung": row[13],
+                "ayam_ras": row[14],
+                "ayam_kampung": row[15],
+                "daging_sapi": row[16],
+                "gas_elpiji": row[18] if len(row) > 18 else None,
+                "garam_bata": row[19] if len(row) > 19 else None,
+                "garam_halus": row[20] if len(row) > 20 else None,
+                "susu_km_bendera": row[21] if len(row) > 21 else None,
+                "susu_km_indomilk": row[22] if len(row) > 22 else None,
+                "susu_bubuk_bendera": row[23] if len(row) > 23 else None,
+                "susu_bubuk_indomilk": row[24] if len(row) > 24 else None,
+            })
+    
+    return jsonify({"data": result, "last_update": last_update})
+
+@app.route('/api/crypto')
+def get_crypto():
+    """Get latest crypto prices."""
+    data, last_update = load_excel_data('crypto_monitor.xlsx', 'Harga')
+    if not data:
+        return jsonify({"error": "Data not found"}), 404
+    
+    result = []
+    for row in data[-5:]:
+        if row[0]:
+            result.append({
+                "tanggal": str(row[0]),
+                "waktu": str(row[1]) if row[1] else "",
+                "btc_usd": row[2],
+                "btc_idr": row[3],
+                "btc_24h": row[4],
+                "eth_usd": row[5],
+                "eth_idr": row[6],
+                "eth_24h": row[7],
+                "sol_usd": row[8],
+                "sol_idr": row[9],
+                "sol_24h": row[10],
+                "market_cap": row[20],
+                "sentimen": row[21],
+            })
+    
+    return jsonify({"data": result, "last_update": last_update})
+
+@app.route('/api/emas')
+def get_emas():
+    """Get latest gold prices."""
+    data, last_update = load_excel_data('harga_emas.xlsx', 'Harian')
+    if not data:
+        return jsonify({"error": "Data not found"}), 404
+    
+    result = []
+    for row in data[-5:]:
+        if row[0]:
+            result.append({
+                "tanggal": str(row[0]),
+                "antam_beli": row[1],
+                "antam_buyback": row[2],
+                "antam_pegadaian": row[3],
+                "galeri24": row[4],
+                "ubs_beli": row[5],
+                "selisih": row[6],
+                "spread_persen": row[7],
+            })
+    
+    return jsonify({"data": result, "last_update": last_update})
+
+@app.route('/api/pertanian')
+def get_pertanian():
+    """Get agriculture prices."""
+    data, last_update = load_excel_data('harga_pertanian_ternak.xlsx')
+    if not data:
+        return jsonify({"error": "Data not found"}), 404
+    
+    result = []
+    for row in data[-5:]:
+        if row[0]:
+            result.append({
+                "tanggal": str(row[0]),
+                "jagung_pipil": row[1],
+                "jagung_pakan": row[2],
+                "kedelai_impor": row[3],
+                "kedelai_lokal": row[4],
+                "pakan_broiler": row[5],
+                "pakan_layer": row[6],
+                "pakan_bebek": row[7],
+                "bungkil_kedelai": row[8],
+                "jagung_giling": row[9],
+            })
+    
+    return jsonify({"data": result, "last_update": last_update})
+
+@app.route('/api/keuangan')
+def get_keuangan():
+    """Get financial data."""
+    data, last_update = load_excel_data('keuangan.xlsx')
+    if not data:
+        return jsonify({"error": "Data not found"}), 404
+    
+    result = []
+    for row in data[-20:]:  # Last 20 transactions
+        if row[0]:
+            result.append({
+                "tanggal": str(row[0]),
+                "jenis": row[1],
+                "kategori": row[2],
+                "deskripsi": row[3],
+                "jumlah": row[4],
+                "metode": row[5] or "",
+            })
+    
+    return jsonify({"data": result, "last_update": last_update})
+
+@app.route('/keuangan')
+def keuangan():
+    """Serve dedicated keuangan page."""
+    return render_template('keuangan.html')
+
+@app.route('/api/summary')
+def get_summary():
+    """Get overall summary."""
+    summary = {
+        "timestamp": datetime.now().isoformat(),
+        "sembako": {"status": "OK" if load_excel_data('harga_sembako.xlsx')[0] else "ERROR"},
+        "crypto": {"status": "OK" if load_excel_data('crypto_monitor.xlsx')[0] else "ERROR"},
+        "emas": {"status": "OK" if load_excel_data('harga_emas.xlsx')[0] else "ERROR"},
+        "pertanian": {"status": "OK" if load_excel_data('harga_pertanian_ternak.xlsx')[0] else "ERROR"},
+        "keuangan": {"status": "OK" if load_excel_data('keuangan.xlsx')[0] else "ERROR"},
+    }
+    return jsonify(summary)
+
+@app.route('/api/health')
+def health():
+    """Health check."""
+    return jsonify({"status": "healthy", "timestamp": datetime.now().isoformat()})
+
+# ============ Error Handlers ============
+
+@app.errorhandler(404)
+def not_found(e):
+    return jsonify({"error": "Not found"}), 404
+
+@app.errorhandler(500)
+def server_error(e):
+    return jsonify({"error": "Server error"}), 500
+
+if __name__ == '__main__':
+    # Development
+    app.run(host='0.0.0.0', port=5000, debug=True)
+    # Production: use gunicorn
+    # gunicorn -w 4 -b 0.0.0.0:5000 app:app

@@ -1,0 +1,96 @@
+[
+  {
+    "headline": "Tekanan Global Mereda, Harga Pertamax Turun?",
+    "status": "TURUN \ud83d\udcc9",
+    "fuel_types": [
+      "Pertamax"
+    ],
+    "prices": [],
+    "timestamp": "2026-06-24T17:20:17.134673"
+  },
+  {
+    "headline": "Bisakah Pertamax Turun Bulan Depan?",
+    "status": "TURUN \ud83d\udcc9",
+    "fuel_types": [
+      "Pertamax"
+    ],
+    "prices": [],
+    "timestamp": "2026-06-24T17:20:17.134700"
+  },
+  {
+    "headline": "Pertamina Buka-bukaan Nasib Harga Pertamax Bulan Depan, Bisa Turun?",
+    "status": "TURUN \ud83d\udcc9",
+    "fuel_types": [
+      "Pertamax"
+    ],
+    "prices": [],
+    "timestamp": "2026-06-24T17:20:17.134707"
+  },
+  {
+    "headline": "Purbaya Pede Harga Pertamax Bakal Turun",
+    "status": "TURUN \ud83d\udcc9",
+    "fuel_types": [
+      "Pertamax"
+    ],
+    "prices": [],
+    "timestamp": "2026-06-24T17:20:17.134713"
+  },
+  {
+    "headline": "Ribuan Orang di Kolombia Turun ke Jalan, Protes Harga BBM Naik 50 Persen",
+    "status": "NAIK \ud83d\udcc8",
+    "fuel_types": [
+      "BBM Umum"
+    ],
+    "prices": [],
+    "timestamp": "2026-06-24T17:20:17.134719"
+  },
+  {
+    "headline": "AS & Iran Damai-Harga Minyak Turun, Pertamax Ikut Turun Juga?",
+    "status": "TURUN \ud83d\udcc9",
+    "fuel_types": [
+      "Pertamax"
+    ],
+    "prices": [],
+    "timestamp": "2026-06-24T17:20:17.134725"
+  },
+  {
+    "headline": "Hampir Rp 4 Ribu, Kenaikan Pertamax Baru 50 Persen dari Harga Asli",
+    "status": "NAIK \ud83d\udcc8",
+    "fuel_types": [
+      "Pertamax"
+    ],
+    "prices": [
+      "4"
+    ],
+    "timestamp": "2026-06-24T17:20:17.134733"
+  },
+  {
+    "headline": "ESDM Sebut Sesulit Apa pun Kondisinya, Harga Pertalite-Solar Takkan Naik",
+    "status": "NAIK \ud83d\udcc8",
+    "fuel_types": [
+      "Pertalite",
+      "Solar"
+    ],
+    "prices": [],
+    "timestamp": "2026-06-24T17:20:17.134748"
+  },
+  {
+    "headline": "Pertamax Naik, Warga Ramai-Ramai Tinggalkan dan Beralih ke Pertalite",
+    "status": "NAIK \ud83d\udcc8",
+    "fuel_types": [
+      "Pertalite",
+      "Pertamax"
+    ],
+    "prices": [],
+    "timestamp": "2026-06-24T17:20:17.134754"
+  },
+  {
+    "headline": "Bahlil: Harga BBM Subsidi Tidak Akan Naik, Kalau Nonsubsidi Pasarnya Begitu",
+    "status": "NAIK \ud83d\udcc8",
+    "fuel_types": [
+      "BBM Umum"
+    ],
+    "prices": [],
+    "timestamp": "2026-06-25T13:00:55.537799"
+  }
+]

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="description" content="Dashboard Monitoring Adi - Real-time data for Sembako, Crypto, Emas, Pertanian & Keuangan">
+    <title>Dashboard Monitoring - adioranye</title>
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/extras.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>📊 Dashboard Monitoring Adi</h1>
+                    <p class="subtitle">Real-time data monitoring for sembako, crypto, emas, pertanian & keuangan</p>
+                </div>
+                <div class="header-info">
+                    <span id="current-time"></span>
+                    <span id="health-status" class="status-badge status-ok">● Online</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="tabs-nav">
+            <button class="tab-btn active" data-tab="overview">📈 Overview</button>
+            <button class="tab-btn" data-tab="sembako">🛒 Sembako</button>
+            <button class="tab-btn" data-tab="crypto">🪙 Crypto</button>
+            <button class="tab-btn" data-tab="emas">💰 Emas</button>
+            <button class="tab-btn" data-tab="pertanian">🌾 Pertanian</button>
+        </nav>
+
+        <!-- Content Area -->
+        <main class="main-content">
+            
+            <!-- Overview Tab -->
+            <section class="tab-content active" id="overview">
+                <div class="cards-grid">
+                    <!-- Sembako Card -->
+                    <div class="card card-sembako">
+                        <div class="card-header">
+                            <h3>🛒 Harga Sembako</h3>
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-label">Last Update</p>
+                            <p id="sembako-date" class="card-value">-</p>
+                            <div class="card-mini-items">
+                                <div class="mini-item">
+                                    <span>Beras</span>
+                                    <span id="mini-beras" class="mini-value">-</span>
+                                </div>
+                                <div class="mini-item">
+                                    <span>Telur Ras</span>
+                                    <span id="mini-telur" class="mini-value">-</span>
+                                </div>
+                                <div class="mini-item">
+                                    <span>Ayam Ras</span>
+                                    <span id="mini-ayam" class="mini-value">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Crypto Card -->
+                    <div class="card card-crypto">
+                        <div class="card-header">
+                            <h3>🪙 Crypto Today</h3>
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-label">Market Cap</p>
+                            <p id="crypto-mcap" class="card-value">-</p>
+                            <div class="card-mini-items">
+                                <div class="mini-item">
+                                    <span>BTC</span>
+                                    <span id="mini-btc" class="mini-value">-</span>
+                                </div>
+                                <div class="mini-item">
+                                    <span>ETH</span>
+                                    <span id="mini-eth" class="mini-value">-</span>
+                                </div>
+                                <div class="mini-item">
+                                    <span>SOL</span>
+                                    <span id="mini-sol" class="mini-value">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Emas Card -->
+                    <div class="card card-emas">
+                        <div class="card-header">
+                            <h3>💰 Harga Emas</h3>
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-label">Antam 1gr</p>
+                            <p id="emas-price" class="card-value">-</p>
+                            <div class="card-mini-items">
+                                <div class="mini-item">
+                                    <span>Beli</span>
+                                    <span id="mini-emas-beli" class="mini-value">-</span>
+                                </div>
+                                <div class="mini-item">
+                                    <span>Buyback</span>
+                                    <span id="mini-emas-back" class="mini-value">-</span>
+                                </div>
+                                <div class="mini-item">
+                                    <span>Spread</span>
+                                    <span id="mini-spread" class="mini-value">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="charts-section">
+                    <div class="chart-container">
+                        <h3>📈 Crypto 24h Changes</h3>
+                        <canvas id="cryptoChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3>💰 Emas Price Trend</h3>
+                        <canvas id="emasChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sembako Tab -->
+            <section class="tab-content" id="sembako">
+                <div class="data-table">
+                    <h2>🛒 Harga Sembako Terbaru</h2>
+                    <div style="overflow-x: auto;">
+                    <table id="sembako-table">
+                        <thead>
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Beras Prem</th>
+                                <th>Beras Med</th>
+                                <th>Minyak Gor</th>
+                                <th>Gula</th>
+                                <th>Garam Bata</th>
+                                <th>Cabai Merah</th>
+                                <th>Cabai Rawit</th>
+                                <th>Bawang Merah</th>
+                                <th>Bawang Putih</th>
+                                <th>Telur Ras</th>
+                                <th>Telur Kamp</th>
+                                <th>Ayam Ras</th>
+                                <th>Ayam Kamp</th>
+                                <th>Daging Sapi</th>
+                                <th>Gas Elpiji</th>
+                                <th>Susu KM Bend</th>
+                                <th>Susu KM Indo</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sembako-tbody">
+                            <tr><td colspan="18" class="loading">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Crypto Tab -->
+            <section class="tab-content" id="crypto">
+                <div class="data-table">
+                    <h2>🪙 Harga Crypto</h2>
+                    <table id="crypto-table">
+                        <thead>
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>BTC (USD)</th>
+                                <th>BTC (IDR)</th>
+                                <th>BTC 24h</th>
+                                <th>ETH (USD)</th>
+                                <th>ETH (IDR)</th>
+                                <th>SOL (USD)</th>
+                                <th>Market Cap</th>
+                                <th>Sentimen</th>
+                            </tr>
+                        </thead>
+                        <tbody id="crypto-tbody">
+                            <tr><td colspan="9" class="loading">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Emas Tab -->
+            <section class="tab-content" id="emas">
+                <div class="data-table">
+                    <h2>💰 Harga Emas</h2>
+                    <table id="emas-table">
+                        <thead>
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Antam Beli</th>
+                                <th>Antam Buyback</th>
+                                <th>Pegadaian</th>
+                                <th>Galeri24</th>
+                                <th>UBS Beli</th>
+                                <th>Selisih</th>
+                                <th>Spread %</th>
+                            </tr>
+                        </thead>
+                        <tbody id="emas-tbody">
+                            <tr><td colspan="8" class="loading">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Pertanian Tab -->
+            <section class="tab-content" id="pertanian">
+                <div class="data-table">
+                    <h2>🌾 Harga Pertanian & Ternak</h2>
+                    <table id="pertanian-table">
+                        <thead>
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Jagung Pipil</th>
+                                <th>Jagung Pakan</th>
+                                <th>Kedelai Impor</th>
+                                <th>Kedelai Lokal</th>
+                                <th>Pakan Broiler</th>
+                                <th>Pakan Layer</th>
+                                <th>Bungkil Kedelai</th>
+                                <th>Jagung Giling</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pertanian-tbody">
+                            <tr><td colspan="9" class="loading">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>📊 Dashboard Monitoring v1.0 by adioranye | Last updated: <span id="footer-time">-</span></p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="/static/js/script.js"></script>
+</body>
+</html>

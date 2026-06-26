@@ -1,0 +1,874 @@
+[
+  {
+    "keyword": "ekonomi indonesia",
+    "headline": "Jabar Hari Ini: Berakhirnya Pelarian Taufik Hidayat",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-23T23:03:19.989700"
+  },
+  {
+    "keyword": "ekonomi indonesia",
+    "headline": "Data Sensus Ekonomi 2026 Jadi Modal Perkuat UMKM di Indonesia",
+    "sentiment": "POSITIF",
+    "score": 0.8,
+    "source": "detik.com",
+    "timestamp": "2026-06-23T23:03:19.999187"
+  },
+  {
+    "keyword": "ekonomi indonesia",
+    "headline": "Janji Purbaya Pantau Ketat Barang-barang Impor Ilegal",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik.com",
+    "timestamp": "2026-06-23T23:03:20.008646"
+  },
+  {
+    "keyword": "ekonomi indonesia",
+    "headline": "Video: Momen Purbaya Lesehan Paparkan Kondisi Fiskal RI",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-23T23:03:20.017994"
+  },
+  {
+    "keyword": "ekonomi indonesia",
+    "headline": "Video Prabowo Ogah Harga Sawit-Nikel Diatur Asing",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-23T23:03:20.027391"
+  },
+  {
+    "keyword": "harga pangan",
+    "headline": "F-Gerindra DPR Bantah Budi Djiwandono Minta Awasi Pergerakan Gibran",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-23T23:03:20.553585"
+  },
+  {
+    "keyword": "harga pangan",
+    "headline": "3 Temuan Peneliti UI pada Program Ketahanan Pangan Imipas",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-23T23:03:20.563283"
+  },
+  {
+    "keyword": "harga pangan",
+    "headline": "Peternak Ngamuk Harga Jual Ayam Turun, Ini Biang Keroknya!",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik.com",
+    "timestamp": "2026-06-23T23:03:20.572901"
+  },
+  {
+    "keyword": "harga pangan",
+    "headline": "Video Cek Harga Pangan di Pasar Palmerah, Zulhas: Cabai Turun Jauh",
+    "sentiment": "NEGATIF",
+    "score": -0.8,
+    "source": "detik.com",
+    "timestamp": "2026-06-23T23:03:20.582376"
+  },
+  {
+    "keyword": "harga pangan",
+    "headline": "Video: Jelang Ramadan, Harga Bahan Pangan Mulai Naik, Yuk Intip Harganya!",
+    "sentiment": "POSITIF",
+    "score": 0.65,
+    "source": "detik.com",
+    "timestamp": "2026-06-23T23:03:20.591882"
+  },
+  {
+    "keyword": "inflasi indonesia",
+    "headline": "Kemendagri Apresiasi Pemda Berprestasi di Papua, Dorong Peningkatan Kinerja",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-23T23:03:21.160635"
+  },
+  {
+    "keyword": "inflasi indonesia",
+    "headline": "Tekan Kenaikan IPH, Kemendagri Minta Pemda & TPID Intervensi di Lapangan",
+    "sentiment": "POSITIF",
+    "score": 0.65,
+    "source": "detik.com",
+    "timestamp": "2026-06-23T23:03:21.169956"
+  },
+  {
+    "keyword": "inflasi indonesia",
+    "headline": "Wamendagri Ribka Buka Pasar Murah & Pameran UMKM di Papua",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-23T23:03:21.178996"
+  },
+  {
+    "keyword": "inflasi indonesia",
+    "headline": "Video: 3 Provinsi Terdampak Bencana di Sumatera Alami Inflasi",
+    "sentiment": "NEGATIF",
+    "score": -0.95,
+    "source": "detik.com",
+    "timestamp": "2026-06-23T23:03:21.190606"
+  },
+  {
+    "keyword": "inflasi indonesia",
+    "headline": "BI Ramal Kenaikan Harga Pertamax Kerek Inflasi, Mendag Respons Begini",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-23T23:03:21.200109"
+  },
+  {
+    "keyword": "rupiah dollar",
+    "headline": "Harga Sparepart Mahal Bikin Bengkel Sepi, Montir Ngeluh Tip Berkurang",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-23T23:03:21.709175"
+  },
+  {
+    "keyword": "rupiah dollar",
+    "headline": "Aksi Mogok Pedagang Daging Sapi Magelang Berlanjut Hari Ini",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-23T23:03:21.718998"
+  },
+  {
+    "keyword": "rupiah dollar",
+    "headline": "Said Abdullah soal Harga Minyak Dunia Turun: Tekanan Fiskal RI Berkurang",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik.com",
+    "timestamp": "2026-06-23T23:03:21.728670"
+  },
+  {
+    "keyword": "rupiah dollar",
+    "headline": "Rupiah Dihajar, Dolar AS Nyaris Rp 17.000",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-23T23:03:21.738346"
+  },
+  {
+    "keyword": "rupiah dollar",
+    "headline": "Nilai Rupiah Melemah, Kiriman TKI ke Kampung Bertambah",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-23T23:03:21.748456"
+  },
+  {
+    "keyword": "ihsg bursa",
+    "headline": "IHSG Turun 1,29% ke Level 6.037",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik.com",
+    "timestamp": "2026-06-23T23:03:22.078442"
+  },
+  {
+    "keyword": "ihsg bursa",
+    "headline": "JECX Masuki Masa Book Building, SONA Gelar Tender Wajib dan GPSO Tambah Modal",
+    "sentiment": "POSITIF",
+    "score": 0.65,
+    "source": "detik.com",
+    "timestamp": "2026-06-23T23:03:22.088046"
+  },
+  {
+    "keyword": "ihsg bursa",
+    "headline": "IHSG Nyaris Tinggalkan Level 6.000",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-23T23:03:22.097408"
+  },
+  {
+    "keyword": "ihsg bursa",
+    "headline": "Video: IHSG Anjlok 9% Usai Libur Lebaran, Langsung Trading Halt",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik.com",
+    "timestamp": "2026-06-23T23:03:22.107018"
+  },
+  {
+    "keyword": "ihsg bursa",
+    "headline": "EMMI Bidik Dana IPO Rp 269 Miliar, MDKA Siapkan Private Placement dan BIRD Tebar Dividen",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-23T23:03:22.116664"
+  },
+  {
+    "keyword": "ekonomi indonesia",
+    "headline": "Saat Prabowo Heran Ekonomi Tumbuh tapi Orang Miskin Bertambah",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-24T09:00:49.684959"
+  },
+  {
+    "keyword": "ekonomi indonesia",
+    "headline": "Jalankan Potongan Aplikator 8% Mulai 1 Juli, Grab Bakal Ada Penyesuaian",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-24T09:00:49.694281"
+  },
+  {
+    "keyword": "ekonomi indonesia",
+    "headline": "Imbas Penangkapan Liar, Nelayan Pangandaran Siapkan Zonasi BBL",
+    "sentiment": "NEGATIF",
+    "score": -0.511,
+    "source": "detik.com",
+    "timestamp": "2026-06-24T09:00:49.703792"
+  },
+  {
+    "keyword": "ekonomi indonesia",
+    "headline": "Video: Momen Purbaya Lesehan Paparkan Kondisi Fiskal RI",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-24T09:00:49.714665"
+  },
+  {
+    "keyword": "ekonomi indonesia",
+    "headline": "Video Prabowo Ogah Harga Sawit-Nikel Diatur Asing",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-24T09:00:49.729929"
+  },
+  {
+    "keyword": "harga pangan",
+    "headline": "Pasokan Durian Melimpah di Malaysia, Termurah Dijual Rp 8 Ribuan per Buah",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-24T09:00:50.203371"
+  },
+  {
+    "keyword": "harga pangan",
+    "headline": "Satgas Pangan Polri Selidiki Pabrik Sawit Diduga Beli TBS Tak Wajar",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-24T09:00:50.212718"
+  },
+  {
+    "keyword": "harga pangan",
+    "headline": "Harga Daging Ayam di Sumut Turun, Asahan Jual Rp 23 Ribu per Kg",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik.com",
+    "timestamp": "2026-06-24T09:00:50.223680"
+  },
+  {
+    "keyword": "harga pangan",
+    "headline": "Video Cek Harga Pangan di Pasar Palmerah, Zulhas: Cabai Turun Jauh",
+    "sentiment": "NEGATIF",
+    "score": -0.8,
+    "source": "detik.com",
+    "timestamp": "2026-06-24T09:00:50.234381"
+  },
+  {
+    "keyword": "harga pangan",
+    "headline": "Video: Jelang Ramadan, Harga Bahan Pangan Mulai Naik, Yuk Intip Harganya!",
+    "sentiment": "POSITIF",
+    "score": 0.65,
+    "source": "detik.com",
+    "timestamp": "2026-06-24T09:00:50.243458"
+  },
+  {
+    "keyword": "inflasi indonesia",
+    "headline": "Kemendagri Apresiasi Pemda Berprestasi di Papua, Dorong Peningkatan Kinerja",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-24T09:00:50.692155"
+  },
+  {
+    "keyword": "inflasi indonesia",
+    "headline": "Tekan Kenaikan IPH, Kemendagri Minta Pemda & TPID Intervensi di Lapangan",
+    "sentiment": "POSITIF",
+    "score": 0.65,
+    "source": "detik.com",
+    "timestamp": "2026-06-24T09:00:50.701272"
+  },
+  {
+    "keyword": "inflasi indonesia",
+    "headline": "Wamendagri Ribka Buka Pasar Murah & Pameran UMKM di Papua",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-24T09:00:50.710557"
+  },
+  {
+    "keyword": "inflasi indonesia",
+    "headline": "Video: 3 Provinsi Terdampak Bencana di Sumatera Alami Inflasi",
+    "sentiment": "NEGATIF",
+    "score": -0.95,
+    "source": "detik.com",
+    "timestamp": "2026-06-24T09:00:50.719536"
+  },
+  {
+    "keyword": "inflasi indonesia",
+    "headline": "BI Ramal Kenaikan Harga Pertamax Kerek Inflasi, Mendag Respons Begini",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-24T09:00:50.731920"
+  },
+  {
+    "keyword": "rupiah dollar",
+    "headline": "Harga Sparepart Mahal Bikin Bengkel Sepi, Montir Ngeluh Tip Berkurang",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-24T09:00:51.262011"
+  },
+  {
+    "keyword": "rupiah dollar",
+    "headline": "Aksi Mogok Pedagang Daging Sapi Magelang Berlanjut Hari Ini",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-24T09:00:51.271863"
+  },
+  {
+    "keyword": "rupiah dollar",
+    "headline": "Said Abdullah soal Harga Minyak Dunia Turun: Tekanan Fiskal RI Berkurang",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik.com",
+    "timestamp": "2026-06-24T09:00:51.281247"
+  },
+  {
+    "keyword": "rupiah dollar",
+    "headline": "Rupiah Dihajar, Dolar AS Nyaris Rp 17.000",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-24T09:00:51.290816"
+  },
+  {
+    "keyword": "rupiah dollar",
+    "headline": "Nilai Rupiah Melemah, Kiriman TKI ke Kampung Bertambah",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-24T09:00:51.300143"
+  },
+  {
+    "keyword": "ihsg bursa",
+    "headline": "IHSG Turun 1,29% ke Level 6.037",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik.com",
+    "timestamp": "2026-06-24T09:00:51.818981"
+  },
+  {
+    "keyword": "ihsg bursa",
+    "headline": "JECX Masuki Masa Book Building, SONA Gelar Tender Wajib dan GPSO Tambah Modal",
+    "sentiment": "POSITIF",
+    "score": 0.65,
+    "source": "detik.com",
+    "timestamp": "2026-06-24T09:00:51.828573"
+  },
+  {
+    "keyword": "ihsg bursa",
+    "headline": "IHSG Nyaris Tinggalkan Level 6.000",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-24T09:00:51.838215"
+  },
+  {
+    "keyword": "ihsg bursa",
+    "headline": "Video: IHSG Anjlok 9% Usai Libur Lebaran, Langsung Trading Halt",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik.com",
+    "timestamp": "2026-06-24T09:00:51.847726"
+  },
+  {
+    "keyword": "ihsg bursa",
+    "headline": "EMMI Bidik Dana IPO Rp 269 Miliar, MDKA Siapkan Private Placement dan BIRD Tebar Dividen",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-24T09:00:51.857227"
+  },
+  {
+    "keyword": "ekonomi indonesia",
+    "headline": "Purbaya Dapat Gelar Profesor Usai Cari Utang di China",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:00:54.411591"
+  },
+  {
+    "keyword": "ekonomi indonesia",
+    "headline": "Tanggal 25 Juni 2026 Memperingati Apa? Ada Hari Asyura-HUT BJ Habibie",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:00:54.421439"
+  },
+  {
+    "keyword": "ekonomi indonesia",
+    "headline": "MUI Sebut Fatherless Picu LGBT di Lingkungan Keluarga",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:00:54.430697"
+  },
+  {
+    "keyword": "ekonomi indonesia",
+    "headline": "Video: Respons Luhut soal Prabowo Heran Ekonomi Tumbuh, tapi Kemiskinan Naik",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:00:54.439911"
+  },
+  {
+    "keyword": "ekonomi indonesia",
+    "headline": "Video: Momen Purbaya Lesehan Paparkan Kondisi Fiskal RI",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:00:54.448998"
+  },
+  {
+    "keyword": "harga pangan",
+    "headline": "Keluh Kesah Petani Jagung di NTB Kena Banyak Pajak",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:00:54.994022"
+  },
+  {
+    "keyword": "harga pangan",
+    "headline": "Dipajaki Bulog, Petani Jagung NTB Ngadu ke Iqbal",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:00:55.002959"
+  },
+  {
+    "keyword": "harga pangan",
+    "headline": "Prof Rycko Amelza: Data BPS RI Impor Jagung Sejak 1973 dan 2026 Setop, Polri Buat Sejarah",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:00:55.011815"
+  },
+  {
+    "keyword": "harga pangan",
+    "headline": "Video Cek Harga Pangan di Pasar Palmerah, Zulhas: Cabai Turun Jauh",
+    "sentiment": "NEGATIF",
+    "score": -0.8,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:00:55.020968"
+  },
+  {
+    "keyword": "harga pangan",
+    "headline": "Video: Jelang Ramadan, Harga Bahan Pangan Mulai Naik, Yuk Intip Harganya!",
+    "sentiment": "POSITIF",
+    "score": 0.65,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:00:55.030123"
+  },
+  {
+    "keyword": "inflasi indonesia",
+    "headline": "Harga Minyak Dunia Melambung, Begini Dampaknya ke Investasi",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:00:55.462535"
+  },
+  {
+    "keyword": "inflasi indonesia",
+    "headline": "Mengurai Anomali Ekonomi yang Dipertanyakan Prabowo",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:00:55.471704"
+  },
+  {
+    "keyword": "inflasi indonesia",
+    "headline": "Appi Kenalkan Potensi Makassar ke Investor Lewat Forum Bisnis IGS 2026",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:00:55.481330"
+  },
+  {
+    "keyword": "inflasi indonesia",
+    "headline": "Video: 3 Provinsi Terdampak Bencana di Sumatera Alami Inflasi",
+    "sentiment": "NEGATIF",
+    "score": -0.95,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:00:55.490654"
+  },
+  {
+    "keyword": "inflasi indonesia",
+    "headline": "Kemendagri Apresiasi Pemda Berprestasi di Papua, Dorong Peningkatan Kinerja",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:00:55.500108"
+  },
+  {
+    "keyword": "rupiah dollar",
+    "headline": "Harga Sparepart Mahal Bikin Bengkel Sepi, Montir Ngeluh Tip Berkurang",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:00:55.973204"
+  },
+  {
+    "keyword": "rupiah dollar",
+    "headline": "Aksi Mogok Pedagang Daging Sapi Magelang Berlanjut Hari Ini",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:00:55.982761"
+  },
+  {
+    "keyword": "rupiah dollar",
+    "headline": "Said Abdullah soal Harga Minyak Dunia Turun: Tekanan Fiskal RI Berkurang",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:00:55.992127"
+  },
+  {
+    "keyword": "rupiah dollar",
+    "headline": "Rupiah Dihajar, Dolar AS Nyaris Rp 17.000",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:00:56.001917"
+  },
+  {
+    "keyword": "rupiah dollar",
+    "headline": "Nilai Rupiah Melemah, Kiriman TKI ke Kampung Bertambah",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:00:56.011421"
+  },
+  {
+    "keyword": "ihsg bursa",
+    "headline": "Biang Kerok IHSG Anjlok 3,56% Meski RI Tetap di Emerging Market",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:00:56.460503"
+  },
+  {
+    "keyword": "ihsg bursa",
+    "headline": "Mengurai Anomali Ekonomi yang Dipertanyakan Prabowo",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:00:56.469528"
+  },
+  {
+    "keyword": "ihsg bursa",
+    "headline": "IHSG Balik Arah ke Zona Merah, Saham Bank Kompak Anjlok",
+    "sentiment": "NEGATIF",
+    "score": -0.8,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:00:56.478330"
+  },
+  {
+    "keyword": "ihsg bursa",
+    "headline": "Video: IHSG Anjlok 9% Usai Libur Lebaran, Langsung Trading Halt",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:00:56.487799"
+  },
+  {
+    "keyword": "ihsg bursa",
+    "headline": "RANS Tawarkan Saham Perdana, dan ESSA Bagikan Dividen Rp 895 Miliar",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:00:56.497200"
+  },
+  {
+    "keyword": "ekonomi indonesia",
+    "headline": "Wacana Program MBG Adopsi AI hingga Disalurkan untuk Penderita TBC",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:10:54.570304"
+  },
+  {
+    "keyword": "ekonomi indonesia",
+    "headline": "Purbaya Dapat Gelar Profesor Usai Cari Utang di China",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:10:54.579938"
+  },
+  {
+    "keyword": "ekonomi indonesia",
+    "headline": "Tanggal 25 Juni 2026 Memperingati Apa? Ada Hari Asyura-HUT BJ Habibie",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:10:54.589208"
+  },
+  {
+    "keyword": "ekonomi indonesia",
+    "headline": "Video: Respons Luhut soal Prabowo Heran Ekonomi Tumbuh, tapi Kemiskinan Naik",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:10:54.598374"
+  },
+  {
+    "keyword": "ekonomi indonesia",
+    "headline": "Video: Momen Purbaya Lesehan Paparkan Kondisi Fiskal RI",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:10:54.607959"
+  },
+  {
+    "keyword": "harga pangan",
+    "headline": "Keluh Kesah Petani Jagung di NTB Kena Banyak Pajak",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:10:55.071409"
+  },
+  {
+    "keyword": "harga pangan",
+    "headline": "Dipajaki Bulog, Petani Jagung NTB Ngadu ke Iqbal",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:10:55.082406"
+  },
+  {
+    "keyword": "harga pangan",
+    "headline": "Prof Rycko Amelza: Data BPS RI Impor Jagung Sejak 1973 dan 2026 Setop, Polri Buat Sejarah",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:10:55.093690"
+  },
+  {
+    "keyword": "harga pangan",
+    "headline": "Video Cek Harga Pangan di Pasar Palmerah, Zulhas: Cabai Turun Jauh",
+    "sentiment": "NEGATIF",
+    "score": -0.8,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:10:55.103265"
+  },
+  {
+    "keyword": "harga pangan",
+    "headline": "Video: Jelang Ramadan, Harga Bahan Pangan Mulai Naik, Yuk Intip Harganya!",
+    "sentiment": "POSITIF",
+    "score": 0.65,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:10:55.113040"
+  },
+  {
+    "keyword": "inflasi indonesia",
+    "headline": "Harga Minyak Dunia Melambung, Begini Dampaknya ke Investasi",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:10:55.594291"
+  },
+  {
+    "keyword": "inflasi indonesia",
+    "headline": "Mengurai Anomali Ekonomi yang Dipertanyakan Prabowo",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:10:55.603440"
+  },
+  {
+    "keyword": "inflasi indonesia",
+    "headline": "Appi Kenalkan Potensi Makassar ke Investor Lewat Forum Bisnis IGS 2026",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:10:55.612912"
+  },
+  {
+    "keyword": "inflasi indonesia",
+    "headline": "Video: 3 Provinsi Terdampak Bencana di Sumatera Alami Inflasi",
+    "sentiment": "NEGATIF",
+    "score": -0.95,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:10:55.622152"
+  },
+  {
+    "keyword": "inflasi indonesia",
+    "headline": "Kemendagri Apresiasi Pemda Berprestasi di Papua, Dorong Peningkatan Kinerja",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:10:55.631213"
+  },
+  {
+    "keyword": "rupiah dollar",
+    "headline": "Harga Sparepart Mahal Bikin Bengkel Sepi, Montir Ngeluh Tip Berkurang",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:10:56.106457"
+  },
+  {
+    "keyword": "rupiah dollar",
+    "headline": "Aksi Mogok Pedagang Daging Sapi Magelang Berlanjut Hari Ini",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:10:56.115930"
+  },
+  {
+    "keyword": "rupiah dollar",
+    "headline": "Said Abdullah soal Harga Minyak Dunia Turun: Tekanan Fiskal RI Berkurang",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:10:56.125060"
+  },
+  {
+    "keyword": "rupiah dollar",
+    "headline": "Rupiah Dihajar, Dolar AS Nyaris Rp 17.000",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:10:56.134329"
+  },
+  {
+    "keyword": "rupiah dollar",
+    "headline": "Nilai Rupiah Melemah, Kiriman TKI ke Kampung Bertambah",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:10:56.143295"
+  },
+  {
+    "keyword": "ihsg bursa",
+    "headline": "Biang Kerok IHSG Anjlok 3,56% Meski RI Tetap di Emerging Market",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:10:56.600365"
+  },
+  {
+    "keyword": "ihsg bursa",
+    "headline": "Mengurai Anomali Ekonomi yang Dipertanyakan Prabowo",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:10:56.609928"
+  },
+  {
+    "keyword": "ihsg bursa",
+    "headline": "IHSG Balik Arah ke Zona Merah, Saham Bank Kompak Anjlok",
+    "sentiment": "NEGATIF",
+    "score": -0.8,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:10:56.619719"
+  },
+  {
+    "keyword": "ihsg bursa",
+    "headline": "RANS Tawarkan Saham Perdana, dan ESSA Bagikan Dividen Rp 895 Miliar",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:10:56.628949"
+  },
+  {
+    "keyword": "ihsg bursa",
+    "headline": "OJK soal Pengumuman MSCI: Sesuai Harapan",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:10:56.638503"
+  },
+  {
+    "keyword": "ekonomi indonesia",
+    "headline": "Ada Pertukaran Budaya bagi Guru ke Jepang, Yuk Perluas Wawasan!",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:18:05.938096"
+  },
+  {
+    "keyword": "ekonomi indonesia",
+    "headline": "Wacana Program MBG Adopsi AI hingga Disalurkan untuk Penderita TBC",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:18:05.946958"
+  },
+  {
+    "keyword": "ekonomi indonesia",
+    "headline": "Purbaya Dapat Gelar Profesor Usai Cari Utang di China",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:18:05.955518"
+  },
+  {
+    "keyword": "ekonomi indonesia",
+    "headline": "Tanggal 25 Juni 2026 Memperingati Apa? Ada Hari Asyura-HUT BJ Habibie",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:18:05.963642"
+  },
+  {
+    "keyword": "ekonomi indonesia",
+    "headline": "MUI Sebut Fatherless Picu LGBT di Lingkungan Keluarga",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:18:05.972037"
+  },
+  {
+    "keyword": "harga pangan",
+    "headline": "Keluh Kesah Petani Jagung di NTB Kena Banyak Pajak",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-25T09:18:13.254912"
+  },
+  {
+    "keyword": "ekonomi indonesia",
+    "headline": "NasDem: Prabowo Sebenarnya Sudah Tahu Siapa Bohir dari Semua Kegaduhan",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-26T09:00:28.004533"
+  },
+  {
+    "keyword": "ekonomi indonesia",
+    "headline": "Viral Dari Iuran Rp 2.000/Hari, Warga Kampung di Yogya Ini Renovasi 165 Rumah",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-26T09:00:28.013300"
+  },
+  {
+    "keyword": "ekonomi indonesia",
+    "headline": "Hari Pelaut Sedunia, Pelindo Dukung Potensi Ekonomi di Selat Malaka",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik.com",
+    "timestamp": "2026-06-26T09:00:28.021650"
+  }
+]

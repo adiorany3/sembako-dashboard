@@ -1,0 +1,92 @@
+/* Additional CSS - Badges, Charts, and Utility Classes */
+
+.badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    background: #f0f0f0;
+    color: #666;
+}
+
+.badge-success {
+    background: #c8e6c9;
+    color: #2e7d32;
+}
+
+.badge-danger {
+    background: #ffcdd2;
+    color: #c62828;
+}
+
+.badge-warning {
+    background: #ffe0b2;
+    color: #e65100;
+}
+
+.badge-info {
+    background: #b3e5fc;
+    color: #0277bd;
+}
+
+/* Text colors */
+.text-success { color: #4caf50; }
+.text-danger { color: #f44336; }
+.text-warning { color: #ff9800; }
+.text-info { color: #2196f3; }
+
+/* Chart specific */
+canvas {
+    max-height: 300px;
+}
+
+/* Table enhancements */
+table tbody tr td:nth-child(4),
+table tbody tr td:nth-child(8) {
+    font-weight: 600;
+}
+
+/* Animations */
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Print styles */
+@media print {
+    .header, .tabs-nav, .footer {
+        display: none;
+    }
+    
+    .main-content {
+        padding: 0;
+    }
+    
+    body {
+        background: white;
+    }
+}
