@@ -40,6 +40,7 @@
             <button class="tab-btn" data-tab="peternakan">🐔 Peternakan</button>
             <button class="tab-btn" data-tab="pakan">🌽 Pakan</button>
             <button class="tab-btn" data-tab="saham">📈 Saham</button>
+            <button class="tab-btn" data-tab="sentimen">📰 Berita Terkini</button>
             <button class="tab-btn" data-tab="ai-analysis">🤖 AI Analysis</button>
         </nav>
 
@@ -392,6 +393,30 @@
                             <tr><td colspan="9" class="loading">Loading...</td></tr>
                         </tbody>
                     </table>
+                </div>
+            </section>
+
+            <!-- Sentimen Berita Tab -->
+            <section class="tab-content" id="sentimen">
+                <div class="dashboard-grid">
+                    <div class="card" style="grid-column: 1/-1;">
+                        <h2>📰 Berita Terkini & Sentimen</h2>
+                        <div class="table-responsive">
+                            <table class="data-table" id="sentimen-table">
+                                <thead>
+                                    <tr>
+                                        <th>Tanggal & Waktu</th>
+                                        <th>Keyword</th>
+                                        <th>Headline</th>
+                                        <th>Sentimen & Skor</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="sentimen-tbody">
+                                    <tr><td colspan="4" class="loading">Loading...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </section>
 

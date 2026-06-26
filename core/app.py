@@ -418,6 +418,31 @@ def get_saham():
     return jsonify({"data": result, "last_update": last_update})
 
 
+@app.route("/api/sentimen")
+def get_sentimen():
+    """Get latest news sentiment data."""
+    data, last_update = load_excel_data("sentimen_berita.xlsx", "Detail")
+    if not data:
+        return jsonify({"error": "Data not found"}), 404
+
+    result = []
+    for row in data:
+        if row[0]:
+            result.append(
+                {
+                    "tanggal": str(row[0]),
+                    "waktu": str(row[1]),
+                    "keyword": row[2],
+                    "headline": row[3],
+                    "sentimen": row[4],
+                    "score": row[5],
+                    "source": row[6],
+                }
+            )
+
+    return jsonify({"data": result, "last_update": last_update})
+
+
 @app.route("/api/pakan")
 def get_pakan():
     """Get latest pakan/feed prices."""

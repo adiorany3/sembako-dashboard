@@ -343,33 +343,31 @@ async function loadPakanData() {
             <td>${formatCurrency(row.rice_polish)}</td>
             <td>${formatCurrency(row.mung_bean_husk)}</td>
         `;
+        tbody.appendChild(tr);
+    });
 }
 
 // ============ Sentimen Berita ============
 async function loadSentimenData() {
-    const response = await fetchData('sembako'); // Asumsi sementara, perlu dicek API yg benar
+    const response = await fetchData('sentimen'); // Panggil API sentimen baru
     if (!response || !response.data || response.data.length === 0) return;
 
     const data = response.data;
-    // Filter for 'berita terkini' or relevant sentiment data if available
-    // For now, let's assume we display the latest few entries if they look like news headlines
-    const filteredData = data.filter(row => row.keyword && row.keyword.includes('ekonomi') || row.keyword.includes('pasar') || row.keyword.includes('harga')).slice(-10);
-
-    const tbody = document.getElementById('sentimen-tbody'); // Need to create this tbody in HTML
+    const tbody = document.getElementById('sentimen-tbody');
     tbody.innerHTML = '';
 
-    filteredData.forEach(row => {
+    data.slice(-10).reverse().forEach(row => { // Tampilkan 10 berita terakhir, dari terbaru
         const tr = document.createElement('tr');
         
         let sentimentColor = 'grey';
-        if (row.sentiment === 'POSITIF') sentimentColor = 'green';
-        else if (row.sentiment === 'NEGATIF') sentimentColor = 'red';
+        if (row.sentimen === 'POSITIF') sentimentColor = 'green';
+        else if (row.sentimen === 'NEGATIF') sentimentColor = 'red';
 
         tr.innerHTML = `
-            <td>${row.tanggal} ${row.waktu || ''}</td>
+            <td>${formatDate(row.tanggal)} ${row.waktu || ''}</td>
             <td>${row.keyword || '-'}</td>
             <td>${row.headline.substring(0, 70)}...</td>
-            <td style="color: ${sentimentColor}; font-weight: bold;">${row.sentiment} (${row.score})</td>
+            <td style="color: ${sentimentColor}; font-weight: bold;">${row.sentimen} (${row.score})</td>
         `;
         tbody.appendChild(tr);
     });
