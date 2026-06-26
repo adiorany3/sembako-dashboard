@@ -277,7 +277,7 @@ def get_summary():
 def get_saham():
     """Get IHSG and bluechip stock data."""
     import os
-    excel_path = os.path.join(APP_DIR, 'harga_saham_ihsg.xlsx')
+    excel_path = os.path.join(DATA_DIR, 'harga_saham_ihsg.xlsx')
     if not os.path.exists(excel_path):
         return jsonify({"error": "Data not found"}), 404
 
