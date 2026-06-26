@@ -359,6 +359,46 @@ def get_saham():
 
     return jsonify({"data": result, "last_update": last_update})
 
+@app.route('/api/pakan')
+def get_pakan():
+    """Get latest pakan/feed prices."""
+    data, last_update = load_excel_data('harga_pakan_ternak.xlsx')
+    if not data:
+        return jsonify({"error": "Data not found"}), 404
+
+    result = []
+    for row in data:
+        if row[0]:
+            result.append({
+                "tanggal": str(row[0]),
+                "jagung_pipilan": row[1],
+                "bungkil_kedelai": row[2],
+                "dedak_padi": row[3],
+                "tepung_ikan": row[4],
+                "pollard": row[5],
+                "biji_kapuk": row[6],
+                "tepung_darah": row[7],
+                "tepung_tulang": row[8],
+                "molases": row[9],
+                "bungkil_kelapa": row[10],
+                "gaplek": row[11],
+                "bungkil_sawit": row[12],
+                "ampas_tahu": row[13],
+                "tepung_bulu_ayam": row[14],
+                "kulit_kentang": row[15],
+                "onggok": row[16],
+                "bungkil_kacang_tanah": row[17],
+                "dedak_halus": row[18],
+                "sorgum": row[19],
+                "menir": row[20],
+                "corn_gluten_feed": row[21],
+                "rice_polish": row[22],
+                "mung_bean_husk": row[23],
+            })
+
+    return jsonify({"data": result, "last_update": last_update})
+
+
 @app.route('/api/health')
 def health():
     """Health check."""

@@ -59,6 +59,7 @@ async function loadAllData() {
         loadEmasData(),
         loadPertanianData(),
         loadPeternakanData(),
+        loadPakanData(),
         loadSahamData(),
         checkHealth()
     ]);
@@ -293,6 +294,53 @@ function renderPeternakanTable(filter) {
             <td class="price">${formatCurrency(row.harga)}</td>
             <td>${row.satuan}</td>
             <td>${row.sumber}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+// ============ Pakan/Feed Data ============
+async function loadPakanData() {
+    const response = await fetchData('pakan');
+    if (!response || !response.data || response.data.length === 0) return;
+
+    const data = response.data;
+    const latest = data[data.length - 1];
+
+    // Update last update
+    document.getElementById('pakan-update').textContent = response.last_update || formatDate(latest.tanggal);
+
+    // Fill table
+    const tbody = document.getElementById('pakan-tbody');
+    tbody.innerHTML = '';
+
+    data.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${formatDate(row.tanggal)}</td>
+            <td>${formatCurrency(row.jagung_pipilan)}</td>
+            <td>${formatCurrency(row.bungkil_kedelai)}</td>
+            <td>${formatCurrency(row.dedak_padi)}</td>
+            <td>${formatCurrency(row.tepung_ikan)}</td>
+            <td>${formatCurrency(row.pollard)}</td>
+            <td>${formatCurrency(row.biji_kapuk)}</td>
+            <td>${formatCurrency(row.tepung_darah)}</td>
+            <td>${formatCurrency(row.tepung_tulang)}</td>
+            <td>${formatCurrency(row.molases)}</td>
+            <td>${formatCurrency(row.bungkil_kelapa)}</td>
+            <td>${formatCurrency(row.gaplek)}</td>
+            <td>${formatCurrency(row.bungkil_sawit)}</td>
+            <td>${formatCurrency(row.ampas_tahu)}</td>
+            <td>${formatCurrency(row.tepung_bulu_ayam)}</td>
+            <td>${formatCurrency(row.kulit_kentang)}</td>
+            <td>${formatCurrency(row.onggok)}</td>
+            <td>${formatCurrency(row.bungkil_kacang_tanah)}</td>
+            <td>${formatCurrency(row.dedak_halus)}</td>
+            <td>${formatCurrency(row.sorgum)}</td>
+            <td>${formatCurrency(row.menir)}</td>
+            <td>${formatCurrency(row.corn_gluten_feed)}</td>
+            <td>${formatCurrency(row.rice_polish)}</td>
+            <td>${formatCurrency(row.mung_bean_husk)}</td>
         `;
         tbody.appendChild(tr);
     });

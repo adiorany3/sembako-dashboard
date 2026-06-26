@@ -38,6 +38,7 @@
             <button class="tab-btn" data-tab="emas">💰 Emas</button>
             <button class="tab-btn" data-tab="pertanian">🌾 Pertanian</button>
             <button class="tab-btn" data-tab="peternakan">🐔 Peternakan</button>
+            <button class="tab-btn" data-tab="pakan">🌽 Pakan</button>
             <button class="tab-btn" data-tab="saham">📈 Saham</button>
             <button class="tab-btn" data-tab="ai-analysis">🤖 AI Analysis</button>
         </nav>
@@ -276,6 +277,51 @@
                             <tr><td colspan="6" class="loading">Loading...</td></tr>
                         </tbody>
                     </table>
+                </div>
+            </section>
+
+            <!-- Pakan Tab -->
+            <section class="tab-content" id="pakan">
+                <div class="dashboard-grid">
+                    <div class="card" style="grid-column: 1/-1;">
+                        <h2>🌽 Harga Bahan Pakan Ternak</h2>
+                        <div id="pakan-update" class="last-update">Loading...</div>
+                        <div class="table-responsive">
+                            <table class="data-table" id="pakan-table">
+                                <thead>
+                                    <tr>
+                                        <th>Tanggal</th>
+                                        <th>Jagung Pipilan</th>
+                                        <th>Bungkil Kedelai</th>
+                                        <th>Dedak Padi</th>
+                                        <th>Tepung Ikan</th>
+                                        <th>Pollard</th>
+                                        <th>Biji Kapuk</th>
+                                        <th>Tepung Darah</th>
+                                        <th>Tepung Tulang</th>
+                                        <th>Molases</th>
+                                        <th>Bungkil Kelapa</th>
+                                        <th>Gaplek</th>
+                                        <th>Bungkil Sawit</th>
+                                        <th>Ampas Tahu</th>
+                                        <th>Tepung Bulu Ayam</th>
+                                        <th>Kulit Kentang</th>
+                                        <th>Onggok</th>
+                                        <th>Bungkil Kacang Tanah</th>
+                                        <th>Dedak Halus</th>
+                                        <th>Sorgum</th>
+                                        <th>Menir</th>
+                                        <th>Corn Gluten</th>
+                                        <th>Rice Polish</th>
+                                        <th>Mung Bean Husk</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="pakan-tbody">
+                                    <tr><td colspan="24" class="loading">Loading...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </section>
 
