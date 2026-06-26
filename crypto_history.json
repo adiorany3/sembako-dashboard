@@ -1,0 +1,35 @@
+[
+  {
+    "date": "2026-06-26",
+    "time": "22:00",
+    "prices": {
+      "btc_usd": 60058,
+      "btc_idr": 1072868723,
+      "btc_change": 1.99,
+      "eth_usd": 1565.44,
+      "eth_idr": 27964729,
+      "eth_change": 0.66,
+      "sol_usd": 70.42,
+      "sol_idr": 1257982,
+      "sol_change": 7.98,
+      "ada_usd": 0.14524,
+      "ada_idr": 2594.53,
+      "ada_change": 4.08,
+      "doge_usd": 0.074227,
+      "doge_idr": 1325.97,
+      "doge_change": 1.24,
+      "xrp_usd": 1.032,
+      "xrp_idr": 18444.08,
+      "xrp_change": 1.46,
+      "total_mcap": 1514925060339.46
+    },
+    "sentiment": "NETRAL \u26aa",
+    "news": [
+      "Begini Cara Membaca Grafik TOTAL2 sebagai Barometer Sentimen Altseason",
+      "Trader Kripto Kostya Kudo Tewas di Lamborghini Saat Pasar Kripto Runtuh",
+      "Bitcoin Tembus Rp 1,9 M",
+      "5 Aplikasi Trading Terbaik di Dunia",
+      "Bitcoin Cs Melempem Jelang Pidato Jerome Powell"
+    ]
+  }
+]
