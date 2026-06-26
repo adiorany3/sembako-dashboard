@@ -14,7 +14,17 @@ COIN_NAMES = {"bitcoin": "BTC", "ethereum": "ETH", "solana": "SOL",
 def create_or_load_workbook():
     if os.path.exists(EXCEL_PATH):
         wb = openpyxl.load_workbook(EXCEL_PATH)
-        return wb, wb["Harga"]
+        # Check for 'Harga' sheet, if not found use active or create
+        if "Harga" in wb.sheetnames:
+            return wb, wb["Harga"]
+        elif len(wb.sheetnames) > 0:
+            # Rename first sheet to Harga
+            ws = wb.worksheets[0]
+            ws.title = "Harga"
+            return wb, ws
+        else:
+            ws = wb.create_sheet("Harga")
+            return wb, ws
     return create_new_workbook()
 
 def create_new_workbook():
