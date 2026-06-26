@@ -12,13 +12,12 @@ from flask import Flask, render_template, jsonify
 from flask_cors import CORS
 import sys
 
-sys.path.insert(0, os.path.expanduser("~/sembako"))
 
-app = Flask(__name__)
+
+app = Flask(__name__, template_folder='../web/templates', static_folder='../web/static')
 CORS(app)
 
-DATA_DIR = os.path.expanduser("~/sembako")
-DATA_DIR = os.path.expanduser("~/sembako")
+DATA_DIR = os.path.expanduser("~/sembako/data")
 
 
 # ============ Helper Functions ============
@@ -472,7 +471,7 @@ def health():
 
 # Try to import config (local only, not on GitHub)
 try:
-    sys.path.insert(0, os.path.expanduser("~/sembako"))
+    
     from config import GROQ_API_KEY
 except ImportError:
     # Fallback to environment variable
