@@ -273,6 +273,92 @@ def get_summary():
     }
     return jsonify(summary)
 
+@app.route('/api/saham')
+def get_saham():
+    """Get IHSG and bluechip stock data."""
+    import os
+    excel_path = os.path.join(APP_DIR, 'harga_saham_ihsg.xlsx')
+    if not os.path.exists(excel_path):
+        return jsonify({"error": "Data not found"}), 404
+
+    wb = openpyxl.load_workbook(excel_path, data_only=True)
+
+    # Get all sheets data
+    result = {}
+
+    # Sheet 1: IHSG
+    ws_ihsg = wb['IHSG']
+    ihsg_data = []
+    for row in ws_ihsg.iter_rows(min_row=2, values_only=True):
+        if row[0]:
+            ihsg_data.append({
+                "tanggal": str(row[0]),
+                "ihsg": row[1],
+                "change": row[2],
+                "change_pct": row[3],
+                "high": row[4],
+                "low": row[5],
+                "volume": row[6],
+                "sentimen": row[7]
+            })
+    result['ihsg'] = ihsg_data[-30:]  # Last 30 days
+
+    # Sheet 2: Sektor
+    ws_sektor = wb['Sektor']
+    sektor_data = []
+    for row in ws_sektor.iter_rows(min_row=2, values_only=True):
+        if row[0]:
+            sektor_data.append({
+                "sektor": row[0],
+                "value": row[1],
+                "daily_change": row[2],
+                "change_pct": row[3],
+                "weekly_trend": row[4],
+                "recommendation": row[8]
+            })
+    result['sektor'] = sektor_data
+
+    # Sheet 3: Bluechip
+    ws_blue = wb['Bluechip']
+    bluechip_data = []
+    for row in ws_blue.iter_rows(min_row=2, values_only=True):
+        if row[0]:
+            bluechip_data.append({
+                "symbol": row[0],
+                "nama": row[1],
+                "sektor": row[2],
+                "harga": row[3],
+                "daily_chg": row[4],
+                "daily_chg_pct": row[5],
+                "rsi": row[6],
+                "trend": row[7],
+                "signal": row[8],
+                "recommendation": row[9]
+            })
+    result['bluechip'] = bluechip_data
+
+    # Sheet 6: Watchlist
+    ws_watch = wb['Watchlist']
+    watchlist_data = []
+    for row in ws_watch.iter_rows(min_row=2, values_only=True):
+        if row[0]:
+            watchlist_data.append({
+                "symbol": row[0],
+                "nama": row[1],
+                "harga": row[3],
+                "daily_chg": row[4],
+                "rsi": row[5],
+                "reason": row[6],
+                "potential": row[7],
+                "recommendation": row[9]
+            })
+    result['watchlist'] = watchlist_data
+
+    # Get last update from file
+    last_update = datetime.fromtimestamp(os.path.getmtime(excel_path)).strftime('%d %b %Y, %H:%M')
+
+    return jsonify({"data": result, "last_update": last_update})
+
 @app.route('/api/health')
 def health():
     """Health check."""

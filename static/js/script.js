@@ -59,6 +59,7 @@ async function loadAllData() {
         loadEmasData(),
         loadPertanianData(),
         loadPeternakanData(),
+        loadSahamData(),
         checkHealth()
     ]);
 }
@@ -594,3 +595,116 @@ window.addEventListener('resize', function() {
         }
     }, 250);
 });
+
+// ============ Saham Data (IHSG & Bluechip) ============
+let sahamData = {};
+
+async function loadSahamData() {
+    const response = await fetchData('saham');
+    if (!response || !response.data) return;
+
+    sahamData = response.data;
+
+    // Render IHSG summary
+    renderIHSGSummary();
+
+    // Render Sektor
+    renderSektorList();
+
+    // Render Watchlist
+    renderWatchlist();
+
+    // Render Bluechip table
+    renderBluechipTable();
+
+    // Update footer time
+    if (response.last_update) {
+        document.getElementById('footer-time').textContent = response.last_update;
+    }
+}
+
+function renderIHSGSummary() {
+    const ihsgData = sahamData.ihsg || [];
+    if (ihsgData.length === 0) return;
+
+    const latest = ihsgData[ihsgData.length - 1];
+
+    document.getElementById('ihsg-value').textContent = latest.ihsg ? latest.ihsg.toLocaleString('id-ID') : '-';
+    document.getElementById('ihsg-change').textContent = latest.change_pct ? (latest.change_pct > 0 ? '+' : '') + latest.change_pct + '%' : '-';
+    document.getElementById('ihsg-change').className = 'metric-change ' + (latest.change_pct > 0 ? 'positive' : 'negative');
+    document.getElementById('ihsg-high').textContent = latest.high ? latest.high.toLocaleString('id-ID') : '-';
+    document.getElementById('ihsg-low').textContent = latest.low ? latest.low.toLocaleString('id-ID') : '-';
+}
+
+function renderSektorList() {
+    const container = document.getElementById('sektor-list');
+    const sektorData = sahamData.sektor || [];
+    if (sektorData.length === 0) {
+        container.innerHTML = '<div class="loading">No data</div>';
+        return;
+    }
+
+    container.innerHTML = '';
+    sektorData.forEach(sek => {
+        const div = document.createElement('div');
+        div.className = 'sektor-item';
+        const changeClass = sek.daily_change > 0 ? 'positive' : sek.daily_change < 0 ? 'negative' : 'neutral';
+        div.innerHTML = `
+            <span class="sektor-name">${sek.sektor}</span>
+            <span class="sektor-value">${sek.value ? sek.value.toLocaleString('id-ID') : '-'}</span>
+            <span class="sektor-change ${changeClass}">${sek.change_pct ? (sek.change_pct > 0 ? '+' : '') + sek.change_pct + '%' : '-'}</span>
+        `;
+        container.appendChild(div);
+    });
+}
+
+function renderWatchlist() {
+    const tbody = document.getElementById('watchlist-tbody');
+    const watchlist = sahamData.watchlist || [];
+    if (watchlist.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="loading">No data</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = '';
+    watchlist.forEach(stock => {
+        const tr = document.createElement('tr');
+        const recClass = stock.recommendation === 'BUY' ? 'rec-buy' : stock.recommendation === 'SELL' ? 'rec-sell' : 'rec-hold';
+        tr.innerHTML = `
+            <td><strong>${stock.symbol}</strong></td>
+            <td>${stock.nama || '-'}</td>
+            <td>${stock.harga ? 'Rp ' + stock.harga.toLocaleString('id-ID') : '-'}</td>
+            <td class="${stock.rsi < 40 ? 'rsi-oversold' : stock.rsi > 70 ? 'rsi-overbought' : ''}">${stock.rsi || '-'}</td>
+            <td><span class="badge ${recClass}">${stock.recommendation || '-'}</span></td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+function renderBluechipTable() {
+    const tbody = document.getElementById('bluechip-tbody');
+    const bluechip = sahamData.bluechip || [];
+    if (bluechip.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="9" class="loading">No data</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = '';
+    bluechip.forEach(stock => {
+        const tr = document.createElement('tr');
+        const recClass = stock.recommendation === 'BUY' ? 'rec-buy' : stock.recommendation === 'SELL' ? 'rec-sell' : 'rec-hold';
+        const chgClass = stock.daily_chg > 0 ? 'positive' : stock.daily_chg < 0 ? 'negative' : 'neutral';
+        tr.innerHTML = `
+            <td><strong>${stock.symbol}</strong></td>
+            <td>${stock.nama || '-'}</td>
+            <td>${stock.sektor || '-'}</td>
+            <td>${stock.harga ? 'Rp ' + stock.harga.toLocaleString('id-ID') : '-'}</td>
+            <td class="${chgClass}">${stock.daily_chg_pct ? (stock.daily_chg_pct > 0 ? '+' : '') + stock.daily_chg_pct + '%' : '-'}</td>
+            <td class="${stock.rsi < 40 ? 'rsi-oversold' : stock.rsi > 70 ? 'rsi-overbought' : ''}">${stock.rsi || '-'}</td>
+            <td>${stock.trend || '-'}</td>
+            <td>${stock.signal || '-'}</td>
+            <td><span class="badge ${recClass}">${stock.recommendation || '-'}</span></td>
+        `;
+        tbody.appendChild(tr);
+    });
+}

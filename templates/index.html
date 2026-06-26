@@ -38,6 +38,7 @@
             <button class="tab-btn" data-tab="emas">💰 Emas</button>
             <button class="tab-btn" data-tab="pertanian">🌾 Pertanian</button>
             <button class="tab-btn" data-tab="peternakan">🐔 Peternakan</button>
+            <button class="tab-btn" data-tab="saham">📈 Saham</button>
         </nav>
 
         <!-- Content Area -->
@@ -272,6 +273,76 @@
                         </thead>
                         <tbody id="peternakan-tbody">
                             <tr><td colspan="6" class="loading">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Saham Tab -->
+            <section class="tab-content" id="saham">
+                <div class="dashboard-grid">
+                    <!-- IHSG Summary -->
+                    <div class="card">
+                        <h3>📊 IHSG (Jakarta Composite)</h3>
+                        <div id="ihsg-summary">
+                            <div class="metric-large">
+                                <span class="metric-value" id="ihsg-value">-</span>
+                                <span class="metric-change" id="ihsg-change">-</span>
+                            </div>
+                            <div class="metric-row">
+                                <span>High:</span> <span id="ihsg-high">-</span>
+                                <span>Low:</span> <span id="ihsg-low">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sektor Performance -->
+                    <div class="card">
+                        <h3>🏢 Sektor Performance</h3>
+                        <div id="sektor-list" class="sektor-list">
+                            <div class="loading">Loading...</div>
+                        </div>
+                    </div>
+
+                    <!-- Watchlist Saham Turun -->
+                    <div class="card">
+                        <h3>🔴 Watchlist - Turun & Potensi</h3>
+                        <table class="data-table compact">
+                            <thead>
+                                <tr>
+                                    <th>Symbol</th>
+                                    <th>Nama</th>
+                                    <th>Harga</th>
+                                    <th>RSI</th>
+                                    <th>Rec</th>
+                                </tr>
+                            </thead>
+                            <tbody id="watchlist-tbody">
+                                <tr><td colspan="5" class="loading">Loading...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Bluechip Table -->
+                <div class="data-table">
+                    <h3>💹 Saham Bluechip LQ45</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Symbol</th>
+                                <th>Nama</th>
+                                <th>Sektor</th>
+                                <th>Harga</th>
+                                <th>Change</th>
+                                <th>RSI</th>
+                                <th>Trend</th>
+                                <th>Signal</th>
+                                <th>Rec</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bluechip-tbody">
+                            <tr><td colspan="9" class="loading">Loading...</td></tr>
                         </tbody>
                     </table>
                 </div>
