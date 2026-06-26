@@ -121,7 +121,7 @@ def get_crypto():
         return jsonify({"error": "Data not found"}), 404
     
     result = []
-    for row in data[-5:]:
+    for row in data:
         if row[0]:
             result.append({
                 "tanggal": str(row[0]),
@@ -149,7 +149,7 @@ def get_emas():
         return jsonify({"error": "Data not found"}), 404
     
     result = []
-    for row in data[-5:]:
+    for row in data:
         if row[0]:
             result.append({
                 "tanggal": str(row[0]),
@@ -172,7 +172,7 @@ def get_pertanian():
         return jsonify({"error": "Data not found"}), 404
     
     result = []
-    for row in data[-5:]:
+    for row in data:
         if row[0]:
             result.append({
                 "tanggal": str(row[0]),
