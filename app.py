@@ -82,7 +82,7 @@ def get_sembako():
         return jsonify({"error": "Data not found"}), 404
     
     result = []
-    for row in data[-5:]:  # Last 5 days
+    for row in data:  # All data
         if row[0]:
             result.append({
                 "tanggal": str(row[0]),
