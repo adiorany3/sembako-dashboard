@@ -634,3 +634,62 @@ tr:hover {
         user-select: none;
     }
 }
+
+/* ============ Peternakan Badges ============ */
+.badge {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.badge-hulu {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.badge-industri {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.badge-hilir {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.badge-analisis {
+    background: #ede9fe;
+    color: #5b21b6;
+}
+
+/* ============ Filter Buttons ============ */
+.filter-buttons {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 8px 16px;
+    border: 2px solid #667eea;
+    background: white;
+    color: #667eea;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.filter-btn:hover {
+    background: #eef2ff;
+}
+
+.filter-btn.active {
+    background: #667eea;
+    color: white;
+}
+

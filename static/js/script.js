@@ -58,6 +58,7 @@ async function loadAllData() {
         loadCryptoData(),
         loadEmasData(),
         loadPertanianData(),
+        loadPeternakanData(),
         checkHealth()
     ]);
 }
@@ -246,6 +247,51 @@ async function loadPertanianData() {
             <td>${formatCurrency(row.pakan_layer)}</td>
             <td>${formatCurrency(row.bungkil_kedelai)}</td>
             <td>${formatCurrency(row.jagung_giling)}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+// ============ Peternakan Data (Hulu to Hilir) ============
+let peternakanData = [];
+
+async function loadPeternakanData() {
+    const response = await fetchData('peternakan');
+    if (!response || !response.data || response.data.length === 0) return;
+    
+    peternakanData = response.data;
+    
+    // Fill table
+    renderPeternakanTable('all');
+    
+    // Setup filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            e.target.classList.add('active');
+            renderPeternakanTable(e.target.dataset.filter);
+        });
+    });
+}
+
+function renderPeternakanTable(filter) {
+    const tbody = document.getElementById('peternakan-tbody');
+    tbody.innerHTML = '';
+    
+    const filtered = filter === 'all' 
+        ? peternakanData 
+        : peternakanData.filter(row => row.kategori === filter);
+    
+    filtered.forEach(row => {
+        const tr = document.createElement('tr');
+        const catClass = row.kategori.toLowerCase();
+        tr.innerHTML = `
+            <td><span class="badge badge-${catClass}">${row.kategori}</span></td>
+            <td>${row.sub_kategori}</td>
+            <td>${row.produk}</td>
+            <td class="price">${formatCurrency(row.harga)}</td>
+            <td>${row.satuan}</td>
+            <td>${row.sumber}</td>
         `;
         tbody.appendChild(tr);
     });

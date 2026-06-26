@@ -210,6 +210,50 @@ def get_keuangan():
     
     return jsonify({"data": result, "last_update": last_update})
 
+@app.route('/api/peternakan')
+def get_peternakan():
+    """Get comprehensive livestock data (hulu to hilir)."""
+    data, last_update = load_excel_data('harga_peternakan_lengkap.xlsx', 'Data Utama')
+    if not data:
+        return jsonify({"error": "Data not found"}), 404
+    
+    result = []
+    for row in data[-50:]:
+        if row[0]:
+            result.append({
+                "tanggal": str(row[0]),
+                "kategori": row[1],
+                "sub_kategori": row[2],
+                "produk": row[3],
+                "harga": row[4],
+                "satuan": row[5],
+                "sumber": row[6],
+            })
+    
+    return jsonify({"data": result, "last_update": last_update})
+
+@app.route('/api/peternakan/<kategori>')
+def get_peternakan_by_kategori(kategori):
+    """Get peternakan data filtered by kategori (hulu, industri, hilir, analisis)."""
+    data, last_update = load_excel_data('harga_peternakan_lengkap.xlsx', 'Data Utama')
+    if not data:
+        return jsonify({"error": "Data not found"}), 404
+    
+    result = []
+    for row in data:
+        if row[0] and row[1] and row[1].upper() == kategori.upper():
+            result.append({
+                "tanggal": str(row[0]),
+                "kategori": row[1],
+                "sub_kategori": row[2],
+                "produk": row[3],
+                "harga": row[4],
+                "satuan": row[5],
+                "sumber": row[6],
+            })
+    
+    return jsonify({"data": result, "last_update": last_update, "kategori": kategori.upper()})
+
 @app.route('/keuangan')
 def keuangan():
     """Serve dedicated keuangan page."""
@@ -225,6 +269,7 @@ def get_summary():
         "emas": {"status": "OK" if load_excel_data('harga_emas.xlsx')[0] else "ERROR"},
         "pertanian": {"status": "OK" if load_excel_data('harga_pertanian_ternak.xlsx')[0] else "ERROR"},
         "keuangan": {"status": "OK" if load_excel_data('keuangan.xlsx')[0] else "ERROR"},
+        "peternakan": {"status": "OK" if load_excel_data('harga_peternakan_lengkap.xlsx')[0] else "ERROR"},
     }
     return jsonify(summary)
 

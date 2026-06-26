@@ -37,6 +37,7 @@
             <button class="tab-btn" data-tab="crypto">🪙 Crypto</button>
             <button class="tab-btn" data-tab="emas">💰 Emas</button>
             <button class="tab-btn" data-tab="pertanian">🌾 Pertanian</button>
+            <button class="tab-btn" data-tab="peternakan">🐔 Peternakan</button>
         </nav>
 
         <!-- Content Area -->
@@ -242,6 +243,35 @@
                         </thead>
                         <tbody id="pertanian-tbody">
                             <tr><td colspan="9" class="loading">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Peternakan Tab -->
+            <section class="tab-content" id="peternakan">
+                <div class="data-table">
+                    <h2>🐔 Data Peternakan (Hulu → Hilir)</h2>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-filter="all">Semua</button>
+                        <button class="filter-btn" data-filter="HULU">Hulu</button>
+                        <button class="filter-btn" data-filter="INDUSTRI">Industri</button>
+                        <button class="filter-btn" data-filter="HILIR">Hilir</button>
+                        <button class="filter-btn" data-filter="ANALISIS">Analisis</button>
+                    </div>
+                    <table id="peternakan-table">
+                        <thead>
+                            <tr>
+                                <th>Kategori</th>
+                                <th>Sub Kategori</th>
+                                <th>Produk</th>
+                                <th>Harga (Rp)</th>
+                                <th>Satuan</th>
+                                <th>Sumber</th>
+                            </tr>
+                        </thead>
+                        <tbody id="peternakan-tbody">
+                            <tr><td colspan="6" class="loading">Loading...</td></tr>
                         </tbody>
                     </table>
                 </div>
