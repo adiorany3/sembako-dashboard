@@ -7,7 +7,7 @@ import os
 import json
 import openpyxl
 from datetime import datetime
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify
 from flask_cors import CORS
 import sys
 
@@ -63,7 +63,8 @@ def load_json_data(filename):
         try:
             with open(path) as f:
                 return json.load(f)
-        except:
+        except Exception as e:
+            print(f"Error loading JSON data: {e}")
             return {}
     return {}
 
@@ -492,7 +493,7 @@ def generate_analysis_prompt():
     prompt_parts = []
     today = datetime.now().strftime('%d %b %Y')
 
-    prompt_parts.append(f"# ANALISIS MARKER {today}\n")
+    prompt_parts.append(f"# ANALISIS MARKER {today}\\n")
 
     # 1. IHSG & Saham
     try:
@@ -505,41 +506,42 @@ def generate_analysis_prompt():
             ihsg_rows = list(ws_ihsg.iter_rows(min_row=2, values_only=True))
             if ihsg_rows:
                 latest = ihsg_rows[-1]
-                prompt_parts.append(f"\n## IHSG (Indeks Saham)\n")
-                prompt_parts.append(f"- Level: {latest[1]}\n")
-                prompt_parts.append(f"- Change: {latest[2]} ({latest[3]})\n")
-                prompt_parts.append(f"- High: {latest[4]}, Low: {latest[5]}\n")
+                prompt_parts.append(f"\\n## IHSG (Indeks Saham)\\n")
+                prompt_parts.append(f"- Level: {latest[1]}\\n")
+                prompt_parts.append(f"- Change: {latest[2]} ({latest[3]}%)\\n")
+                prompt_parts.append(f"- High: {latest[4]}, Low: {latest[5]}\\n")
 
             # Sektor
             ws_sektor = wb['Sektor']
             sektor_rows = list(ws_sektor.iter_rows(min_row=2, values_only=True))
             if sektor_rows:
-                prompt_parts.append(f"\n## Sektor Performance\n")
+                prompt_parts.append(f"\\n## Sektor Performance\\n")
                 for row in sektor_rows[:8]:
                     if row[0]:
-                        prompt_parts.append(f"- {row[0]}: {row[1]} ({row[3]})\n")
+                        prompt_parts.append(f"- {row[0]}: {row[1]} ({row[3]})\\n")
 
             # Bluechip
             ws_blue = wb['Bluechip']
             blue_rows = list(ws_blue.iter_rows(min_row=2, values_only=True))
             if blue_rows:
-                prompt_parts.append(f"\n## Saham Bluechip LQ45 (Top 10)\n")
-                prompt_parts.append(f"| Symbol | Harga | RSI | Trend | Rec |\n")
-                prompt_parts.append(f"|--------|-------|-----|-------|-----|\n")
+                prompt_parts.append(f"\\n## Saham Bluechip LQ45 (Top 10)\\n")
+                prompt_parts.append(f"| Symbol | Harga | RSI | Trend | Rec |\\n")
+                prompt_parts.append(f"|--------|-------|-----|-------|-----|\\n")
                 for row in blue_rows[:10]:
                     if row[0]:
-                        prompt_parts.append(f"| {row[0]} | {row[3]} | {row[6]} | {row[7]} | {row[9]} |\n")
+                        prompt_parts.append(f"| {row[0]} | {row[3]} | {row[6]} | {row[7]} | {row[9]} |\\n")
 
             # Watchlist
             ws_watch = wb['Watchlist']
             watch_rows = list(ws_watch.iter_rows(min_row=2, values_only=True))
             if watch_rows:
-                prompt_parts.append(f"\n## Watchlist (Turun + Potensi)\n")
+                prompt_parts.append(f"\\n## Watchlist (Turun + Potensi)\\n")
                 for row in watch_rows[:5]:
                     if row[0]:
-                        prompt_parts.append(f"- {row[0]} ({row[1]}): RSI={row[5]}, Potential={row[7]}, Rec={row[9]}\n")
+                        prompt_parts.append(f"- {row[0]} ({row[1]}): RSI={row[5]}, Potential={row[7]}, Rec={row[9]}\\n")
     except Exception as e:
-        prompt_parts.append(f"\n## IHSG/Saham: Data tidak tersedia ({e})\n")
+        prompt_parts.append(f"\\n## IHSG/Saham: Data tidak tersedia ({e})\\n")
+        pass
 
     # 2. Crypto
     try:
@@ -549,11 +551,12 @@ def generate_analysis_prompt():
             ws = wb['Harga']
             crypto_rows = list(ws.iter_rows(min_row=2, values_only=True))
             if crypto_rows:
-                prompt_parts.append(f"\n## Crypto\n")
+                prompt_parts.append(f"\\n## Crypto\\n")
                 for row in crypto_rows[:6]:
                     if row[0]:
-                        prompt_parts.append(f"- {row[0]}: ${row[1]} ({row[4]})\n")
-    except:
+                        prompt_parts.append(f"- {row[0]}: ${row[1]} ({row[4]}%)\\n")
+    except Exception as e:
+        print(f"Error generating Crypto data for prompt: {e}")
         pass
 
     # 3. Emas
@@ -564,11 +567,12 @@ def generate_analysis_prompt():
             ws = wb['Harga']
             emas_rows = list(ws.iter_rows(min_row=2, values_only=True))
             if emas_rows:
-                prompt_parts.append(f"\n## Emas\n")
+                prompt_parts.append(f"\\n## Emas\\n")
                 for row in emas_rows[:3]:
                     if row[0]:
-                        prompt_parts.append(f"- {row[0]}: Rp {row[1]} ({row[3]})\n")
-    except:
+                        prompt_parts.append(f"- {row[0]}: Rp {row[1]} (Buyback: Rp {row[2]})\\n")
+    except Exception as e:
+        print(f"Error generating Emas data for prompt: {e}")
         pass
 
     # 4. Sembako (key items)
@@ -579,16 +583,16 @@ def generate_analysis_prompt():
             ws = wb['Harga']
             sembako_rows = list(ws.iter_rows(min_row=2, values_only=True))
             if sembako_rows:
-                prompt_parts.append(f"\n## Sembako (Key Items)\n")
+                prompt_parts.append(f"\\n## Sembako (Key Items)\\n")
                 for row in sembako_rows[:8]:
                     if row[0]:
-                        prompt_parts.append(f"- {row[0]}: Rp {row[1]}\n")
-    except:
+                        prompt_parts.append(f"- {row[0]}: Rp {row[1]}\\n")
+    except Exception as e:
+        print(f"Error generating Sembako data for prompt: {e}")
         pass
 
-    prompt_parts.append(f"\n---\nBerikan analisis dalam Bahasa Indonesia dengan format yang rapi.")
-
-    return "".join(prompt_parts)
+    prompt_parts.append(f"\\n---\\nBerikan analisis dalam Bahasa Indonesia dengan format yang rapi.")
+    return "\\n".join(prompt_parts)
 
 # ============ Error Handlers ============
 
