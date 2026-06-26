@@ -417,7 +417,8 @@ Fokus pada data yang ADA, jangan mengarang."""
             data=data,
             headers={
                 'Authorization': f'Bearer {GROQ_API_KEY}',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
             },
             method='POST'
         )
@@ -434,9 +435,15 @@ Fokus pada data yang ADA, jangan mengarang."""
         })
 
     except Exception as e:
+        import traceback
+        error_detail = str(e)
+        if hasattr(e, 'read'):
+            error_detail = e.read().decode('utf-8')
         return jsonify({
             "status": "error",
-            "error": str(e),
+            "error": error_detail,
+            "type": str(type(e).__name__),
+            "GROQ_KEY_SET": bool(GROQ_API_KEY and len(GROQ_API_KEY) > 10),
             "timestamp": datetime.now().isoformat()
         }), 500
 
