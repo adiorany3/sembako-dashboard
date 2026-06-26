@@ -554,7 +554,5 @@ def server_error(e):
     return jsonify({"error": "Server error"}), 500
 
 if __name__ == '__main__':
-    # Development
-    app.run(host='0.0.0.0', port=5000, debug=True)
-    # Production: use gunicorn
-    # gunicorn -w 4 -b 0.0.0.0:5000 app:app
+    # Production mode - disable debug for stability
+    app.run(host='0.0.0.0', port=5000, debug=False, use_reloader=False)
