@@ -365,10 +365,17 @@ def health():
     return jsonify({"status": "healthy", "timestamp": datetime.now().isoformat()})
 
 # ============ AI-Powered Analysis using Groq ============
-# Set GROQ_API_KEY environment variable on VPS
-# export GROQ_API_KEY="your_key_here"
 import os
-GROQ_API_KEY = os.environ.get('GROQ_API_KEY', '')
+import sys
+
+# Try to import config (local only, not on GitHub)
+try:
+    sys.path.insert(0, os.path.expanduser("~/sembako"))
+    from config import GROQ_API_KEY
+except ImportError:
+    # Fallback to environment variable
+    GROQ_API_KEY = os.environ.get('GROQ_API_KEY', '')
+
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 
 @app.route('/api/ai-analysis')
