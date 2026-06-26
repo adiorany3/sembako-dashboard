@@ -3,6 +3,7 @@
 Dashboard Backend - Flask API
 Aggregates all monitoring data (sembako, crypto, cuaca, emas, keuangan)
 """
+
 import os
 import json
 import openpyxl
@@ -17,31 +18,34 @@ app = Flask(__name__)
 CORS(app)
 
 DATA_DIR = os.path.expanduser("~/sembako")
+DATA_DIR = os.path.expanduser("~/sembako")
+
 
 # ============ Helper Functions ============
+
 
 def load_excel_data(filename, sheet_name=None):
     """Load data from Excel file."""
     path = os.path.join(DATA_DIR, filename)
     if not os.path.exists(path):
         return None, None
-    
+
     try:
         wb = openpyxl.load_workbook(path, data_only=True)
         if sheet_name:
             ws = wb[sheet_name]
         else:
             ws = wb.active
-        
+
         data = []
         for row in ws.iter_rows(min_row=2, values_only=True):
             if row[0]:  # Skip empty rows
                 data.append(row)
-        
+
         # Get file modification time
         file_mtime = os.path.getmtime(path)
-        file_date = datetime.fromtimestamp(file_mtime).strftime('%d %b %Y, %H:%M')
-        
+        file_date = datetime.fromtimestamp(file_mtime).strftime("%d %b %Y, %H:%M")
+
         return data if data else [], file_date
     except Exception as e:
         print(f"Error loading {filename}: {e}")
@@ -53,8 +57,9 @@ def get_file_last_update(filename):
     path = os.path.join(DATA_DIR, filename)
     if os.path.exists(path):
         mtime = os.path.getmtime(path)
-        return datetime.fromtimestamp(mtime).strftime('%d %b %Y, %H:%M')
+        return datetime.fromtimestamp(mtime).strftime("%d %b %Y, %H:%M")
     return None
+
 
 def load_json_data(filename):
     """Load JSON data."""
@@ -68,217 +73,260 @@ def load_json_data(filename):
             return {}
     return {}
 
+
 # ============ API Routes ============
 
-@app.route('/')
+
+@app.route("/")
 def index():
     """Serve dashboard."""
-    return render_template('index.html')
+    return render_template("index.html")
 
-@app.route('/api/sembako')
+
+@app.route("/api/sembako")
 def get_sembako():
     """Get latest sembako prices."""
-    data, last_update = load_excel_data('harga_sembako.xlsx', 'Harga')
+    data, last_update = load_excel_data("harga_sembako.xlsx", "Harga")
     if not data:
         return jsonify({"error": "Data not found"}), 404
-    
+
     result = []
     for row in data:  # All data
         if row[0]:
-            result.append({
-                "tanggal": str(row[0]),
-                "beras_premium": row[1],
-                "beras_medium": row[2],
-                "minyak_goreng": row[3],
-                "gula_pasir": row[4],
-                "garam": row[5],
-                "tepung_terigu": row[6],
-                "cabai_merah": row[7],
-                "cabai_rawit": row[8],
-                "bawang_merah": row[9],
-                "bawang_putih": row[10],
-                "minyak_tanah": row[11],
-                "telur_ras": row[12],
-                "telur_kampung": row[13],
-                "ayam_ras": row[14],
-                "ayam_kampung": row[15],
-                "daging_sapi": row[16],
-                "gas_elpiji": row[17] if len(row) > 17 else None,
-                "garam_bata": row[18] if len(row) > 18 else None,
-                "garam_halus": row[19] if len(row) > 19 else None,
-                "susu_km_bendera": row[20] if len(row) > 20 else None,
-                "susu_km_indomilk": row[21] if len(row) > 21 else None,
-                "susu_bubuk_bendera": row[22] if len(row) > 22 else None,
-                "susu_bubuk_indomilk": row[23] if len(row) > 23 else None,
-            })
-    
+            result.append(
+                {
+                    "tanggal": str(row[0]),
+                    "beras_premium": row[1],
+                    "beras_medium": row[2],
+                    "minyak_goreng": row[3],
+                    "gula_pasir": row[4],
+                    "garam": row[5],
+                    "tepung_terigu": row[6],
+                    "cabai_merah": row[7],
+                    "cabai_rawit": row[8],
+                    "bawang_merah": row[9],
+                    "bawang_putih": row[10],
+                    "minyak_tanah": row[11],
+                    "telur_ras": row[12],
+                    "telur_kampung": row[13],
+                    "ayam_ras": row[14],
+                    "ayam_kampung": row[15],
+                    "daging_sapi": row[16],
+                    "gas_elpiji": row[17] if len(row) > 17 else None,
+                    "garam_bata": row[18] if len(row) > 18 else None,
+                    "garam_halus": row[19] if len(row) > 19 else None,
+                    "susu_km_bendera": row[20] if len(row) > 20 else None,
+                    "susu_km_indomilk": row[21] if len(row) > 21 else None,
+                    "susu_bubuk_bendera": row[22] if len(row) > 22 else None,
+                    "susu_bubuk_indomilk": row[23] if len(row) > 23 else None,
+                }
+            )
+
     return jsonify({"data": result, "last_update": last_update})
 
-@app.route('/api/crypto')
+
+@app.route("/api/crypto")
 def get_crypto():
     """Get latest crypto prices."""
-    data, last_update = load_excel_data('crypto_monitor.xlsx', 'Harga')
+    data, last_update = load_excel_data("crypto_monitor.xlsx", "Harga")
     if not data:
         return jsonify({"error": "Data not found"}), 404
-    
+
     result = []
     for row in data:
         if row[0]:
-            result.append({
-                "tanggal": str(row[0]),
-                "waktu": str(row[1]) if row[1] else "",
-                "btc_usd": row[2],
-                "btc_idr": row[3],
-                "btc_24h": row[4],
-                "eth_usd": row[5],
-                "eth_idr": row[6],
-                "eth_24h": row[7],
-                "sol_usd": row[8],
-                "sol_idr": row[9],
-                "sol_24h": row[10],
-                "market_cap": row[20],
-                "sentimen": row[21],
-            })
-    
+            result.append(
+                {
+                    "tanggal": str(row[0]),
+                    "waktu": str(row[1]) if row[1] else "",
+                    "btc_usd": row[2],
+                    "btc_idr": row[3],
+                    "btc_24h": row[4],
+                    "eth_usd": row[5],
+                    "eth_idr": row[6],
+                    "eth_24h": row[7],
+                    "sol_usd": row[8],
+                    "sol_idr": row[9],
+                    "sol_24h": row[10],
+                    "market_cap": row[20],
+                    "sentimen": row[21],
+                }
+            )
+
     return jsonify({"data": result, "last_update": last_update})
 
-@app.route('/api/emas')
+
+@app.route("/api/emas")
 def get_emas():
     """Get latest gold prices."""
-    data, last_update = load_excel_data('harga_emas.xlsx', 'Harian')
+    data, last_update = load_excel_data("harga_emas.xlsx", "Harian")
     if not data:
         return jsonify({"error": "Data not found"}), 404
-    
+
     result = []
     for row in data:
         if row[0]:
-            result.append({
-                "tanggal": str(row[0]),
-                "antam_beli": row[1],
-                "antam_buyback": row[2],
-                "antam_pegadaian": row[3],
-                "galeri24": row[4],
-                "ubs_beli": row[5],
-                "selisih": row[6],
-                "spread_persen": row[7],
-            })
-    
+            result.append(
+                {
+                    "tanggal": str(row[0]),
+                    "antam_beli": row[1],
+                    "antam_buyback": row[2],
+                    "antam_pegadaian": row[3],
+                    "galeri24": row[4],
+                    "ubs_beli": row[5],
+                    "selisih": row[6],
+                    "spread_persen": row[7],
+                }
+            )
+
     return jsonify({"data": result, "last_update": last_update})
 
-@app.route('/api/pertanian')
+
+@app.route("/api/pertanian")
 def get_pertanian():
     """Get agriculture prices."""
-    data, last_update = load_excel_data('harga_pertanian_ternak.xlsx')
+    data, last_update = load_excel_data("harga_pertanian_ternak.xlsx")
     if not data:
         return jsonify({"error": "Data not found"}), 404
-    
+
     result = []
     for row in data:
         if row[0]:
-            result.append({
-                "tanggal": str(row[0]),
-                "jagung_pipil": row[1],
-                "jagung_pakan": row[2],
-                "kedelai_impor": row[3],
-                "kedelai_lokal": row[4],
-                "pakan_broiler": row[5],
-                "pakan_layer": row[6],
-                "pakan_bebek": row[7],
-                "bungkil_kedelai": row[8],
-                "jagung_giling": row[9],
-            })
-    
+            result.append(
+                {
+                    "tanggal": str(row[0]),
+                    "jagung_pipil": row[1],
+                    "jagung_pakan": row[2],
+                    "kedelai_impor": row[3],
+                    "kedelai_lokal": row[4],
+                    "pakan_broiler": row[5],
+                    "pakan_layer": row[6],
+                    "pakan_bebek": row[7],
+                    "bungkil_kedelai": row[8],
+                    "jagung_giling": row[9],
+                }
+            )
+
     return jsonify({"data": result, "last_update": last_update})
 
-@app.route('/api/keuangan')
+
+@app.route("/api/keuangan")
 def get_keuangan():
     """Get financial data."""
-    data, last_update = load_excel_data('keuangan.xlsx')
+    data, last_update = load_excel_data("keuangan.xlsx")
     if not data:
         return jsonify({"error": "Data not found"}), 404
-    
+
     result = []
     for row in data[-20:]:  # Last 20 transactions
         if row[0]:
-            result.append({
-                "tanggal": str(row[0]),
-                "jenis": row[1],
-                "kategori": row[2],
-                "deskripsi": row[3],
-                "jumlah": row[4],
-                "metode": row[5] or "",
-            })
-    
+            result.append(
+                {
+                    "tanggal": str(row[0]),
+                    "jenis": row[1],
+                    "kategori": row[2],
+                    "deskripsi": row[3],
+                    "jumlah": row[4],
+                    "metode": row[5] or "",
+                }
+            )
+
     return jsonify({"data": result, "last_update": last_update})
 
-@app.route('/api/peternakan')
+
+@app.route("/api/peternakan")
 def get_peternakan():
     """Get comprehensive livestock data (hulu to hilir)."""
-    data, last_update = load_excel_data('harga_peternakan_lengkap.xlsx', 'Data Utama')
+    data, last_update = load_excel_data("harga_peternakan_lengkap.xlsx", "Data Utama")
     if not data:
         return jsonify({"error": "Data not found"}), 404
-    
+
     result = []
     for row in data[-50:]:
         if row[0]:
-            result.append({
-                "tanggal": str(row[0]),
-                "kategori": row[1],
-                "sub_kategori": row[2],
-                "produk": row[3],
-                "harga": row[4],
-                "satuan": row[5],
-                "sumber": row[6],
-            })
-    
+            result.append(
+                {
+                    "tanggal": str(row[0]),
+                    "kategori": row[1],
+                    "sub_kategori": row[2],
+                    "produk": row[3],
+                    "harga": row[4],
+                    "satuan": row[5],
+                    "sumber": row[6],
+                }
+            )
+
     return jsonify({"data": result, "last_update": last_update})
 
-@app.route('/api/peternakan/<kategori>')
+
+@app.route("/api/peternakan/<kategori>")
 def get_peternakan_by_kategori(kategori):
     """Get peternakan data filtered by kategori (hulu, industri, hilir, analisis)."""
-    data, last_update = load_excel_data('harga_peternakan_lengkap.xlsx', 'Data Utama')
+    data, last_update = load_excel_data("harga_peternakan_lengkap.xlsx", "Data Utama")
     if not data:
         return jsonify({"error": "Data not found"}), 404
-    
+
     result = []
     for row in data:
         if row[0] and row[1] and row[1].upper() == kategori.upper():
-            result.append({
-                "tanggal": str(row[0]),
-                "kategori": row[1],
-                "sub_kategori": row[2],
-                "produk": row[3],
-                "harga": row[4],
-                "satuan": row[5],
-                "sumber": row[6],
-            })
-    
-    return jsonify({"data": result, "last_update": last_update, "kategori": kategori.upper()})
+            result.append(
+                {
+                    "tanggal": str(row[0]),
+                    "kategori": row[1],
+                    "sub_kategori": row[2],
+                    "produk": row[3],
+                    "harga": row[4],
+                    "satuan": row[5],
+                    "sumber": row[6],
+                }
+            )
 
-@app.route('/keuangan')
+    return jsonify(
+        {"data": result, "last_update": last_update, "kategori": kategori.upper()}
+    )
+
+
+@app.route("/keuangan")
 def keuangan():
     """Serve dedicated keuangan page."""
-    return render_template('keuangan.html')
+    return render_template("keuangan.html")
 
-@app.route('/api/summary')
+
+@app.route("/api/summary")
 def get_summary():
     """Get overall summary."""
     summary = {
         "timestamp": datetime.now().isoformat(),
-        "sembako": {"status": "OK" if load_excel_data('harga_sembako.xlsx')[0] else "ERROR"},
-        "crypto": {"status": "OK" if load_excel_data('crypto_monitor.xlsx')[0] else "ERROR"},
-        "emas": {"status": "OK" if load_excel_data('harga_emas.xlsx')[0] else "ERROR"},
-        "pertanian": {"status": "OK" if load_excel_data('harga_pertanian_ternak.xlsx')[0] else "ERROR"},
-        "keuangan": {"status": "OK" if load_excel_data('keuangan.xlsx')[0] else "ERROR"},
-        "peternakan": {"status": "OK" if load_excel_data('harga_peternakan_lengkap.xlsx')[0] else "ERROR"},
+        "sembako": {
+            "status": "OK" if load_excel_data("harga_sembako.xlsx")[0] else "ERROR"
+        },
+        "crypto": {
+            "status": "OK" if load_excel_data("crypto_monitor.xlsx")[0] else "ERROR"
+        },
+        "emas": {"status": "OK" if load_excel_data("harga_emas.xlsx")[0] else "ERROR"},
+        "pertanian": {
+            "status": (
+                "OK" if load_excel_data("harga_pertanian_ternak.xlsx")[0] else "ERROR"
+            )
+        },
+        "keuangan": {
+            "status": "OK" if load_excel_data("keuangan.xlsx")[0] else "ERROR"
+        },
+        "peternakan": {
+            "status": (
+                "OK" if load_excel_data("harga_peternakan_lengkap.xlsx")[0] else "ERROR"
+            )
+        },
     }
     return jsonify(summary)
 
-@app.route('/api/saham')
+
+@app.route("/api/saham")
 def get_saham():
     """Get IHSG and bluechip stock data."""
     import os
-    excel_path = os.path.join(DATA_DIR, 'harga_saham_ihsg.xlsx')
+
+    excel_path = os.path.join(DATA_DIR, "harga_saham_ihsg.xlsx")
     if not os.path.exists(excel_path):
         return jsonify({"error": "Data not found"}), 404
 
@@ -288,122 +336,136 @@ def get_saham():
     result = {}
 
     # Sheet 1: IHSG
-    ws_ihsg = wb['IHSG']
+    ws_ihsg = wb["IHSG"]
     ihsg_data = []
     for row in ws_ihsg.iter_rows(min_row=2, values_only=True):
         if row[0]:
-            ihsg_data.append({
-                "tanggal": str(row[0]),
-                "ihsg": row[1],
-                "change": row[2],
-                "change_pct": row[3],
-                "high": row[4],
-                "low": row[5],
-                "volume": row[6],
-                "sentimen": row[7]
-            })
-    result['ihsg'] = ihsg_data[-30:]  # Last 30 days
+            ihsg_data.append(
+                {
+                    "tanggal": str(row[0]),
+                    "ihsg": row[1],
+                    "change": row[2],
+                    "change_pct": row[3],
+                    "high": row[4],
+                    "low": row[5],
+                    "volume": row[6],
+                    "sentimen": row[7],
+                }
+            )
+    result["ihsg"] = ihsg_data[-30:]  # Last 30 days
 
     # Sheet 2: Sektor
-    ws_sektor = wb['Sektor']
+    ws_sektor = wb["Sektor"]
     sektor_data = []
     for row in ws_sektor.iter_rows(min_row=2, values_only=True):
         if row[0]:
-            sektor_data.append({
-                "sektor": row[0],
-                "value": row[1],
-                "daily_change": row[2],
-                "change_pct": row[3],
-                "weekly_trend": row[4],
-                "recommendation": row[8]
-            })
-    result['sektor'] = sektor_data
+            sektor_data.append(
+                {
+                    "sektor": row[0],
+                    "value": row[1],
+                    "daily_change": row[2],
+                    "change_pct": row[3],
+                    "weekly_trend": row[4],
+                    "recommendation": row[8],
+                }
+            )
+    result["sektor"] = sektor_data
 
     # Sheet 3: Bluechip
-    ws_blue = wb['Bluechip']
+    ws_blue = wb["Bluechip"]
     bluechip_data = []
     for row in ws_blue.iter_rows(min_row=2, values_only=True):
         if row[0]:
-            bluechip_data.append({
-                "symbol": row[0],
-                "nama": row[1],
-                "sektor": row[2],
-                "harga": row[3],
-                "daily_chg": row[4],
-                "daily_chg_pct": row[5],
-                "rsi": row[6],
-                "trend": row[7],
-                "signal": row[8],
-                "recommendation": row[9]
-            })
-    result['bluechip'] = bluechip_data
+            bluechip_data.append(
+                {
+                    "symbol": row[0],
+                    "nama": row[1],
+                    "sektor": row[2],
+                    "harga": row[3],
+                    "daily_chg": row[4],
+                    "daily_chg_pct": row[5],
+                    "rsi": row[6],
+                    "trend": row[7],
+                    "signal": row[8],
+                    "recommendation": row[9],
+                }
+            )
+    result["bluechip"] = bluechip_data
 
     # Sheet 6: Watchlist
-    ws_watch = wb['Watchlist']
+    ws_watch = wb["Watchlist"]
     watchlist_data = []
     for row in ws_watch.iter_rows(min_row=2, values_only=True):
         if row[0]:
-            watchlist_data.append({
-                "symbol": row[0],
-                "nama": row[1],
-                "harga": row[3],
-                "daily_chg": row[4],
-                "rsi": row[5],
-                "reason": row[6],
-                "potential": row[7],
-                "recommendation": row[9]
-            })
-    result['watchlist'] = watchlist_data
+            watchlist_data.append(
+                {
+                    "symbol": row[0],
+                    "nama": row[1],
+                    "harga": row[3],
+                    "daily_chg": row[4],
+                    "rsi": row[5],
+                    "reason": row[6],
+                    "potential": row[7],
+                    "recommendation": row[9],
+                }
+            )
+    result["watchlist"] = watchlist_data
 
     # Get last update from file
-    last_update = datetime.fromtimestamp(os.path.getmtime(excel_path)).strftime('%d %b %Y, %H:%M')
+    last_update = datetime.fromtimestamp(os.path.getmtime(excel_path)).strftime(
+        "%d %b %Y, %H:%M"
+    )
 
     return jsonify({"data": result, "last_update": last_update})
 
-@app.route('/api/pakan')
+
+@app.route("/api/pakan")
 def get_pakan():
     """Get latest pakan/feed prices."""
-    data, last_update = load_excel_data('harga_pakan_ternak.xlsx')
+    data, last_update = load_excel_data("harga_pakan_ternak.xlsx")
     if not data:
         return jsonify({"error": "Data not found"}), 404
 
     result = []
     for row in data:
         if row[0]:
-            result.append({
-                "tanggal": str(row[0]),
-                "jagung_pipilan": row[1],
-                "bungkil_kedelai": row[2],
-                "dedak_padi": row[3],
-                "tepung_ikan": row[4],
-                "pollard": row[5],
-                "biji_kapuk": row[6],
-                "tepung_darah": row[7],
-                "tepung_tulang": row[8],
-                "molases": row[9],
-                "bungkil_kelapa": row[10],
-                "gaplek": row[11],
-                "bungkil_sawit": row[12],
-                "ampas_tahu": row[13],
-                "tepung_bulu_ayam": row[14],
-                "kulit_kentang": row[15],
-                "onggok": row[16],
-                "bungkil_kacang_tanah": row[17],
-                "dedak_halus": row[18],
-                "sorgum": row[19],
-                "menir": row[20],
-                "corn_gluten_feed": row[21],
-                "rice_polish": row[22],
-                "mung_bean_husk": row[23],
-            })
+            result.append(
+                {
+                    "tanggal": str(row[0]),
+                    "jagung_pipilan": row[1],
+                    "bungkil_kedelai": row[2],
+                    "dedak_padi": row[3],
+                    "tepung_ikan": row[4],
+                    "pollard": row[5],
+                    "biji_kapuk": row[6],
+                    "tepung_darah": row[7],
+                    "tepung_tulang": row[8],
+                    "molases": row[9],
+                    "bungkil_kelapa": row[10],
+                    "gaplek": row[11],
+                    "bungkil_sawit": row[12],
+                    "ampas_tahu": row[13],
+                    "tepung_bulu_ayam": row[14],
+                    "kulit_kentang": row[15],
+                    "onggok": row[16],
+                    "bungkil_kacang_tanah": row[17],
+                    "dedak_halus": row[18],
+                    "sorgum": row[19],
+                    "menir": row[20],
+                    "corn_gluten_feed": row[21],
+                    "rice_polish": row[22],
+                    "mung_bean_husk": row[23],
+                }
+            )
 
     return jsonify({"data": result, "last_update": last_update})
 
 
-@app.route('/api/health')
+@app.route("/api/health")
 def health():
     """Health check."""
     return jsonify({"status": "healthy", "timestamp": datetime.now().isoformat()})
+
 
 # ============ AI-Powered Analysis using Groq ============
 
@@ -414,11 +476,12 @@ try:
     from config import GROQ_API_KEY
 except ImportError:
     # Fallback to environment variable
-    GROQ_API_KEY = os.environ.get('GROQ_API_KEY', '')
+    GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
 
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 
-@app.route('/api/ai-analysis')
+
+@app.route("/api/ai-analysis")
 def get_ai_analysis():
     """Get AI-powered analysis for all market data using Groq."""
     import urllib.request
@@ -428,12 +491,13 @@ def get_ai_analysis():
 
     try:
         # Call Groq API
-        data = json.dumps({
-            "model": "llama-3.1-8b-instant",
-            "messages": [
-                {
-                    "role": "system",
-                    "content": """Kamu adalah analis keuangan Indonesia yang expert.
+        data = json.dumps(
+            {
+                "model": "llama-3.1-8b-instant",
+                "messages": [
+                    {
+                        "role": "system",
+                        "content": """Kamu adalah analis keuangan Indonesia yang expert.
 Kamu menganalisis data harga pasar dan memberikan:
 1. Tren harga (naik/turun/stabil)
 2. Rekomendasi saham berdasarkan RSI (RSI<30=oversold=BUY, RSI>70=overbought=SELL)
@@ -441,67 +505,73 @@ Kamu menganalisis data harga pasar dan memberikan:
 4. Warning jika ada perubahan signifikan
 
 Jawaban dalam Bahasa Indonesia, format JSON-like tapi tetap readable.
-Fokus pada data yang ADA, jangan mengarang."""
-                },
-                {
-                    "role": "user",
-                    "content": analysis_prompt
-                }
-            ],
-            "temperature": 0.3,
-            "max_tokens": 2000
-        }).encode('utf-8')
+Fokus pada data yang ADA, jangan mengarang.""",
+                    },
+                    {"role": "user", "content": analysis_prompt},
+                ],
+                "temperature": 0.3,
+                "max_tokens": 2000,
+            }
+        ).encode("utf-8")
 
         req = urllib.request.Request(
             GROQ_API_URL,
             data=data,
             headers={
-                'Authorization': f'Bearer {GROQ_API_KEY}',
-                'Content-Type': 'application/json',
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+                "Authorization": f"Bearer {GROQ_API_KEY}",
+                "Content-Type": "application/json",
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
             },
-            method='POST'
+            method="POST",
         )
 
         with urllib.request.urlopen(req, timeout=30) as response:
-            result = json.loads(response.read().decode('utf-8'))
-            analysis = result['choices'][0]['message']['content']
+            result = json.loads(response.read().decode("utf-8"))
+            analysis = result["choices"][0]["message"]["content"]
 
-        return jsonify({
-            "status": "success",
-            "analysis": analysis,
-            "timestamp": datetime.now().strftime('%d %b %Y, %H:%M'),
-            "model": "Groq Llama 3.1 8B"
-        })
+        return jsonify(
+            {
+                "status": "success",
+                "analysis": analysis,
+                "timestamp": datetime.now().strftime("%d %b %Y, %H:%M"),
+                "model": "Groq Llama 3.1 8B",
+            }
+        )
 
     except Exception as e:
 
         error_detail = str(e)
-        if hasattr(e, 'read'):
-            error_detail = e.read().decode('utf-8')
-        return jsonify({
-            "status": "error",
-            "error": error_detail,
-            "type": str(type(e).__name__),
-            "GROQ_KEY_SET": bool(GROQ_API_KEY and len(GROQ_API_KEY) > 10),
-            "timestamp": datetime.now().isoformat()
-        }), 500
+        if hasattr(e, "read"):
+            error_detail = e.read().decode("utf-8")
+        return (
+            jsonify(
+                {
+                    "status": "error",
+                    "error": error_detail,
+                    "type": str(type(e).__name__),
+                    "GROQ_KEY_SET": bool(GROQ_API_KEY and len(GROQ_API_KEY) > 10),
+                    "timestamp": datetime.now().isoformat(),
+                }
+            ),
+            500,
+        )
+
 
 def generate_analysis_prompt():
     """Generate analysis prompt from all available data."""
     prompt_parts = []
-    today = datetime.now().strftime('%d %b %Y')
+    today = datetime.now().strftime("%d %b %Y")
 
     prompt_parts.append(f"# ANALISIS MARKER {today}\\n")
 
     # 1. IHSG & Saham
     try:
-        ihsg_path = os.path.join(DATA_DIR, 'harga_saham_ihsg.xlsx')
+        ihsg_path = os.path.join(DATA_DIR, "harga_saham_ihsg.xlsx")
         if os.path.exists(ihsg_path):
             wb = openpyxl.load_workbook(ihsg_path, data_only=True)
 
             # IHSG data
-            ws_ihsg = wb['IHSG']
+            ws_ihsg = wb["IHSG"]
             ihsg_rows = list(ws_ihsg.iter_rows(min_row=2, values_only=True))
             if ihsg_rows:
                 latest = ihsg_rows[-1]
@@ -511,7 +581,7 @@ def generate_analysis_prompt():
                 prompt_parts.append(f"- High: {latest[4]}, Low: {latest[5]}\\n")
 
             # Sektor
-            ws_sektor = wb['Sektor']
+            ws_sektor = wb["Sektor"]
             sektor_rows = list(ws_sektor.iter_rows(min_row=2, values_only=True))
             if sektor_rows:
                 prompt_parts.append("\\n## Sektor Performance\\n")
@@ -520,7 +590,7 @@ def generate_analysis_prompt():
                         prompt_parts.append(f"- {row[0]}: {row[1]} ({row[3]})\\n")
 
             # Bluechip
-            ws_blue = wb['Bluechip']
+            ws_blue = wb["Bluechip"]
             blue_rows = list(ws_blue.iter_rows(min_row=2, values_only=True))
             if blue_rows:
                 prompt_parts.append("\\n## Saham Bluechip LQ45 (Top 10)\\n")
@@ -528,26 +598,30 @@ def generate_analysis_prompt():
                 prompt_parts.append("|--------|-------|-----|-------|-----|\\n")
                 for row in blue_rows[:10]:
                     if row[0]:
-                        prompt_parts.append(f"| {row[0]} | {row[3]} | {row[6]} | {row[7]} | {row[9]} |\\n")
+                        prompt_parts.append(
+                            f"| {row[0]} | {row[3]} | {row[6]} | {row[7]} | {row[9]} |\\n"
+                        )
 
             # Watchlist
-            ws_watch = wb['Watchlist']
+            ws_watch = wb["Watchlist"]
             watch_rows = list(ws_watch.iter_rows(min_row=2, values_only=True))
             if watch_rows:
                 prompt_parts.append("\\n## Watchlist (Turun + Potensi)\\n")
                 for row in watch_rows[:5]:
                     if row[0]:
-                        prompt_parts.append(f"- {row[0]} ({row[1]}): RSI={row[5]}, Potential={row[7]}, Rec={row[9]}\\n")
+                        prompt_parts.append(
+                            f"- {row[0]} ({row[1]}): RSI={row[5]}, Potential={row[7]}, Rec={row[9]}\\n"
+                        )
     except Exception as e:
         prompt_parts.append(f"\\n## IHSG/Saham: Data tidak tersedia ({e})\\n")
         pass
 
     # 2. Crypto
     try:
-        crypto_path = os.path.join(DATA_DIR, 'crypto_monitor.xlsx')
+        crypto_path = os.path.join(DATA_DIR, "crypto_monitor.xlsx")
         if os.path.exists(crypto_path):
             wb = openpyxl.load_workbook(crypto_path, data_only=True)
-            ws = wb['Harga']
+            ws = wb["Harga"]
             crypto_rows = list(ws.iter_rows(min_row=2, values_only=True))
             if crypto_rows:
                 prompt_parts.append("\\n## Crypto\\n")
@@ -560,26 +634,28 @@ def generate_analysis_prompt():
 
     # 3. Emas
     try:
-        emas_path = os.path.join(DATA_DIR, 'harga_emas.xlsx')
+        emas_path = os.path.join(DATA_DIR, "harga_emas.xlsx")
         if os.path.exists(emas_path):
             wb = openpyxl.load_workbook(emas_path, data_only=True)
-            ws = wb['Harga']
+            ws = wb["Harga"]
             emas_rows = list(ws.iter_rows(min_row=2, values_only=True))
             if emas_rows:
                 prompt_parts.append("\\n## Emas\\n")
                 for row in emas_rows[:3]:
                     if row[0]:
-                        prompt_parts.append(f"- {row[0]}: Rp {row[1]} (Buyback: Rp {row[2]})\\n")
+                        prompt_parts.append(
+                            f"- {row[0]}: Rp {row[1]} (Buyback: Rp {row[2]})\\n"
+                        )
     except Exception as e:
         print(f"Error generating Emas data for prompt: {e}")
         pass
 
     # 4. Sembako (key items)
     try:
-        sembako_path = os.path.join(DATA_DIR, 'harga_sembako.xlsx')
+        sembako_path = os.path.join(DATA_DIR, "harga_sembako.xlsx")
         if os.path.exists(sembako_path):
             wb = openpyxl.load_workbook(sembako_path, data_only=True)
-            ws = wb['Harga']
+            ws = wb["Harga"]
             sembako_rows = list(ws.iter_rows(min_row=2, values_only=True))
             if sembako_rows:
                 prompt_parts.append("\\n## Sembako (Key Items)\\n")
@@ -590,19 +666,25 @@ def generate_analysis_prompt():
         print(f"Error generating Sembako data for prompt: {e}")
         pass
 
-    prompt_parts.append("\\n---\\nBerikan analisis dalam Bahasa Indonesia dengan format yang rapi.")
+    prompt_parts.append(
+        "\\n---\\nBerikan analisis dalam Bahasa Indonesia dengan format yang rapi."
+    )
     return "\\n".join(prompt_parts)
 
+
 # ============ Error Handlers ============
+
 
 @app.errorhandler(404)
 def not_found(e):
     return jsonify({"error": "Not found"}), 404
 
+
 @app.errorhandler(500)
 def server_error(e):
     return jsonify({"error": "Server error"}), 500
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     # Production mode - disable debug for stability
-    app.run(host='0.0.0.0', port=5000, debug=False, use_reloader=False)
+    app.run(host="0.0.0.0", port=5000, debug=False, use_reloader=False)
