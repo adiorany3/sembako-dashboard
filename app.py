@@ -42,7 +42,7 @@ def load_excel_data(filename, sheet_name=None):
         file_mtime = os.path.getmtime(path)
         file_date = datetime.fromtimestamp(file_mtime).strftime('%d %b %Y, %H:%M')
         
-        return data[-10:] if data else [], file_date
+        return data if data else [], file_date
     except Exception as e:
         print(f"Error loading {filename}: {e}")
         return [], None
