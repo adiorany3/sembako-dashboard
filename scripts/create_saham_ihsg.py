@@ -11,6 +11,7 @@ from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
 from datetime import datetime, timedelta
 import random
+import os
 
 # ==========================================
 # DATA DEFINITIONS
@@ -540,7 +541,7 @@ def create_ihsg_excel(days_back=30):
     ws7.column_dimensions['B'].width = 25
     
     # Save
-    filepath = '/root/sembako/harga_saham_ihsg.xlsx'
+    filepath = os.path.expanduser("~/sembako/data/harga_saham_ihsg.xlsx")
     wb.save(filepath)
     print(f"  ✅ {filepath}")
     print(f"  📋 Sheets: {[ws.title for ws in wb.worksheets]}")

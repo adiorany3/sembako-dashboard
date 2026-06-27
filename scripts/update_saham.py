@@ -6,22 +6,20 @@ Runs: Mon-Fri at 09:00, 12:00, 15:30 WIB
 
 import sys
 import os
-sys.path.insert(0, '/root/sembako')
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from create_saham_ihsg import update_ihsg_data, update_bluechip_data
+from create_saham_ihsg import create_ihsg_excel
+from datetime import datetime
 
 def main():
     print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Updating IHSG & Saham data...")
     
-    # Update all data
-    ihsg_updated = update_ihsg_data()
-    bluechip_updated = update_bluechip_data()
-    
-    if ihsg_updated and bluechip_updated:
-        print("✅ Saham data updated successfully")
-    else:
-        print("⚠️ Some data may not have updated properly")
+    try:
+        # Generate/regenerate with 30 days back
+        result = create_ihsg_excel(days_back=30)
+        print(result)
+    except Exception as e:
+        print(f"Error updating saham data: {e}")
 
-if __name__ == '__main__':
-    from datetime import datetime
+if __name__ == "__main__":
     main()

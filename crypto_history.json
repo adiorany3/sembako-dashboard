@@ -31,5 +31,38 @@
       "5 Aplikasi Trading Terbaik di Dunia",
       "Bitcoin Cs Melempem Jelang Pidato Jerome Powell"
     ]
+  },
+  {
+    "date": "2026-06-27",
+    "time": "17:45",
+    "prices": {
+      "btc_usd": 60314,
+      "btc_idr": 1077245809,
+      "btc_change": 0.89,
+      "eth_usd": 1579.58,
+      "eth_idr": 28212214,
+      "eth_change": 1.48,
+      "sol_usd": 71.68,
+      "sol_idr": 1280163,
+      "sol_change": 2.94,
+      "ada_usd": 0.146803,
+      "ada_idr": 2621.99,
+      "ada_change": 1.45,
+      "doge_usd": 0.07522,
+      "doge_idr": 1343.48,
+      "doge_change": 1.16,
+      "xrp_usd": 1.055,
+      "xrp_idr": 18843.64,
+      "xrp_change": 1.96,
+      "total_mcap": 1524253852547.718
+    },
+    "sentiment": "NETRAL \u26aa",
+    "news": [
+      "Begini Cara Membaca Grafik TOTAL2 sebagai Barometer Sentimen Altseason",
+      "Trader Kripto Kostya Kudo Tewas di Lamborghini Saat Pasar Kripto Runtuh",
+      "Bitcoin Tembus Rp 1,9 M",
+      "5 Aplikasi Trading Terbaik di Dunia",
+      "Bitcoin Cs Melempem Jelang Pidato Jerome Powell"
+    ]
   }
 ]

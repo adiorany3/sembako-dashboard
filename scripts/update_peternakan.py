@@ -11,7 +11,7 @@ import random
 import sys
 import os
 
-EXCEL_PATH = '/root/sembako/harga_peternakan_lengkap.xlsx'
+EXCEL_PATH = os.path.expanduser("~/sembako/data/harga_peternakan_lengkap.xlsx")
 
 # Base prices (will vary slightly each day)
 BASE_PRICES = {

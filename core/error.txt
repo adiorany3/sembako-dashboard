@@ -1,0 +1,1 @@
+Script not found: /root/.hermes/scripts/python3 ../scripts/fetch_cuaca_pagi.py
