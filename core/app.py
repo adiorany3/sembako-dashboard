@@ -6,11 +6,44 @@ Aggregates all monitoring data (sembako, crypto, cuaca, emas, keuangan)
 
 import os
 import json
+import time
 import openpyxl
+import hashlib
 from datetime import datetime
 from flask import Flask, render_template, jsonify
 from flask_cors import CORS
 import sys
+
+CACHE_DIR = os.path.expanduser("~/.hermes/cache")
+os.makedirs(CACHE_DIR, exist_ok=True)
+
+
+def _cache_path(key: str) -> str:
+    safe = hashlib.sha256(key.encode()).hexdigest()[:16]
+    return os.path.join(CACHE_DIR, f"{safe}.json")
+
+
+def get_cached(key: str, ttl: int = 28800):
+    path = _cache_path(key)
+    if not os.path.exists(path):
+        return None
+    try:
+        with open(path) as f:
+            entry = json.load(f)
+        if time.time() - entry.get("ts", 0) > ttl:
+            return None
+        return entry.get("data")
+    except (json.JSONDecodeError, OSError):
+        return None
+
+
+def set_cache(key: str, data) -> None:
+    path = _cache_path(key)
+    try:
+        with open(path, "w") as f:
+            json.dump({"ts": time.time(), "data": data}, f, ensure_ascii=False)
+    except OSError:
+        pass
 
 
 
@@ -507,15 +540,27 @@ GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 
 @app.route("/api/ai-analysis")
 def get_ai_analysis():
-    """Get AI-powered analysis for all market data using Groq."""
+    """Get AI-powered analysis for all market data using Groq with 8h cache."""
     import urllib.request
+
+    # Check cache first (8 hour TTL for daily data)
+    cache_key = "ai_analysis:daily"
+    cached = get_cached(cache_key, ttl=28800)
+    if cached:
+        return jsonify({
+            "status": "success",
+            "analysis": cached["analysis"],
+            "timestamp": cached["ts"],
+            "model": "Groq Llama 3.1 8B (cached)",
+            "cached": True,
+        })
 
     # Gather data from all sources
     analysis_prompt = generate_analysis_prompt()
 
     try:
         # Call Groq API
-        data = json.dumps(
+        payload = json.dumps(
             {
                 "model": "llama-3.1-8b-instant",
                 "messages": [
@@ -540,7 +585,7 @@ Fokus pada data yang ADA, jangan mengarang.""",
 
         req = urllib.request.Request(
             GROQ_API_URL,
-            data=data,
+            data=payload,
             headers={
                 "Authorization": f"Bearer {GROQ_API_KEY}",
                 "Content-Type": "application/json",
@@ -553,11 +598,15 @@ Fokus pada data yang ADA, jangan mengarang.""",
             result = json.loads(response.read().decode("utf-8"))
             analysis = result["choices"][0]["message"]["content"]
 
+        # Cache the result for 8 hours
+        now = datetime.now().strftime("%d %b %Y, %H:%M")
+        set_cache(cache_key, {"analysis": analysis, "ts": now})
+
         return jsonify(
             {
                 "status": "success",
                 "analysis": analysis,
-                "timestamp": datetime.now().strftime("%d %b %Y, %H:%M"),
+                "timestamp": now,
                 "model": "Groq Llama 3.1 8B",
             }
         )

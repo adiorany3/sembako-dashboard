@@ -16,6 +16,7 @@ EXCEL_PATH = os.path.expanduser("~/sembako/data/harga_sembako.xlsx")
 CACHE_PATH = os.path.expanduser("~/sembako/data/harga_sembako_cache.json")
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from create_excel import add_row
+from cache_lib import jina as jina_read_cached
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
@@ -24,13 +25,8 @@ HEADERS = {
 
 
 def jina_read(url, timeout=15):
-    jina_url = f"https://r.jina.ai/{url}"
-    req = urllib.request.Request(jina_url, headers=HEADERS)
-    try:
-        with urllib.request.urlopen(req, timeout=timeout + 5) as resp:
-            return resp.read().decode("utf-8", errors="ignore")
-    except Exception as e:
-        return ""
+    text = jina_read_cached(url)
+    return text if text else ""
 
 
 def get_last_prices():

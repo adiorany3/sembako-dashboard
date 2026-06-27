@@ -2,7 +2,6 @@
 """
 Scrap harga jagung, kedelai, pakan ternak dari berita online via Jina Reader.
 """
-import urllib.request
 import re
 import os
 import sys
@@ -11,32 +10,16 @@ from datetime import datetime
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from create_pertanian_excel import add_row
+from cache_lib import jina as jina_read_cached
 
 EXCEL_PATH = os.path.expanduser("~/sembako/data/harga_pertanian_ternak.xlsx")
 HISTORY_PATH = os.path.expanduser("~/sembako/data/pertanian_history.json")
 
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) Chrome/120.0",
-    "Accept": "text/plain",
-}
-
-
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
-    "Accept": "text/plain",
-}
-
 
 def jina_read(url, timeout=15):
-    """Fetch URL via Jina Reader, return clean markdown."""
-    jina_url = f"https://r.jina.ai/{url}"
-    req = urllib.request.Request(jina_url, headers=HEADERS)
-    try:
-        with urllib.request.urlopen(req, timeout=timeout + 5) as resp:
-            return resp.read().decode("utf-8", errors="ignore")
-    except Exception as e:
-        print(f"  ⚠️ Jina error: {e}")
-    return ""
+    """Fetch URL via Jina Reader with 1h cache (from cache_lib)."""
+    text = jina_read_cached(url)
+    return text if text else ""
 
 
 def get_article_urls(keyword, limit=5):

@@ -998,5 +998,133 @@
     "score": 0.0,
     "source": "detik finance",
     "timestamp": "2026-06-27T20:29:45.258057"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "detikFinance - Berita Ekonomi Bisnis, dan Investasi Hari Ini",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-27T20:40:16.133361"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Purbaya soal Efisiensi Anggaran MBG: Saya Maunya Nol, Tapi Nggak Bisa Kan](https://finance.detik.com/berita-ekonomi-bisnis/d-8549550/purbaya-soal-efisiensi-anggaran-mbg-saya-maunya-nol-tapi-nggak-bisa-kan)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-27T20:40:16.143077"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Trump Murka! AS Serang Iran Lagi](https://finance.detik.com/berita-ekonomi-bisnis/d-8549337/trump-murka-as-serang-iran-lagi)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-27T20:40:16.152172"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Terungkap Kondisi Pasokan Batu Bara PLN](https://finance.detik.com/energi/d-8549000/terungkap-kondisi-pasokan-batu-bara-pln)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-27T20:40:16.162040"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Duit Jumbo dari AIIB China yang Kata Purbaya Bukan Utang](https://finance.detik.com/berita-ekonomi-bisnis/d-8549025/duit-jumbo-dari-aiib-china-yang-kata-purbaya-bukan-utang)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-27T20:40:16.171945"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Rute MRT Lebak Bulus-Serpong Masih Rahasia demi Hindari Calo Tanah](https://finance.detik.com/infrastruktur/d-8549184/rute-mrt-lebak-bulus-serpong-masih-rahasia-demi-hindari-calo-tanah)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-27T20:40:16.183233"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Stok Batu Bara PLN Aman, ESDM Buka Lagi Keran Ekspor](https://finance.detik.com/energi/d-8549352/stok-batu-bara-pln-aman-esdm-buka-lagi-keran-ekspor)",
+    "sentiment": "POSITIF",
+    "score": 0.65,
+    "source": "detik finance",
+    "timestamp": "2026-06-27T20:40:16.201287"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Ekspor Batu Bara Sempat Ditahan demi Pasokan ke PLN](https://finance.detik.com/energi/d-8548667/ekspor-batu-bara-sempat-ditahan-demi-pasokan-ke-pln)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-27T20:40:16.216217"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Beras IR. III (IR 64)](https://finance.detik.com/info-pangan/jakarta/beras-ir-iii-ir-64)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-27T20:40:16.228943"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Cabe Merah Keriting](https://finance.detik.com/info-pangan/jakarta/cabe-merah-keriting)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-27T20:40:16.239773"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Daging Sapi Murni (Semur)](https://finance.detik.com/info-pangan/jakarta/daging-sapi-murni-semur)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-27T20:40:16.249023"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Beli TV LED 50\" UHD Smart di Transmart Full Day Sale Diskonnya Jutaan](https://finance.detik.com/berita-ekonomi-bisnis/d-8549706/beli-tv-led-50-uhd-smart-di-transmart-full-day-sale-diskonnya-jutaan)",
+    "sentiment": "POSITIF",
+    "score": 0.402,
+    "source": "detik finance",
+    "timestamp": "2026-06-27T20:40:16.258566"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Puncak El Nino di Depan Mata, Pemerintah Pede Stok Beras Aman hingga Mei 2027](https://finance.detik.com/berita-ekonomi-bisnis/d-8549545/puncak-el-nino-di-depan-mata-pemerintah-pede-stok-beras-aman-hingga-mei-2027)",
+    "sentiment": "POSITIF",
+    "score": 0.65,
+    "source": "detik finance",
+    "timestamp": "2026-06-27T20:40:16.267558"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Transmart Full Day Sale: Harga Sepeda Anak Cuma Rp 1 Jutaan!](https://finance.detik.com/berita-ekonomi-bisnis/d-8549696/transmart-full-day-sale-harga-sepeda-anak-cuma-rp-1-jutaan)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-27T20:40:16.276714"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Kemenperin Soroti Penyebab Implementasi Kebijakan HGBT Belum Optimal](https://finance.detik.com/industri/d-8550008/kemenperin-soroti-penyebab-implementasi-kebijakan-hgbt-belum-optimal)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-27T20:40:16.286013"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "Rekomendasi untuk Anda",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-27T20:40:16.295279"
   }
 ]

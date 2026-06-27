@@ -3,10 +3,14 @@
 Analisa sentimen berita Indonesia via Jina Reader.
 Direct scrape dari homepage news tanpa Google Search.
 """
+import os
+import sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from cache_lib import jina as jina_read_cached
+
 import urllib.request
 import re
 import json
-import os
 from datetime import datetime
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
@@ -45,15 +49,9 @@ OUTDATED_PATTERNS = [
 
 
 def jina_read(url, timeout=15):
-    """Fetch URL via Jina Reader, return clean markdown."""
-    jina_url = f"https://r.jina.ai/{url}"
-    req = urllib.request.Request(jina_url, headers=HEADERS)
-    try:
-        with urllib.request.urlopen(req, timeout=timeout + 5) as resp:
-            return resp.read().decode("utf-8", errors="ignore")
-    except Exception as e:
-        print(f"  ⚠️ Jina error: {e}")
-    return ""
+    """Fetch URL via Jina Reader with 1h cache (from cache_lib)."""
+    text = jina_read_cached(url)
+    return text if text else ""
 
 
 def extract_headlines(text):
