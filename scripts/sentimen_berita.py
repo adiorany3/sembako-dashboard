@@ -1,17 +1,22 @@
 #!/usr/bin/env python3
 """
 Analisa sentimen berita Indonesia via Jina Reader.
+Direct scrape dari homepage news tanpa Google Search.
 """
 import urllib.request
 import re
 import json
 import os
-import sys
 from datetime import datetime
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 EXCEL_PATH = os.path.expanduser("~/sembako/data/sentimen_berita.xlsx")
 HISTORY_PATH = os.path.expanduser("~/sembako/data/sentimen_history.json")
+
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+    "Accept": "text/plain",
+}
 
 POSITIVE_ID = [
     "positif", "optimis", "berhasil", "sukses", "naik", "meningkat", "tumbuh",
@@ -25,7 +30,7 @@ NEGATIVE_ID = [
     "negatif", "gagal", "turun", "menurun", "anjlok", "merosot", "rugi",
     "krisis", "resesi", "inflasi", "korupsi", "bencana", "gempa", "banjir",
     "kecelakaan", "konflik", "perang", "demo", "protes", "ancaman",
-    "bearish", "darurat", "wabah", "PHK", "kemiskinan",
+    "bearish", "darurat", "wabah", "phk", "kemiskinan",
     "kelangkaan", "keluhan", "masalah", "buruk", "pelemahan", "melambat",
     "miskin", "ilegal", "ditutup", "dampak", "eskalasi"
 ]
@@ -37,11 +42,6 @@ OUTDATED_PATTERNS = [
     r'\bmenjelang\s*ramadhan\b', r'\bjelang\s*ramadhan\b',
     r'\bjelang\s*ramadan\b', r'\bjelang\s*lebaran\b'
 ]
-
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) Chrome/120.0",
-    "Accept": "text/plain",
-}
 
 
 def jina_read(url, timeout=15):
@@ -56,22 +56,62 @@ def jina_read(url, timeout=15):
     return ""
 
 
-def search_jina(query, limit=8):
-    """Get article URLs from detik.com homepage via Jina."""
-    text = jina_read("https://finance.detik.com/")
-    if not text:
-        return []
-    urls = re.findall(r'https://finance\.detik\.com/berita-ekonomi-bisnis/d-\d+', text)
-    return list(dict.fromkeys(urls))[:limit]
+def extract_headlines(text):
+    """Extract article headlines and URLs from finance homepage markdown."""
+    results = []
+    lines = text.split("\n")
+    current_title = ""
+    current_url = ""
+
+    for line in lines:
+        line = line.strip()
+        # URL lines
+        url_match = re.search(r'https://[^\s<>)\"\']+', line)
+        if url_match:
+            url = url_match.group()
+            if 'detik.com' in url or 'kompas.com' in url or 'cnbcindonesia' in url:
+                if current_title and len(current_title) > 15:
+                    results.append((current_title.strip(), url))
+                current_url = url
+                current_title = ""
+        # Title lines (markdown headers or bold text)
+        if line.startswith("#") or line.startswith("**"):
+            title = re.sub(r'^#+\s*', '', line).replace("**", "").strip()
+            if len(title) > 15:
+                current_title = title
+
+    return results[:20]
 
 
-def extract_title_from_text(text):
-    """Extract title from clean markdown (first non-empty line usually)."""
-    lines = [l.strip() for l in text.split('\n') if l.strip()]
-    for line in lines[:5]:
-        if len(line) > 20 and not line.startswith('http'):
-            return line
-    return lines[0] if lines else ""
+def fetch_article_headlines(limit_per_source=5):
+    """Get headlines from multiple news homepages."""
+    sources = [
+        ("https://finance.detik.com/", "detik finance"),
+        ("https://www.kompas.com/", "kompas"),
+        ("https://www.cnbcindonesia.com/news/", "cnbc"),
+    ]
+
+    all_headlines = []
+    seen = set()
+
+    for url, name in sources:
+        print(f"  🌐 Fetching {name}...")
+        text = jina_read(url, timeout=15)
+        if not text or len(text) < 200:
+            print(f"    ⚠️ Gagal fetch {name}")
+            continue
+
+        headlines = extract_headlines(text)
+        print(f"    Ditemukan {len(headlines)} headline")
+        for title, article_url in headlines:
+            if title not in seen and len(title) > 20:
+                seen.add(title)
+                all_headlines.append((title, article_url, name))
+
+        if len(all_headlines) >= limit_per_source * len(sources):
+            break
+
+    return all_headlines[:limit_per_source * 2]
 
 
 def is_outdated(text):
@@ -106,58 +146,38 @@ def analyze_sentiment_id(text):
     return {"label": label, "score": round(score, 3)}
 
 
-def analyze_news(keywords=None):
-    if keywords is None:
-        keywords = [
-            "ekonomi indonesia",
-            "harga pangan",
-            "inflasi indonesia",
-            "rupiah dollar",
-            "ihsg bursa"
-        ]
+def analyze_news():
+    """Fetch headlines and analyze sentiment."""
+    headlines = fetch_article_headlines(limit_per_source=8)
+    if not headlines:
+        print("⚠️ Tidak ada headline ditemukan")
+        return []
 
-    all_results = []
-    seen = set()
+    results = []
+    for title, url, source in headlines:
+        if is_outdated(title):
+            print(f"  SKIP (outdated): {title[:50]}...")
+            continue
 
-    for kw in keywords:
-        print(f"\n🔍 [{kw}]")
-        urls = search_jina(kw, limit=6)
+        sentiment = analyze_sentiment_id(title)
+        emoji = {"POSITIF": "🟢", "NEGATIF": "🔴", "NETRAL": "⚪"}[sentiment["label"]]
+        print(f"  {emoji} [{sentiment['label']:>7}] {title[:60]}")
 
-        for url in urls:
-            if len(all_results) >= 30:  # cap results
-                break
+        results.append({
+            "keyword": "berita ekonomi",
+            "headline": title,
+            "sentiment": sentiment["label"],
+            "score": sentiment["score"],
+            "source": source,
+            "timestamp": datetime.now().isoformat()
+        })
 
-            text = jina_read(url, timeout=12)
-            if not text or len(text) < 100:
-                continue
-
-            title = extract_title_from_text(text)
-            if not title or len(title) < 20:
-                continue
-            if title in seen:
-                continue
-            if is_outdated(title):
-                print(f"  SKIP (outdated): {title[:50]}...")
-                continue
-
-            seen.add(title)
-            sentiment = analyze_sentiment_id(title)
-            result = {
-                "keyword": kw,
-                "headline": title,
-                "sentiment": sentiment["label"],
-                "score": sentiment["score"],
-                "source": "detik.com",
-                "timestamp": datetime.now().isoformat()
-            }
-            all_results.append(result)
-            emoji = {"POSITIF": "🟢", "NEGATIF": "🔴", "NETRAL": "⚪"}[sentiment["label"]]
-            print(f"  {emoji} [{sentiment['label']:>7}] {title[:60]}")
-
-    return all_results
+    return results
 
 
 def save_to_history(results):
+    if not results:
+        return
     history = []
     if os.path.exists(HISTORY_PATH):
         with open(HISTORY_PATH) as f:
@@ -169,6 +189,8 @@ def save_to_history(results):
 
 
 def save_to_excel(results):
+    if not results:
+        return
     import openpyxl
     from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
     from openpyxl.utils import get_column_letter
@@ -248,33 +270,6 @@ def save_to_excel(results):
     for i in range(1, 4):
         ws_sum.column_dimensions[get_column_letter(i)].width = 18
 
-    # Per keyword
-    row_k = len(sum_data) + 3
-    ws_sum.cell(row=row_k, column=1, value="Per Keyword").font = Font(bold=True, size=12)
-    row_k += 1
-    for col, h in enumerate(["Keyword", "Total", "Positif", "Negatif", "Netral", "Skor Avg"], 1):
-        c = ws_sum.cell(row=row_k, column=col, value=h)
-        c.font = hf; c.fill = hfill; c.alignment = ha; c.border = thin
-
-    keywords = {}
-    for r in all_rows:
-        kw = r[2]
-        if kw not in keywords:
-            keywords[kw] = {"pos": 0, "neg": 0, "net": 0, "scores": []}
-        if r[4] == "POSITIF": keywords[kw]["pos"] += 1
-        elif r[4] == "NEGATIF": keywords[kw]["neg"] += 1
-        else: keywords[kw]["net"] += 1
-        if r[5] is not None: keywords[kw]["scores"].append(r[5])
-
-    row_k += 1
-    for kw, data in keywords.items():
-        t = data["pos"] + data["neg"] + data["net"]
-        avg = sum(data["scores"]) / len(data["scores"]) if data["scores"] else 0
-        for col, val in enumerate([kw, t, data["pos"], data["neg"], data["net"], round(avg, 3)], 1):
-            c = ws_sum.cell(row=row_k, column=col, value=val)
-            c.border = thin; c.alignment = ca
-        row_k += 1
-
     if total > 0:
         pie = PieChart()
         pie.title = "Distribusi Sentimen"
@@ -282,7 +277,7 @@ def save_to_excel(results):
         pie.add_data(Reference(ws_sum, min_col=2, min_row=1, max_row=4), titles_from_data=True)
         pie.set_categories(Reference(ws_sum, min_col=1, min_row=2, max_row=4))
         pie.width = 16; pie.height = 12
-        ws_sum.add_chart(pie, "A" + str(row_k + 2))
+        ws_sum.add_chart(pie, "A9")
 
     wb.save(EXCEL_PATH)
     print(f"\n✅ Disimpan ke {EXCEL_PATH}")
@@ -323,7 +318,7 @@ def main():
 
         print(f"\n{msg}")
     else:
-        print("⚠️ Tidak ada berita ditemukan")
+        print("⚠️ Tidak ada berita ditemukan - tidak ada perubahan pada data")
 
 
 if __name__ == "__main__":
