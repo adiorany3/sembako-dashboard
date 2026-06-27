@@ -1,7 +1,8 @@
+import os
 import openpyxl
 from datetime import datetime
 
-wb = openpyxl.load_workbook('/root/sembako/harga_sembako.xlsx')
+wb = openpyxl.load_workbook(os.path.expanduser('~/sembako/data/harga_sembako.xlsx'))
 ws = wb['Harga']
 
 # Data dari detik.com - Harga Sembako Jawa Timur 24 Juni 2026
@@ -32,11 +33,11 @@ new_row = [
 
 ws.append(new_row)
 
-wb.save('/root/sembako/harga_sembako.xlsx')
+wb.save(os.path.expanduser('~/sembako/data/harga_sembako.xlsx'))
 print("Excel updated successfully!")
 
 # Verify the last row
-wb2 = openpyxl.load_workbook('/root/sembako/harga_sembako.xlsx')
+wb2 = openpyxl.load_workbook(os.path.expanduser('~/sembako/data/harga_sembako.xlsx'))
 ws2 = wb2['Harga']
 print(f"Total rows (including header): {ws2.max_row}")
 print("Last row:")

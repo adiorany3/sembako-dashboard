@@ -9,7 +9,7 @@ from openpyxl.utils import get_column_letter
 from datetime import datetime
 
 def expand_peternakan_data():
-    filepath = '/root/sembako/harga_peternakan_lengkap.xlsx'
+    filepath = os.path.expanduser("~/sembako/data/harga_peternakan_lengkap.xlsx")
     wb = openpyxl.load_workbook(filepath)
     
     header_fill = PatternFill(start_color='1e3c72', end_color='2a5298', fill_type='solid')

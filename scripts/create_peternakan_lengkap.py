@@ -414,7 +414,7 @@ def create_peternakan_excel():
         ws7.column_dimensions[col].width = 22 if col == 'A' else 15 if col in ['B', 'C', 'D', 'E'] else 10
     
     # Save workbook
-    output_path = '/root/sembako/harga_peternakan_lengkap.xlsx'
+    output_path = os.path.expanduser("~/sembako/data/harga_peternakan_lengkap.xlsx")
     wb.save(output_path)
     print(f"✅ File created: {output_path}")
     print(f"📊 Sheets: {[ws.title for ws in wb.worksheets]}")

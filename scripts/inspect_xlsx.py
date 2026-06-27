@@ -1,5 +1,6 @@
+import os
 import openpyxl
-wb = openpyxl.load_workbook('/root/sembako/harga_sembako.xlsx')
+wb = openpyxl.load_workbook(os.path.expanduser('~/sembako/data/harga_sembako.xlsx'))
 print('Sheets:', wb.sheetnames)
 for sheet in wb.sheetnames:
     ws = wb[sheet]
