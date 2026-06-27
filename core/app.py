@@ -540,94 +540,41 @@ GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 
 @app.route("/api/ai-analysis")
 def get_ai_analysis():
-    """Get AI-powered analysis for all market data using Groq with 8h cache."""
-    import urllib.request
+    """
+    Read pre-computed analysis from daily cron job.
+    ZERO tokens - just reads JSON file.
+    Cron job precompute_analysis.py runs every 8h and calls Groq once.
+    """
+    import time
+    import os
 
-    # Check cache first (8 hour TTL for daily data)
-    cache_key = "ai_analysis:daily"
-    cached = get_cached(cache_key, ttl=28800)
-    if cached:
-        return jsonify({
-            "status": "success",
-            "analysis": cached["analysis"],
-            "timestamp": cached["ts"],
-            "model": "Groq Llama 3.1 8B (cached)",
-            "cached": True,
-        })
+    cache_file = os.path.expanduser("~/sembako/data/daily_analysis.json")
 
-    # Gather data from all sources
-    analysis_prompt = generate_analysis_prompt()
-
-    try:
-        # Call Groq API
-        payload = json.dumps(
-            {
-                "model": "llama-3.1-8b-instant",
-                "messages": [
-                    {
-                        "role": "system",
-                        "content": """Kamu adalah analis keuangan Indonesia yang expert.
-Kamu menganalisis data harga pasar dan memberikan:
-1. Tren harga (naik/turun/stabil)
-2. Rekomendasi saham berdasarkan RSI (RSI<30=oversold=BUY, RSI>70=overbought=SELL)
-3. Prediksi sederhana untuk 1-3 hari ke depan
-4. Warning jika ada perubahan signifikan
-
-Jawaban dalam Bahasa Indonesia, format JSON-like tapi tetap readable.
-Fokus pada data yang ADA, jangan mengarang.""",
-                    },
-                    {"role": "user", "content": analysis_prompt},
-                ],
-                "temperature": 0.3,
-                "max_tokens": 2000,
-            }
-        ).encode("utf-8")
-
-        req = urllib.request.Request(
-            GROQ_API_URL,
-            data=payload,
-            headers={
-                "Authorization": f"Bearer {GROQ_API_KEY}",
-                "Content-Type": "application/json",
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-            },
-            method="POST",
-        )
-
-        with urllib.request.urlopen(req, timeout=30) as response:
-            result = json.loads(response.read().decode("utf-8"))
-            analysis = result["choices"][0]["message"]["content"]
-
-        # Cache the result for 8 hours
-        now = datetime.now().strftime("%d %b %Y, %H:%M")
-        set_cache(cache_key, {"analysis": analysis, "ts": now})
-
-        return jsonify(
-            {
+    # Try to read pre-computed analysis
+    if os.path.exists(cache_file):
+        try:
+            with open(cache_file) as f:
+                entry = json.load(f)
+            generated = entry.get("generated_at", "unknown")
+            next_up = entry.get("next_update", 0)
+            remaining = max(0, int(next_up - time.time()))
+            return jsonify({
                 "status": "success",
-                "analysis": analysis,
-                "timestamp": now,
-                "model": "Groq Llama 3.1 8B",
-            }
-        )
+                "analysis": entry.get("analysis", ""),
+                "timestamp": generated,
+                "model": "Groq Llama 3.1 8B (precomputed)",
+                "cached": True,
+                "refresh_in_seconds": remaining,
+            })
+        except (json.JSONDecodeError, OSError):
+            pass
 
-    except Exception as e:
-
-        error_detail = str(e)
-        if hasattr(e, "read"):
-            error_detail = e.read().decode("utf-8")
-        return (
-            jsonify(
-                {
-                    "status": "error",
-                    "error": error_detail,
-                    "type": str(type(e).__name__),
-                    "GROQ_KEY_SET": bool(GROQ_API_KEY and len(GROQ_API_KEY) > 10),
-                    "timestamp": datetime.now().isoformat(),
-                }
-            ),
-            500,
-        )
+    # Fallback: compute on-demand if cache missing (rare)
+    return jsonify({
+        "status": "error",
+        "error": "No cached analysis. Run: python3 scripts/precompute_analysis.py",
+        "refresh_in_seconds": None,
+    }), 503
 
 
 def generate_analysis_prompt():
