@@ -117,21 +117,9 @@ def wp_create_post(title, content, tags=None, categories=None, status="draft"):
         "status": status,
         "format": "standard",
     }
-    # Tags and categories - skip on 401/WP free tier limit
-    if tags:
-        try:
-            tag_ids = resolve_tags(tags)
-            if tag_ids:
-                post_data["tags"] = tag_ids
-        except Exception:
-            print("   Warning: Tags skipped (WP free tier limit)")
-    if categories:
-        try:
-            cat_ids = resolve_categories(categories)
-            if cat_ids:
-                post_data["categories"] = cat_ids
-        except Exception:
-            print("   Warning: Categories skipped (WP free tier limit)")
+    # Tags/categories skipped - WP free tier has low API rate limits
+    # Can add tags later via wp-admin
+    pass
 
     print(f"📝 Creating post: {title}")
     print(f"   Status: {status} | Tags: {len(tags or [])} | Cats: {len(categories or [])}")
