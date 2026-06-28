@@ -874,159 +874,32 @@ def api_article_new():
 
 @app.route("/article")
 def article_page():
-    """Generate article from real dashboard data — title and content synced."""
-    import random as _rnd, urllib.request as _req
-    from html import escape as _esc
+    """Serve latest generated article — title and content always synced."""
+    articles_dir = os.path.join(DATA_DIR, "wp_articles")
+    today = datetime.now().strftime("%Y-%m-%d")
+    meta_file = os.path.join(articles_dir, f"{today}.json")
 
-    # Force new article if ?new param
-    if request.args.get('new'):
-        meta_file_to_delete = os.path.join(DATA_DIR, 'wp_articles', datetime.now().strftime('%Y-%m-%d') + '.json')
-        if os.path.exists(meta_file_to_delete):
-            os.remove(meta_file_to_delete)
+    # Force regenerate if ?new param
+    if request.args.get("new") and os.path.exists(meta_file):
+        os.remove(meta_file)
 
-    now = datetime.now()
-    ds = now.strftime("%d %B %Y")
-    day_of_year = now.timetuple().tm_yday
-
-    # Fetch real data
-    def _fetch(endpoint):
+    # Generate if missing
+    if not os.path.exists(meta_file):
+        import subprocess as _sub
         try:
-            url = f"http://127.0.0.1:5000/api/{endpoint}"
-            req = _req.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-            with _req.urlopen(req, timeout=8) as r:
-                return json.loads(r.read())
+            script = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../scripts/generate_wp_article.py")
+            _sub.run(["python3", script], timeout=30, capture_output=True)
         except Exception:
-            return {"data": []}
+            pass
 
-    pet = _fetch("peternakan")
-    sent = _fetch("sentimen")
-    pakan = _fetch("pakan")
-
-    # Extract real prices
-    pet_items = (pet.get("data") or [])[-8:]
-    price_lines = []
-    for item in pet_items:
-        name = item.get("produk", item.get("komoditas", ""))
-        price = item.get("harga_rata", item.get("harga", 0))
-        if name and isinstance(price, (int, float)) and price > 0:
-            price_lines.append(f"<li><strong>{_esc(str(name))}</strong>: Rp{price:,.0f}/kg</li>")
-    prices_html = "\n".join(price_lines) if price_lines else "<li>Data harga sedang diperbarui</li>"
-
-    # Sentiment
-    pos_count = 0
-    neg_count = 0
-    sent_data = (sent.get("data") or [])[:5]
-    for s in sent_data:
-        if "positif" in str(s.get("sentimen", "")).lower():
-            pos_count += 1
-        elif "negatif" in str(s.get("sentimen", "")).lower():
-            neg_count += 1
-    tren = "positif" if pos_count >= neg_count else "hati-hati"
-
-    # Topic selection (synced with content)
-    topics = [
-        {
-            "title": f"Update Harga Ternak {ds}: Tren {tren} untuk Peternakan Indonesia",
-            "sections": [
-                ("📊 Harga Bahan Pakan & Ternak Hari Ini", f"""
-<p>Kondisi pasar peternakan Indonesia periode <strong>{ds}</strong> menunjukkan tren <strong>{tren}</strong>.
-Memahami pergerakan harga adalah kunci optimasi biaya produksi peternak.</p>
-<h4>Harga Terkini:</h4>
-<ul>{prices_html}</ul>"""),
-                ("🎯 Strategi Optimasi Biaya", """
-<ol>
-<li><strong>Formulasi Pakan Mandiri</strong> — Racik pakan sendiri lebih hemat 20-30% dari pakan komersial. Gunakan bahan lokal seperti jagung, dedak, bungkil kedelai.</li>
-<li><strong>Diversifikasi Bahan Lokal</strong> — Manfaatkan limbah industri: ampas tahu, molases, onggok. Sumber nutrisi terjangkau.</li>
-<li><strong>Pencatatan Harga Berkala</strong> — Pantau harga bahan pakan untuk menentukan waktu pembelian terbaik.</li>
-<li><strong>Manajemen Kesehatan</strong> — Pencegahan selalu lebih murah dari pengobatan. Terapkan protokol biosekuriti.</li>
-</ol>"""),
-                ("📈 Prospek Cerah", f"""
-<p>Konsumsi protein hewani masyarakat Indonesia terus meningkat. Tren pasar saat ini <strong>{tren}</strong>,
-menjadi peluang emas bagi peternak yang menerapkan manajemen modern dan efisien.</p>
-<p>Teknologi informasi memudahkan pemantauan harga real-time. Dengan data yang akurat,
-keputusan bisnis menjadi lebih tepat sasaran.</p>"""),
-                ("💡 Tips Praktis", """
-<ul>
-<li>Periksa kualitas pakan — pastikan tidak basi atau lembap</li>
-<li>Catat seluruh biaya produksi untuk analisis profitabilitas</li>
-<li>Evaluasi konversi pakan — targetkan FCR yang optimal</li>
-<li>Manfaatkan cuaca baik untuk menjemur pakan atau bersihkan kandang</li>
-</ul>""")
-            ]
-        },
-        {
-            "title": f"Panduan Pakan Ternak {ds}: Nutrisi Optimal Hemat Biaya",
-            "sections": [
-                ("📊 Komposisi Pakan & Harga Bahan", f"""
-<p>Panduan lengkap formulasi pakan ternak dengan data harga terkini <strong>{ds}</strong>.
-Pakan menyumbang 60-70% biaya peternakan — optimasi di sini langsung untung besar.</p>
-<h4>Harga Bahan Pakan Hari Ini:</h4>
-<ul>{prices_html}</ul>"""),
-                ("🐔 Formulasi Pakan Unggas", """
-<ol>
-<li><strong>Broiler Starter (0-4 minggu)</strong>: Jagung 40%, Bungkil Kedelai 25%, Dedak 15%, Konsentrat 15%, Minyak 5%</li>
-<li><strong>Broiler Finisher (4-panen)</strong>: Jagung 50%, Bungkil Kedelai 20%, Dedak 15%, Konsentrat 10%, Minyak 5%</li>
-<li><strong>Ayam Petelur</strong>: Jagung 45%, Bungkil Kedelai 20%, Dedak 20%, Konsentrat 10%, Premix 5%</li>
-</ol>"""),
-                ("🐄 Formulasi Pakan Ternak Besar", """
-<ol>
-<li><strong>Sapi Potong**: Jerami 40%, Konsentrat 35%, Ampas Tahu 15%, Mineral 10%</li>
-<li><strong>Sapi Perah**: Rumput 50%, Konsentrat 30%, Bungkil 15%, Mineral 5%</li>
-<li><strong>Kambing**: Rumput 55%, Konsentrat 25%, Dedak 15%, Mineral 5%</li>
-</ol>"""),
-                ("💡 Tips Hemat", """
-<ul>
-<li>Beli bahan pakan saat panen raya — harga lebih rendah</li>
-<li>Simpan pakan di tempat kering dan tertutup</li>
-<li>Gunakan teknik fermentasi untuk meningkatkan daya cerna</li>
-<li>Evaluasi Formula setiap bulan sesuai ketersediaan bahan lokal</li>
-</ul>""")
-            ]
-        },
-        {
-            "title": f"Prediksi Pasar Ternak {now.strftime('%B %Y')}: Analisis Mendalam",
-            "sections": [
-                ("📊 Analisis Tren Pasar", f"""
-<p>Prediksi pasar peternakan Indonesia bulan <strong>{now.strftime('%B %Y')}</strong> berdasarkan data real-time.
-Sentimen pasar saat ini: <strong>{tren}</strong>.</p>
-<h4>Data Harga Referensi:</h4>
-<ul>{prices_html}</ul>"""),
-                ("📈 Faktor Penentu Harga", """
-<ol>
-<li><strong>Stok Nasional</strong> — Pasokan ternak lokal masih stabil. Produksi ayam broiler mencukupi kebutuhan domestik.</li>
-<li><strong>Impor</strong> — Kebijakan impor daging sapi tetap terkontrol. Dukungan pemerintah untuk peternak lokal kuat.</li>
-<li><strong>Permintaan</strong> — Konsumsi protein hewani terus naik seiring pertumbuhan ekonomi dan populasi.</li>
-<li><strong>Pakan</strong> — Harga bahan pakan global mulai stabil. Peluang untuk optimasi biaya.</li>
-</ol>"""),
-                ("🎯 Strategi Peternak", f"""
-<p>Dengan tren pasar yang <strong>{tren}</strong>, berikut strategi yang direkomendasikan:</p>
-<ul>
-<li>Tingkatkan produktivitas melalui manajemen pakan yang efisien</li>
-<li>Jaga kesehatan ternak untuk mengurangi biaya pengobatan</li>
-<li>Pantau harga secara berkala untuk timing jual terbaik</li>
-<li>Pertimbangkan diversifikasi jenis ternak</li>
-</ul>"""),
-                ("💡 Outlook Jangka Panjang", """
-<p>Peternakan Indonesia memiliki prospek cerah. Pertumbuhan ekonomi dan kesadaran konsumsi protein sehat
-menjadi motor penggerak utama. Peternak yang mengadopsi teknologi modern akan memimpin pasar.</p>""")
-            ]
-        }
-    ]
-
-    _rnd.seed(day_of_year)
-    topic = _rnd.choice(topics)
-    title = topic["title"]
-
-    # Build content from sections
-    content_parts = []
-    for heading, body in topic["sections"]:
-        content_parts.append(f"<h4>{heading}</h4>{body}")
-    content_parts.append(f"""<hr><p><strong>Semangat peternak Indonesia! Data dan strategi yang tepat untuk untung maksimal! 🐔🐄🐑</strong></p>
-<p><em>Diperbarui {ds}. Data bersumber dari dashboard monitoring komoditas nasional.
-Pantau terus perkembangan harga di <a href="https://catataninsani.wordpress.com/" target="_blank" rel="noopener">Catatan Insani</a>.</em></p>""")
-    content = "\n\n".join(content_parts)
-
-    return f"""<!DOCTYPE html>
+    if os.path.exists(meta_file):
+        with open(meta_file) as fp:
+            meta = json.load(fp)
+        t = meta["title"]
+        ct = meta["content"]
+        cat = meta.get("category", "")
+        dt = meta.get("date", "")
+        return f"""<!DOCTYPE html>
 <html lang="id"><head><meta charset="UTF-8">
 <title>WordPress Article</title>
 <style>
@@ -1042,29 +915,30 @@ pre{{white-space:pre-wrap;word-wrap:break-word;background:#f8f8f8;padding:12px;b
 </style></head><body>
 <h1>Artikel WordPress</h1>
 <div class="card">
-<div class="label">Title (copy ke WordPress):</div>
-<h1 id="title">{_esc(title)}</h1>
+<div class="label">Title:</div>
+<h1 id="title">{t}</h1>
 <button class="copy-btn" onclick="copyText('title')">Copy Title</button>
 <span class="success" id="title-copied">Copied!</span>
 </div>
 <div class="card">
-<div class="label">Date: <strong>{ds}</strong></div>
+<div class="label">Category: <strong>{cat}</strong> | Date: <strong>{dt}</strong></div>
 </div>
 <div class="card">
 <div class="label">HTML Content (paste ke WordPress editor HTML mode):</div>
-<pre id="content">{_esc(content)}</pre>
+<pre id="content">{ct}</pre>
 <button class="copy-btn" onclick="copyText('content')">Copy HTML Content</button>
-<a href="/article?new=1" class="copy-btn" style="background:#28a745;text-decoration:none;display:inline-block;margin-left:8px">Generate Artikel Baru</a>
 <span class="success" id="content-copied">Copied!</span>
 </div>
-<div class="card preview"><div class="label">Preview:</div>{content}</div>
+<div class="card preview"><div class="label">Preview:</div>{ct}</div>
+<div class="card">
+<a href="/article?new=1" class="copy-btn" style="background:#28a745;text-decoration:none;display:inline-block">Generate Artikel Baru</a>
+</div>
 <script>
 function copyText(id){{
   var el=document.getElementById(id);
   var text=el.innerText||el.textContent;
   var ta=document.createElement('textarea');
-  ta.value=text;
-  ta.style.position='fixed';ta.style.opacity='0';
+  ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
   document.body.appendChild(ta);ta.select();
   document.execCommand('copy');
   document.body.removeChild(ta);
@@ -1072,8 +946,7 @@ function copyText(id){{
   setTimeout(function(){{document.getElementById(id+'-copied').style.display='none'}},2000);
 }}
 </script></body></html>"""
-
-
+    return "No article yet. Click Generate.", 204, {"Content-Type": "text/plain"}
 if __name__ == "__main__":
     # Production mode - disable debug for stability
     app.run(host="0.0.0.0", port=5000, debug=False, use_reloader=False)
