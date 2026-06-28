@@ -899,6 +899,8 @@ def article_page():
         ct = meta["content"]
         cat = meta.get("category", "")
         dt = meta.get("date", "")
+        import html as _html
+        ct_esc = _html.escape(ct)
         return f"""<!DOCTYPE html>
 <html lang="id"><head><meta charset="UTF-8">
 <title>WordPress Article</title>
@@ -925,7 +927,7 @@ pre{{white-space:pre-wrap;word-wrap:break-word;background:#f8f8f8;padding:12px;b
 </div>
 <div class="card">
 <div class="label">HTML Source (copy ini, paste ke WordPress <strong>HTML/Code Editor</strong>):</div>
-<pre id="raw" style="display:none">{ct}</pre>
+<pre id="raw" style="display:none">{ct_esc}</pre>
 <button class="copy-btn" onclick="copyRaw()">📋 Copy HTML Source</button>
 <span class="success" id="content-copied">Copied!</span>
 <div id="readable" style="margin-top:12px;padding:12px;background:#f8f8f8;border-radius:6px;font-size:13px;max-height:300px;overflow-y:auto;border:1px solid #eee"></div>
