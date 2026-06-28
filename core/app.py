@@ -830,6 +830,46 @@ def download_file(filename):
         return jsonify({"error": "File not found"}), 404
 
 
+
+@app.route("/api/publish", methods=["POST"])
+def api_publish():
+    """Publish article to WordPress. POST JSON: {status: "draft"|"publish"}"""
+    import subprocess as _sub
+    req = request.get_json(silent=True) or {}
+    status = req.get("status", "draft")
+    if status not in ("draft", "publish"):
+        status = "draft"
+    try:
+        result = _sub.run(
+            ["python3", os.path.join(os.path.dirname(__file__), "../scripts/wp_publisher.py"), status],
+            capture_output=True, text=True, timeout=120
+        )
+        return jsonify({
+            "status": status,
+            "output": result.stdout,
+            "error": result.stderr if result.returncode != 0 else None,
+            "success": result.returncode == 0
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/wp-status")
+def wp_status():
+    """Check WordPress publisher status."""
+    import json as _json
+    log_file = os.path.join(DATA_DIR, "wp_published.json")
+    if os.path.exists(log_file):
+        with open(log_file) as f:
+            log = _json.load(f)
+        return jsonify({
+            "total_published": len(log.get("published", [])),
+            "last_5": log.get("published", [])[-5:],
+            "next_topic_idx": log.get("topic_idx", 0),
+        })
+    return jsonify({"total_published": 0, "message": "No posts yet"})
+
+
 if __name__ == "__main__":
     # Production mode - disable debug for stability
     app.run(host="0.0.0.0", port=5000, debug=False, use_reloader=False)
