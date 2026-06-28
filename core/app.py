@@ -10,7 +10,7 @@ import time
 import openpyxl
 import hashlib
 from datetime import datetime
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, send_from_directory
 from flask_cors import CORS
 import sys
 
@@ -796,6 +796,31 @@ def not_found(e):
 @app.errorhandler(500)
 def server_error(e):
     return jsonify({"error": "Server error"}), 500
+
+
+@app.route("/download/<filename>")
+def download_file(filename):
+    """Download Excel/data files from the data directory."""
+    import re as _re
+    # Security: only allow safe filenames
+    if not _re.match(r'^[\w\-\.]+$', filename):
+        return jsonify({"error": "Invalid filename"}), 400
+    try:
+        return send_from_directory(DATA_DIR, filename, as_attachment=True)
+    except Exception:
+        return jsonify({"error": "File not found"}), 404
+
+
+@app.route("/api/download/<filename>")
+def api_download(filename):
+    """API alias for download."""
+    import re as _re
+    if not _re.match(r'^[\w\-\.]+$', filename):
+        return jsonify({"error": "Invalid filename"}), 400
+    try:
+        return send_from_directory(DATA_DIR, filename, as_attachment=True)
+    except Exception:
+        return jsonify({"error": "File not found"}), 404
 
 
 if __name__ == "__main__":
