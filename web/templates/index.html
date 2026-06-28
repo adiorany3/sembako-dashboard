@@ -24,7 +24,9 @@
                     <p class="subtitle">Real-time data monitoring for sembako, crypto, emas, pertanian & keuangan</p>
                 </div>
                 <div class="header-info">
+                    <span id="refresh-countdown"></span>
                     <span id="current-time"></span>
+                    <button id="dark-toggle" class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
                     <span id="health-status" class="status-badge status-ok">● Online</span>
                 </div>
             </div>
@@ -40,8 +42,13 @@
             <button class="tab-btn" data-tab="peternakan">🐔 Peternakan</button>
             <button class="tab-btn" data-tab="pakan">🌽 Pakan</button>
             <button class="tab-btn" data-tab="saham">📈 Saham</button>
-            <button class="tab-btn" data-tab="sentimen">📰 Berita Terkini</button>
-            <button class="tab-btn" data-tab="ai-analysis">🤖 AI Analysis</button>
+            <button class="tab-btn" data-tab="kurs">💱 Kurs</button>
+            <button class="tab-btn" data-tab="minyak">🛢️ Minyak</button>
+            <button class="tab-btn" data-tab="bi-rate">🏦 BI Rate</button>
+            <button class="tab-btn" data-tab="cpo">🌴 CPO</button>
+            <button class="tab-btn" data-tab="sentimen">📰 Berita</button>
+            <button class="tab-btn" data-tab="alerts">🚨 Alerts</button>
+            <button class="tab-btn" data-tab="ai-analysis">🤖 AI</button>
         </nav>
 
         <!-- Content Area -->
@@ -415,6 +422,109 @@
                                     <tr><td colspan="4" class="loading">Loading...</td></tr>
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Kurs Tab -->
+            <section class="tab-content" id="kurs">
+                <div class="cards-grid">
+                    <div class="card card-kurs">
+                        <div class="card-header"><h3>💱 Kurs USD/IDR</h3></div>
+                        <div class="card-body">
+                            <p class="card-label">Last Update</p>
+                            <p id="kurs-date" class="card-value">-</p>
+                            <div class="card-mini-items">
+                                <div class="mini-item"><span>🇺🇸 USD</span><span id="kurs-usd" class="mini-value">-</span></div>
+                                <div class="mini-item"><span>🇪🇺 EUR</span><span id="kurs-eur" class="mini-value">-</span></div>
+                                <div class="mini-item"><span>🇸🇬 SGD</span><span id="kurs-sgd" class="mini-value">-</span></div>
+                                <div class="mini-item"><span>🇲🇾 MYR</span><span id="kurs-myr" class="mini-value">-</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <h3>💱 Kurs Trend</h3>
+                    <canvas id="kursChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Minyak Tab -->
+            <section class="tab-content" id="minyak">
+                <div class="cards-grid">
+                    <div class="card card-minyak">
+                        <div class="card-header"><h3>🛢️ Minyak Mentah</h3></div>
+                        <div class="card-body">
+                            <p class="card-label">Last Update</p>
+                            <p id="minyak-date" class="card-value">-</p>
+                            <div class="card-mini-items">
+                                <div class="mini-item"><span>Brent</span><span id="minyak-brent" class="mini-value">-</span></div>
+                                <div class="mini-item"><span>WTI</span><span id="minyak-wti" class="mini-value">-</span></div>
+                                <div class="mini-item"><span>Selisih</span><span id="minyak-selisih" class="mini-value">-</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <h3>🛢️ Minyak Trend</h3>
+                    <canvas id="minyakChart"></canvas>
+                </div>
+            </section>
+
+            <!-- BI Rate Tab -->
+            <section class="tab-content" id="bi-rate">
+                <div class="cards-grid">
+                    <div class="card card-bi">
+                        <div class="card-header"><h3>🏦 Bank Indonesia</h3></div>
+                        <div class="card-body">
+                            <p class="card-label">Last Update</p>
+                            <p id="bi-date" class="card-value">-</p>
+                            <div class="card-mini-items">
+                                <div class="mini-item"><span>BI Rate</span><span id="bi-rate-val" class="mini-value">-</span></div>
+                                <div class="mini-item"><span>Inflasi MoM</span><span id="bi-mom" class="mini-value">-</span></div>
+                                <div class="mini-item"><span>Inflasi YoY</span><span id="bi-yoy" class="mini-value">-</span></div>
+                                <div class="mini-item"><span>IHK</span><span id="bi-ihk" class="mini-value">-</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <h3>🏦 Inflasi Trend</h3>
+                    <canvas id="biChart"></canvas>
+                </div>
+            </section>
+
+            <!-- CPO Tab -->
+            <section class="tab-content" id="cpo">
+                <div class="cards-grid">
+                    <div class="card card-cpo">
+                        <div class="card-header"><h3>🌴 CPO (Kelapa Sawit)</h3></div>
+                        <div class="card-body">
+                            <p class="card-label">Last Update</p>
+                            <p id="cpo-date" class="card-value">-</p>
+                            <div class="card-mini-items">
+                                <div class="mini-item"><span>MYR/ton</span><span id="cpo-myr" class="mini-value">-</span></div>
+                                <div class="mini-item"><span>IDR/kg</span><span id="cpo-idr" class="mini-value">-</span></div>
+                                <div class="mini-item"><span>Perubahan</span><span id="cpo-chg" class="mini-value">-</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <h3>🌴 CPO Trend</h3>
+                    <canvas id="cpoChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Alerts Tab -->
+            <section class="tab-content" id="alerts">
+                <div class="dashboard-grid">
+                    <div class="card" style="grid-column: 1/-1;">
+                        <h2>🚨 Price Alerts</h2>
+                        <p class="subtitle">Perubahan harga signifikan yang terdeteksi</p>
+                        <div id="alerts-list">
+                            <p class="hint">Belum ada alerts. Alerts akan muncul saat ada perubahan harga signifikan.</p>
                         </div>
                     </div>
                 </div>

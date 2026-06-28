@@ -518,6 +518,99 @@ def get_pakan():
     return jsonify({"data": result, "last_update": last_update})
 
 
+@app.route("/api/kurs")
+def get_kurs():
+    """Get exchange rates (USD, EUR, SGD, MYR vs IDR)."""
+    data, last_update = load_excel_data("kurs_valuta.xlsx", "Harian")
+    if not data:
+        return jsonify({"data": [], "last_update": None})
+
+    result = []
+    for row in data:
+        if row[0]:
+            result.append({
+                "tanggal": str(row[0]),
+                "usd_idr": row[1],
+                "eur_idr": row[2],
+                "sgd_idr": row[3],
+                "myr_idr": row[4],
+            })
+    return jsonify({"data": result, "last_update": last_update})
+
+
+@app.route("/api/minyak")
+def get_minyak():
+    """Get crude oil prices (Brent & WTI)."""
+    data, last_update = load_excel_data("harga_minyak.xlsx", "Harian")
+    if not data:
+        return jsonify({"data": [], "last_update": None})
+
+    result = []
+    for row in data:
+        if row[0]:
+            result.append({
+                "tanggal": str(row[0]),
+                "brent": row[1],
+                "wti": row[2],
+                "selisih": row[3],
+            })
+    return jsonify({"data": result, "last_update": last_update})
+
+
+@app.route("/api/bi-rate")
+def get_bi_rate():
+    """Get BI Rate & Inflasi (CPI)."""
+    data, last_update = load_excel_data("bi_rate_inflasi.xlsx", "Harian")
+    if not data:
+        return jsonify({"data": [], "last_update": None})
+
+    result = []
+    for row in data:
+        if row[0]:
+            result.append({
+                "tanggal": str(row[0]),
+                "bi_rate": row[1],
+                "inflasi_mom": row[2],
+                "inflasi_yoy": row[3],
+                "ihk": row[4],
+            })
+    return jsonify({"data": result, "last_update": last_update})
+
+
+@app.route("/api/cpo")
+def get_cpo():
+    """Get Crude Palm Oil (CPO) / Kelapa Sawit price."""
+    data, last_update = load_excel_data("harga_cpo.xlsx", "Harian")
+    if not data:
+        return jsonify({"data": [], "last_update": None})
+
+    result = []
+    for row in data:
+        if row[0]:
+            result.append({
+                "tanggal": str(row[0]),
+                "harga_myr": row[1],
+                "harga_idr": row[2],
+                "perubahan_persen": row[3],
+            })
+    return jsonify({"data": result, "last_update": last_update})
+
+
+@app.route("/api/alerts")
+def get_alerts():
+    """Get recent price alerts (significant changes)."""
+    import json as _json
+    alert_file = os.path.join(DATA_DIR, "price_alerts.json")
+    if not os.path.exists(alert_file):
+        return jsonify({"alerts": [], "last_check": None})
+    try:
+        with open(alert_file) as f:
+            data = _json.load(f)
+        return jsonify({"alerts": data.get("alerts", []), "last_check": data.get("last_check")})
+    except Exception:
+        return jsonify({"alerts": [], "last_check": None})
+
+
 @app.route("/api/health")
 def health():
     """Health check."""

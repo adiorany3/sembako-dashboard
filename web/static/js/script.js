@@ -62,6 +62,11 @@ async function loadAllData() {
         loadSahamData(),
         loadPakanData(),
         loadSentimenData(),
+        loadKursData(),
+        loadMinyakData(),
+        loadBIData(),
+        loadCPOData(),
+        loadAlertsData(),
         checkHealth()
     ]);
 }
@@ -844,3 +849,151 @@ function updateAISummary() {
 function closeAiModal() {
     document.getElementById('ai-modal').style.display = 'none';
 }
+
+// ============ NEW TABS: Kurs, Minyak, BI Rate, CPO, Alerts ============
+
+async function loadKursData() {
+    const data = await fetchData('kurs');
+    if (!data || !data.data || data.data.length === 0) return;
+    const latest = data.data[data.data.length - 1];
+    document.getElementById('kurs-date').textContent = latest.tanggal || '-';
+    document.getElementById('kurs-usd').textContent = 'Rp ' + formatIDR(latest.usd_idr);
+    document.getElementById('kurs-eur').textContent = 'Rp ' + formatIDR(latest.eur_idr);
+    document.getElementById('kurs-sgd').textContent = 'Rp ' + formatIDR(latest.sgd_idr);
+    document.getElementById('kurs-myr').textContent = 'Rp ' + formatIDR(latest.myr_idr);
+    // Chart
+    renderLineChart('kursChart', data.data, [
+        {key: 'usd_idr', label: 'USD/IDR', color: '#4CAF50'},
+        {key: 'eur_idr', label: 'EUR/IDR', color: '#2196F3'},
+    ]);
+}
+
+async function loadMinyakData() {
+    const data = await fetchData('minyak');
+    if (!data || !data.data || data.data.length === 0) return;
+    const latest = data.data[data.data.length - 1];
+    document.getElementById('minyak-date').textContent = latest.tanggal || '-';
+    document.getElementById('minyak-brent').textContent = '$' + (latest.brent || '-');
+    document.getElementById('minyak-wti').textContent = '$' + (latest.wti || '-');
+    document.getElementById('minyak-selisih').textContent = '$' + (latest.selisih || '-');
+    renderLineChart('minyakChart', data.data, [
+        {key: 'brent', label: 'Brent', color: '#FF5722'},
+        {key: 'wti', label: 'WTI', color: '#FF9800'},
+    ]);
+}
+
+async function loadBIData() {
+    const data = await fetchData('bi-rate');
+    if (!data || !data.data || data.data.length === 0) return;
+    const latest = data.data[data.data.length - 1];
+    document.getElementById('bi-date').textContent = latest.tanggal || '-';
+    document.getElementById('bi-rate-val').textContent = (latest.bi_rate || '-') + '%';
+    document.getElementById('bi-mom').textContent = (latest.inflasi_mom || '-') + '%';
+    document.getElementById('bi-yoy').textContent = (latest.inflasi_yoy || '-') + '%';
+    document.getElementById('bi-ihk').textContent = latest.ihk ? latest.ihk.toLocaleString() : '-';
+    renderLineChart('biChart', data.data, [
+        {key: 'bi_rate', label: 'BI Rate', color: '#9C27B0'},
+        {key: 'inflasi_yoy', label: 'Inflasi YoY', color: '#E91E63'},
+    ]);
+}
+
+async function loadCPOData() {
+    const data = await fetchData('cpo');
+    if (!data || !data.data || data.data.length === 0) return;
+    const latest = data.data[data.data.length - 1];
+    document.getElementById('cpo-date').textContent = latest.tanggal || '-';
+    document.getElementById('cpo-myr').textContent = 'MYR ' + (latest.harga_myr ? latest.harga_myr.toLocaleString() : '-');
+    document.getElementById('cpo-idr').textContent = 'Rp ' + (latest.harga_idr ? latest.harga_idr.toLocaleString() : '-');
+    const chg = latest.perubahan_persen;
+    document.getElementById('cpo-chg').textContent = chg != null ? (chg >= 0 ? '+' : '') + chg + '%' : '-';
+    renderLineChart('cpoChart', data.data, [
+        {key: 'harga_myr', label: 'CPO (MYR/ton)', color: '#4CAF50'},
+    ]);
+}
+
+async function loadAlertsData() {
+    const data = await fetchData('alerts');
+    if (!data || !data.alerts || data.alerts.length === 0) return;
+    const container = document.getElementById('alerts-list');
+    container.innerHTML = '';
+    data.alerts.forEach(alert => {
+        const div = document.createElement('div');
+        div.className = 'alert-item';
+        div.innerHTML = `<span class="alert-icon">${alert.icon || '🚨'}</span>
+            <div class="alert-body"><strong>${alert.title || ''}</strong><br><small>${alert.message || ''}</small></div>
+            <span class="alert-time">${alert.time || ''}</span>`;
+        container.appendChild(div);
+    });
+}
+
+// ============ Generic Line Chart Renderer ============
+
+const chartInstances = {};
+function renderLineChart(canvasId, dataArray, datasets) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas || dataArray.length === 0) return;
+    // Destroy old instance
+    if (chartInstances[canvasId]) {
+        chartInstances[canvasId].destroy();
+    }
+    const labels = dataArray.map(d => d.tanggal ? d.tanggal.slice(5) : ''); // MM-DD
+    const lines = datasets.map(ds => ({
+        label: ds.label,
+        data: dataArray.map(d => d[ds.key]),
+        borderColor: ds.color,
+        backgroundColor: ds.color + '20',
+        fill: true,
+        tension: 0.3,
+        pointRadius: dataArray.length > 30 ? 0 : 3,
+    }));
+    chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
+        type: 'line',
+        data: { labels, datasets: lines },
+        options: {
+            responsive: true,
+            plugins: { legend: { labels: { color: '#94a3b8' } } },
+            scales: {
+                x: { ticks: { color: '#94a3b8', maxTicksLimit: 10 }, grid: { color: '#1e293b' } },
+                y: { ticks: { color: '#94a3b8' }, grid: { color: '#1e293b' } }
+            }
+        }
+    });
+}
+
+// ============ Dark Mode ============
+
+function toggleDarkMode() {
+    document.body.classList.toggle('light-mode');
+    const isLight = document.body.classList.contains('light-mode');
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    document.getElementById('dark-toggle').textContent = isLight ? '☀️' : '🌙';
+}
+
+// Load saved theme
+(function() {
+    const saved = localStorage.getItem('theme');
+    if (saved === 'light') {
+        document.body.classList.add('light-mode');
+        setTimeout(() => { const btn = document.getElementById('dark-toggle'); if(btn) btn.textContent = '☀️'; }, 100);
+    }
+})();
+
+// ============ Auto-Refresh Countdown ============
+
+const REFRESH_INTERVAL = 300; // 5 minutes
+let countdown = REFRESH_INTERVAL;
+
+function updateCountdown() {
+    const el = document.getElementById('refresh-countdown');
+    if (!el) return;
+    const m = Math.floor(countdown / 60);
+    const s = countdown % 60;
+    el.textContent = `🔄 ${m}:${s.toString().padStart(2,'0')}`;
+    if (countdown <= 0) {
+        countdown = REFRESH_INTERVAL;
+        loadAllData();
+    }
+    countdown--;
+}
+
+setInterval(updateCountdown, 1000);
