@@ -3,6 +3,10 @@
 
 const API_BASE = '/api';
 let cryptoChart, emasChart;
+// Global data stores for AI Summary
+let cryptoData = null;
+let emasData = null;
+let sembakoData = null;
 
 // ============ Initialize ============
 document.addEventListener('DOMContentLoaded', function() {
@@ -122,6 +126,7 @@ async function loadSembakoData() {
     if (!response || !response.data || response.data.length === 0) return;
     
     const data = response.data;
+    sembakoData = response; // save to global for AI Summary
     const latest = data[data.length - 1];
     
     // Update overview cards
@@ -166,6 +171,7 @@ async function loadCryptoData() {
     if (!response || !response.data || response.data.length === 0) return;
     
     const data = response.data;
+    cryptoData = response; // global for AI Summary
     const latest = data[data.length - 1];
     
     // Update overview cards
@@ -843,11 +849,65 @@ async function refreshAiAnalysis() {
 }
 
 function updateAISummary() {
-    // Extract key metrics from AI analysis or available data
     // IHSG
+    const ihsgEl = document.getElementById('ai-ihsg');
     if (sahamData.ihsg && sahamData.ihsg.length > 0) {
         const latest = sahamData.ihsg[sahamData.ihsg.length - 1];
-        document.getElementById('ai-ihsg').textContent = latest.ihsg ? latest.ihsg.toLocaleString() : '-';
+        ihsgEl.textContent = latest.ihsg ? Number(latest.ihsg).toLocaleString() : '-';
+    }
+
+    // BTC
+    const btcEl = document.getElementById('ai-btc');
+    if (cryptoData && cryptoData.data && cryptoData.data.length) {
+        const cv = cryptoData.data[cryptoData.data.length - 1];
+        if (cv.btc_usd) btcEl.textContent = '$' + Number(cv.btc_usd).toLocaleString(undefined, {maximumFractionDigits: 0});
+    }
+
+    // Emas
+    const emasEl = document.getElementById('ai-emas');
+    if (emasData && emasData.data && emasData.data.length) {
+        const ev = emasData.data[emasData.data.length - 1];
+        if (ev.antam_beli) emasEl.textContent = 'Rp' + Number(ev.antam_beli).toLocaleString();
+    }
+
+    // Top Mover — find biggest % change from sembako
+    const moverEl = document.getElementById('ai-top-mover');
+    if (sembakoData && sembakoData.data && sembakoData.data.length > 1) {
+        const rows = sembakoData.data;
+        if (rows.length >= 2) {
+            const curr = rows[rows.length - 1];
+            const prev = rows[rows.length - 2];
+            let topName = '-', topChg = 0;
+            const keys = Object.keys(curr).filter(k => k !== 'Tanggal' && prev[k] && curr[k]);
+            for (const k of keys) {
+                const c = Number(curr[k]), p = Number(prev[k]);
+                if (p > 0) {
+                    const chg = ((c - p) / p) * 100;
+                    if (Math.abs(chg) > Math.abs(topChg)) { topChg = chg; topName = k.replace(/_/g, ' '); }
+                }
+            }
+            moverEl.textContent = topName + (topChg !== 0 ? ' ' + (topChg > 0 ? '↑' : '↓') + Math.abs(topChg).toFixed(1) + '%' : '');
+        }
+    }
+
+    // Extract recommendations from analysis markdown
+    if (aiAnalysisCache) {
+        const recEl = document.getElementById('ai-recommendations');
+        const sections = aiAnalysisCache.split(/\n/);
+        let inRec = false;
+        let recLines = [];
+        for (const line of sections) {
+            if (/💡\s*Rekomendasi/.test(line)) { inRec = true; continue; }
+            if (/^##/.test(line) && inRec) break; // next section
+            if (inRec && line.trim()) recLines.push(line);
+        }
+        if (recLines.length > 0) {
+            recEl.innerHTML = recLines.map(l => {
+                const bold = l.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                const bullet = bold.replace(/^[-•]\s*/, '• ');
+                return bullet.startsWith('  ') ? '<div style="padding-left:1rem;color:#888;font-size:0.85em">' + bullet.trim() + '</div>' : '<div style="margin-bottom:0.4em">' + bullet + '</div>';
+            }).join('');
+        }
     }
 }
 
@@ -1001,4 +1061,5 @@ function updateCountdown() {
     countdown--;
 }
 
-setInterval(updateCountdown, 1000);
+setInterval(updateCountdown, 1000);// ============ Emas Data ============
+
