@@ -1,0 +1,39 @@
+[
+  {
+    "date": "2026-06-28T13:58:09.573118",
+    "prices": {
+      "jagung_pipil": null,
+      "jagung_pakan": null,
+      "kedelai_impor": 1918,
+      "kedelai_lokal": 1918,
+      "pakan_broiler": 42900,
+      "pakan_layer": null,
+      "pakan_bebek": null,
+      "bungkil_kedelai": null,
+      "jagung_giling": null
+    },
+    "sources": [
+      "Title: Warga Butuh 'Napas' Tambahan, Stimulus Ekonomi Dikucurkan",
+      "Title: Lengkap! Ini Daftar Stimulus Pemerintah Meluncur Mulai Juli",
+      "Title: Penjelasan Lengkap soal Paket Stimulus Ekonomi Rp 26,34 Triliun",
+      "Title: Harga Hewan Kurban di Gaza Meledak, Tembus Rp 120 Juta per Ekor"
+    ]
+  },
+  {
+    "date": "2026-06-28T13:58:39.236135",
+    "prices": {
+      "jagung_pipil": 6200,
+      "jagung_pakan": 7000,
+      "kedelai_impor": 11500,
+      "kedelai_lokal": 10200,
+      "pakan_broiler": 8300,
+      "pakan_layer": 7700,
+      "pakan_bebek": 7100,
+      "bungkil_kedelai": 9800,
+      "jagung_giling": 6500
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  }
+]
