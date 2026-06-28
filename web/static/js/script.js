@@ -82,6 +82,11 @@ function formatCurrency(value) {
     }).format(value);
 }
 
+function formatIDR(value) {
+    if (!value) return '-';
+    return new Intl.NumberFormat('id-ID').format(Math.round(value));
+}
+
 function formatUSD(value) {
     if (!value) return '-';
     return new Intl.NumberFormat('en-US', {
