@@ -831,43 +831,102 @@ def download_file(filename):
 
 
 
-@app.route("/api/publish", methods=["POST"])
-def api_publish():
-    """Publish article to WordPress. POST JSON: {status: "draft"|"publish"}"""
+@app.route("/api/generate-article", methods=["POST"])
+def api_generate_article():
+    """Generate article, save as JSON + HTML for copy-paste."""
     import subprocess as _sub
-    req = request.get_json(silent=True) or {}
-    status = req.get("status", "draft")
-    if status not in ("draft", "publish"):
-        status = "draft"
     try:
         result = _sub.run(
-            ["python3", os.path.join(os.path.dirname(__file__), "../scripts/wp_publisher.py"), status],
-            capture_output=True, text=True, timeout=120
+            ["python3", os.path.join(os.path.dirname(__file__), "../scripts/generate_wp_article.py")],
+            capture_output=True, text=True, timeout=30
         )
-        return jsonify({
-            "status": status,
-            "output": result.stdout,
-            "error": result.stderr if result.returncode != 0 else None,
-            "success": result.returncode == 0
-        })
+        # Read generated file
+        today = datetime.now().strftime("%Y-%m-%d")
+        meta_file = os.path.join(DATA_DIR, "wp_articles", f"{today}.json")
+        if os.path.exists(meta_file):
+            with open(meta_file) as f:
+                meta = json.load(f)
+            return jsonify({
+                "title": meta["title"],
+                "content": meta["content"],
+                "category": meta.get("category", ""),
+                "date": meta.get("date", ""),
+                "html_file": f"/download/wp_articles/{today}.html",
+            })
+        return jsonify({"error": "Generation failed", "output": result.stdout}), 500
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 
-@app.route("/api/wp-status")
-def wp_status():
-    """Check WordPress publisher status."""
+@app.route("/article")
+def article_page():
+    """Serve article copy-paste page."""
     import json as _json
-    log_file = os.path.join(DATA_DIR, "wp_published.json")
-    if os.path.exists(log_file):
-        with open(log_file) as f:
-            log = _json.load(f)
-        return jsonify({
-            "total_published": len(log.get("published", [])),
-            "last_5": log.get("published", [])[-5:],
-            "next_topic_idx": log.get("topic_idx", 0),
-        })
-    return jsonify({"total_published": 0, "message": "No posts yet"})
+    articles_dir = os.path.join(DATA_DIR, "wp_articles")
+    today = datetime.now().strftime("%Y-%m-%d")
+    meta_file = os.path.join(articles_dir, f"{today}.json")
+
+    if not os.path.exists(meta_file):
+        # Generate first
+        try:
+            import subprocess as _sub
+            _sub.run(["python3", os.path.join(os.path.dirname(__file__),
+                      "../scripts/generate_wp_article.py")], timeout=30)
+        except Exception:
+            pass
+
+    if os.path.exists(meta_file):
+        with open(meta_file) as f:
+            meta = _json.load(f)
+        return f"""<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>WordPress Article</title>
+<style>
+body {{ font-family: -apple-system, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f5f5; }}
+.card {{ background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.1); }}
+h1 {{ color: #1a1a2e; font-size: 22px; }}
+pre {{ white-space: pre-wrap; word-wrap: break-word; background: #f8f8f8; padding: 12px; border-radius: 6px; font-size: 13px; max-height: 400px; overflow-y: auto; border: 1px solid #eee; }}
+.copy-btn {{ background: #0073aa; color: #fff; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 14px; margin-top: 8px; }}
+.copy-btn:hover {{ background: #005a87; }}
+.label {{ font-weight: bold; color: #555; margin-bottom: 4px; }}
+.success {{ color: green; font-weight: bold; display: none; margin-left: 10px; }}
+</style>
+</head>
+<body>
+<h1>🐾 Artikel WordPress — Catatan Insani</h1>
+<div class="card">
+<div class="label">📝 Title (copy ke WordPress):</div>
+<h1 id="title">{meta["title"]}</h1>
+<button class="copy-btn" onclick="copyText('title')">📋 Copy Title</button>
+<span class="success" id="title-copied">✅ Copied!</span>
+</div>
+<div class="card">
+<div class="label">📂 Category: <strong>{meta.get("category", "")}</strong></div>
+<div class="label">📅 Date: <strong>{meta.get("date", "")}</strong></div>
+</div>
+<div class="card">
+<div class="label">📄 HTML Content (paste ke WordPress editor HTML mode):</div>
+<pre id="content">{meta["content"]}</pre>
+<button class="copy-btn" onclick="copyText('content')">📋 Copy HTML Content</button>
+<span class="success" id="content-copied">✅ Copied!</span>
+</div>
+<div class="card">
+<div class="label">👁️ Preview:</div>
+{meta["content"]}
+</div>
+<script>
+function copyText(id) {{
+  const text = document.getElementById(id).innerText || document.getElementById(id).textContent;
+  navigator.clipboard.writeText(text).then(() => {{
+    document.getElementById(id + '-copied').style.display = 'inline';
+    setTimeout(() => document.getElementById(id + '-copied').style.display = 'none', 2000);
+  }});
+}}
+</script>
+</body></html>"""
+    return jsonify({"error": "No article generated yet. POST /api/generate-article first."}), 404
 
 
 if __name__ == "__main__":
