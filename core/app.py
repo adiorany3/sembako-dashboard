@@ -929,17 +929,11 @@ pre{{white-space:pre-wrap;word-wrap:break-word;background:#f8f8f8;padding:12px;b
 <button class="copy-btn" onclick="copyRaw()">📋 Copy HTML Source</button>
 <span class="success" id="content-copied">Copied!</span>
 <div id="readable" style="margin-top:12px;padding:12px;background:#f8f8f8;border-radius:6px;font-size:13px;max-height:300px;overflow-y:auto;border:1px solid #eee"></div>
-</div>
 <div class="card preview"><div class="label">Preview:</div>{ct}</div>
 <div class="card">
-<a href="/article?new=1" class="copy-btn" style="background:#28a745;text-decoration:none;display:inline-block">Generate Artikel Baru</a>
+<a href="/article?new=1" class="copy-btn" style="background:#28a745;text-decoration:none;display:inline-block">🔄 Generate Artikel Baru</a>
 </div>
 <script>
-(function(){{
-  var raw=document.getElementById("raw").textContent;
-  var el=document.getElementById("readable");
-  el.innerHTML="<pre>"+raw.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")+"</pre>";
-}})();
 function copyRaw(){{
   var raw=document.getElementById("raw").textContent;
   var ta=document.createElement("textarea");
