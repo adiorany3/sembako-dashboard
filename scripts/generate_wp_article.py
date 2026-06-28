@@ -1,448 +1,436 @@
 #!/usr/bin/env python3
 """
-WordPress Article Generator v3 — Catatan Insani
+WordPress Article Generator v4 — Catatan Insani
 ================================================
-Prinsip: judul DAN konten harus koheren. Setiap artikel = tulisan utuh.
-Data real dari dashboard dipakai langsung di konten (bukan template).
+Pure peternakan articles. No forced data.
+Each article is a coherent blog post on a farming topic.
+7 rotating topics.
 """
 
-import json, random, os
+import json, random
 from datetime import datetime
 from pathlib import Path
-import urllib.request
 
-DATA_DIR = Path(__file__).resolve().parent.parent / "data"
-WP_DIR = DATA_DIR / "wp_articles"
+WP_DIR = Path(__file__).resolve().parent.parent / "data" / "wp_articles"
 WP_DIR.mkdir(exist_ok=True)
 
 
-def fetch_api(endpoint):
-    try:
-        url = f"http://127.0.0.1:5000/api/{endpoint}"
-        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-        with urllib.request.urlopen(req, timeout=10) as r:
-            return json.loads(r.read()).get("data", [])
-    except Exception:
-        return []
-
-
-def fmt(n):
-    return f"Rp{n:,.0f}".replace(",", ".")
-
-
-def categorize_prices(items):
-    """Sort items into categories."""
-    cats = {
-        "hewan_hidup": [],
-        "daging": [],
-        "telur": [],
-        "olah": [],
-        "jasa": [],
-        "packaging": [],
-        "supermarket": [],
-    }
-    for it in items:
-        name = (it.get("produk") or it.get("komoditas") or "").lower()
-        price = it.get("harga_rata") or it.get("harga") or 0
-        src = (it.get("sumber") or "").lower()
-        if not price:
-            continue
-        entry = (it.get("produk") or it.get("komoditas", ""), price, src)
-
-        if "jasa" in name or "pemotongan" in name or "cold" in name or "transportasi" in name:
-            cats["jasa"].append(entry)
-        elif "hidup" in name:
-            cats["hewan_hidup"].append(entry)
-        elif "daging" in name or "fillet" in name or "marge" in name or "liver" in name or "feet" in name:
-            cats["daging"].append(entry)
-        elif "telur" in name:
-            cats["telur"].append(entry)
-        elif "sosis" in name or "nugget" in name:
-            cats["olah"].append(entry)
-        elif "kardus" in name or "plastik" in name or "label" in name or "code date" in name:
-            cats["packaging"].append(entry)
-        elif "superindo" in src or "hypermart" in src or "carrefour" in src:
-            cats["supermarket"].append(entry)
-    return cats
-
-
-def make_table(rows, title=""):
-    """Build HTML table from list of (name, price, source) tuples."""
-    if not rows:
-        return ""
-    html = f'<h4>{title}</h4>\n<table style="width:100%;border-collapse:collapse;font-size:14px;margin:10px 0">\n'
-    html += '<tr style="background:#0073aa;color:#fff"><th style="padding:6px;text-align:left">Komoditas</th><th style="padding:6px;text-align:right">Harga/kg</th><th style="padding:6px;text-align:left">Sumber</th></tr>\n'
-    for name, price, src in rows:
-        html += f'<tr><td style="padding:5px;border-bottom:1px solid #eee">{name}</td><td style="padding:5px;border-bottom:1px solid #eee;text-align:right">{fmt(price)}</td><td style="padding:5px;border-bottom:1px solid #eee;color:#888">{src}</td></tr>\n'
-    html += "</table>\n"
-    return html
-
-
 # ================================================================
-# 7 ARTICLE TYPES — each returns {title, category, body}
+# 7 ARTICLE TYPES — each is a complete, coherent blog post
 # ================================================================
 
+ARTICLES = [
+    # 1
+    {
+        "title": "Cara Memilih Bibit Ayam Broiler yang Bagus: Panduan untuk Pemula",
+        "category": "Tips Ternak",
+        "body": """
+<p>Memilih bibit DOC (Day Old Chick) yang berkualitas adalah langkah pertama menentukan keberhasilan ternak ayam broiler. Banyak pemula yang salah memilih bibit hanya karena harganya murah, padahal kualitas DOC menentukan 60-70% hasil akhir.</p>
 
-def art_1_harga_hari_ini(cats, sentimen, ds):
-    """Ringkasan harga lengkap hari ini — hewan hidup, daging, telur."""
-    hidup = cats["hewan_hidup"][:6]
-    daging = cats["daging"][:6]
-    telur = cats["telur"][:4]
-    olah = cats["olah"][:4]
-
-    pos = sum(1 for s in sentimen if "positif" in str(s.get("sentimen", "")).lower())
-    neg = sum(1 for s in sentimen if "negatif" in str(s.get("sentimen", "")).lower())
-    total_s = pos + neg
-    tren_txt = f"Positif ({pos}/{total_s} data)" if pos > neg else f"Waspada ({neg}/{total_s} data negatif)" if neg > pos else "Netral"
-
-    # Average prices for summary
-    avg_hidup = sum(p for _, p, _ in hidup) / len(hidup) if hidup else 0
-    avg_daging = sum(p for _, p, _ in daging) / len(daging) if daging else 0
-
-    body = f"""<p>Berikut rangkuman harga peternakan terkini per <strong>{ds}</strong> berdasarkan data monitoring dari berbagai pasar dan sumber.</p>
-
-<h4>Hewan Hidup (Basis Peternak)</h4>
-{make_table(hidup)}
-
-<h4>Daging Segar</h4>
-{make_table(daging)}
-
-<h4>Telur</h4>
-{make_table(telur)}
-
-<h4>Produk Olahan</h4>
-{make_table(olah)}
-
-<h4>Ringkasan</h4>
-<p>Rata-rata harga hewan hidup berkisar <strong>{fmt(avg_hidup)}/kg</strong>, sedangkan daging segar di kisaran <strong>{fmt(avg_daging)}/kg</strong>. Sentimen pasar: <strong>{tren_txt}</strong>.</p>
-<p>Peternak perlu memantau pergerakan harga mingguan untuk menentukan timing beli pakan dan jual ternak yang tepat.</p>"""
-
-    return {
-        "title": f"Update Harga Peternakan {ds}: Hewan Hidup, Daging & Telur",
-        "category": "Update Harga",
-        "body": body,
-    }
-
-
-def art_2_selisih_grosir_eceran(cats, ds):
-    """Analisis selisih harga grosir vs eceran — peluang untuk peternak."""
-    daging = cats["daging"]
-    telur = cats["telur"]
-
-    # Find grosir vs eceran pairs
-    pairs = []
-    grosir_items = [(n, p, s) for n, p, s in daging + telur if "grosir" in s.lower() or "kim" in s.lower() or "peternakan" in s.lower()]
-    eceran_items = [(n, p, s) for n, p, s in daging + telur if "eceran" in s.lower() or "sm" in s.lower()]
-
-    # Match by similar product name
-    for gn, gp, gs in grosir_items:
-        for en, ep, es in eceran_items:
-            # Simple match: both contain "ayam" or both contain "sapi" or both contain "telur"
-            for keyword in ["ayam", "sapi", "telur", "kambing"]:
-                if keyword in gn.lower() and keyword in en.lower():
-                    if gp > 0 and ep > 0 and ep > gp:
-                        margin = ep - gp
-                        pct = (margin / gp) * 100
-                        pairs.append((gn, gp, en, ep, margin, pct))
-                        break
-
-    pairs = pairs[:4]  # max 4 pairs
-
-    if not pairs:
-        pairs_data = "<p>Data selisih grosir vs eceran belum cukup untuk analisis hari ini. Harga eceran umumnya 15-25% lebih tinggi dari harga grosir/peternakan.</p>"
-    else:
-        rows = ""
-        for gn, gp, en, ep, margin, pct in pairs:
-            rows += f"<tr><td>{gn}</td><td>{fmt(gp)}</td><td>{en}</td><td>{fmt(ep)}</td><td><strong>{fmt(margin)}</strong></td><td>{pct:.0f}%</td></tr>\n"
-        pairs_data = f"""<table style="width:100%;border-collapse:collapse;font-size:14px;margin:10px 0">
-<tr style="background:#0073aa;color:#fff"><th style="padding:6px">Grosir</th><th style="padding:6px">Harga Grosir</th><th style="padding:6px">Eceran</th><th style="padding:6px">Harga Ecer</th><th style="padding:6px">Selisih</th><th style="padding:6px">Margin %</th></tr>
-{rows}</table>"""
-
-    body = f"""<p>Salah satu peluang terbesar bagi peternak adalah menjual langsung ke konsumen atau retail, bukan hanya ke bandar. Berikut analisis selisih harga grosir vs eceran per <strong>{ds}</strong>.</p>
-
-{pairs_data}
-
-<h4>Mengapa Selisih Ini Ada?</h4>
+<h4>Ciri DOC Sehat yang Harus Diperhatikan</h4>
 <ul>
-<li><strong>Biaya distribusi</strong> — transportasi, cold chain, penanganan</li>
-<li><strong>Biaya ritel</strong> — sewa tempat, listrik, pegawai</li>
-<li><strong>Margin pedagang</strong> — keuntungan untuk rantai pasok</li>
-<li><strong>Resiko kerusakan</strong> — produk segar punya shelf life pendek</li>
+<li><strong>Postur tubuh tegak</strong> — DOC sehat berdiri kokoh, tidak jatuh atau miring. Jika ada yang terus terjatuh, kemungkinan ada masalah kaki atau syaraf.</li>
+<li><strong>Mata cerah dan bersih</strong> — mata berair, kusam, atau tertutup lendir adalah tanda infeksi awal.</li>
+<li><strong>Pusar kering dan bersih</strong> — pusar yang basah atau berdarah menandakan sanitasi inkubator buruk. Ini pintu masuk infeksi bakteri.</li>
+<li><strong>Bulu kering dan halus</strong> — DOC sehat memiliki bulu halus yang mengembang. Bulu lepek atau kusut menandakan dehidrasi atau stres.</li>
+<li><strong>Suara aktif</strong> — DOC sehat bersuara aktif dan merata. Jika ada yang terus mencekik atau diam, kemungkinan sakit.</li>
+<li><strong>Berat badan seragam</strong> — DOC standar broiler 40-45 gram. Berat yang terlalu ringan (di bawah 38g) biasanya berasal dari indukan kurang gizi.</li>
 </ul>
 
-<h4>Bagaimana Peternak Bisa Memanfaatkan?</h4>
+<h4>Sumber DOC Terpercaya</h4>
+<p>Hindari membeli DOC dari pengepul yang tidak jelas asal-usulnya. Pilih distributor resmi seperti:</p>
+<ul>
+<li>PT Charoen Pokphand Indonesia (CP)</li>
+<li>PT Japfa Comfeed Indonesia</li>
+<li>PT Santosa Agrindo (Sierad Produce)</li>
+<li>PT Panca Budi Investama</li>
+</ul>
+<p>Distributor resmi memberikan jaminan vaksinasi awal (ND + IBD) dan riwayat kesehatan indukan (parent stock).</p>
+
+<h4>Harga DOC vs Kualitas</h4>
+<p>DOC broiler berkisar Rp4.000-6.500 per ekor. Harga ini fluktuatif tergantung musim dan permintaan. Jangan tergiur DOC murah di bawah Rp3.500 — kemungkinan besar berasal dari DOC reject atau indukan tua.</p>
+<p>Sebagai gambaran: DOC kualitas baik dari indukan muda (umur 30-45 minggu) menghasilkan pertumbuhan lebih cepat dan FCR lebih rendah dibanding DOC dari indukan tua (>60 minggu).</p>
+
+<h4>Tips Setelah DOC Sampai</h4>
 <ol>
-<li><strong>Jual langsung di pasar tradisional</strong> — margin lebih tinggi, tapi perlu waktu dan tenaga.</li>
-<li><strong>Kerja sama dengan warung/katering</strong> — harga di atas grosir, di bawah eceran. Win-win.</li>
-<li><strong>olah sendiri</strong> — nugget, sosis, abon dari daging/sisa. Margin jauh lebih besar.</li>
-<li><strong>Branding sederhana</strong> — kemasan rapi + label = bisa jual lebih mahal dari pasar.</li>
+<li><strong>Langsung masukkan ke brooding</strong> — suhu brooding harus 32-34°C di minggu pertama. Turunkan 0.5°C per minggu.</li>
+<li><strong>Air gula hangat</strong> — berikan air hangat dengan gula 5% selama 6 jam pertama untuk mengurangi stres transportasi.</li>
+<li><strong>Pakan starter sesegera mungkin</strong> — dalam 24 jam pertama. DOC yang lambat makan = pertumbuhan terhambat.</li>
+<li><strong>Amati 3 hari pertama</strong> — 72 jam pertama adalah masa kritis. Jika ada DOC yang terus diam atau tidak makan, langsung singkirkan.</li>
 </ol>
 
-<h4>Contoh Potensi</h4>
-<p>Jika kamu menjual ayam potong Rp{fmt(38000)}/kg ke bandar, tapi bisa jual Rp{fmt(44000)}/kg ke warung — selisih Rp{fmt(6000)}/kg. Untuk 100 kg/hari = Rp{fmt(600000)}/hari = Rp{fmt(18000000)}/bulan tambahan. Tanpa tambah ternak.</p>"""
-
-    return {
-        "title": f"Selisih Harga Grosir vs Eceran ({ds}): Peluang untuk Peternak",
-        "category": "Analisis Pasar",
-        "body": body,
-    }
-
-
-def art_3_biaya_produksi(cats, ds):
-    """Breakdown biaya produksi dari data jasa + packaging."""
-    jasa = cats["jasa"]
-    pak = cats["packaging"]
-
-    body_sections = ""
-
-    if jasa:
-        body_sections += make_table(jasa, "Biaya Jasa & Logistik")
-    else:
-        body_sections += '<p>Data biaya jasa belum tersedia.</p>'
-
-    if pak:
-        body_sections += make_table(pak, "Biaya Kemasan")
-    else:
-        body_sections += '<p>Data biaya kemasan belum tersedia.</p>'
-
-    # Find slaughter cost
-    sapi_cut = next((p for n, p, _ in jasa if "sapi" in n.lower() and "besar" not in n.lower()), None)
-    kambing_cut = next((p for n, p, _ in jasa if "kambing" in n.lower()), None)
-
-    body = f"""<p>Biaya produksi peternakan bukan hanya soal pakan dan bibit. Banyak komponen tersembunyi yang sering terlupakan. Berikut rincian berdasarkan data terkini.</p>
-
-{body_sections}
-
-<h4>Contoh Rincian Biaya Produksi Ayam Broiler (per ekor)</h4>
-<table style="width:100%;border-collapse:collapse;font-size:14px;margin:10px 0">
-<tr style="background:#0073aa;color:#fff"><th style="padding:6px;text-align:left">Komponen</th><th style="padding:6px;text-align:right">Estimasi</th></tr>
-<tr><td style="padding:5px;border-bottom:1px solid #eee">DOC (anak ayam)</td><td style="padding:5px;border-bottom:1px solid #eee;text-align:right">Rp4.500-5.500</td></tr>
-<tr><td style="padding:5px;border-bottom:1px solid #eee">Pakan (35-40 hari)</td><td style="padding:5px;border-bottom:1px solid #eee;text-align:right">Rp25.000-30.000</td></tr>
-<tr><td style="padding:5px;border-bottom:1px solid #eee">Obat & vaksin</td><td style="padding:5px;border-bottom:1px solid #eee;text-align:right">Rp1.500-2.000</td></tr>
-<tr><td style="padding:5px;border-bottom:1px solid #eee">Energi (listrik air)</td><td style="padding:5px;border-bottom:1px solid #eee;text-align:right">Rp1.000-1.500</td></tr>
-<tr><td style="padding:5px;border-bottom:1px solid #eee">Kemasan & label</td><td style="padding:5px;border-bottom:1px solid #eee;text-align:right">Rp500-1.000</td></tr>
-<tr style="background:#f0f0f0;font-weight:bold"><td style="padding:6px">Total biaya</td><td style="padding:6px;text-align:right">Rp32.500-40.000</td></tr>
-</table>
-
-<p>Jika harga jual Rp{fmt(38000)}/kg dan berat akhir 2 kg = Rp76.000/ekor. Laba bersih: Rp{fmt(76000-40000)}-{fmt(76000-32500)}/ekor. Untuk 1.000 ekor: Rp{fmt(36000000)}-{fmt(43500000)}/siklus.</p>
-
-<h4>Yang Sering Terlupakan</h4>
-<ul>
-<li><strong>Susu formula anak</strong> — kalau ternak sapi perah, ini komponen besar.</li>
-<li><strong>Kerusakan/kematian</strong> — budget 3-5% dari total biaya sebagai cadangan.</li>
-<li><strong>Kerusakan peralatan</strong> — kipas, lampu, waterer. Siapkan dana perbaikan.</li>
-<li><strong>Biaya tenaga kerja</strong> — kalau ada karyawan, hitung UMR lokal.</li>
-</ul>"""
-
-    return {
-        "title": f"Rincian Biaya Produksi Peternakan ({ds}): Jasa, Kemasan & Logistik",
+<h4>Kesimpulan</h4>
+<p>Investasi di bibit yang baik akan terbayar di akhir panen. DOC berkualitas = pertumbuhan seragam, kematian rendah, dan FCR optimal. Jangan korbankan kualitas bibit demi menghemat seribu-dua ribu rupiah per ekor.</p>
+"""
+    },
+    # 2
+    {
+        "title": "Formulasi Pakan Ayam Broiler: Cara Racik Sendiri untuk Hemat Biaya",
         "category": "Optimasi Biaya",
-        "body": body,
-    }
+        "body": """
+<p>Pakan komersial memang praktis, tapi harganya terus naik. Dengan meracik pakan sendiri, peternak bisa menghemat 20-30% biaya pakan tanpa mengorbankan pertumbuhan ternak.</p>
 
-
-def art_4_olahan_ayam(cats, ds):
-    """Fokus produk olahan ayam — nugget, sosis, fillet."""
-    daging_ayam = [(n, p, s) for n, p, s in cats["daging"] if "ayam" in n.lower()]
-    olah = cats["olah"]
-    supermarket = [(n, p, s) for n, p, s in cats["supermarket"] if "ayam" in n.lower() or "sosis" in n.lower() or "nugget" in n.lower()]
-
-    body = f"""<p>Produk olahan ayam punya margin yang jauh lebih tinggi dibanding daging mentah. Berikut peluang yang bisa dimanfaatkan peternak.</p>
-
-<h4>Harga Bahan Baku (Ayam)</h4>
-{make_table(daging_ayam, "Harga Ayam Mentah")}
-
-<h4>Harga Produk Olahan</h4>
-{make_table(olah, "Produk Olahan")}
-
-<h4>Harga di Supermarket</h4>
-{make_table(supermarket, "Harga Supermarket")}
-
-<h4>Analisis Margin</h4>"""
-
-    # Calculate margin if data available
-    if daging_ayam and olah:
-        avg_raw = sum(p for _, p, _ in daging_ayam) / len(daging_ayam)
-        for name, price, src in olah:
-            margin = price - avg_raw
-            pct = (margin / avg_raw * 100) if avg_raw else 0
-            body += f"<p><strong>{name}</strong>: bahan baku ~{fmt(avg_raw)}/kg → harga jual {fmt(price)}/kg → margin {fmt(margin)}/kg ({pct:.0f}%)</p>\n"
-    else:
-        body += "<p>Data bahan baku belum cukup untuk kalkulasi margin.</p>"
-
-    body += f"""
-<h4>Mulai Produksi Olahan Sendiri</h4>
-<ol>
-<li><strong>Nugget ayam</strong> — bahan: ayam giling, tepung roti, telur, bumbu. Modal kecil, nilai tambah besar.</li>
-<li><strong>Sosis ayam</strong> — bahan: ayam giling, tapioka, bumbu, kulit sosis. Butuh cetakan sosis.</li>
-<li><strong>Ayam fillet</strong> — potong tanpa tulang. Butuh keterampilan, tapi harga jual 2-3x lipat daging ayam biasa.</li>
-<li><strong>Abon ayam</strong> — olahan dari ayam rebus + bumbu. Shelf life panjang, cocok untuk oleh-oleh.</li>
-</ol>
-
-<h4>Tips Penting</h4>
+<h4>Prinsip Dasar Formulasi Pakan</h4>
+<p>Pakan ternak harus memenuhi 4 kebutuhan utama:</p>
 <ul>
-<li>Gunakan bahan segar — kualitas rasa menentukan repeat order.</li>
-<li>Kemasan rapi dan bersih — kesan pertama penting.</li>
-<li>Mulai dari skala kecil (10-20 kg/hari), test market dulu.</li>
-<li>Daftarkan ke PIRT (Pangan Industri Rumah Tangga) untuk legalitas.</li>
-</ul>"""
-
-    return {
-        "title": f"Produk Olahan Ayam ({ds}): Peluang Margin Tinggi untuk Peternak",
-        "category": "Peluang Bisnis",
-        "body": body,
-    }
-
-
-def art_5_hewan_ternak(cats, ds):
-    """Fokus hewan ternak hidup — ayam, kambing, sapi, itik."""
-    hidup = cats["hewan_hidup"]
-
-    body = f"""<p>Harga hewan ternak hidup adalah titik awal sebelum masuk ke rantai pasok. Memahami perbandingan harga antar jenis ternak membantu peternak memilih mana yang paling menguntungkan.</p>
-
-<h4>Harga Ternak Hidup</h4>
-{make_table(hidup, "Harga Hewan Hidup (Basis Peternak)")}
-
-<h4>Perbandingan per Jenis</h4>"""
-
-    # Group by type
-    types = {}
-    for name, price, src in hidup:
-        key = "Sapi" if "sapi" in name.lower() else "Kambing" if "kambing" in name.lower() else "Ayam" if "ayam" in name.lower() else "Itik" if "itik" in name.lower() else "Lain"
-        types.setdefault(key, []).append((name, price))
-
-    for tipe in ["Ayam", "Kambing", "Sapi", "Itik"]:
-        items = types.get(tipe, [])
-        if items:
-            avg = sum(p for _, p in items) / len(items)
-            body += f"<p><strong>{tipe}</strong>: rata-rata {fmt(avg)}/kg. Range: {fmt(min(p for _, p in items))} - {fmt(max(p for _, p in items))}/kg</p>\n"
-
-    body += f"""
-<h4>Pertimbangan Memilih Ternak</h4>
-<table style="width:100%;border-collapse:collapse;font-size:14px;margin:10px 0">
-<tr style="background:#0073aa;color:#fff"><th style="padding:6px;text-align:left">Jenis</th><th style="padding:6px">Modal Awal</th><th style="padding:6px">Siklus</th><th style="padding:6px">Resiko</th></tr>
-<tr><td style="padding:5px;border-bottom:1px solid #eee">Ayam Broiler</td><td style="padding:5px;border-bottom:1px solid #eee;text-align:center">Kecil</td><td style="padding:5px;border-bottom:1px solid #eee;text-align:center">35-40 hari</td><td style="padding:5px;border-bottom:1px solid #eee;text-align:center">Rendah</td></tr>
-<tr><td style="padding:5px;border-bottom:1px solid #eee">Ayam Kampung</td><td style="padding:5px;border-bottom:1px solid #eee;text-align:center">Kecil</td><td style="padding:5px;border-bottom:1px solid #eee;text-align:center">3-4 bulan</td><td style="padding:5px;border-bottom:1px solid #eee;text-align:center">Rendah</td></tr>
-<tr><td style="padding:5px;border-bottom:1px solid #eee">Kambing</td><td style="padding:5px;border-bottom:1px solid #eee;text-align:center">Sedang</td><td style="padding:5px;border-bottom:1px solid #eee;text-align:center">6-8 bulan</td><td style="padding:5px;border-bottom:1px solid #eee;text-align:center">Sedang</td></tr>
-<tr><td style="padding:5px;border-bottom:1px solid #eee">Sapi</td><td style="padding:5px;border-bottom:1px solid #eee;text-align:center">Besar</td><td style="padding:5px;border-bottom:1px solid #eee;text-align:center">8-12 bulan</td><td style="padding:5px;border-bottom:1px solid #eee;text-align:center">Tinggi</td></tr>
-</table>
-
-<h4>Tips Memilih Bibit/Bakalan</h4>
-<ul>
-<li><strong>Cek kondisi fisik</strong> — mata cerah, nafsu makan baik, tidak lesu.</li>
-<li><strong>Tanya asal usul</strong> — peternak terpercaya = riwayat kesehatan lebih jelas.</li>
-<li><strong>Jangan tergiur murah</strong> — bibit murah tapi sakat = rugi di akhir.</li>
-<li><strong>Pertimbangkan lokasi</strong> — ayam lebih cocok di dekat kota, sapi/kambing di lahan luas.</li>
-</ul>"""
-
-    return {
-        "title": f"Harga Ternak Hidup ({ds}): Perbandingan Ayam, Kambing, Sapi & Itik",
-        "category": "Panduan Ternak",
-        "body": body,
-    }
-
-
-def art_6_supermarket_harga(cats, ds):
-    """Analisis harga supermarket vs pasar tradisional."""
-    sm = cats["supermarket"][:8]
-    trad = [(n, p, s) for n, p, s in cats["daging"] + cats["telur"] if "superindo" not in s and "hypermart" not in s and "carrefour" not in s and "tokopedia" not in s and "shopee" not in s][:8]
-
-    body = f"""<p>Harga di supermarket biasanya lebih mahal dari pasar tradisional. Tapi berapa sebenarnya selisihnya? Berikut perbandingan data terkini.</p>
-
-<h4>Harga Supermarket</h4>
-{make_table(sm, "Harga Supermarket (SM)")}
-
-<h4>Harga Pasar Tradisional / Peternakan</h4>
-{make_table(trad, "Harga Pasar Tradisional")}
-
-<h4>Peluang untuk Peternak</h4>
-<p>Supermarket membayar lebih mahal karena menuntut kualitas, konsistensi, dan kemasan yang rapi. Peternak bisa masuk ke rantai supermarket dengan:</p>
-<ol>
-<li><strong>Kualitas konsisten</strong> — ukuran, berat, dan tampilan yang seragam.</li>
-<li><strong>Kemasan profesional</strong> — vakum, label, tanggal produksi jelas.</li>
-<li><strong>Sertifikasi</strong> — HALAL, PIRT, atau sertifikat kesehatan hewan.</li>
-<li><strong>Pengiriman terjadwal</strong> — supermarket butuh suplai harian/mingguan.</li>
-</ol>
-
-<h4>Alternatif: Jual Langsung Online</h4>
-<ul>
-<li><strong>Tokopedia/Shopee</strong> — harga di platform ini lebih mendekati harga pasar, bukan supermarket.</li>
-<li><strong>Instagram/WhatsApp</strong> — jual langsung ke konsumen akhir, margin terbesar.</li>
-<li><strong>Katering/Restoran</strong> — harga di atas grosir, below supermarket. Volume besar.</li>
-</ul>"""
-
-    return {
-        "title": f"Harga Supermarket vs Pasar Tradisional ({ds}): Analisis untuk Peternak",
-        "category": "Analisis Pasar",
-        "body": body,
-    }
-
-
-def art_7_sentimen_pasar(cats, sentimen, ds):
-    """Analisis sentimen pasar peternakan."""
-    entries = sentimen[:10]
-    items_html = ""
-    for s in entries:
-        headline = s.get("headline") or s.get("komoditas") or s.get("produk") or "Berita"
-        sent = s.get("sentimen", "Netral")
-        skor = s.get("score", s.get("skor", "-"))
-        source = s.get("source", s.get("sumber", ""))
-        tanggal = s.get("tanggal", "")
-        warna = "green" if str(sent).upper() == "POSITIF" else "red" if str(sent).upper() == "NEGATIF" else "#666"
-        items_html += f'<li><strong>{headline[:80]}</strong> <span style="color:{warna};font-weight:bold">({sent})</span> — {source}, {tanggal}</li>\n'
-
-    # Sentiment summary
-    pos = sum(1 for s in entries if "positif" in str(s.get("sentimen", "")).lower())
-    neg = sum(1 for s in entries if "negatif" in str(s.get("sentimen", "")).lower())
-    neu = len(entries) - pos - neg
-
-    body = f"""<p>Sentimen pasar mencerminkan kondisi psikologis pelaku pasar terhadap suatu komoditas. Berikut data terkini per <strong>{ds}</strong>.</p>
-
-<h4>Data Sentimen</h4>
-<ul>{items_html}</ul>
-
-<h4>Ringkasan</h4>
-<table style="width:100%;border-collapse:collapse;font-size:14px;margin:10px 0">
-<tr style="background:#0073aa;color:#fff"><th style="padding:6px">Positif</th><th style="padding:6px">Netral</th><th style="padding:6px">Negatif</th></tr>
-<tr><td style="padding:8px;text-align:center;color:green;font-weight:bold;font-size:18px">{pos}</td><td style="padding:8px;text-align:center;font-size:18px">{neu}</td><td style="padding:8px;text-align:center;color:red;font-weight:bold;font-size:18px">{neg}</td></tr>
-</table>
-
-<h4>Artinya untuk Peternak</h4>
-<ul>
-<li><strong>Sentimen positif</strong> → permintaan kuat atau pasokan menipis. Harga berpotensi naik. Pertahankan stok, jangan buru-buru jual.</li>
-<li><strong>Sentimen negatif</strong> → oversupply atau permintaan turun. Harga berpotensi turun. Jual lebih awal, kurangi stok.</li>
-<li><strong>Sentimen netral</strong> → kondisi stabil. Fokus efisiensi biaya produksi.</li>
+<li><strong>Energi</strong> — sumber utama dari jagung, beras, atau singkong. Untuk broiler finisher: 3.000-3.200 kkal/kg.</li>
+<li><strong>Protein</strong> — dari bungkil kedelai, bungkil kelapa, atau ampas tahu. Untuk broiler finisher: 19-21% protein kasar.</li>
+<li><strong>Serat</strong> — dari dedak padi atau rumput. Maksimal 5-7% untuk broiler. Terlalu banyak serat mengurangi daya cerna.</li>
+<li><strong>Vitamin & mineral</strong> — dari premix atau konsentrat. Tidak bisa diabaikan.</li>
 </ul>
 
-<h4>Tindakan yang Bisa Diambil</h4>
+<h4>Contoh Ransum Broiler Finisher (Minggu 5-6)</h4>
+<table style="width:100%;border-collapse:collapse;margin:12px 0">
+<tr style="background:#0073aa;color:#fff"><th style="padding:8px;text-align:left">Bahan</th><th style="padding:8px;text-align:right">Komposisi</th><th style="padding:8px;text-align:left">Fungsi</th></tr>
+<tr><td style="padding:6px;border-bottom:1px solid #eee">Jagung kuning</td><td style="padding:6px;border-bottom:1px solid #eee;text-align:right">55%</td><td style="padding:6px;border-bottom:1px solid #eee">Sumber energi utama</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid #eee">Bungkil kedelai</td><td style="padding:6px;border-bottom:1px solid #eee;text-align:right">22%</td><td style="padding:6px;border-bottom:1px solid #eee">Sumber protein</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid #eee">Dedak padi</td><td style="padding:6px;border-bottom:1px solid #eee;text-align:right">12%</td><td style="padding:6px;border-bottom:1px solid #eee">Serat + energi tambahan</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid #eee">Minyak sawit</td><td style="padding:6px;border-bottom:1px solid #eee;text-align:right">5%</td><td style="padding:6px;border-bottom:1px solid #eee">Energy density tinggi</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid #eee">Premix broiler</td><td style="padding:6px;border-bottom:1px solid #eee;text-align:right">3%</td><td style="padding:6px;border-bottom:1px solid #eee">Vitamin & mineral</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid #eee">Kalsium fosfat</td><td style="padding:6px;border-bottom:1px solid #eee;text-align:right">2%</td><td style="padding:6px;border-bottom:1px solid #eee">Tulang & cangkang</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid #eee">Garam dapur</td><td style="padding:6px;border-bottom:1px solid #eee;text-align:right">0.5%</td><td style="padding:6px;border-bottom:1px solid #eee">Elektrolit</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid #eee">Metionin</td><td style="padding:6px;border-bottom:1px solid #eee;text-align:right">0.3%</td><td style="padding:6px;border-bottom:1px solid #eee">Amino acid esensial</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid #eee">Lysin HCl</td><td style="padding:6px;border-bottom:1px solid #eee;text-align:right">0.2%</td><td style="padding:6px;border-bottom:1px solid #eee">Amino acid esensial</td></tr>
+</table>
+
+<h4>Alternatif Pengganti Bungkil Kedelai</h4>
+<p>Bungkil kedelai sering mahal. Beberapa alternatif yang bisa dicampur:</p>
+<ul>
+<li><strong>Ampas tahu</strong> — protein 20-25%, tapi kadar air tinggi. Perlu dikeringkan dulu. Cocok untuk campuran 10-15%.</li>
+<li><strong>Bungkil kelapa</strong> — protein 18-22%, lebih murah dari kedelai. Tapi rendah lisin.</li>
+<li><strong>Onggok</strong> — protein 18-20%, hasil sampingan industri tapi. Murah tapi perlu fermentasi.</li>
+<li><strong>Limbah roti/biskuit</strong> — protein 10-12%, tapi tinggi karbohidrat. Campur maksimal 10%.</li>
+</ul>
+
+<h4>Cara Membuat Pakan Fermentasi</h4>
 <ol>
-<li>Pantau sentimen minimal 2-3x seminggu — jangan tunggu data bulanan.</li>
-<li>Gunakan data sentimen + harga bersamaan untuk keputusan beli/jual.</li>
-<li>Manfaatkan sentimen negatif komoditas A untuk diversifikasi ke komoditas B.</li>
+<li>Campur semua bahan kering sesuai formulasi.</li>
+<li>Larutkan ragi roti (5 gram/kg pakan) dalam air hangat.</li>
+<li>Siram rata ke campuran pakan, aduk hingga lembab.</li>
+<li>Simpan dalam wadah tertutup rapat selama 24-48 jam di tempat gelap.</li>
+<li>Jika tercium aroma seperti tape — fermentasi berhasil.</li>
+</ol>
+<p>Fermentasi meningkatkan daya cerna pakan 15-25% karena mikroorganisme memecah serat kompleks menjadi nutrisi yang lebih mudah diserap.</p>
+
+<h4>Kesimpulan</h4>
+<p>Meracik pakan sendiri bukan tentang mengurangi kualitas — tapi tentang memahami kebutuhan nutrisi ternak dan memanfaatkan bahan lokal yang tersedia. Mulai dengan ransum sederhana, pantau pertumbuhan, lalu sesuaikan formulasi dari pengalaman.</p>
+"""
+    },
+    # 3
+    {
+        "title": "Manajemen Kesehatan Ternak: Pencegahan Lebih Murah dari Pengobatan",
+        "category": "Kesehatan Ternak",
+        "body": """
+<p>Seorang peternak sukses pernah berkata: "Uang yang saya keluarkan untuk vaksin Rp500 per ekor, tapi uang yang saya habiskan untuk mengobati wabak Rp50 juta." Pencegahan memang jauh lebih murah dari pengobatan.</p>
+
+<h4>Vaksinasi: Jadwal yang Wajib Dipatuhi</h4>
+<p>Untuk unggas (ayam broiler):</p>
+<ul>
+<li><strong>Hari 1</strong>: Vaksin ND (Newcastle Disease) + IB (Infectious Bronchit) tetes mata atau hidung</li>
+<li><strong>Hari 7-10</strong>: Vaksin ND + IB ulang</li>
+<li><strong>Hari 14</strong>: Vaksin IBD (Infectious Bursal Disease / Gumboro) per oral</li>
+<li><strong>Hari 21</strong>: Vaksin ND laju (booster)</li>
+<li>Untuk layer: booster ND tiap 4-6 minggu selama masa produksi</li>
+</ul>
+<p>Harga vaksin ND berkisar Rp200-500 per dosis. Dengan vaksinasi tepat waktu, risiko wabak ND bisa diturunkan hingga 90%.</p>
+
+<h4>Biosekuriti Dasar</h4>
+<p>Biosekuriti bukan soal membangun gedung mahal. Ini adalah kebiasaan sehari-hari yang mencegah penyakit masuk ke kandang:</p>
+<ol>
+<li><strong>Footbath di pintu masuk</strong> — larutan formalin 2% atau glutaraldehyde. Ganti setiap 2-3 hari.</li>
+<li><strong>Ganti pakaian dan sepatu</strong> — siapa pun yang masuk kandang harus pakai pakaian dan sepatu khusus kandang.</li>
+<li><strong>Batasi kunjungan</strong> — semakin banyak orang masuk kandang, semakin besar risiko kontaminasi.</li>
+<li><strong>Karantina ternak baru</strong> — minimal 7-14 hari sebelum bergabung dengan kawanan utama.</li>
+<li><strong>Pisahkan area</strong> — kandang anakan, pembesaran, dan produksi harus terpisah secara fisik.</li>
 </ol>
 
-<h4>Disclaimer</h4>
-<p>Data sentimen dikumpulkan dari berbagai sumber berita dan analisis pasar. Bukan rekomendasi investasi. Selalu konsultasi dengan peternak berpengalaman di daerah Anda.</p>"""
+<h4>Tanda-Tanda Penyakit yang Harus Diwaspadai</h4>
+<ul>
+<li>Nafsu makan menurun drastis pada lebih dari 5% kawanan</li>
+<li>Aktivitas berkurang — ternak lebih banyak diam dari biasanya</li>
+<li>Demam — cek suhu rektal. Normal ayam 40-42°C. Di atas 43°C = demam.</li>
+<li>Produksi telur menurun mendadak (untuk layer)</li>
+<li>Ngorok atau napas berat pada unggas</li>
+<li>Diare atau kotoran berwarna abnormal (hijau, kuning, atau berdarah)</li>
+<li>Bengkak di kepala atau wajah (untuk unggas)</li>
+<li>Kematian mendadak pada beberapa ekor dalam waktu singkat</li>
+</ul>
+<p>Jika menemukan tanda-tanda ini, langkah pertama adalah isolasi ternak sakit. Jangan coba-coba obati sendiri tanpa diagnosis yang jelas. Hubungi dokter hewan atau penyuluh peternakan setempat.</p>
 
-    return {
-        "title": f"Sentimen Pasar Peternakan ({ds}): {pos} Positif, {neg} Negatif, {neu} Netral",
-        "category": "Analisis Pasar",
-        "body": body,
-    }
+<h4>Manajemen Limbah Kandang</h4>
+<p>Limbah kandang yang tidak dikelola dengan baik menjadi sumber penyakit. Praktik dasar:</p>
+<ul>
+<li>Ganti alas kandang minimal 2x seminggu</li>
+<li>Kompos limbah kandang — bisa jadi pupuk organik bernilai jual</li>
+<li>Cuci kandang dengan disinfektan setiap selesai panen (sebelum DOC baru masuk)</li>
+<li>Tunggu minimal 7 hari empty setelah cuci sebelum isi DOC baru</li>
+</ul>
 
+<h4>Biaya Pencegahan vs Pengobatan</h4>
+<ul>
+<li>Vaksinasi per ekor/bulan: Rp200-500</li>
+<li>Disinfektan per kandang/bulan: Rp100.000-300.000</li>
+<li>Biaya pengobatan wabak ringan: Rp2.000.000-10.000.000</li>
+<li>Biaya wabak berat (kematian massal): Rp10.000.000-100.000.000</li>
+</ul>
+<p>Investasi Rp500.000/bulan untuk pencegahan bisa mencegah kerugian Rp50 juta. Itu matematika sederhana yang sering dilupakan.</p>
+"""
+    },
+    # 4
+    {
+        "title": "Ternak Sapi Potong: Dari Pemilihan Bibit hingga Masa Panen",
+        "category": "Panduan Ternak",
+        "body": """
+<p>Ternak sapi potong menjanjikan margin keuntungan yang besar per ekor, meski modal awal lebih tinggi dibanding unggas. Siklus pemeliharaan 8-12 bulan, dan permintaan daging sapi di Indonesia terus meningkat setiap tahun.</p>
 
-# ================================================================
-# MAIN
-# ================================================================
+<h4>Memilih Bibit Sapi Potong</h4>
+<p>Bibit yang baik menentukan 70% keberhasilan. Berdasarkan pengalaman peternak di Jawa dan Sumatera:</p>
+<ul>
+<li><strong>Jenis sapi</strong>: Crossbreed seperti Simental, Limousin, dan Brahman Cross (BX) paling umum. Sapi lokal (Madura, Bali) lebih tahan penyakit tapi pertumbuhan lebih lambat.</li>
+<li><strong>Berat ideal saat dibeli</strong>: 200-250 kg (feeder/bakalan). Di atas 250 kg sudah terlalu tua untuk dibesarkan, di bawah 200 kg terlalu rentan sakit.</li>
+<li><strong>Usia</strong>: 12-18 bulan. Cek dari gigi — sapi umur 12-18 bulan biasanya sudah mulai tumbuh gigi permanen.</li>
+<li><strong>Fisik</strong>: tubuh berisi (bukan kurus kering), punggung lurus, tidak pincang, nafsu makan aktif.</li>
+</ul>
 
-ALL_ARTICLES = [
-    (art_1_harga_hari_ini, "prices"),
-    (art_2_selisih_grosir_eceran, "prices"),
-    (art_3_biaya_produksi, "prices"),
-    (art_4_olahan_ayam, "prices"),
-    (art_5_hewan_ternak, "prices"),
-    (art_6_supermarket_harga, "prices"),
-    (art_7_sentimen_pasar, "prices+sentimen"),
+<h4>Persiapan Kandang</h4>
+<p>Untuk pemula, kandang individu lebih mudah dikelola daripada kandang kelompok.</p>
+<ul>
+<li><strong>Ukuran kandang</strong>: minimal 3x3 meter per ekor. Sapi butuh ruang untuk berdiri, berbaring, dan berputar.</li>
+<li><strong>Alas kandang</strong>: semen berlubang atau tanah dengan jerami/sekam setebal 15-20 cm. Ganti minimal 2x seminggu.</li>
+<li><strong>Tempat pakan</strong>: palung semen atau besi. Ketinggian 60-80 cm dari lantai.</li>
+<li><strong>Tempat minum</strong>: tersedia 24 jam. Sapi potong minum 30-50 liter per hari tergantung ukuran dan suhu.</li>
+<li><strong>Atap</strong>: terpal atau genteng. Yang penting kandang tidak kepanasan di siang hari dan tidak bocor saat hujan.</li>
+</ul>
+
+<h4>Pakan Sapi Potong</h4>
+<p>Target pertumbuhan: 0,8-1,2 kg per hari. Untuk mencapai target ini, ransum harus mengandung cukup energi dan protein.</p>
+<ul>
+<li><strong>Hijauan</strong>: rumput gajah, kolonjono, king grass, atau rumput lapangan. 30-40 kg per ekor per hari.</li>
+<li><strong>Konsentrat</strong>: campuran ampas tahu (40%), bekatul (30%), jagung giling (25%), dan garam (5%). 5-8 kg per ekor per hari.</li>
+<li><strong>Mineral</strong>: blok mineral atau campuran garam kasar + kapur tulis. Sapi kekurangan mineral = nafsu makan turun.</li>
+<li><strong>Air minum</strong>: bersih, tidak terbatas, tidak terlalu dingin.</li>
+</ul>
+<p>Rasio hijauan:konsentrat yang ideal adalah 70:30. Terlalu banyak konsentrat bisa menyebabkan asidosis (pH rumen turun drastis), yang berujung pada diare dan bahkan kematian.</p>
+
+<h4>Pemeliharaan Harian</h4>
+<ol>
+<li><strong>Pagi (06:00)</strong>: beri pakan hijauan segar, cek air minum, amati perilaku ternak.</li>
+<li><strong>Siang (12:00)</strong>: beri konsentrat, cek kandang (kotoran, kelembaban).</li>
+<li><strong>Sore (17:00)</strong>: beri pakan hijauan lagi, bersihkan tempat minum.</li>
+<li><strong>Mingguan</strong>: timbang perkembangan berat badan, catat di buku.</li>
+<li><strong>Bulanan</strong>: dehelmintasi (obat cacing), evaluasi FCR.</li>
+</ol>
+
+<h4>Analisis Biaya Sederhana</h4>
+<ul>
+<li>Bibit 200-250 kg: Rp15-22 juta (tergantung jenis dan lokasi)</li>
+<li>Pakan 8 bulan (hijauan + konsentrat): Rp6-10 juta</li>
+<li>Obat & vaksin: Rp500.000-1.000.000</li>
+<li>Biaya kandang & lain-lain: Rp2-3 juta</li>
+<li><strong>Total modal per ekor</strong>: Rp23-36 juta</li>
+<li><strong>Target berat jual</strong>: 350-450 kg</li>
+<li><strong>Harga jual</strong>: Rp70.000-85.000/kg tergantung lokasi dan musim</li>
+</ul>
+<p>Margin per ekor bisa mencapai Rp5-12 juta tergantung efisiensi pakan dan timing jual.</p>
+
+<h4>Kesimpulan</h4>
+<p>Ternak sapi potong bukan bisnis instan. Butuh kesabaran 8-12 bulan untuk hasil. Tapi dengan manajemen yang benar — bibit bagus, pakan tepat, kesehatan terjaga — margin per ekor bisa menjanjikan. Mulai dari 2-3 ekor, pelajari dari pengalaman, lalu scale up.</p>
+"""
+    },
+    # 5
+    {
+        "title": "Cara Membuat Pakan Fermentasi untuk Ternak: Hemat & Efektif",
+        "category": "Optimasi Biaya",
+        "body": """
+<p>Fermentasi pakan adalah teknik sederhana yang bisa meningkatkan daya cerna pakan hingga 25%. Mikroorganisme dalam proses fermentasi memecah serat kompleks menjadi nutrisi yang lebih mudah diserap oleh ternak. Hasilnya: ternak tumbuh lebih cepat dengan pakan yang sama.</p>
+
+<h4>Mengapa Fermentasi Efektif?</h4>
+<ul>
+<li><strong>Meningkatkan protein</strong> — jamur dan bakteri baik menghasilkan protein sel tunggal yang bergizi.</li>
+<li><strong>Mengurai serat</strong> — selulosa dan hemiselulosa dipecah menjadi gula sederhana.</li>
+<li><strong>Probiotik alami</strong> — mikroorganisme baik membantu kesehatan pencernaan ternak.</li>
+<li><strong>Mengurangi bau kotoran</strong> — pencernaan lebih efisien = limbah lebih sedikit dan tidak berbau.</li>
+<li><strong>Mengawetkan pakan</strong> — pakan fermentasi bisa disimpan lebih lama dari pakan basah biasa.</li>
+</ul>
+
+<h4>Resep Fermentasi Pakan Unggas</h4>
+<p>Bahan:</p>
+<ul>
+<li>Dedak padi: 40 kg</li>
+<li>Jagung giling: 30 kg</li>
+<li>Bungkil kedelai: 20 kg</li>
+<li>Ampas tahu segar: 10 kg</li>
+<li>Ragi roti (Fermipan): 50 gram</li>
+<li>Gula pasir: 200 gram</li>
+<li>Air secukupnya (sampai lembab, bukan basah)</li>
+</ul>
+<p>Cara membuat:</p>
+<ol>
+<li>Campur semua bahan kering hingga rata.</li>
+<li>Larutkan ragi dan gula dalam 2 liter air hangat (30-35°C). Diamkan 15 menit sampai berbusa.</li>
+<li>Siram larutan ragi ke campuran pakan. Aduk rata.</li>
+<li>Tambah air sedikit-sedikit sampai pakan lembab tapi tidak menetes saat digenggam.</li>
+<li>Masukkan ke dalam drum atau karung tertutup rapat. Padatkan untuk mengurangi udara.</li>
+<li>Fermentasi selama 24-48 jam di tempat teduh.</li>
+<li>Pakan siap pakai jika tercium aroma seperti tape atau roti发酵.</li>
+</ol>
+<p>Jika tercium bau busuk atau berlendir hitam, fermentasi gagal. Jangan pakai — buang dan mulai ulang.</p>
+
+<h4>Fermentasi Pakan Ternak Besar (Sapi/Kambing)</h4>
+<p>Bahan:</p>
+<ul>
+<li>Jerami padi: 50 kg (dipotong 3-5 cm)</li>
+<li>Dedak padi: 15 kg</li>
+<li>Ampas tahu: 10 kg</li>
+<li>Molase: 3 liter</li>
+<li>Urea: 1 kg</li>
+<li>Air: 50-60 liter</li>
+</ul>
+<p>Cara:</p>
+<ol>
+<li>Jerami dipotong pendek agar mudah difermentasi.</li>
+<li>Campur jerami, dedak, dan ampas tahu.</li>
+<li>Larutkan molase dan urea dalam air, siram ke campuran.</li>
+<li>Padatkan dalam drum tertutup atau lobang tanah yang dialasi plastik.</li>
+<li>Fermentasi 3-4 minggu.</li>
+<li>Pakan siap jika jerami sudah lunak dan berbau manis seperti silase.</li>
+</ol>
+<p>Pakan hasil fermentasi untuk ternak besar ini bisa menggantikan 20-30% kebutuhan harian. Jerami yang tadinya tidak bergizi menjadi sumber energi yang layak.</p>
+
+<h4>Kesalahan Umum yang Harus Dihindari</h4>
+<ul>
+<li><strong>Terlalu basah</strong> — pakan yang terlalu basah cepat busuk. Genggam: jika air menetes, terlalu basah.</li>
+<li><strong>Tidak tertutup rapat</strong> — udara masuk = kontaminasi jamur. Tutup rapat dengan karet atau tali.</li>
+<li><strong>Wadah kotor</strong> — cuci wadah dengan air panas sebelum pakai.</li>
+<li><strong>Terlalu lama</strong> — fermentasi lebih dari 3 hari untuk unggas sudah berlebihan. Nutrisi mulai rusak.</li>
+<li><strong>Langsung pakai tanpa cek</strong> — selalu cek aroma dulu. Bau busuk = jangan dipakai.</li>
+</ul>
+
+<h4>Manfaat untuk Peternak Kecil</h4>
+<p>Untuk peternak dengan 100-500 ekor unggas, fermentasi pakan bisa menghemat Rp1-3 juta per bulan dari selisih harga bahan baku vs pakan komersial. Investasi awal hanya Rp200.000-500.000 untuk ragi dan wadah fermentasi.</p>
+"""
+    },
+    # 6
+    {
+        "title": "Menjalankan Usaha Ternak Kambing untuk Pemula: Langkah Awal yang Tepat",
+        "category": "Tips Ternak",
+        "body": """
+<p>Ternak kambing adalah salah satu usaha peternakan dengan modal menengah yang menjanjikan. Permintaan daging kambing cukup stabil sepanjang tahun, dan meningkat signifikan menjelang Idul Adha. Berikut panduan langkah demi langkah untuk pemula.</p>
+
+<h4>Pilih Jenis Kambing yang Tepat</h4>
+<ul>
+<li><strong>Kambing Etawa (PE)</strong>: postur besar, pertumbuhan cepat, cocok untuk peternakan daging. Harga bibir Rp3-6 juta.</li>
+<li><strong>Kambing Kacang</strong>: kambing lokal, tahan panas dan penyakit. Pertumbuhan lebih lambat tapi biaya perawatan rendah.</li>
+<li><strong>Kambing Boer</strong>: jenis impor dari Afrika Selatan, pertumbuhan sangat cepat. Harga bibit tinggi (Rp5-10 juta).</li>
+<li><strong>Domba</strong>: bulu tebal, cocok di dataran tinggi. Permintaan tinggi menjelang Qurban.</li>
+</ul>
+<p>Untuk pemula, kambing PE atau Kacang lebih disarankan karena lebih mudah didapat dan biaya awal lebih rendah.</p>
+
+<h4>Persiapan Kandang</h4>
+<ul>
+<li><strong>Ukuran</strong>: minimal 1.5x1.5 meter per ekor untuk kandang kelompok.</li>
+<li><strong>Tipe</strong>: kandang panggung (stilt house) dengan ketinggian 50-80 cm dari tanah. Kelebihannya: kotoran langsung jatuh ke bawah, kandang tetap kering.</li>
+<li><strong>Alas</strong>: bambu berjarak 1-2 cm atau besi hollow. Tidak boleh terlalu lebar (kaki masuk) atau terlalu sempit (kotoran tersangkut).</li>
+<li><strong>Atap</strong>: genteng atau aspal. Pastikan tidak bocor. Sapi kambing rentan pneumonia jika basah terus.</li>
+<li><strong>Atap</strong>: pastikan kandang teduh dari sinar matahari langsung. Kambing tidak tahan panas berlebih.</li>
+</ul>
+
+<h4>Pakan Kambing</h4>
+<ul>
+<li><strong>Hijauan</strong>: rumput gajah, lamtoro, kacang panjang, daun singkong. 2-3 kg per ekor per hari.</li>
+<li><strong>Konsentrat</strong>: bekatul, ampas tahu, kulit kedelai. 0.5-1 kg per ekor per hari.</li>
+<li><strong>Suplemen</strong>: mineral block, garam kasar. Penting untuk kesehatan pencernaan.</li>
+<li><strong>Air minum</strong>: 2-4 liter per ekor per hari. Bersih dan segar.</li>
+</ul>
+<p>Kambing adalah hewan browsing — mereka lebih suka makan daun dan dedaunan daripada rumput. Manfaatkan tanaman limbah pertanian seperti daun ubi jalar, daun pisang, atau lamtoro.</p>
+
+<h4>Reproduksi</h4>
+<ul>
+<li><strong>Indukan betina</strong>: siap kawin pada usia 8-10 bulan (berat minimal 25-30 kg).</li>
+<li><strong>Indukan jantan</strong>: siap kawin pada usia 10-12 bulan (berat minimal 30-35 kg).</li>
+<li><strong>Masa kebuntingan</strong>: 150 hari (5 bulan).</li>
+<li><strong>Anak per kelahiran</strong>: biasanya 1-2 ekor. Dengan manajemen nutrisi baik, bisa mencapai kembar 3.</li>
+<li><strong>Jarak kelahiran</strong>: 8-12 bulan antara kelahiran. Artinya 1 indukan bisa menghasilkan 2-3 anak per tahun.</li>
+</ul>
+<p>Satu ekor indukan yang produktif bisa menghasilkan pendapatan Rp6-12 juta per tahun dari penjualan anak. Dengan 10 indukan, potensi pendapatan Rp60-120 juta per tahun.</p>
+
+<h4>Manajemen Kesehatan</h4>
+<ul>
+<li><strong>Vaksinasi</strong>: vaksin POX (kudis) dan tetanus untuk semua anak kambing.</li>
+<li><strong>Dehelmintasi</strong>: obat cacing tiap 3-4 bulan. Cacing internal adalah pembunuh diam-diam yang mengurangi nafsu makan dan berat badan.</li>
+<li><strong>Obat luar</strong>: salep untuk kudis atau luka. Siapkan betadine dan salep antibiotik.</li>
+<li><strong>Isolasi</strong>: pisahkan kambing sakit dari kawanan segera.</li>
+</ul>
+
+<h4>Analisis Biaya untuk 5 Ekor Indukan</h4>
+<ul>
+<li>Indukan PE 5 ekor: Rp15-25 juta</li>
+<li>Kandang (5x3 meter): Rp5-8 juta</li>
+<li>Pakan per bulan (5 indukan + anak): Rp1.5-2.5 juta</li>
+<li>Obat & vaksin per tahun: Rp500.000-1.000.000</li>
+<li><strong>Total modal awal</strong>: Rp22-37 juta</li>
+<li><strong>Potensi pendapatan per tahun</strong>: Rp30-60 juta (10-15 anak x Rp3-5 juta/anak)</li>
+</ul>
+<p>ROI bisa mencapai 50-100% di tahun kedua setelah populasi indukan stabil. Kunci utama: manajemen reproduksi dan kesehatan yang konsisten.</p>
+"""
+    },
+    # 7
+    {
+        "title": "Pemanfaatan Limbah Peternakan: Dari Masalah Jadi Peluang Bisnis",
+        "category": "Peluang Bisnis",
+        "body": """
+<p>Limbah peternakan sering dianggap sebagai masalah — bau, polusi, dan tempat berkembangbiaknya lalat. Tapi sebenarnya, limbah ini adalah sumber pendapatan yang belum dimanfaatkan oleh kebanyakan peternak.</p>
+
+<h4>Jenis Limbah Peternakan dan Nilai Jualnya</h4>
+<ul>
+<li><strong>Kotoran kering</strong>: bisa diolah jadi pupuk organik Rp1.500-3.000/kg.</li>
+<li><strong>Kotoran segar</strong>: bahan baku biogas untuk memasak atau listrik.</li>
+<li><strong>Bulu ayam</strong>: bahan baku pupuk, pakan ternak, atau isolasi termal.</li>
+<li><strong>Tulang & ampas</strong>: bahan baku pakan ternak (tepung tulang) atau pupuk.</li>
+<li><strong>Air cucian kandang</strong>: pupuk cair organik untuk tanaman.</li>
+</ul>
+
+<h4>Pupuk Organik dari Kotoran Ternak</h4>
+<p>Proses pembuatan pupuk organik sederhana dan bisa dilakukan di lahan kecil:</p>
+<ol>
+<li><strong>Pengumpulan</strong>: kumpulkan kotoran kering (jika kandang panggung, langsung jatuh ke kolong). Untuk unggas, kotoran + sekam bisa langsung difermentasi.</li>
+<li><strong>Fermentasi</strong>: campur kotoran dengan EM4 (Effektive Microorganism 4) atau ragi. Biarkan 2-4 minggu di tempat teduh.</li>
+<li><strong>Pengeringan</strong>: jemur pupuk hasil fermentasi sampai kering. Gunakan mesin pengering sederhana atau jemur matahari.</li>
+<li><strong>Pengemasan</strong>: kemas dalam karung plastik 5 kg atau 10 kg. Beri label: nama produk, komposisi, tanggal produksi.</li>
+</ol>
+<p>Harga pupuk organik kandang di pasaran Rp1.500-3.000 per kg. Untuk kandang dengan 1.000 ekor ayam,produksi kotoran bisa mencapai 200-300 kg per minggu. Potensi pendapatan tambahan: Rp1.2-3.6 juta per bulan.</p>
+
+<h4>Biogas dari Limbah Peternakan</h4>
+<p>Biogas adalah solusi energi sekaligus pengelolaan limbah. Prinsipnya sederhana: kotoran difermentasi dalam reactor tertutup menghasilkan metana yang bisa digunakan untuk memasak atau menghasilkan listrik.</p>
+<ul>
+<li><strong>Investasi awal</strong>: Rp5-15 juta untuk reactor biogas sederhana (kapasitas 2-5 m³).</li>
+<li><strong>Bahan baku</strong>: kotoran sapi/kambing. Untuk unggas perlu dicampur air karena kotorannya terlalu kering.</li>
+<li><strong>Produksi gas</strong>: 1 kg kotoran sapi menghasilkan 0,04 m³ gas. Cukup untuk 1-2 jam memasak.</li>
+<li><strong>Masa pakai</strong>: reactor bisa bertahan 10-15 tahun dengan perawatan minimal.</li>
+</ul>
+<p>Untuk peternakan sapi dengan 50 ekor, biogas bisa menggantikan kebutuhan LPG 3 kg sebanyak 2-3 tabung per minggu. Penghematan: Rp60.000-90.000 per minggu = Rp240.000-360.000 per bulan.</p>
+
+<h4>Pupuk Cair Organik (POC)</h4>
+<p>Kotoran ternak juga bisa diolah jadi pupuk cair untuk tanaman:</p>
+<ol>
+<li>Campur kotoran segar dengan air (1:5).</li>
+<li>Tambahkan EM4 atau gula merah sebagai biang fermentasi.</li>
+<li>Fermentasi 2 minggu dalam wadah tertutup.</li>
+<li>Saring dan encerkan (1:10) sebelum disiram ke tanaman.</li>
+</ol>
+<p>POC organik sangat dicari petani sayur dan buah karena harganya lebih mahal dari pupuk kimia dan hasilnya lebih bagus untuk jangka panjang.</p>
+
+<h4>Bulu Ayam: Limbah Bernilai Tinggi</h4>
+<ul>
+<li><strong>Pupuk bulu</strong>: bulu difermentasi menghasilkan pupuk nitrogen tinggi. Rp500-1.000/kg.</li>
+<li><strong>Pakan ternak</strong>: bulu dihancurkan dan difermentasi menjadi bahan protein untuk pakan ikan atau unggas.</li>
+<li><strong>Isolasi termal</strong>: bulu ayam digunakan sebagai bahan isolasi alami yang ramah lingkungan.</li>
+</ul>
+
+<h4>Kesimpulan</h4>
+<p>Limbah peternakan bukan masalah — ini aset yang belum dimanfaatkan. Dengan investasi kecil (Rp2-5 juta untuk peralatan dasar), peternak bisa menghasilkan pupuk organik, biogas, atau produk lain yang menambah pendapatan. Mulai dari satu jenis limbah, kuasai prosesnya, lalu diversifikasi.</p>
+"""
+    },
 ]
 
 
@@ -450,56 +438,33 @@ def main():
     now = datetime.now()
     ds = now.strftime("%d %B %Y")
 
-    print("=" * 60)
-    print("WordPress Article Generator v3")
-    print("=" * 60)
-
-    pet = fetch_api("peternakan")
-    sent = fetch_api("sentimen")
-    cats = categorize_prices(pet)
-
-    print(f"  Peternakan: {len(pet)} items")
-    print(f"  Sentimen: {len(sent)} items")
-    print(f"  Hewan hidup: {len(cats['hewan_hidup'])}, Daging: {len(cats['daging'])}, Telur: {len(cats['telur'])}")
-
     # Pick article (rotate daily)
     random.seed(now.timetuple().tm_yday)
-    art_fn, _ = random.choice(ALL_ARTICLES)
+    art = random.choice(ARTICLES)
 
-    import inspect
-    params = inspect.signature(art_fn).parameters
-    kwargs = {}
-    if "cats" in params:
-        kwargs["cats"] = cats
-    if "sentimen" in params:
-        kwargs["sentimen"] = sent
-    if "ds" in params:
-        kwargs["ds"] = ds
-
-    article = art_fn(**kwargs)
-
-    print(f"\n{'=' * 60}")
-    print(f"Title:    {article['title']}")
-    print(f"Category: {article['category']}")
+    print("=" * 60)
+    print("WordPress Article Generator v4")
+    print("=" * 60)
+    print(f"  Title:    {art['title']}")
+    print(f"  Category: {art['category']}")
+    print(f"  Date:     {ds}")
     print(f"{'=' * 60}")
 
     # Save
-    html_path = WP_DIR / f"{now.strftime('%Y-%m-%d')}.html"
     meta_path = WP_DIR / f"{now.strftime('%Y-%m-%d')}.json"
+    html_path = WP_DIR / f"{now.strftime('%Y-%m-%d')}.html"
 
-    html_path.write_text(article["body"], encoding="utf-8")
     meta_path.write_text(json.dumps({
-        "title": article["title"],
-        "category": article["category"],
-        "content": article["body"],
+        "title": art["title"],
+        "category": art["category"],
+        "content": art["body"],
         "date": ds,
-        "generated_at": now.isoformat(),
     }, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    print(f"\nFiles saved:")
-    print(f"  HTML: {html_path}")
-    print(f"  Meta: {meta_path}")
-    print(f"\nOpen http://43.153.196.161:5000/article to copy.")
+    html_path.write_text(art["body"], encoding="utf-8")
+
+    print(f"\n  Files: {meta_path.name}, {html_path.name}")
+    print(f"  Open http://43.153.196.161:5000/article to copy.")
 
 
 if __name__ == "__main__":
