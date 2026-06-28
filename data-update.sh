@@ -21,7 +21,8 @@ for script in \
     ../scripts/update_bi_rate.py \
     ../scripts/update_cpo.py \
     ../scripts/sentimen_berita.py \
-    ../scripts/price_alerts.py; do
+    ../scripts/price_alerts.py \
+    ../scripts/precompute_analysis.py; do
     
     name=$(basename "$script" .py)
     if timeout $TIMEOUT python3 "$script" >> "$LOG" 2>&1; then
