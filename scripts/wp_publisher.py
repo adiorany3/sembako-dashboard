@@ -86,13 +86,27 @@ def wp_request(endpoint, method="GET", data=None):
     else:
         req = urllib.request.Request(url, headers=headers, method=method)
 
-    try:
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            return json.loads(resp.read().decode("utf-8"))
-    except urllib.error.HTTPError as e:
-        body = e.read().decode("utf-8", errors="replace")
-        print(f"❌ API Error {e.code}: {body[:300]}")
-        return None
+    import time as _time
+    for _attempt in range(4):
+        try:
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                return json.loads(resp.read().decode("utf-8"))
+        except urllib.error.HTTPError as e:
+            body = e.read().decode("utf-8", errors="replace")
+            if e.code == 429:
+                wait = 15 * (_attempt + 1)
+                print(f"⏳ Rate limit 429, waiting {wait}s (attempt {_attempt+1}/4)...")
+                _time.sleep(wait)
+                if data:
+                    encoded = urllib.parse.urlencode(data).encode("utf-8")
+                    req = urllib.request.Request(url, data=encoded, headers=headers, method=method)
+                else:
+                    req = urllib.request.Request(url, headers=headers, method=method)
+                continue
+            print(f"❌ API Error {e.code}: {body[:300]}")
+            return None
+    print(f"❌ Failed after 4 retries (rate limit)")
+    return None
 
 
 def wp_create_post(title, content, tags=None, categories=None, status="draft"):
@@ -103,15 +117,21 @@ def wp_create_post(title, content, tags=None, categories=None, status="draft"):
         "status": status,
         "format": "standard",
     }
-    # Tags & categories need IDs — resolve slugs first
+    # Tags and categories - skip on 401/WP free tier limit
     if tags:
-        tag_ids = resolve_tags(tags)
-        if tag_ids:
-            post_data["tags"] = tag_ids
+        try:
+            tag_ids = resolve_tags(tags)
+            if tag_ids:
+                post_data["tags"] = tag_ids
+        except Exception:
+            print("   Warning: Tags skipped (WP free tier limit)")
     if categories:
-        cat_ids = resolve_categories(categories)
-        if cat_ids:
-            post_data["categories"] = cat_ids
+        try:
+            cat_ids = resolve_categories(categories)
+            if cat_ids:
+                post_data["categories"] = cat_ids
+        except Exception:
+            print("   Warning: Categories skipped (WP free tier limit)")
 
     print(f"📝 Creating post: {title}")
     print(f"   Status: {status} | Tags: {len(tags or [])} | Cats: {len(categories or [])}")
@@ -131,15 +151,13 @@ def resolve_tags(tag_names):
     """Get or create tag IDs from names."""
     ids = []
     for name in tag_names:
-        slug = name.lower().replace(" ", "-").replace("&", "dan")
-        # Try to find existing
+        slug = name.lower().replace(" ", "-").replace("and", "dan")
         existing = wp_request(f"tags?search={urllib.parse.quote(name)}&_fields=ID,slug")
-        if existing and len(existing) > 0:
+        if existing and isinstance(existing, list) and len(existing) > 0 and isinstance(existing[0], dict) and "ID" in existing[0]:
             ids.append(existing[0]["ID"])
         else:
-            # Create new
             result = wp_request("tags", method="POST", data={"name": name, "slug": slug})
-            if result and "ID" in result:
+            if result and isinstance(result, dict) and "ID" in result:
                 ids.append(result["ID"])
     return ids
 
@@ -148,13 +166,13 @@ def resolve_categories(cat_names):
     """Get or create category IDs from names."""
     ids = []
     for name in cat_names:
-        slug = name.lower().replace(" ", "-").replace("&", "dan")
+        slug = name.lower().replace(" ", "-").replace("and", "dan")
         existing = wp_request(f"categories?search={urllib.parse.quote(name)}&_fields=ID,slug")
-        if existing and len(existing) > 0:
+        if existing and isinstance(existing, list) and len(existing) > 0 and isinstance(existing[0], dict) and "ID" in existing[0]:
             ids.append(existing[0]["ID"])
         else:
             result = wp_request("categories", method="POST", data={"name": name, "slug": slug})
-            if result and "ID" in result:
+            if result and isinstance(result, dict) and "ID" in result:
                 ids.append(result["ID"])
     return ids
 
