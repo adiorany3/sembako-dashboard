@@ -812,6 +812,7 @@ def download_file(filename):
     if not os.path.exists(filepath):
         generators = {
             "nutrisi_bahan_pakan_lengkap.xlsx": "../scripts/create_nutrisi_pakan.py",
+            "formulasi_pakan_ternak.xlsx": "../scripts/create_formulasi_pakan.py",
         }
         if filename in generators:
             script = os.path.join(os.path.dirname(__file__), generators[filename])
