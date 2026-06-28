@@ -860,24 +860,37 @@ def api_generate_article():
 
 @app.route("/article")
 def article_page():
-    """Serve article copy-paste page."""
-    import json as _json
+    """Serve article copy-paste page — inline generate, no subprocess."""
+    import random as _rnd
     articles_dir = os.path.join(DATA_DIR, "wp_articles")
+    os.makedirs(articles_dir, exist_ok=True)
+
     today = datetime.now().strftime("%Y-%m-%d")
     meta_file = os.path.join(articles_dir, f"{today}.json")
 
+    # Generate inline if missing
     if not os.path.exists(meta_file):
-        # Generate first
-        try:
-            import subprocess as _sub
-            _sub.run(["python3", os.path.join(os.path.dirname(__file__),
-                      "../scripts/generate_wp_article.py")], timeout=30)
-        except Exception:
-            pass
+        _rnd.seed(datetime.now().day)
+        ds = datetime.now().strftime("%d %B %Y")
+        ternak_opts = ["Ayam Broiler","Ayam Petelur","Bebek","Sapi Potong","Sapi Perah","Kambing","Domba"]
+        ternak = _rnd.choice(ternak_opts)
+        title = f"Update Harga Pakan Ternak {ds}: Strategi Hemat Untung Maksimal"
+        content = (
+            f"<h4>Data Harga Terkini {ds}</h4>"
+            f"<p>Pasar peternakan Indonesia tren positif. "
+            f"Pantau harga terkini untuk optimasi biaya.</p>"
+            f"<h4>Strategi Hemat Pakan</h4>"
+            f"<ol><li><strong>Formulasi Mandiri</strong> - hemat 20-30%</li>"
+            f"<li><strong>Bahan Lokal</strong> - jagung, dedak, bungkil</li>"
+            f"<li><strong>Pencatatan Harga</strong> - beli saat harga rendah</li></ol>"
+            f"<p>Semangat peternak Indonesia!</p>"
+        )
+        _meta = {"title": title, "content": content, "category": "Harga & Pasar", "date": ds}
+        with open(meta_file, "w") as _f:
+            json.dump(_meta, _f, ensure_ascii=False)
 
-    if os.path.exists(meta_file):
-        with open(meta_file) as f:
-            meta = _json.load(f)
+    with open(meta_file) as fp:
+        meta = json.load(fp)
         return f"""<!DOCTYPE html>
 <html lang="id">
 <head>
