@@ -51,24 +51,29 @@ for script in \
     fi
 done
 
-# 3. Restart Flask if code changed, or if not running
-FLASK_PID=$(pgrep -f "python3.*app.py" 2>/dev/null || echo "")
-
-if [ -z "$FLASK_PID" ] || [ "$LOCAL" != "$REMOTE" ]; then
-    if [ -n "$FLASK_PID" ]; then
-        kill $FLASK_PID 2>/dev/null
-        sleep 1
-    fi
+# 3. Restart Flask if code changed
+if [ "$LOCAL" != "$REMOTE" ]; then
+    echo "$(date '+%H:%M:%S'): Code changed, restarting Flask..." >> "$LOG"
+    pkill -f "python3.*app.py" 2>/dev/null || true
+    sleep 2
+    pkill -9 -f "python3.*app.py" 2>/dev/null || true
+    sleep 1
     cd /root/sembako/core
     nohup python3 app.py > /tmp/flask.log 2>&1 &
-    sleep 2
+    sleep 3
     if curl -s --max-time 3 http://localhost:5000/api/health | grep -q "healthy"; then
         echo "$(date '+%H:%M:%S'): Flask restarted OK ✅" >> "$LOG"
     else
         echo "$(date '+%H:%M:%S'): Flask restart FAILED ❌" >> "$LOG"
     fi
 else
-    echo "$(date '+%H:%M:%S'): Flask running (pid=$FLASK_PID)" >> "$LOG"
+    # No code change — verify Flask is alive
+    if ! curl -s --max-time 3 http://localhost:5000/api/health | grep -q "healthy"; then
+        echo "$(date '+%H:%M:%S'): Flask dead, restarting..." >> "$LOG"
+        cd /root/sembako/core
+        nohup python3 app.py > /tmp/flask.log 2>&1 &
+        sleep 3
+    fi
 fi
 
 # 4. Log rotation (keep last 500 lines)
