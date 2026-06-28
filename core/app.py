@@ -618,7 +618,7 @@ def test_article():
 @app.route("/api/health")
 def health():
     """Health check."""
-    return jsonify({"status": "healthy", "timestamp": datetime.now().isoformat()})
+    return jsonify({"status": "healthy", "timestamp": datetime.now().isoformat(), "version": "cd2cec2"})
 
 
 # ============ AI-Powered Analysis using Groq ============
@@ -865,7 +865,68 @@ def api_generate_article():
 @app.route("/article")
 def article_page():
     """Serve article copy-paste page."""
-    return "<h1>TEST OK</h1>", 200, {"Content-Type": "text/html"}
+    articles_dir = os.path.join(DATA_DIR, "wp_articles")
+    os.makedirs(articles_dir, exist_ok=True)
+    today = datetime.now().strftime("%Y-%m-%d")
+    meta_file = os.path.join(articles_dir, f"{today}.json")
+
+    # Generate if missing
+    if not os.path.exists(meta_file):
+        import subprocess as _sub
+        try:
+            _sub.run(["python3", os.path.join(
+                os.path.dirname(os.path.abspath(__file__)),
+                "../scripts/generate_wp_article.py")], timeout=30)
+        except Exception:
+            pass
+
+    if os.path.exists(meta_file):
+        with open(meta_file) as fp:
+            meta = json.load(fp)
+        t = meta["title"]
+        ct = meta["content"]
+        cat = meta.get("category", "")
+        dt = meta.get("date", "")
+        return f"""<!DOCTYPE html>
+<html lang="id"><head><meta charset="UTF-8">
+<title>{t}</title>
+<style>
+body{{font-family:-apple-system,sans-serif;max-width:800px;margin:0 auto;padding:20px;background:#f5f5f5}}
+.card{{background:#fff;border-radius:8px;padding:24px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.1)}}
+h1{{color:#1a1a2e;font-size:22px}}
+pre{{white-space:pre-wrap;word-wrap:break-word;background:#f8f8f8;padding:12px;border-radius:6px;font-size:13px;max-height:400px;overflow-y:auto;border:1px solid #eee}}
+.copy-btn{{background:#0073aa;color:#fff;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;font-size:14px;margin-top:8px}}
+.copy-btn:hover{{background:#005a87}}
+.label{{font-weight:bold;color:#555;margin-bottom:4px}}
+.success{{color:green;font-weight:bold;display:none;margin-left:10px}}
+</style></head><body>
+<h1>Artikel WordPress</h1>
+<div class="card">
+<div class="label">Title (copy ke WordPress):</div>
+<h1 id="title">{t}</h1>
+<button class="copy-btn" onclick="copyText('title')">Copy Title</button>
+<span class="success" id="title-copied">Copied!</span>
+</div>
+<div class="card">
+<div class="label">Category: <strong>{cat}</strong> | Date: <strong>{dt}</strong></div>
+</div>
+<div class="card">
+<div class="label">HTML Content (paste ke WordPress editor HTML mode):</div>
+<pre id="content">{ct}</pre>
+<button class="copy-btn" onclick="copyText('content')">Copy HTML Content</button>
+<span class="success" id="content-copied">Copied!</span>
+</div>
+<div class="card"><div class="label">Preview:</div>{ct}</div>
+<script>
+function copyText(id){{
+  var el=document.getElementById(id);
+  navigator.clipboard.writeText(el.innerText||el.textContent).then(function(){{
+    document.getElementById(id+'-copied').style.display='inline';
+    setTimeout(function(){{document.getElementById(id+'-copied').style.display='none'}},2000);
+  }});
+}}
+</script></body></html>"""
+    return "No article yet", 404, {"Content-Type": "text/plain"}
 
 if __name__ == "__main__":
     # Production mode - disable debug for stability
