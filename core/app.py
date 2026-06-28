@@ -924,26 +924,31 @@ pre{{white-space:pre-wrap;word-wrap:break-word;background:#f8f8f8;padding:12px;b
 <div class="label">Category: <strong>{cat}</strong> | Date: <strong>{dt}</strong></div>
 </div>
 <div class="card">
-<div class="label">HTML Content (paste ke WordPress editor HTML mode):</div>
-<pre id="content">{ct}</pre>
-<button class="copy-btn" onclick="copyText('content')">Copy HTML Content</button>
+<div class="label">HTML Source (copy ini, paste ke WordPress <strong>HTML/Code Editor</strong>):</div>
+<pre id="raw" style="display:none">{ct}</pre>
+<button class="copy-btn" onclick="copyRaw()">📋 Copy HTML Source</button>
 <span class="success" id="content-copied">Copied!</span>
+<div id="readable" style="margin-top:12px;padding:12px;background:#f8f8f8;border-radius:6px;font-size:13px;max-height:300px;overflow-y:auto;border:1px solid #eee"></div>
 </div>
 <div class="card preview"><div class="label">Preview:</div>{ct}</div>
 <div class="card">
 <a href="/article?new=1" class="copy-btn" style="background:#28a745;text-decoration:none;display:inline-block">Generate Artikel Baru</a>
 </div>
 <script>
-function copyText(id){{
-  var el=document.getElementById(id);
-  var text=el.innerText||el.textContent;
-  var ta=document.createElement('textarea');
-  ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
+(function(){{
+  var raw=document.getElementById("raw").textContent;
+  var el=document.getElementById("readable");
+  el.innerHTML="<pre>"+raw.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")+"</pre>";
+}})();
+function copyRaw(){{
+  var raw=document.getElementById("raw").textContent;
+  var ta=document.createElement("textarea");
+  ta.value=raw;ta.style.position="fixed";ta.style.opacity="0";
   document.body.appendChild(ta);ta.select();
-  document.execCommand('copy');
+  document.execCommand("copy");
   document.body.removeChild(ta);
-  document.getElementById(id+'-copied').style.display='inline';
-  setTimeout(function(){{document.getElementById(id+'-copied').style.display='none'}},2000);
+  document.getElementById("content-copied").style.display="inline";
+  setTimeout(function(){{document.getElementById("content-copied").style.display="none"}},2000);
 }}
 </script></body></html>"""
     return "No article yet. Click Generate.", 204, {"Content-Type": "text/plain"}
