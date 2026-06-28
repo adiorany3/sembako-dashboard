@@ -860,87 +860,8 @@ def api_generate_article():
 
 @app.route("/article")
 def article_page():
-    """Serve article copy-paste page — inline generate, no subprocess."""
-    import random as _rnd
-    articles_dir = os.path.join(DATA_DIR, "wp_articles")
-    os.makedirs(articles_dir, exist_ok=True)
-
-    today = datetime.now().strftime("%Y-%m-%d")
-    meta_file = os.path.join(articles_dir, f"{today}.json")
-
-    # Generate inline if missing
-    if not os.path.exists(meta_file):
-        _rnd.seed(datetime.now().day)
-        ds = datetime.now().strftime("%d %B %Y")
-        ternak_opts = ["Ayam Broiler","Ayam Petelur","Bebek","Sapi Potong","Sapi Perah","Kambing","Domba"]
-        ternak = _rnd.choice(ternak_opts)
-        title = f"Update Harga Pakan Ternak {ds}: Strategi Hemat Untung Maksimal"
-        content = (
-            f"<h4>Data Harga Terkini {ds}</h4>"
-            f"<p>Pasar peternakan Indonesia tren positif. "
-            f"Pantau harga terkini untuk optimasi biaya.</p>"
-            f"<h4>Strategi Hemat Pakan</h4>"
-            f"<ol><li><strong>Formulasi Mandiri</strong> - hemat 20-30%</li>"
-            f"<li><strong>Bahan Lokal</strong> - jagung, dedak, bungkil</li>"
-            f"<li><strong>Pencatatan Harga</strong> - beli saat harga rendah</li></ol>"
-            f"<p>Semangat peternak Indonesia!</p>"
-        )
-        _meta = {"title": title, "content": content, "category": "Harga & Pasar", "date": ds}
-        with open(meta_file, "w") as _f:
-            json.dump(_meta, _f, ensure_ascii=False)
-
-    with open(meta_file) as fp:
-        meta = json.load(fp)
-        return f"""<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<title>WordPress Article</title>
-<style>
-body {{ font-family: -apple-system, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f5f5; }}
-.card {{ background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.1); }}
-h1 {{ color: #1a1a2e; font-size: 22px; }}
-pre {{ white-space: pre-wrap; word-wrap: break-word; background: #f8f8f8; padding: 12px; border-radius: 6px; font-size: 13px; max-height: 400px; overflow-y: auto; border: 1px solid #eee; }}
-.copy-btn {{ background: #0073aa; color: #fff; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 14px; margin-top: 8px; }}
-.copy-btn:hover {{ background: #005a87; }}
-.label {{ font-weight: bold; color: #555; margin-bottom: 4px; }}
-.success {{ color: green; font-weight: bold; display: none; margin-left: 10px; }}
-</style>
-</head>
-<body>
-<h1>🐾 Artikel WordPress — Catatan Insani</h1>
-<div class="card">
-<div class="label">📝 Title (copy ke WordPress):</div>
-<h1 id="title">{meta["title"]}</h1>
-<button class="copy-btn" onclick="copyText('title')">📋 Copy Title</button>
-<span class="success" id="title-copied">✅ Copied!</span>
-</div>
-<div class="card">
-<div class="label">📂 Category: <strong>{meta.get("category", "")}</strong></div>
-<div class="label">📅 Date: <strong>{meta.get("date", "")}</strong></div>
-</div>
-<div class="card">
-<div class="label">📄 HTML Content (paste ke WordPress editor HTML mode):</div>
-<pre id="content">{meta["content"]}</pre>
-<button class="copy-btn" onclick="copyText('content')">📋 Copy HTML Content</button>
-<span class="success" id="content-copied">✅ Copied!</span>
-</div>
-<div class="card">
-<div class="label">👁️ Preview:</div>
-{meta["content"]}
-</div>
-<script>
-function copyText(id) {{
-  const text = document.getElementById(id).innerText || document.getElementById(id).textContent;
-  navigator.clipboard.writeText(text).then(() => {{
-    document.getElementById(id + '-copied').style.display = 'inline';
-    setTimeout(() => document.getElementById(id + '-copied').style.display = 'none', 2000);
-  }});
-}}
-</script>
-</body></html>"""
-    return jsonify({"error": "No article generated yet. POST /api/generate-article first."}), 404
-
+    """Serve article copy-paste page."""
+    return "<h1>TEST OK</h1>", 200, {"Content-Type": "text/html"}
 
 if __name__ == "__main__":
     # Production mode - disable debug for stability
