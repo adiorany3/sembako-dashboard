@@ -129,7 +129,7 @@ def generate_article(pet_data=None, topic_idx=None):
     if pet_data and "data" in pet_data and pet_data["data"]:
         items = pet_data["data"][-8:]
         for item in items:
-            name = item.get("komoditas", item.get("nama", ""))
+            name = item.get("produk", item.get("komoditas", item.get("nama", "")))
             price = item.get("harga_rata", item.get("harga", ""))
             if isinstance(price, (int, float)) and price > 0:
                 prices_html += f"<li><strong>{name}</strong>: Rp{price:,.0f}/kg</li>\n"
