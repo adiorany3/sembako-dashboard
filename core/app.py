@@ -896,7 +896,7 @@ def article_page():
         with open(meta_file) as fp:
             meta = json.load(fp)
         t = meta["title"]
-        ct = meta["content"]
+        ct = meta["body"]
         cat = meta.get("category", "")
         dt = meta.get("date", "")
         import html as _html
