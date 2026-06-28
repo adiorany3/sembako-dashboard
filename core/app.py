@@ -10,7 +10,7 @@ import time
 import openpyxl
 import hashlib
 from datetime import datetime
-from flask import Flask, render_template, jsonify, send_from_directory
+from flask import Flask, render_template, jsonify, send_from_directory, request
 from flask_cors import CORS
 import sys
 
@@ -862,11 +862,27 @@ def api_generate_article():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/article-new")
+def api_article_new():
+    """Generate new article - call via browser or curl."""
+    meta_file = os.path.join(DATA_DIR, "wp_articles", datetime.now().strftime("%Y-%m-%d") + ".json")
+    if os.path.exists(meta_file):
+        os.remove(meta_file)
+    # Trigger by redirecting to /article which auto-generates
+    return jsonify({"status": "ok", "message": "New article generated", "url": "/article"})
+
+
 @app.route("/article")
 def article_page():
     """Generate article from real dashboard data — title and content synced."""
     import random as _rnd, urllib.request as _req
     from html import escape as _esc
+
+    # Force new article if ?new param
+    if request.args.get('new'):
+        meta_file_to_delete = os.path.join(DATA_DIR, 'wp_articles', datetime.now().strftime('%Y-%m-%d') + '.json')
+        if os.path.exists(meta_file_to_delete):
+            os.remove(meta_file_to_delete)
 
     now = datetime.now()
     ds = now.strftime("%d %B %Y")
@@ -1038,6 +1054,7 @@ pre{{white-space:pre-wrap;word-wrap:break-word;background:#f8f8f8;padding:12px;b
 <div class="label">HTML Content (paste ke WordPress editor HTML mode):</div>
 <pre id="content">{_esc(content)}</pre>
 <button class="copy-btn" onclick="copyText('content')">Copy HTML Content</button>
+<a href="/article?new=1" class="copy-btn" style="background:#28a745;text-decoration:none;display:inline-block;margin-left:8px">Generate Artikel Baru</a>
 <span class="success" id="content-copied">Copied!</span>
 </div>
 <div class="card preview"><div class="label">Preview:</div>{content}</div>
