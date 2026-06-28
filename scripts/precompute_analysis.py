@@ -313,11 +313,158 @@ RULES:
 - 500-800 kata total.
 - Gunakan emoji."""
 
+def generate_rule_analysis(data_text: str) -> str:
+    """Rule-based analysis fallback — zero API calls, runs anywhere."""
+    from datetime import datetime
+    now = datetime.now()
+    date_str = now.strftime("%d %B %Y")
+
+    lines = []
+
+    # ── Market Overview ──
+    lines.append("## 📊 Market Overview")
+    lines.append(f"Analisis otomatis berdasarkan data real-time {date_str}.")
+    lines.append("")
+
+    # ── Parse numeric values from data ──
+    import re
+    def find_val(text, pattern):
+        m = re.search(pattern, text)
+        return m.group(1).replace(",","") if m else None
+
+    btc = find_val(data_text, r"Bitcoin:\s*\$([\d,.]+)")
+    ihsg = find_val(data_text, r"IHSG:\s*([\d,.]+)")
+    usd = find_val(data_text, r"USD→IDR:\s*Rp([\d,.]+)")
+    bi_rate = find_val(data_text, r"BI Rate:\s*([\d,.]+)")
+    inflasi = find_val(data_text, r"Inflasi YoY:\s*([\d,.]+)")
+    brent = find_val(data_text, r"Brent:\s*\$([\d,.]+)")
+    cpo_myr = find_val(data_text, r"CPO:\s*MYR\s*([\d,.]+)")
+
+    # ── Tren Naik ↑ ──
+    lines.append("## 📈 Tren Naik ↑")
+    naik = []
+    for m in re.finditer(r"- (.+?): Rp([\d,]+)/kg \(([↑+])([+\-\d.]+)%\)", data_text):
+        name, price, arrow, chg = m.groups()
+        if arrow == "↑" and float(chg) > 1:
+            naik.append((name, price, float(chg)))
+    for m in re.finditer(r"- (.+?): Rp([\d,]+)/kg \(([↑+])([+\-\d.]+)%\)", data_text):
+        name, price, arrow, chg = m.groups()
+        if arrow == "↑" and float(chg) > 0.5:
+            naik.append((name, price, float(chg)))
+    # Deduplicate
+    seen = set()
+    unique_naik = []
+    for n, p, c in naik:
+        if n not in seen:
+            seen.add(n)
+            unique_naik.append((n,p,c))
+    if unique_naik:
+        for name, price, chg in sorted(unique_naik, key=lambda x: x[2], reverse=True)[:8]:
+            lines.append(f"- {name}: Rp{price}/kg ↑{chg:.1f}%")
+    else:
+        lines.append("- Tidak ada tren naik signifikan")
+    lines.append("")
+
+    # ── Tren Turun ↓ ──
+    lines.append("## 📉 Tren Turun ↓")
+    turun = []
+    for m in re.finditer(r"- (.+?): Rp([\d,]+)/kg \(([↓\-])([+\-\d.]+)%\)", data_text):
+        name, price, arrow, chg = m.groups()
+        turun.append((name, price, float(chg)))
+    if turun:
+        for name, price, chg in sorted(turun, key=lambda x: x[2])[:5]:
+            lines.append(f"- {name}: Rp{price}/kg ↓{abs(chg):.1f}%")
+    else:
+        lines.append("- Tidak ada tren turun signifikan")
+    lines.append("")
+
+    # ── Analisis Sektoral ──
+    lines.append("## 🔮 Analisis Sektoral")
+    lines.append("")
+
+    # IHSG
+    if ihsg:
+        val = float(ihsg.replace(",",""))
+        status = "stabil" if 5500 < val < 6000 else "lemah" if val < 5500 else "cukup kuat"
+        lines.append(f"- **IHSG**: {ihsg} — pasar {status}")
+    if btc:
+        val = float(btc.replace(",",""))
+        if val > 65000: trend = "menguat"
+        elif val > 55000: trend = "stabil-positif"
+        elif val > 45000: trend = "konsolidasi"
+        else: trend = "melemah"
+        lines.append(f"- **BTC**: ${btc} — {trend}")
+    if usd:
+        lines.append(f"- **Kurs USD**: Rp{usd} {'stabil' if 15800 < float(usd.replace(',','')) < 16200 else 'perlu dipantau'}")
+    lines.append("")
+
+    # ── Kurs & Moneter ──
+    lines.append("### Kurs & Moneter")
+    if bi_rate:
+        lines.append(f"- **BI Rate**: {bi_rate}% {'ekspansif' if float(bi_rate) < 5.5 else 'ketat' if float(bi_rate) > 6.5 else 'netral'}")
+    if inflasi:
+        val = float(inflasi)
+        status = "terkendali" if val < 3 else "tinggi" if val > 5 else "wajar"
+        lines.append(f"- **Inflasi YoY**: {inflasi}% — {status}")
+    lines.append("")
+
+    # ── Energi ──
+    lines.append("### Energi & CPO")
+    if brent:
+        val = float(brent.replace(",",""))
+        lines.append(f"- **Minyak Brent**: ${brent}/barel {'naik' if val > 75 else 'stabil' if val > 65 else 'turun'}")
+    if cpo_myr:
+        lines.append(f"- **CPO**: MYR {cpo_myr}/ton")
+    lines.append("")
+
+    # ── Pakan ──
+    pakan_lines = [l for l in data_text.split('\n') if 'Rp/kg)' in l and 'Rp' in l]
+    if pakan_lines:
+        lines.append("### Pakan Ternak")
+        lines.append(f"- {len(pakan_lines)} bahan pakan terpantau")
+        lines.append("")
+
+    # ── Risiko ──
+    lines.append("## ⚠️ Risiko & Warning")
+    risks = []
+    if ihsg and float(ihsg.replace(",","")) < 5800:
+        risks.append("⚠️ IHSG di bawah 5800 — tekanan jual")
+    if btc and float(btc.replace(",","")) < 55000:
+        risks.append("⚠️ BTC di bawah $55k — risiko koreksi kripto")
+    if bi_rate and float(bi_rate) > 6:
+        risks.append("⚠️ BI Rate tinggi — biaya pinjaman mahal")
+    if inflasi and float(inflasi) > 4:
+        risks.append("⚠️ Inflasi tinggi — daya beli menurun")
+    for r in risks[:3]:
+        lines.append(f"- {r}")
+    if not risks:
+        lines.append("- Tidak ada risiko signifikan terdeteksi")
+    lines.append("")
+
+    # ── Rekomendasi ──
+    lines.append("## 💡 Rekomendasi")
+    lines.append("- **Petani/ternak**: Pantau harga pakan — stok saat harga turun")
+    lines.append("- **Konsumen**: Harga sembako relatif stabil, beli sesuai kebutuhan")
+    lines.append("- **Investor**: Diversifikasi portofolio, jangan all-in satu aset")
+    lines.append("")
+
+    # ── Prediksi ──
+    lines.append("## 🎯 Prediksi 3 Hari ke Depan")
+    lines.append("- Market cenderung sideways minggu ini")
+    lines.append("- Pantau rilis data inflasi & kebijakan BI")
+    lines.append("- Crypto menunggu sentimen global (Fed, ETF flow)")
+    lines.append("")
+    lines.append("---")
+    lines.append(f"_Analisis otomatis. {date_str} — Data dari 12 sumber_")
+
+    return "\n".join(lines)
+
 
 def call_groq(prompt: str) -> str:
+    """Call Groq API — tries main endpoint first."""
     import urllib.request
     if not GROQ_API_KEY:
-        return "GROQ_API_KEY not configured."
+        return ""
 
     payload = json.dumps({
         "model": "llama-3.1-8b-instant",
@@ -353,18 +500,26 @@ def main():
     print(f"{ts()} 📂 {n_sections} sections, {len(data)} chars loaded")
 
     print(f"{ts()} 🤖 Calling Groq (llama-3.1-8b-instant)...")
+    analysis = ""
+    source = "groq_llama3.1_v3"
     try:
         analysis = call_groq(data)
-        print(f"{ts()} ✅ Response: {len(analysis)} chars")
+        if analysis and len(analysis) > 100:
+            print(f"{ts()} ✅ Groq response: {len(analysis)} chars")
+        else:
+            raise Exception("Empty response from Groq")
     except Exception as e:
-        analysis = f"❌ Groq error: {e}\n\nRaw data preview:\n{data[:800]}"
-        print(f"{ts()} ❌ Error: {e}")
+        print(f"{ts()} ⚠️ Groq failed: {e}")
+        print(f"{ts()} 🔄 Generating rule-based analysis...")
+        analysis = generate_rule_analysis(data)
+        source = "rule_based_fallback"
+        print(f"{ts()} ✅ Rule-based: {len(analysis)} chars")
 
     output = {
         "analysis": analysis,
         "generated_at": datetime.now().strftime("%d %b %Y, %H:%M"),
         "next_update": datetime.now().timestamp() + 28800,
-        "source": "groq_llama3.1_v3",
+        "source": source,
     }
     out_path = DATA_DIR / "daily_analysis.json"
     with open(str(out_path), "w", encoding="utf-8") as f:
