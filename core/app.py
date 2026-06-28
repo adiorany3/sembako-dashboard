@@ -611,6 +611,10 @@ def get_alerts():
         return jsonify({"alerts": [], "last_check": None})
 
 
+@app.route("/test-article")
+def test_article():
+    return "<h1>TEST ROUTE WORKS</h1>", 200, {"Content-Type": "text/html"}
+
 @app.route("/api/health")
 def health():
     """Health check."""
