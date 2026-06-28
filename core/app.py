@@ -800,23 +800,29 @@ def server_error(e):
 
 @app.route("/download/<filename>")
 def download_file(filename):
-    """Download Excel/data files from the data directory."""
+    """Download Excel/data files. Generate on-the-fly if missing."""
     import re as _re
-    # Security: only allow safe filenames
+    import subprocess
     if not _re.match(r'^[\w\-\.]+$', filename):
         return jsonify({"error": "Invalid filename"}), 400
-    try:
-        return send_from_directory(DATA_DIR, filename, as_attachment=True)
-    except Exception:
+    
+    filepath = os.path.join(DATA_DIR, filename)
+    
+    # If file missing, try to generate it
+    if not os.path.exists(filepath):
+        generators = {
+            "nutrisi_bahan_pakan_lengkap.xlsx": "../scripts/create_nutrisi_pakan.py",
+        }
+        if filename in generators:
+            script = os.path.join(os.path.dirname(__file__), generators[filename])
+            try:
+                subprocess.run(["python3", script], timeout=30, capture_output=True)
+            except Exception:
+                pass
+    
+    if not os.path.exists(filepath):
         return jsonify({"error": "File not found"}), 404
-
-
-@app.route("/api/download/<filename>")
-def api_download(filename):
-    """API alias for download."""
-    import re as _re
-    if not _re.match(r'^[\w\-\.]+$', filename):
-        return jsonify({"error": "Invalid filename"}), 400
+    
     try:
         return send_from_directory(DATA_DIR, filename, as_attachment=True)
     except Exception:
