@@ -1126,5 +1126,133 @@
     "score": 0.0,
     "source": "detik finance",
     "timestamp": "2026-06-27T20:40:16.295279"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "detikFinance - Berita Ekonomi Bisnis, dan Investasi Hari Ini",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T09:00:46.901588"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Purbaya soal Efisiensi Anggaran MBG: Saya Maunya Nol, Tapi Nggak Bisa Kan](https://finance.detik.com/berita-ekonomi-bisnis/d-8549550/purbaya-soal-efisiensi-anggaran-mbg-saya-maunya-nol-tapi-nggak-bisa-kan)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T09:00:46.911137"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Trump Murka! AS Serang Iran Lagi](https://finance.detik.com/berita-ekonomi-bisnis/d-8549337/trump-murka-as-serang-iran-lagi)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T09:00:46.920365"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Terungkap Kondisi Pasokan Batu Bara PLN](https://finance.detik.com/energi/d-8549000/terungkap-kondisi-pasokan-batu-bara-pln)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T09:00:46.929441"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Duit Jumbo dari AIIB China yang Kata Purbaya Bukan Utang](https://finance.detik.com/berita-ekonomi-bisnis/d-8549025/duit-jumbo-dari-aiib-china-yang-kata-purbaya-bukan-utang)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T09:00:46.939002"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Rute MRT Lebak Bulus-Serpong Masih Rahasia demi Hindari Calo Tanah](https://finance.detik.com/infrastruktur/d-8549184/rute-mrt-lebak-bulus-serpong-masih-rahasia-demi-hindari-calo-tanah)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T09:00:46.948353"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Dilanda Panas Ekstrem, Warga Eropa Panic Buying Rebutan AC](https://finance.detik.com/berita-ekonomi-bisnis/d-8550247/dilanda-panas-ekstrem-warga-eropa-panic-buying-rebutan-ac)",
+    "sentiment": "NEGATIF",
+    "score": -0.511,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T09:00:46.957480"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Harga Beras di Jepang Akhirnya Turun Setelah 3,5 Tahun](https://finance.detik.com/berita-ekonomi-bisnis/d-8539811/harga-beras-di-jepang-akhirnya-turun-setelah-3-5-tahun)",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T09:00:46.966980"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Trump Ancam Naikkan Tarif Impor Mobil Eropa Jadi 25%](https://finance.detik.com/berita-ekonomi-bisnis/d-8471046/trump-ancam-naikkan-tarif-impor-mobil-eropa-jadi-25)",
+    "sentiment": "POSITIF",
+    "score": 0.65,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T09:00:46.976688"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Beras IR. III (IR 64)](https://finance.detik.com/info-pangan/jakarta/beras-ir-iii-ir-64)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T09:00:46.985959"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Cabe Merah Keriting](https://finance.detik.com/info-pangan/jakarta/cabe-merah-keriting)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T09:00:46.995018"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Daging Sapi Murni (Semur)](https://finance.detik.com/info-pangan/jakarta/daging-sapi-murni-semur)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T09:00:47.004202"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Terungkap Biang Kerok AS Serang Iran Lagi](https://finance.detik.com/berita-ekonomi-bisnis/d-8550246/terungkap-biang-kerok-as-serang-iran-lagi)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T09:00:47.013883"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Kisah Penyintas Kanker Ekspor Kain Botanical Print ke Prancis-Brazil](https://finance.detik.com/solusiukm/d-8550302/kisah-penyintas-kanker-ekspor-kain-botanical-print-ke-prancis-brazil)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T09:00:47.023353"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Usaha Camilan Sehat Malika Tembus Ritel Modern hingga Apotek](https://finance.detik.com/solusiukm/d-8550237/usaha-camilan-sehat-malika-tembus-ritel-modern-hingga-apotek)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T09:00:47.033026"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Waduh! Produsen Mobil VW Mau PHK 100.000 Karyawan & Tutup 4 Pabrik](https://finance.detik.com/berita-ekonomi-bisnis/d-8549367/waduh-produsen-mobil-vw-mau-phk-100-000-karyawan-tutup-4-pabrik)",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T09:00:47.042568"
   }
 ]
