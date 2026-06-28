@@ -61,6 +61,8 @@ def extract_headlines(text):
     current_title = ""
     current_url = ""
 
+    noise_keywords = ["rekomendasi", "untuk anda", "diskon", "promo", "iklan", "terjual", "belanja"]
+
     for line in lines:
         line = line.strip()
         # URL lines
@@ -69,6 +71,10 @@ def extract_headlines(text):
             url = url_match.group()
             if 'detik.com' in url or 'kompas.com' in url or 'cnbcindonesia' in url:
                 if current_title and len(current_title) > 15:
+                    # Check for noise
+                    if any(k in current_title.lower() for k in noise_keywords):
+                        current_title = ""
+                        continue
                     results.append((current_title.strip(), url))
                 current_url = url
                 current_title = ""

@@ -206,8 +206,8 @@ def get_emas():
                     "antam_pegadaian": row[3],
                     "galeri24": row[4],
                     "ubs_beli": row[5],
-                    "selisih": row[6],
-                    "spread_persen": row[7],
+                    "selisih": row[7],
+                    "spread_persen": row[8],
                 }
             )
 

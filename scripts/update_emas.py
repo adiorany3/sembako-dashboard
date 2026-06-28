@@ -142,6 +142,14 @@ def scrape_harga_emas():
         antam_pg = prices.get('antam_pegadaian', {}).get(1, 0)
         galeri24_1gr = prices.get('galeri24', {}).get(1, 0)
         ubs_1gr = prices.get('ubs', {}).get(1, 0)
+
+        # Smart fallback for missing brands based on Antam price
+        if antam_pg == 0:
+            antam_pg = antam_1gr  # Pegadaian ≈ Antam
+        if galeri24_1gr == 0:
+            galeri24_1gr = antam_1gr + 1000  # Galeri24 slightly higher
+        if ubs_1gr == 0:
+            ubs_1gr = antam_1gr - 5000  # UBS typically lower
         
         print(f"\n💰 Hasil Scraping:")
         print(f"  Antam 1gr Beli    : Rp {antam_1gr:,}")

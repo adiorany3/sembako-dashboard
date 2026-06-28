@@ -1382,5 +1382,133 @@
     "score": 0.0,
     "source": "detik finance",
     "timestamp": "2026-06-28T13:43:52.374368"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "detikFinance - Berita Ekonomi Bisnis, dan Investasi Hari Ini",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T13:58:09.765059"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Harga Emas Antam Turun dalam Sepekan, Buyback Anjlok Rp 20 Ribu/Gram](https://finance.detik.com/berita-ekonomi-bisnis/d-8550494/harga-emas-antam-turun-dalam-sepekan-buyback-anjlok-rp-20-ribu-gram)",
+    "sentiment": "NEGATIF",
+    "score": -0.8,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T13:58:09.774147"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Harga Ayam di Pasar Ikut Anjlok Jadi Rp 35.000/Kg, Ini Biang Keroknya](https://finance.detik.com/berita-ekonomi-bisnis/d-8550248/harga-ayam-di-pasar-ikut-anjlok-jadi-rp-35-000-kg-ini-biang-keroknya)",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T13:58:09.783105"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Dilanda Panas Ekstrem, Warga Eropa Panic Buying Rebutan AC](https://finance.detik.com/berita-ekonomi-bisnis/d-8550247/dilanda-panas-ekstrem-warga-eropa-panic-buying-rebutan-ac)",
+    "sentiment": "NEGATIF",
+    "score": -0.511,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T13:58:09.792810"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Terungkap Biang Kerok AS Serang Iran Lagi](https://finance.detik.com/berita-ekonomi-bisnis/d-8550246/terungkap-biang-kerok-as-serang-iran-lagi)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T13:58:09.801911"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Purbaya soal Efisiensi Anggaran MBG: Saya Maunya Nol, Tapi Nggak Bisa Kan](https://finance.detik.com/berita-ekonomi-bisnis/d-8549550/purbaya-soal-efisiensi-anggaran-mbg-saya-maunya-nol-tapi-nggak-bisa-kan)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T13:58:09.811012"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Prabowo Singgung Swasta Ikut Nikmati Susbidi Listrik-BBM](https://finance.detik.com/berita-ekonomi-bisnis/d-8550638/prabowo-singgung-swasta-ikut-nikmati-susbidi-listrik-bbm)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T13:58:09.820357"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Dapat Usulan Untung BUMN buat Biaya Riset, Prabowo: Masalahnya Ada Laba Nggak?](https://finance.detik.com/berita-ekonomi-bisnis/d-8550603/dapat-usulan-untung-bumn-buat-biaya-riset-prabowo-masalahnya-ada-laba-nggak)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T13:58:09.829474"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Prabowo Singgung soal Gaduh-gaduh: Kapan Rakyat Sejahtera?](https://finance.detik.com/berita-ekonomi-bisnis/d-8548940/prabowo-singgung-soal-gaduh-gaduh-kapan-rakyat-sejahtera)",
+    "sentiment": "POSITIF",
+    "score": 0.65,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T13:58:09.839459"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Beras IR. III (IR 64)](https://finance.detik.com/info-pangan/jakarta/beras-ir-iii-ir-64)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T13:58:09.855896"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Cabe Merah Keriting](https://finance.detik.com/info-pangan/jakarta/cabe-merah-keriting)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T13:58:09.868396"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Daging Sapi Murni (Semur)](https://finance.detik.com/info-pangan/jakarta/daging-sapi-murni-semur)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T13:58:09.884177"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[DJP Tunjuk 7 Pemungut Pajak Digital Baru, Ada Strava](https://finance.detik.com/berita-ekonomi-bisnis/d-8550575/djp-tunjuk-7-pemungut-pajak-digital-baru-ada-strava)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T13:58:09.900415"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Pemerintah Kantongi Rp 52,85 T dari Pajak Kripto-Pinjol, Ini Rinciannya](https://finance.detik.com/berita-ekonomi-bisnis/d-8550537/pemerintah-kantongi-rp-52-85-t-dari-pajak-kripto-pinjol-ini-rinciannya)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T13:58:09.915988"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Rak Besi Banting Harga di Transmart Full Day Sale, Serbu!](https://finance.detik.com/berita-ekonomi-bisnis/d-8550451/rak-besi-banting-harga-di-transmart-full-day-sale-serbu)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T13:58:09.932142"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[PLTP Dieng Unit 2 Mulai Dibangun, Segini Kapasitasnya](https://finance.detik.com/energi/d-8550378/pltp-dieng-unit-2-mulai-dibangun-segini-kapasitasnya)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-06-28T13:58:09.956698"
   }
 ]

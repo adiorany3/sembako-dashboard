@@ -160,7 +160,7 @@ async function loadCryptoData() {
     
     // Update overview cards
     document.getElementById('crypto-mcap').textContent = latest.market_cap ? 
-        '$' + (latest.market_cap / 1e12).toFixed(2) + 'T' : '-';
+        '$' + (latest.market_cap).toFixed(2) + 'T' : '-';
     document.getElementById('mini-btc').textContent = formatUSD(latest.btc_usd);
     document.getElementById('mini-eth').textContent = formatUSD(latest.eth_usd);
     document.getElementById('mini-sol').textContent = formatUSD(latest.sol_usd);
