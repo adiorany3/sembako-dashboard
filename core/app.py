@@ -920,10 +920,17 @@ pre{{white-space:pre-wrap;word-wrap:break-word;background:#f8f8f8;padding:12px;b
 <script>
 function copyText(id){{
   var el=document.getElementById(id);
-  navigator.clipboard.writeText(el.innerText||el.textContent).then(function(){{
-    document.getElementById(id+'-copied').style.display='inline';
-    setTimeout(function(){{document.getElementById(id+'-copied').style.display='none'}},2000);
-  }});
+  var text=el.innerText||el.textContent;
+  var ta=document.createElement('textarea');
+  ta.value=text;
+  ta.style.position='fixed';
+  ta.style.opacity='0';
+  document.body.appendChild(ta);
+  ta.select();
+  document.execCommand('copy');
+  document.body.removeChild(ta);
+  document.getElementById(id+'-copied').style.display='inline';
+  setTimeout(function(){{document.getElementById(id+'-copied').style.display='none'}},2000);
 }}
 </script></body></html>"""
     return "No article yet", 404, {"Content-Type": "text/plain"}
