@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """
 Update kurs valuta asing harian (USD, EUR, SGD, MYR) ke IDR.
-Sumber utama: exchangerate-api.com (gratis)
-Fallback: Jina scraping dari BI
+Sumber utama: Frankfurter API (gratis, no key)
+Fallback: exchangerate-api.com
+Fallback 2: BI via Jina
 """
 import os
 import sys
@@ -15,8 +16,14 @@ from urllib.error import URLError
 import openpyxl
 from openpyxl.styles import Font, PatternFill, Alignment
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from cache_lib import jina as jina_read
+# Try importing jina from scripts dir, continue if missing
+try:
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from cache_lib import jina as jina_read
+    HAS_JINA = True
+except ImportError:
+    HAS_JINA = False
+    jina_read = None
 
 EXCEL_PATH = os.path.expanduser("~/sembako/data/kurs_valuta.xlsx")
 SHEET_NAME = "Harian"

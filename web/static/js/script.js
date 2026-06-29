@@ -73,6 +73,8 @@ async function loadAllData() {
         loadAlertsData(),
         checkHealth()
     ]);
+    // Auto-fetch AI analysis & populate Summary + Recommendations
+    fetchAiAnalysis();
 }
 
 // ============ Format Functions ============
