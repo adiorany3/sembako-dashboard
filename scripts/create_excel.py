@@ -5,7 +5,7 @@ from openpyxl.chart import LineChart, Reference, BarChart
 from datetime import datetime
 import os
 
-EXCEL_PATH = os.path.expanduser("~/sembako/harga_sembako.xlsx")
+EXCEL_PATH = os.path.expanduser("~/sembako/data/harga_sembako.xlsx")
 
 def create_or_load_workbook():
     if os.path.exists(EXCEL_PATH):

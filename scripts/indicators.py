@@ -239,6 +239,117 @@ def pearson_correlation(x, y):
     return round(num / (dx * dy), 3)
 
 
+# ════════════════════════════════════════════
+# 5b. MULTI-PERIOD TREND + % CHANGE
+# ════════════════════════════════════════════
+
+def multi_period_trend(data, periods=(3, 7, 14)):
+    """
+    Trend direction per period (3, 7, 14 days).
+    Returns dict: {period: {direction, change_pct, baseline, current}}
+    """
+    if not data or len(data) < 2:
+        return {}
+    current = data[-1]
+    result = {}
+    for p in periods:
+        if len(data) > p:
+            baseline = data[-(p+1)]
+            change_pct = round((current - baseline) / baseline * 100, 2) if baseline > 0 else 0
+            if change_pct > 2:
+                direction = "uptrend"
+            elif change_pct < -2:
+                direction = "downtrend"
+            else:
+                direction = "sideways"
+            result[p] = {
+                "direction": direction,
+                "change_pct": change_pct,
+                "baseline": baseline,
+                "current": current,
+            }
+        else:
+            result[p] = {
+                "direction": "insufficient_data",
+                "change_pct": 0,
+                "baseline": 0,
+                "current": current,
+            }
+    return result
+
+
+def price_forecast(data, horizon=7, alpha=0.3):
+    """
+    Exponential smoothing forecast for N days ahead.
+    Returns list of forecasted values (length = horizon).
+    """
+    if not data or len(data) < 5:
+        return []
+    # Double exponential smoothing (Holt's method)
+    level = data[0]
+    trend_val = data[1] - data[0] if len(data) > 1 else 0
+    for i in range(1, len(data)):
+        prev_level = level
+        level = alpha * data[i] + (1 - alpha) * (level + trend_val)
+        trend_val = alpha * (level - prev_level) + (1 - alpha) * trend_val
+    # Forecast
+    forecasts = []
+    for h in range(1, horizon + 1):
+        forecasts.append(round(level + trend_val * h, 2))
+    return forecasts
+
+
+def change_from_baseline(data, baselines=(1, 7, 14, 30)):
+    """
+    % change from various baselines (kemarin, 7h, 14h, 30h).
+    Returns dict: {period: change_pct or None}
+    """
+    if not data or len(data) < 2:
+        return {}
+    current = data[-1]
+    result = {}
+    for b in baselines:
+        if len(data) > b:
+            base_val = data[-(b+1)]
+            if base_val > 0:
+                result[b] = round((current - base_val) / base_val * 100, 2)
+            else:
+                result[b] = None
+        else:
+            result[b] = None
+    return result
+
+
+def enhanced_confidence(data, trend=None, volatility_val=None, forecast=None):
+    """
+    Enhanced confidence score 1-5 with stricter criteria.
+    Factors: data depth, trend clarity, volatility, forecast agreement.
+    """
+    if not data or len(data) < 3:
+        return 1
+    score = 0
+    # Data depth (0-2 pts)
+    if len(data) >= 10: score += 1
+    if len(data) >= 30: score += 1
+    # Trend clarity (0-1.5 pts)
+    if trend and trend not in ("insufficient_data", "sideways"):
+        score += 1.5
+    elif trend == "sideways":
+        score += 0.5
+    # Volatility (0-1 pt) — low vol = high confidence
+    if volatility_val is not None:
+        if volatility_val < 3:
+            score += 1.0
+        elif volatility_val < 5:
+            score += 0.5
+    # Forecast available (0-0.5 pts)
+    if forecast and len(forecast) >= 7:
+        score += 0.5
+    return min(5, max(1, round(score)))
+
+
+
+
 def correlation_matrix(series_dict):
     """
     Compute correlation matrix for multiple time series.

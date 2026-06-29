@@ -11,7 +11,7 @@ import os
 
 API_URL = "https://api.open-meteo.com/v1/forecast?latitude=-7.7956&longitude=110.3695&current=temperature_2m,relative_humidity_2m,rain,weather_code,wind_speed_10m,apparent_temperature&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weather_code&timezone=Asia/Jakarta"
 
-EXCEL_PATH = os.path.expanduser("~/sembako/cuaca_yogyakarta.xlsx")
+EXCEL_PATH = os.path.expanduser("~/sembako/data/cuaca_yogyakarta.xlsx")
 
 # Weather code descriptions (WMO codes)
 WEATHER_CODES = {

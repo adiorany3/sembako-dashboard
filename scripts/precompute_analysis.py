@@ -22,7 +22,8 @@ from indicators import (
     moving_average, ema, rate_of_change, volatility,
     find_support_resistance, trend_direction, momentum_score,
     detect_anomalies, pearson_correlation, confidence_score,
-    get_seasonal_context, full_analysis
+    get_seasonal_context, full_analysis,
+    multi_period_trend, price_forecast, change_from_baseline, enhanced_confidence
 )
 
 DATA_DIR = Path.home() / "sembako" / "data"
@@ -220,46 +221,76 @@ def load_all_history():
 
 
 def compute_all_indicators(history):
-    """Compute technical indicators for all series."""
+    """Compute technical indicators for all series — with multi-period trends, forecasts, enhanced confidence."""
     print(f"{ts()} 📐 Computing indicators...")
     indicators = {}
 
     for name, values in history.items():
         if len(values) >= 2:
             result = full_analysis(name, values)
+            # Add multi-period trend (3/7/14 days)
+            result["multi_period"] = multi_period_trend(values)
+            # Add % change from baselines (1/7/14/30 days)
+            result["changes"] = change_from_baseline(values)
+            # Add 7-day price forecast (if enough data)
+            if len(values) >= 5:
+                result["forecast_7d"] = price_forecast(values, horizon=7)
+            # Enhanced confidence score
+            result["enhanced_confidence"] = enhanced_confidence(
+                values, result["trend"], result.get("volatility"), result.get("forecast_7d")
+            )
             indicators[name] = result
 
-    # Cross-correlations
+    # ── EXPANDED CROSS-CORRELATIONS (12 pairs) ──
     corr_pairs = [
+        # Macro
         ("kurs_USD_IDR", "emas_antam", "USD↔Emas"),
         ("oil_brent", "cpo_myr", "Minyak↔CPO"),
+        # Sembako internal
         ("sembako_Telur Ras", "sembako_Daging Sapi", "Telur↔Daging"),
         ("sembako_Gula Pasir", "sembako_Ber", "Gula↔Beras"),
+        ("sembako_Cabai Merah", "sembako_Bawang Merah", "Cabai↔Bawang"),
+        # Pakan chain (feed → livestock)
+        ("kurs_USD_IDR", "sembako_Daging Sapi", "Kurs↔Daging Sapi"),
+        ("oil_brent", "sembako_Minyak Goreng", "Minyak↔Minyak Goreng"),
+        # Cross-sector
+        ("saham_ihsg", "sembako_Ber", "IHSG↔Beras"),
+        ("sentimen_score", "saham_ihsg", "Sentimen↔IHSG"),
+        ("sentimen_score", "sembako_Telur Ras", "Sentimen↔Telur"),
+        ("kurs_USD_IDR", "saham_ihsg", "Kurs↔IHSG"),
+        ("emas_antam", "saham_ihsg", "Emas↔IHSG"),
     ]
 
     correlations = {}
     for a, b, label in corr_pairs:
         if a in history and b in history:
-            corr = pearson_correlation(history[a][-min(len(history[a]),len(history[b])):],
-                                       history[b][-min(len(history[a]),len(history[b])):])
-            if corr is not None:
-                correlations[label] = corr
+            n = min(len(history[a]), len(history[b]))
+            if n >= 3:
+                corr = pearson_correlation(history[a][-n:], history[b][-n:])
+                if corr is not None:
+                    correlations[label] = corr
 
-    # Anomalies — only on genuine time-series (skip cross-sectional like pakan)
+    # Anomalies — only on genuine time-series
     anomalies = []
     time_series_prefixes = ("sembako_", "crypto_", "pet_", "saham_", "sentimen_", "kurs_", "oil_")
     for name, values in history.items():
         if not any(name.startswith(p) for p in time_series_prefixes):
-            continue  # skip cross-sectional data
+            continue
         if len(values) >= 3:
             detected = detect_anomalies(values, threshold_pct=8)
             for a in detected:
+                # Filter: skip anomali palsu dari values kecil (sentimen score ~0)
+                if abs(a['from']) < 1:
+                    continue
                 anomalies.append({"series": name, **a})
 
     # Seasonal
     seasonal = get_seasonal_context()
 
-    print(f"{ts()} ✅ {len(indicators)} indicator sets, {len(correlations)} correlations, {len(anomalies)} anomalies")
+    # Count stats
+    with_mpt = sum(1 for v in indicators.values() if v.get("multi_period"))
+    with_fc = sum(1 for v in indicators.values() if v.get("forecast_7d"))
+    print(f"{ts()} ✅ {len(indicators)} indicators, {with_mpt} with multi-period trends, {with_fc} with forecasts, {len(correlations)} correlations, {len(anomalies)} anomalies")
     return indicators, correlations, anomalies, seasonal
 
 
@@ -356,7 +387,8 @@ def build_rule_analysis(history, indicators, correlations, anomalies, seasonal):
     down = trends.count("downtrend")
     side = trends.count("sideways")
 
-    total_conf = [v.get("confidence", 0) for v in indicators.values() if v.get("confidence")]
+    # Use enhanced confidence scores
+    total_conf = [v.get("enhanced_confidence", v.get("confidence", 0)) for v in indicators.values() if v.get("trend") != "insufficient_data"]
     avg_conf = sum(total_conf) / max(len(total_conf), 1)
 
     # Overall market direction
@@ -369,7 +401,7 @@ def build_rule_analysis(history, indicators, correlations, anomalies, seasonal):
 
     lines.append(f"Per {date_str}, kondisi pasar {market_dir}.")
     lines.append(f"- {up} komoditas uptrend, {down} downtrend, {side} sideways")
-    lines.append(f"- Rata-rata confidence level: {avg_conf:.1f}/5 {'⭐' * round(avg_conf)}")
+    lines.append(f"- Rata-rata confidence level: {avg_conf:.1f}/5 {'⭐' * min(5, round(avg_conf))}")
 
     if anomalies:
         high_anomaly = [a for a in anomalies if abs(a['change_pct']) > 10]
@@ -380,6 +412,30 @@ def build_rule_analysis(history, indicators, correlations, anomalies, seasonal):
         active = [s for s in seasonal if s['impact'] == 'high']
         if active:
             lines.append(f"- 🌙 **Konteks musiman**: {active[0]['effect']}")
+    lines.append("")
+
+    # ── TOP 3 HAL PENTING ──
+    highlights = []
+    # Biggest movers
+    biggest_up = [(k, v) for k, v in indicators.items()
+                  if v.get('change_pct', 0) > 3 and not v.get('error') and v.get('trend') == 'uptrend']
+    biggest_down = [(k, v) for k, v in indicators.items()
+                    if v.get('change_pct', 0) < -3 and not v.get('error') and v.get('trend') == 'downtrend']
+    if biggest_up:
+        best = max(biggest_up, key=lambda x: x[1]['change_pct'])
+        highlights.append(f"🟢 **{best[0].replace('_',' ').title()}** naik {best[1]['change_pct']:+.1f}% — momentum kuat")
+    if biggest_down:
+        worst = min(biggest_down, key=lambda x: x[1]['change_pct'])
+        highlights.append(f"🔴 **{worst[0].replace('_',' ').title()}** turun {worst[1]['change_pct']:+.1f}% — tekanan jual")
+    # Strongest correlation
+    if correlations:
+        top_corr = max(correlations.items(), key=lambda x: abs(x[1]))
+        if abs(top_corr[1]) > 0.4:
+            highlights.append(f"🔗 **{top_corr[0]}**: korelasi {top_corr[1]:+.3f} — {'searah' if top_corr[1] > 0 else 'berlawanan'}")
+    if highlights:
+        lines.append("**3 Hal Penting:**")
+        for h in highlights[:3]:
+            lines.append(f"- {h}")
     lines.append("")
 
     # ── SEKTOR SEMBAKO ──
@@ -398,8 +454,40 @@ def build_rule_analysis(history, indicators, correlations, anomalies, seasonal):
             mom = f"{ind['momentum']:+d}"
             vol = f"{ind['volatility']:.1f}%" if ind.get('volatility') else "-"
             conf = "⭐" * ind['confidence']
-            lines.append(f"| {name} | {cur} | {ma5} | {ma20} | {t} | {mom} | {vol} | {conf} |")
+            # Enhanced confidence
+            ec = ind.get('enhanced_confidence', ind['confidence'])
+            conf_e = "⭐" * ec
+            lines.append(f"| {name} | {cur} | {ma5} | {ma20} | {t} | {mom} | {vol} | {conf_e} |")
     lines.append("")
+
+    # ── MULTI-PERIOD TRENDS + FORECAST ──
+    trend_key_items = ["Beras Premium", "Telur Ras", "Daging Sapi", "Cabai Keriting", "Bawang Merah", "Gula Pasir", "Minyak Goreng"]
+    trend_data = [(f"sembako_{t}", t) for t in trend_key_items if f"sembako_{t}" in indicators]
+    # Also include pakan & peternakan
+    trend_data += [(f"pakan_{k}", k) for k in ["Jagung Pipilan", "Bungkil Kedelai", "Bekatul"] if f"pakan_{k}" in indicators]
+    trend_data += [(f"pet_{k}", k) for k in ["Ayam_Hidup", "Daging_Eceran", "Telur_(Grosir)"] if f"pet_{k}" in indicators]
+
+    if trend_data:
+        lines.append("## 📈 Tren Multi-Periode + Prediksi 7 Hari")
+        lines.append("| Komoditas | Saat Ini | vs 1 hari | vs 7 hari | vs 14 hari | Prediksi 7h | Arah Prediksi |")
+        lines.append("|-----------|----------|-----------|-----------|-----------|------------|---------------|")
+        for key, label in trend_data:
+            ind = indicators[key]
+            cur = ind['current']
+            chg = ind.get('changes', {})
+            fc = ind.get('forecast_7d', [])
+            chg1 = f"{chg.get(1, 0) or 0:+.1f}%" if chg.get(1) is not None else "-"
+            chg7 = f"{chg.get(7, 0) or 0:+.1f}%" if chg.get(7) is not None else "-"
+            chg14 = f"{chg.get(14, 0) or 0:+.1f}%" if chg.get(14) is not None else "-"
+            if fc:
+                fc_avg = sum(fc) / len(fc)
+                fc_dir = "🟢↑" if fc_avg > cur * 1.01 else "🔴↓" if fc_avg < cur * 0.99 else "🟡→"
+                fc_str = f"Rp{fc_avg:,.0f}" if cur > 100 else f"${fc_avg:,.0f}"
+            else:
+                fc_str = "-"
+                fc_dir = "-"
+            lines.append(f"| {label} | Rp{cur:,.0f} | {chg1} | {chg7} | {chg14} | {fc_str} | {fc_dir} |")
+        lines.append("")
 
     # ── SEKTOR CRYPTO ──
     lines.append("## ₿ Crypto — Analisa Teknis")
