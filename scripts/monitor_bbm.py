@@ -329,10 +329,11 @@ def main():
         with open(os.path.expanduser("~/sembako/bbm_report.txt"), "w") as f:
             f.write(msg)
     else:
-        print("\n✅ Tidak ada perubahan harga BBM yang terkonfirmasi")
-        # Clear report file (silent)
-        with open(os.path.expanduser("~/sembako/bbm_report.txt"), "w") as f:
-            f.write("")
+        # Silent - no confirmed changes, no report
+        # Clear any stale report file
+        report_path = os.path.expanduser("~/sembako/bbm_report.txt")
+        if os.path.exists(report_path):
+            os.remove(report_path)
 
 if __name__ == "__main__":
     main()
