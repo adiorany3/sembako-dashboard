@@ -23,7 +23,9 @@ from indicators import (
     find_support_resistance, trend_direction, momentum_score,
     detect_anomalies, pearson_correlation, confidence_score,
     get_seasonal_context, full_analysis,
-    multi_period_trend, price_forecast, change_from_baseline, enhanced_confidence
+    multi_period_trend, price_forecast, change_from_baseline, enhanced_confidence,
+    real_interest_rate, currency_pressure_index, import_cost_pressure,
+    food_inflation_proxy, stagflation_risk, risk_on_off_index, commodity_terms_of_trade
 )
 
 DATA_DIR = Path.home() / "sembako" / "data"
@@ -287,10 +289,79 @@ def compute_all_indicators(history):
     # Seasonal
     seasonal = get_seasonal_context()
 
+    # ── MACRO ECONOMIC INDICATORS ──
+    macro = {}
+    print(f"{ts()} 📐 Computing macro indicators...")
+    # 1. Real Interest Rate
+    bi_rows = read_sheet("bi_rate_inflasi.xlsx", "Harian")
+    if bi_rows:
+        br = bi_rows[-1].get("BI_Rate")
+        inf = bi_rows[-1].get("Inflasi_YoY")
+        if br and inf:
+            macro["real_interest_rate"] = real_interest_rate(float(br), float(inf))
+    # 2. Currency Pressure Index
+    if "kurs_USD_IDR" in history and len(history["kurs_USD_IDR"]) >= 5:
+        macro["currency_pressure"] = currency_pressure_index(history["kurs_USD_IDR"])
+    # 3. Import Cost Pressure
+    oil_brent = history.get("oil_brent", [None])[-1]
+    usd_idr = history.get("kurs_USD_IDR", [None])[-1]
+    if oil_brent and usd_idr:
+        macro["import_cost_pressure"] = import_cost_pressure(float(oil_brent), float(usd_idr))
+    # 4. Food Inflation Proxy
+    sembako_vals = []
+    for k in ["sembako_Ber", "sembako_Telur Ras", "sembako_Gula Pasir",
+              "sembako_Cabai Merah", "sembako_Minyak Goreng", "sembako_Bawang Merah"]:
+        if k in history and history[k]:
+            sembako_vals.append(history[k][-1])
+    if sembako_vals:
+        basket_avg = sum(sembako_vals) / len(sembako_vals)
+        # Build basket history from available sembako series
+        basket_history = []
+        max_len = max(len(history.get(k, [])) for k in ["sembako_Ber", "sembako_Telur Ras"])
+        for i in range(max(max_len - 35, 0), max_len):
+            day_vals = []
+            for k in ["sembako_Ber", "sembako_Telur Ras", "sembako_Gula Pasir",
+                       "sembako_Cabai Merah", "sembako_Minyak Goreng", "sembako_Bawang Merah"]:
+                v = history.get(k, [])
+                if i < len(v):
+                    day_vals.append(v[i])
+            if day_vals:
+                basket_history.append(sum(day_vals) / len(day_vals))
+        if basket_history:
+            macro["food_inflation_proxy"] = food_inflation_proxy(basket_history)
+    # 5. Stagflation Risk
+    ihsg_trend = indicators.get("saham_ihsg", {}).get("trend", "sideways")
+    food_sig = macro.get("food_inflation_proxy", {}).get("signal", "stable") if macro.get("food_inflation_proxy") else "stable"
+    if macro.get("real_interest_rate"):
+        macro["stagflation_risk"] = stagflation_risk(
+            float(br) if br else None,
+            float(inf) if inf else None,
+            ihsg_trend, food_sig
+        )
+    # 6. Risk-On/Off Index
+    btc_chg = None
+    if "crypto_btc_usd" in history and len(history["crypto_btc_usd"]) >= 5:
+        btc_chg = (history["crypto_btc_usd"][-1] - history["crypto_btc_usd"][-5]) / history["crypto_btc_usd"][-5] * 100
+    gold_chg = None
+    if "emas_antam" in history and len(history["emas_antam"]) >= 5:
+        gold_chg = (history["emas_antam"][-1] - history["emas_antam"][-5]) / history["emas_antam"][-5] * 100
+    ihsg_chg = None
+    if "saham_ihsg" in history and len(history["saham_ihsg"]) >= 5:
+        ihsg_chg = (history["saham_ihsg"][-1] - history["saham_ihsg"][-5]) / history["saham_ihsg"][-5] * 100
+    if btc_chg is not None or gold_chg is not None or ihsg_chg is not None:
+        macro["risk_on_off"] = risk_on_off_index(btc_chg, gold_chg, ihsg_chg)
+    # 7. Commodity Terms of Trade
+    cpo_myr = history.get("cpo_myr", [None])[-1]
+    if cpo_myr and oil_brent:
+        macro["commodity_terms"] = commodity_terms_of_trade(float(cpo_myr), float(oil_brent))
+
+    print(f"{ts()} ✅ {len(macro)} macro indicators computed")
+    indicators["_macro"] = macro
+
     # Count stats
-    with_mpt = sum(1 for v in indicators.values() if v.get("multi_period"))
-    with_fc = sum(1 for v in indicators.values() if v.get("forecast_7d"))
-    print(f"{ts()} ✅ {len(indicators)} indicators, {with_mpt} with multi-period trends, {with_fc} with forecasts, {len(correlations)} correlations, {len(anomalies)} anomalies")
+    with_mpt = sum(1 for v in indicators.values() if isinstance(v, dict) and v.get("multi_period"))
+    with_fc = sum(1 for v in indicators.values() if isinstance(v, dict) and v.get("forecast_7d"))
+    print(f"{ts()} ✅ {len([v for v in indicators if v != '_macro'])} indicators, {with_mpt} multi-period, {with_fc} forecasts, {len(correlations)} correlations, {len(anomalies)} anomalies, {len(macro)} macro")
     return indicators, correlations, anomalies, seasonal
 
 
@@ -373,7 +444,7 @@ def build_prompt(history, indicators, correlations, anomalies, seasonal):
     return "\n".join(lines)
 
 
-def build_rule_analysis(history, indicators, correlations, anomalies, seasonal):
+def build_rule_analysis(history, indicators, correlations, anomalies, seasonal, macro=None):
     """Generate comprehensive rule-based analysis from computed indicators."""
     date_str = datetime.now().strftime("%d %B %Y")
     lines = []
@@ -553,6 +624,70 @@ def build_rule_analysis(history, indicators, correlations, anomalies, seasonal):
         for s in seasonal:
             impact_icon = "🔴" if s['impact'] == 'high' else "🟡" if s['impact'] == 'medium' else "⚪"
             lines.append(f"- {impact_icon} **{s['pattern'].replace('_',' ').title()}**: {s['effect']}")
+        lines.append("")
+
+    # ── MACRO ECONOMIC DASHBOARD ──
+    macro = macro or {}
+    if macro:
+        lines.append("## 🏛️ Indikator Makro Ekonomi")
+
+        # Real Interest Rate
+        rir = macro.get("real_interest_rate")
+        if rir:
+            sig_icon = {"hawkish": "🔴", "neutral": "🟢", "dovish": "🟡", "danger": "⚠️"}.get(rir["signal"], "⚪")
+            lines.append(f"- {sig_icon} **Real Interest Rate**: {rir['value']:+.1f}% — {rir['interpretation']}")
+
+        # Currency Pressure
+        cp = macro.get("currency_pressure")
+        if cp:
+            sig_icon = {"danger": "🔴", "warning": "🟡", "cautious": "🟠", "stable": "🟢"}.get(cp["signal"], "⚪")
+            lines.append(f"- {sig_icon} **Currency Pressure Index**: {cp['score']}/100 (5d: {cp['trend_5d_pct']:+.1f}%) — {cp['interpretation']}")
+
+        # Import Cost Pressure
+        icp = macro.get("import_cost_pressure")
+        if icp:
+            sig_icon = {"danger": "🔴", "warning": "🟡", "neutral": "🟢", "favorable": "💚"}.get(icp["signal"], "⚪")
+            lines.append(f"- {sig_icon} **Import Cost Pressure**: ratio {icp['ratio_vs_baseline']:.2f}x baseline — {icp['interpretation']}")
+
+        # Food Inflation Proxy
+        fip = macro.get("food_inflation_proxy")
+        if fip:
+            sig_icon = {"high_inflation": "🔴", "moderate": "🟡", "stable": "🟢", "deflation": "🔵"}.get(fip["signal"], "⚪")
+            lines.append(f"- {sig_icon} **Food Inflation Proxy**: 30d {fip['change_30d']:+.1f}%, 7d {fip['change_7d']:+.1f}% — {fip['interpretation']}")
+
+        # Stagflation Risk
+        sr = macro.get("stagflation_risk")
+        if sr:
+            sig_icon = {"high_risk": "🔴", "moderate": "🟡", "low": "🟢", "minimal": "✅"}.get(sr["signal"], "⚪")
+            lines.append(f"- {sig_icon} **Stagflation Risk**: {sr['score']}/100 — {sr['interpretation']}")
+            if sr["factors"]:
+                for f in sr["factors"][:3]:
+                    lines.append(f"  - ⮑ {f}")
+
+        # Risk-On/Off
+        roo = macro.get("risk_on_off")
+        if roo:
+            sig_icon = {"risk_on": "🟢", "mild_on": "🟢", "neutral": "⚪", "mild_off": "🟡", "risk_off": "🔴"}.get(roo["signal"], "⚪")
+            lines.append(f"- {sig_icon} **Risk-On/Off Index**: {roo['score']:+d}/100 — {roo['interpretation']}")
+
+        # Commodity Terms of Trade
+        ctt = macro.get("commodity_terms")
+        if ctt:
+            sig_icon = {"favorable": "💚", "positive": "🟢", "neutral": "⚪", "warning": "🟡", "danger": "🔴"}.get(ctt["signal"], "⚪")
+            lines.append(f"- {sig_icon} **Commodity Terms of Trade**: CPO/Oil {ctt['ratio']:.2f} ({ctt['pct_vs_baseline']:+.1f}% vs baseline) — {ctt['interpretation']}")
+
+        # Summary
+        danger_count = sum(1 for v in macro.values() if isinstance(v, dict) and v.get("signal") in ("danger", "high_risk", "risk_off"))
+        warning_count = sum(1 for v in macro.values() if isinstance(v, dict) and v.get("signal") in ("warning", "moderate", "cautious", "mild_off"))
+        lines.append("")
+        if danger_count >= 2:
+            lines.append(f"⚠️ **{danger_count} indikator dalam zona BAHAYA** — ekonomi butuh perhatian serius.")
+        elif danger_count >= 1:
+            lines.append(f"⚠️ **{danger_count} indikator zona bahaya** — waspada terhadap potensi tekanan.")
+        elif warning_count >= 3:
+            lines.append(f"🟡 **{warning_count} indikator waspada** — monitor perkembangan lebih lanjut.")
+        else:
+            lines.append("✅ **Kondisi makro stabil** — tidak ada zona bahaya terdeteksi.")
         lines.append("")
 
     # ── RISK ASSESSMENT ──
@@ -758,6 +893,9 @@ def main():
     # 2. Compute indicators
     indicators, correlations, anomalies, seasonal = compute_all_indicators(history)
 
+    # Extract macro indicators — don't let _macro leak into indicator iteration loops
+    macro_indicators = indicators.pop("_macro", {})
+
     # 3. Build prompt
     prompt = build_prompt(history, indicators, correlations, anomalies, seasonal)
     print(f"{ts()} 📝 Prompt: {len(prompt)} chars")
@@ -784,7 +922,7 @@ def main():
     # 5. Fallback to rule-based
     if not analysis:
         print(f"{ts()} 🔄 Generating comprehensive rule-based analysis...")
-        analysis = build_rule_analysis(history, indicators, correlations, anomalies, seasonal)
+        analysis = build_rule_analysis(history, indicators, correlations, anomalies, seasonal, macro=macro_indicators)
         source = "rule_based_v4"
 
     print(f"{ts()} ✅ Analysis: {len(analysis)} chars ({source})")
