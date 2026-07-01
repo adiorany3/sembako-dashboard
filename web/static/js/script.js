@@ -11,6 +11,7 @@ let sembakoData = null;
 // ============ Initialize ============
 document.addEventListener('DOMContentLoaded', function() {
     initTabs();
+    initTableControls();
     loadAllData();
     updateTime();
     setInterval(updateTime, 1000);
@@ -25,6 +26,82 @@ function initTabs() {
             const tabName = this.getAttribute('data-tab');
             switchTab(tabName);
         });
+    });
+}
+
+// ============ Table Sort/Filter Controls ============
+function initTableControls() {
+    // Map table prefix to tbody id
+    const tables = ['crypto', 'emas'];
+    
+    tables.forEach(prefix => {
+        const controls = document.querySelector(`#${prefix} .table-controls`);
+        if (!controls) return;
+        
+        const buttons = controls.querySelectorAll('.filter-btn');
+        const startInput = controls.querySelector(`#${prefix}-date-start`);
+        const endInput = controls.querySelector(`#${prefix}-date-end`);
+        
+        // Sort buttons
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                buttons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                sortTable(prefix, btn.dataset.sort);
+            });
+        });
+        
+        // Date filter inputs
+        [startInput, endInput].forEach(input => {
+            if (input) input.addEventListener('change', () => filterByDate(prefix));
+        });
+    });
+}
+
+function sortTable(prefix, order) {
+    const tbody = document.getElementById(`${prefix}-tbody`);
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    
+    rows.sort((a, b) => {
+        const aDate = a.cells[0]?.textContent.trim() || '';
+        const bDate = b.cells[0]?.textContent.trim() || '';
+        // Parse DD/MM/YYYY or YYYY-MM-DD
+        const parse = (s) => {
+            if (s.includes('/')) {
+                const [d, m, y] = s.split('/');
+                return new Date(y, m - 1, d);
+            }
+            return new Date(s);
+        };
+        const diff = parse(aDate) - parse(bDate);
+        return order === 'asc' ? diff : -diff;
+    });
+    
+    tbody.innerHTML = '';
+    rows.forEach(r => tbody.appendChild(r));
+}
+
+function filterByDate(prefix) {
+    const start = document.getElementById(`${prefix}-date-start`)?.value;
+    const end = document.getElementById(`${prefix}-date-end`)?.value;
+    const tbody = document.getElementById(`${prefix}-tbody`);
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    
+    rows.forEach(row => {
+        const cellDate = row.cells[0]?.textContent.trim() || '';
+        if (!start && !end) { row.style.display = ''; return; }
+        
+        // Parse date from cell
+        let rowDate;
+        if (cellDate.includes('/')) {
+            const [d, m, y] = cellDate.split('/');
+            rowDate = new Date(y, m - 1, d);
+        } else {
+            rowDate = new Date(cellDate);
+        }
+        
+        const show = (!start || rowDate >= new Date(start)) && (!end || rowDate <= new Date(end));
+        row.style.display = show ? '' : 'none';
     });
 }
 
@@ -192,13 +269,11 @@ async function loadCryptoData() {
         const btc24hClass = row.btc_24h < 0 ? 'text-danger' : 'text-success';
         tr.innerHTML = `
             <td>${formatDate(row.tanggal)}</td>
+            <td style="font-size:11px;white-space:nowrap">${row.waktu || '-'}</td>
             <td>${formatUSD(row.btc_usd)}</td>
-            <td>${formatCurrency(row.btc_idr)}</td>
             <td class="${btc24hClass}">${formatPercent(row.btc_24h)}</td>
             <td>${formatUSD(row.eth_usd)}</td>
-            <td>${formatCurrency(row.eth_idr)}</td>
             <td>${formatUSD(row.sol_usd)}</td>
-            <td>${row.market_cap ? '$' + (row.market_cap / 1e12).toFixed(2) + 'T' : '-'}</td>
             <td><span class="badge">${row.sentimen || 'NETRAL'}</span></td>
         `;
         tbody.appendChild(tr);

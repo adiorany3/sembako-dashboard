@@ -188,23 +188,27 @@
             <!-- Crypto Tab -->
             <section class="tab-content" id="crypto">
                 <div class="data-table">
-                    <h2>🪙 Harga Crypto</h2>
+                    <div class="table-controls">
+                        <button class="filter-btn active" data-sort="desc">Terbaru</button>
+                        <button class="filter-btn" data-sort="asc">Terlama</button>
+                        <input type="date" id="crypto-date-start" placeholder="Dari tanggal">
+                        <input type="date" id="crypto-date-end" placeholder="Sampai tanggal">
+                    </div>
+                    <h2>🪙 Harga Crypto (OHLC)</h2>
                     <table id="crypto-table">
                         <thead>
                             <tr>
                                 <th>Tanggal</th>
+                                <th>Waktu (OHLC)</th>
                                 <th>BTC (USD)</th>
-                                <th>BTC (IDR)</th>
                                 <th>BTC 24h</th>
                                 <th>ETH (USD)</th>
-                                <th>ETH (IDR)</th>
                                 <th>SOL (USD)</th>
-                                <th>Market Cap</th>
                                 <th>Sentimen</th>
                             </tr>
                         </thead>
                         <tbody id="crypto-tbody">
-                            <tr><td colspan="9" class="loading">Loading...</td></tr>
+                            <tr><td colspan="7" class="loading">Loading...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -213,6 +217,12 @@
             <!-- Emas Tab -->
             <section class="tab-content" id="emas">
                 <div class="data-table">
+                    <div class="table-controls">
+                        <button class="filter-btn active" data-sort="desc">Terbaru</button>
+                        <button class="filter-btn" data-sort="asc">Terlama</button>
+                        <input type="date" id="emas-date-start" placeholder="Dari tanggal">
+                        <input type="date" id="emas-date-end" placeholder="Sampai tanggal">
+                    </div>
                     <h2>💰 Harga Emas</h2>
                     <table id="emas-table">
                         <thead>

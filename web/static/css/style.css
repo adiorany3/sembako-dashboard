@@ -665,6 +665,20 @@ tr:hover {
 }
 
 /* ============ Filter Buttons ============ */
+.table-controls {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.table-controls input[type="date"] {
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 13px;
+    background: white;
+}
 .filter-buttons {
     display: flex;
     gap: 8px;
