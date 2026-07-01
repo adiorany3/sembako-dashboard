@@ -7,6 +7,9 @@ venv/
 *.xlsx~
 .DS_Store
 config.py
+.venv/
+logs/
+*.egg-info/
 # Data files in root only (keep data/ folder tracked)
 /*.xlsx
 /*.json

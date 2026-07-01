@@ -62,24 +62,25 @@ def load_all_history():
 
     data = {}
 
-    # Sembako (31 rows)
+    # Sembako (64 rows)
     rows = read_sheet("harga_sembako.xlsx", "Harga")
     if rows:
-        keys = ["Ber","Telur Ras","Gula Pasir","Cabai Merah","Minyak Goreng","Bawang Merah","Daging Sapi"]
+        keys = ["Beras Premium","Telur Ras","Gula Pasir","Cabai Merah","Minyak Goreng","Bawang Merah","Daging Sapi"]
         for k in keys:
             vals = [float(r.get(k, 0)) for r in rows if r.get(k) and float(str(r.get(k,0) or 0)) > 0]
             if len(vals) >= 2:
                 data[f"sembako_{k}"] = vals
         print(f"  Sembako: {len(rows)} rows, {len([k for k in data if k.startswith('sembako')])} series")
 
-    # Crypto (2 rows)
-    rows = read_sheet("crypto_monitor.xlsx")
+    # Crypto (multiple rows)
+    rows = read_sheet("crypto_monitor.xlsx", "Harga")
     if rows:
-        for col in ["btc_usd","eth_usd","sol_usd"]:
-            vals = [float(r.get(col, 0)) for r in rows if r.get(col)]
+        col_map = {"BTC (USD)": "btc_usd", "ETH (USD)": "eth_usd", "SOL (USD)": "sol_usd"}
+        for xl_col, key in col_map.items():
+            vals = [float(r.get(xl_col, 0)) for r in rows if r.get(xl_col)]
             if len(vals) >= 2:
-                data[f"crypto_{col}"] = vals
-        print(f"  Crypto: {len(rows)} rows")
+                data[f"crypto_{key}"] = vals
+        print(f"  Crypto: {len(rows)} rows, {len([k for k in data if k.startswith('crypto')])} series")
 
     # Pertanian (1 row only)
     rows = read_sheet("harga_pertanian_ternak.xlsx", "Harga Komoditas")
@@ -317,26 +318,31 @@ def compute_all_indicators(history):
         basket_avg = sum(sembako_vals) / len(sembako_vals)
         # Build basket history from available sembako series
         basket_history = []
-        max_len = max(len(history.get(k, [])) for k in ["sembako_Ber", "sembako_Telur Ras"])
-        for i in range(max(max_len - 35, 0), max_len):
-            day_vals = []
-            for k in ["sembako_Ber", "sembako_Telur Ras", "sembako_Gula Pasir",
-                       "sembako_Cabai Merah", "sembako_Minyak Goreng", "sembako_Bawang Merah"]:
-                v = history.get(k, [])
-                if i < len(v):
-                    day_vals.append(v[i])
-            if day_vals:
-                basket_history.append(sum(day_vals) / len(day_vals))
+        available_keys = [k for k in ["sembako_Ber", "sembako_Telur Ras"] if k in history and history[k]]
+        if available_keys:
+            max_len = max(len(history[k]) for k in available_keys)
+            for i in range(max(max_len - 35, 0), max_len):
+                day_vals = []
+                for k in ["sembako_Ber", "sembako_Telur Ras", "sembako_Gula Pasir",
+                           "sembako_Cabai Merah", "sembako_Minyak Goreng", "sembako_Bawang Merah"]:
+                    v = history.get(k, [])
+                    if i < len(v):
+                        day_vals.append(v[i])
+                if day_vals:
+                    basket_history.append(sum(day_vals) / len(day_vals))
         if basket_history:
             macro["food_inflation_proxy"] = food_inflation_proxy(basket_history)
     # 5. Stagflation Risk
     ihsg_trend = indicators.get("saham_ihsg", {}).get("trend", "sideways")
     food_sig = macro.get("food_inflation_proxy", {}).get("signal", "stable") if macro.get("food_inflation_proxy") else "stable"
-    if macro.get("real_interest_rate"):
+    rir = macro.get("real_interest_rate")
+    if rir:
+        # Extract actual BI rate and inflation from the latest data
+        _bi_rows = read_sheet("bi_rate_inflasi.xlsx", "Harian")
+        _br = float(_bi_rows[-1].get("BI_Rate")) if _bi_rows and _bi_rows[-1].get("BI_Rate") else None
+        _inf = float(_bi_rows[-1].get("Inflasi_YoY")) if _bi_rows and _bi_rows[-1].get("Inflasi_YoY") else None
         macro["stagflation_risk"] = stagflation_risk(
-            float(br) if br else None,
-            float(inf) if inf else None,
-            ihsg_trend, food_sig
+            _br, _inf, ihsg_trend, food_sig
         )
     # 6. Risk-On/Off Index
     btc_chg = None

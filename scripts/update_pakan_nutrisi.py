@@ -76,13 +76,13 @@ def main():
     for c in range(2, ws.max_column):
         avg = avgs.get(c)
         if avg and avg > 0:
-            variation = avg * random.uniform(-0.05, 0.05)
-            harga = round(avg + variation, -2)  # bulatkan ke 100
+            # Use average directly - no variation
+            harga = round(avg, -2)  # bulatkan ke 100
         else:
-            # Fallback ke base
+            # Fallback ke base tanpa variasi
             bahan_idx = c - 2
             if bahan_idx < len(BAHAN):
-                harga = round(BASE_HARGA[BAHAN[bahan_idx]] * random.uniform(0.95, 1.05), -2)
+                harga = BASE_HARGA[BAHAN[bahan_idx]]
             else:
                 harga = 0
         ws.cell(next_row, c, value=harga)

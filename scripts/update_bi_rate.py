@@ -8,7 +8,6 @@ import re
 import os
 import sys
 import json
-import random
 from datetime import datetime
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -166,8 +165,8 @@ def scrape_inflasi():
 
 
 def vary_pct(val, pct=0.05):
-    """Small variation for fallback data."""
-    return round(val + random.uniform(-pct, pct), 2)
+    """No variation - return base value."""
+    return val
 
 
 def save_to_excel(data):

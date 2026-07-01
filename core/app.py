@@ -93,6 +93,31 @@ def get_file_last_update(filename):
     return None
 
 
+def get_file_mtime_iso(filename):
+    """Get file modification time as ISO string for meta."""
+    path = os.path.join(DATA_DIR, filename)
+    if os.path.exists(path):
+        mtime = os.path.getmtime(path)
+        return datetime.fromtimestamp(mtime).isoformat()
+    return None
+
+
+def build_meta(filename, source, data, error=None):
+    """Build meta dict for API responses."""
+    status = "valid" if not error else "failed"
+    last_attempt_at = get_file_mtime_iso(filename)
+    validation_errors = [error] if error else []
+    
+    return {
+        "status": status,
+        "last_success_at": last_attempt_at,
+        "last_attempt_at": last_attempt_at,
+        "row_count": len(data) if data else 0,
+        "source": source,
+        "validation_errors": validation_errors
+    }
+
+
 def load_json_data(filename):
     """Load JSON data."""
     path = os.path.join(DATA_DIR, filename)
@@ -118,9 +143,15 @@ def index():
 @app.route("/api/sembako")
 def get_sembako():
     """Get latest sembako prices."""
-    data, last_update = load_excel_data("harga_sembako.xlsx", "Harga")
+    try:
+        data, last_update = load_excel_data("harga_sembako.xlsx", "Harga")
+    except Exception as e:
+        meta = build_meta("harga_sembako.xlsx", "detik.com/Jina Reader", [], error=str(e))
+        return jsonify({"data": [], "meta": meta}), 404
+
     if not data:
-        return jsonify({"error": "Data not found"}), 404
+        meta = build_meta("harga_sembako.xlsx", "detik.com/Jina Reader", [], error="Data not found")
+        return jsonify({"data": [], "meta": meta}), 404
 
     result = []
     for row in data:  # All data
@@ -154,15 +185,22 @@ def get_sembako():
                 }
             )
 
-    return jsonify({"data": result, "last_update": last_update})
+    meta = build_meta("harga_sembako.xlsx", "detik.com/Jina Reader", result)
+    return jsonify({"data": result, "last_update": last_update, "meta": meta})
 
 
 @app.route("/api/crypto")
 def get_crypto():
     """Get latest crypto prices."""
-    data, last_update = load_excel_data("crypto_monitor.xlsx", "Harga")
+    try:
+        data, last_update = load_excel_data("crypto_monitor.xlsx", "Harga")
+    except Exception as e:
+        meta = build_meta("crypto_monitor.xlsx", "CoinGecko API", [], error=str(e))
+        return jsonify({"data": [], "meta": meta}), 404
+
     if not data:
-        return jsonify({"error": "Data not found"}), 404
+        meta = build_meta("crypto_monitor.xlsx", "CoinGecko API", [], error="Data not found")
+        return jsonify({"data": [], "meta": meta}), 404
 
     result = []
     for row in data:
@@ -185,15 +223,22 @@ def get_crypto():
                 }
             )
 
-    return jsonify({"data": result, "last_update": last_update})
+    meta = build_meta("crypto_monitor.xlsx", "CoinGecko API", result)
+    return jsonify({"data": result, "last_update": last_update, "meta": meta})
 
 
 @app.route("/api/emas")
 def get_emas():
     """Get latest gold prices."""
-    data, last_update = load_excel_data("harga_emas.xlsx", "Harian")
+    try:
+        data, last_update = load_excel_data("harga_emas.xlsx", "Harian")
+    except Exception as e:
+        meta = build_meta("harga_emas.xlsx", "detik.com (Antam/UBS)", [], error=str(e))
+        return jsonify({"data": [], "meta": meta}), 404
+
     if not data:
-        return jsonify({"error": "Data not found"}), 404
+        meta = build_meta("harga_emas.xlsx", "detik.com (Antam/UBS)", [], error="Data not found")
+        return jsonify({"data": [], "meta": meta}), 404
 
     result = []
     for row in data:
@@ -211,15 +256,22 @@ def get_emas():
                 }
             )
 
-    return jsonify({"data": result, "last_update": last_update})
+    meta = build_meta("harga_emas.xlsx", "detik.com (Antam/UBS)", result)
+    return jsonify({"data": result, "last_update": last_update, "meta": meta})
 
 
 @app.route("/api/pertanian")
 def get_pertanian():
     """Get agriculture prices."""
-    data, last_update = load_excel_data("harga_pertanian_ternak.xlsx")
+    try:
+        data, last_update = load_excel_data("harga_pertanian_ternak.xlsx")
+    except Exception as e:
+        meta = build_meta("harga_pertanian_ternak.xlsx", "kompas.com/detik.com", [], error=str(e))
+        return jsonify({"data": [], "meta": meta}), 404
+
     if not data:
-        return jsonify({"error": "Data not found"}), 404
+        meta = build_meta("harga_pertanian_ternak.xlsx", "kompas.com/detik.com", [], error="Data not found")
+        return jsonify({"data": [], "meta": meta}), 404
 
     result = []
     for row in data:
@@ -239,7 +291,8 @@ def get_pertanian():
                 }
             )
 
-    return jsonify({"data": result, "last_update": last_update})
+    meta = build_meta("harga_pertanian_ternak.xlsx", "kompas.com/detik.com", result)
+    return jsonify({"data": result, "last_update": last_update, "meta": meta})
 
 
 @app.route("/api/keuangan")
@@ -269,9 +322,15 @@ def get_keuangan():
 @app.route("/api/peternakan")
 def get_peternakan():
     """Get comprehensive livestock data (hulu to hilir)."""
-    data, last_update = load_excel_data("harga_peternakan_lengkap.xlsx", "Data Utama")
+    try:
+        data, last_update = load_excel_data("harga_peternakan_lengkap.xlsx", "Data Utama")
+    except Exception as e:
+        meta = build_meta("harga_peternakan_lengkap.xlsx", "data generator", [], error=str(e))
+        return jsonify({"data": [], "meta": meta}), 404
+
     if not data:
-        return jsonify({"error": "Data not found"}), 404
+        meta = build_meta("harga_peternakan_lengkap.xlsx", "data generator", [], error="Data not found")
+        return jsonify({"data": [], "meta": meta}), 404
 
     result = []
     for row in data[-50:]:
@@ -288,15 +347,22 @@ def get_peternakan():
                 }
             )
 
-    return jsonify({"data": result, "last_update": last_update})
+    meta = build_meta("harga_peternakan_lengkap.xlsx", "data generator", result)
+    return jsonify({"data": result, "last_update": last_update, "meta": meta})
 
 
 @app.route("/api/peternakan/<kategori>")
 def get_peternakan_by_kategori(kategori):
     """Get peternakan data filtered by kategori (hulu, industri, hilir, analisis)."""
-    data, last_update = load_excel_data("harga_peternakan_lengkap.xlsx", "Data Utama")
+    try:
+        data, last_update = load_excel_data("harga_peternakan_lengkap.xlsx", "Data Utama")
+    except Exception as e:
+        meta = build_meta("harga_peternakan_lengkap.xlsx", "data generator", [], error=str(e))
+        return jsonify({"data": [], "kategori": kategori.upper(), "meta": meta}), 404
+
     if not data:
-        return jsonify({"error": "Data not found"}), 404
+        meta = build_meta("harga_peternakan_lengkap.xlsx", "data generator", [], error="Data not found")
+        return jsonify({"data": [], "kategori": kategori.upper(), "meta": meta}), 404
 
     result = []
     for row in data:
@@ -313,8 +379,9 @@ def get_peternakan_by_kategori(kategori):
                 }
             )
 
+    meta = build_meta("harga_peternakan_lengkap.xlsx", "data generator", result)
     return jsonify(
-        {"data": result, "last_update": last_update, "kategori": kategori.upper()}
+        {"data": result, "last_update": last_update, "kategori": kategori.upper(), "meta": meta}
     )
 
 
@@ -327,136 +394,146 @@ def keuangan():
 @app.route("/api/summary")
 def get_summary():
     """Get overall summary."""
+    sources = {
+        "sembako": "detik.com/Jina Reader",
+        "crypto": "CoinGecko API",
+        "emas": "detik.com (Antam/UBS)",
+        "pertanian": "kompas.com/detik.com",
+        "keuangan": "manual entry",
+        "peternakan": "data generator",
+    }
+    
     summary = {
         "timestamp": datetime.now().isoformat(),
         "sembako": {
-            "status": "OK" if load_excel_data("harga_sembako.xlsx")[0] else "ERROR"
+            "status": "OK" if load_excel_data("harga_sembako.xlsx")[0] else "ERROR",
+            "source": sources["sembako"]
         },
         "crypto": {
-            "status": "OK" if load_excel_data("crypto_monitor.xlsx")[0] else "ERROR"
+            "status": "OK" if load_excel_data("crypto_monitor.xlsx")[0] else "ERROR",
+            "source": sources["crypto"]
         },
-        "emas": {"status": "OK" if load_excel_data("harga_emas.xlsx")[0] else "ERROR"},
+        "emas": {"status": "OK" if load_excel_data("harga_emas.xlsx")[0] else "ERROR", "source": sources["emas"]},
         "pertanian": {
             "status": (
                 "OK" if load_excel_data("harga_pertanian_ternak.xlsx")[0] else "ERROR"
-            )
+            ),
+            "source": sources["pertanian"]
         },
         "keuangan": {
-            "status": "OK" if load_excel_data("keuangan.xlsx")[0] else "ERROR"
+            "status": "OK" if load_excel_data("keuangan.xlsx")[0] else "ERROR",
+            "source": sources["keuangan"]
         },
         "peternakan": {
             "status": (
                 "OK" if load_excel_data("harga_peternakan_lengkap.xlsx")[0] else "ERROR"
-            )
+            ),
+            "source": sources["peternakan"]
         },
     }
-    return jsonify(summary)
+    
+    # Build meta combining all sources
+    combined_data = []
+    meta = {
+        "status": "valid" if all(v.get("status") == "OK" for v in summary.values() if isinstance(v, dict)) else "stale",
+        "last_attempt_at": datetime.now().isoformat(),
+        "row_count": len(combined_data),
+        "source": "combined",
+        "validation_errors": []
+    }
+    
+    return jsonify({"data": summary, "meta": meta})
 
 
 @app.route("/api/saham")
 def get_saham():
     """Get IHSG and bluechip stock data."""
-    import os
-
     excel_path = os.path.join(DATA_DIR, "harga_saham_ihsg.xlsx")
     if not os.path.exists(excel_path):
-        return jsonify({"error": "Data not found"}), 404
+        meta = build_meta("harga_saham_ihsg.xlsx", "Yahoo Finance/investing.com", [], error="File not found")
+        return jsonify({"data": {}, "meta": meta}), 404
 
-    wb = openpyxl.load_workbook(excel_path, data_only=True)
-
-    # Get all sheets data
     result = {}
+    wb = None
+    try:
+        wb = openpyxl.load_workbook(excel_path, data_only=True)
 
-    # Sheet 1: IHSG
-    ws_ihsg = wb["IHSG"]
-    ihsg_data = []
-    for row in ws_ihsg.iter_rows(min_row=2, values_only=True):
-        if row[0]:
-            ihsg_data.append(
-                {
-                    "tanggal": str(row[0]),
-                    "ihsg": row[1],
-                    "change": row[2],
-                    "change_pct": row[3],
-                    "high": row[4],
-                    "low": row[5],
-                    "volume": row[6],
-                    "sentimen": row[7],
-                }
-            )
-    result["ihsg"] = ihsg_data[-30:]  # Last 30 days
+        # Sheet 1: IHSG
+        if "IHSG" in wb.sheetnames:
+            ws_ihsg = wb["IHSG"]
+            ihsg_data = []
+            for row in ws_ihsg.iter_rows(min_row=2, values_only=True):
+                if row[0]:
+                    ihsg_data.append({
+                        "tanggal": str(row[0]),
+                        "ihsg": row[1], "change": row[2], "change_pct": row[3],
+                        "high": row[4], "low": row[5], "volume": row[6], "sentimen": row[7],
+                    })
+            result["ihsg"] = ihsg_data[-30:]
 
-    # Sheet 2: Sektor
-    ws_sektor = wb["Sektor"]
-    sektor_data = []
-    for row in ws_sektor.iter_rows(min_row=2, values_only=True):
-        if row[0]:
-            sektor_data.append(
-                {
-                    "sektor": row[0],
-                    "value": row[1],
-                    "daily_change": row[2],
-                    "change_pct": row[3],
-                    "weekly_trend": row[4],
-                    "recommendation": row[8],
-                }
-            )
-    result["sektor"] = sektor_data
+        # Sheet 2: Sektor
+        if "Sektor" in wb.sheetnames:
+            ws_sektor = wb["Sektor"]
+            sektor_data = []
+            for row in ws_sektor.iter_rows(min_row=2, values_only=True):
+                if row[0]:
+                    sektor_data.append({
+                        "sektor": row[0], "value": row[1], "daily_change": row[2],
+                        "change_pct": row[3], "weekly_trend": row[4], "recommendation": row[8] if len(row) > 8 else "",
+                    })
+            result["sektor"] = sektor_data
 
-    # Sheet 3: Bluechip
-    ws_blue = wb["Bluechip"]
-    bluechip_data = []
-    for row in ws_blue.iter_rows(min_row=2, values_only=True):
-        if row[0]:
-            bluechip_data.append(
-                {
-                    "symbol": row[0],
-                    "nama": row[1],
-                    "sektor": row[2],
-                    "harga": row[3],
-                    "daily_chg": row[4],
-                    "daily_chg_pct": row[5],
-                    "rsi": row[6],
-                    "trend": row[7],
-                    "signal": row[8],
-                    "recommendation": row[9],
-                }
-            )
-    result["bluechip"] = bluechip_data
+        # Sheet 3: Bluechip
+        if "Bluechip" in wb.sheetnames:
+            ws_blue = wb["Bluechip"]
+            bluechip_data = []
+            for row in ws_blue.iter_rows(min_row=2, values_only=True):
+                if row[0]:
+                    bluechip_data.append({
+                        "symbol": row[0], "nama": row[1], "sektor": row[2], "harga": row[3],
+                        "daily_chg": row[4], "daily_chg_pct": row[5], "rsi": row[6],
+                        "trend": row[7], "signal": row[8], "recommendation": row[9] if len(row) > 9 else "",
+                    })
+            result["bluechip"] = bluechip_data
 
-    # Sheet 6: Watchlist
-    ws_watch = wb["Watchlist"]
-    watchlist_data = []
-    for row in ws_watch.iter_rows(min_row=2, values_only=True):
-        if row[0]:
-            watchlist_data.append(
-                {
-                    "symbol": row[0],
-                    "nama": row[1],
-                    "harga": row[3],
-                    "daily_chg": row[4],
-                    "rsi": row[5],
-                    "reason": row[6],
-                    "potential": row[7],
-                    "recommendation": row[9],
-                }
-            )
-    result["watchlist"] = watchlist_data
+        # Sheet: Watchlist
+        if "Watchlist" in wb.sheetnames:
+            ws_watch = wb["Watchlist"]
+            watchlist_data = []
+            for row in ws_watch.iter_rows(min_row=2, values_only=True):
+                if row[0]:
+                    watchlist_data.append({
+                        "symbol": row[0], "nama": row[1], "harga": row[3],
+                        "daily_chg": row[4], "rsi": row[5], "reason": row[6],
+                        "potential": row[7], "recommendation": row[9] if len(row) > 9 else "",
+                    })
+            result["watchlist"] = watchlist_data
 
-    # Get last update from file
-    last_update = datetime.fromtimestamp(os.path.getmtime(excel_path)).strftime(
-        "%d %b %Y, %H:%M"
-    )
+    except Exception as e:
+        print(f"Error loading saham: {e}")
+        meta = build_meta("harga_saham_ihsg.xlsx", "Yahoo Finance/investing.com", [], error=str(e))
+        return jsonify({"data": {}, "meta": meta}), 404
+    finally:
+        if wb:
+            wb.close()
 
-    return jsonify({"data": result, "last_update": last_update})
+    last_update = get_file_last_update("harga_saham_ihsg.xlsx")
+    meta = build_meta("harga_saham_ihsg.xlsx", "Yahoo Finance/investing.com", result)
+    return jsonify({"data": result, "last_update": last_update, "meta": meta})
 
 
 @app.route("/api/sentimen")
 def get_sentimen():
     """Get latest news sentiment data."""
-    data, last_update = load_excel_data("sentimen_berita.xlsx", "Detail")
+    try:
+        data, last_update = load_excel_data("sentimen_berita.xlsx", "Detail")
+    except Exception as e:
+        meta = build_meta("sentimen_berita.xlsx", "news scraping", [], error=str(e))
+        return jsonify({"data": [], "meta": meta}), 404
+
     if not data:
-        return jsonify({"error": "Data not found"}), 404
+        meta = build_meta("sentimen_berita.xlsx", "news scraping", [], error="Data not found")
+        return jsonify({"data": [], "meta": meta}), 404
 
     result = []
     for row in data:
@@ -473,15 +550,22 @@ def get_sentimen():
                 }
             )
 
-    return jsonify({"data": result, "last_update": last_update})
+    meta = build_meta("sentimen_berita.xlsx", "news scraping", result)
+    return jsonify({"data": result, "last_update": last_update, "meta": meta})
 
 
 @app.route("/api/pakan")
 def get_pakan():
     """Get latest pakan/feed prices."""
-    data, last_update = load_excel_data("harga_pakan_ternak.xlsx")
+    try:
+        data, last_update = load_excel_data("harga_pakan_ternak.xlsx")
+    except Exception as e:
+        meta = build_meta("harga_pakan_ternak.xlsx", "detik.com/kompas.com", [], error=str(e))
+        return jsonify({"data": [], "meta": meta}), 404
+
     if not data:
-        return jsonify({"error": "Data not found"}), 404
+        meta = build_meta("harga_pakan_ternak.xlsx", "detik.com/kompas.com", [], error="Data not found")
+        return jsonify({"data": [], "meta": meta}), 404
 
     result = []
     for row in data:
@@ -515,15 +599,22 @@ def get_pakan():
                 }
             )
 
-    return jsonify({"data": result, "last_update": last_update})
+    meta = build_meta("harga_pakan_ternak.xlsx", "detik.com/kompas.com", result)
+    return jsonify({"data": result, "last_update": last_update, "meta": meta})
 
 
 @app.route("/api/kurs")
 def get_kurs():
     """Get exchange rates (USD, EUR, SGD, MYR vs IDR)."""
-    data, last_update = load_excel_data("kurs_valuta.xlsx", "Harian")
+    try:
+        data, last_update = load_excel_data("kurs_valuta.xlsx", "Harian")
+    except Exception as e:
+        meta = build_meta("kurs_valuta.xlsx", "currency API", [], error=str(e))
+        return jsonify({"data": [], "meta": meta}), 404
+
     if not data:
-        return jsonify({"data": [], "last_update": None})
+        meta = build_meta("kurs_valuta.xlsx", "currency API", [], error="Data not found")
+        return jsonify({"data": [], "last_update": None, "meta": meta}), 404
 
     result = []
     for row in data:
@@ -535,15 +626,22 @@ def get_kurs():
                 "sgd_idr": row[3],
                 "myr_idr": row[4],
             })
-    return jsonify({"data": result, "last_update": last_update})
+    meta = build_meta("kurs_valuta.xlsx", "currency API", result)
+    return jsonify({"data": result, "last_update": last_update, "meta": meta})
 
 
 @app.route("/api/minyak")
 def get_minyak():
     """Get crude oil prices (Brent & WTI)."""
-    data, last_update = load_excel_data("harga_minyak.xlsx", "Harian")
+    try:
+        data, last_update = load_excel_data("harga_minyak.xlsx", "Harian")
+    except Exception as e:
+        meta = build_meta("harga_minyak.xlsx", "oil price API", [], error=str(e))
+        return jsonify({"data": [], "meta": meta}), 404
+
     if not data:
-        return jsonify({"data": [], "last_update": None})
+        meta = build_meta("harga_minyak.xlsx", "oil price API", [], error="Data not found")
+        return jsonify({"data": [], "last_update": None, "meta": meta}), 404
 
     result = []
     for row in data:
@@ -554,15 +652,22 @@ def get_minyak():
                 "wti": row[2],
                 "selisih": row[3],
             })
-    return jsonify({"data": result, "last_update": last_update})
+    meta = build_meta("harga_minyak.xlsx", "oil price API", result)
+    return jsonify({"data": result, "last_update": last_update, "meta": meta})
 
 
 @app.route("/api/bi-rate")
 def get_bi_rate():
     """Get BI Rate & Inflasi (CPI)."""
-    data, last_update = load_excel_data("bi_rate_inflasi.xlsx", "Harian")
+    try:
+        data, last_update = load_excel_data("bi_rate_inflasi.xlsx", "Harian")
+    except Exception as e:
+        meta = build_meta("bi_rate_inflasi.xlsx", "BI.go.id", [], error=str(e))
+        return jsonify({"data": [], "meta": meta}), 404
+
     if not data:
-        return jsonify({"data": [], "last_update": None})
+        meta = build_meta("bi_rate_inflasi.xlsx", "BI.go.id", [], error="Data not found")
+        return jsonify({"data": [], "last_update": None, "meta": meta}), 404
 
     result = []
     for row in data:
@@ -574,15 +679,22 @@ def get_bi_rate():
                 "inflasi_yoy": row[3],
                 "ihk": row[4],
             })
-    return jsonify({"data": result, "last_update": last_update})
+    meta = build_meta("bi_rate_inflasi.xlsx", "BI.go.id", result)
+    return jsonify({"data": result, "last_update": last_update, "meta": meta})
 
 
 @app.route("/api/cpo")
 def get_cpo():
     """Get Crude Palm Oil (CPO) / Kelapa Sawit price."""
-    data, last_update = load_excel_data("harga_cpo.xlsx", "Harian")
+    try:
+        data, last_update = load_excel_data("harga_cpo.xlsx", "Harian")
+    except Exception as e:
+        meta = build_meta("harga_cpo.xlsx", "CPO market data", [], error=str(e))
+        return jsonify({"data": [], "meta": meta}), 404
+
     if not data:
-        return jsonify({"data": [], "last_update": None})
+        meta = build_meta("harga_cpo.xlsx", "CPO market data", [], error="Data not found")
+        return jsonify({"data": [], "last_update": None, "meta": meta}), 404
 
     result = []
     for row in data:
@@ -593,7 +705,8 @@ def get_cpo():
                 "harga_idr": row[2],
                 "perubahan_persen": row[3],
             })
-    return jsonify({"data": result, "last_update": last_update})
+    meta = build_meta("harga_cpo.xlsx", "CPO market data", result)
+    return jsonify({"data": result, "last_update": last_update, "meta": meta})
 
 
 @app.route("/api/alerts")
@@ -602,13 +715,17 @@ def get_alerts():
     import json as _json
     alert_file = os.path.join(DATA_DIR, "price_alerts.json")
     if not os.path.exists(alert_file):
-        return jsonify({"alerts": [], "last_check": None})
+        meta = build_meta("price_alerts.json", "price alerts", [], error="File not found")
+        return jsonify({"alerts": [], "last_check": None, "meta": meta})
     try:
         with open(alert_file) as f:
             data = _json.load(f)
-        return jsonify({"alerts": data.get("alerts", []), "last_check": data.get("last_check")})
-    except Exception:
-        return jsonify({"alerts": [], "last_check": None})
+        alerts = data.get("alerts", [])
+        meta = build_meta("price_alerts.json", "price alerts", alerts)
+        return jsonify({"alerts": alerts, "last_check": data.get("last_check"), "meta": meta})
+    except Exception as e:
+        meta = build_meta("price_alerts.json", "price alerts", [], error=str(e))
+        return jsonify({"alerts": [], "last_check": None, "meta": meta})
 
 
 @app.route("/test-article")
@@ -618,7 +735,14 @@ def test_article():
 @app.route("/api/health")
 def health():
     """Health check."""
-    return jsonify({"status": "healthy", "timestamp": datetime.now().isoformat(), "version": "cd2cec2"})
+    meta = {
+        "status": "valid",
+        "last_attempt_at": datetime.now().isoformat(),
+        "row_count": 0,
+        "source": "system",
+        "validation_errors": []
+    }
+    return jsonify({"status": "healthy", "timestamp": datetime.now().isoformat(), "version": "cd2cec2", "meta": meta})
 
 
 # ============ AI-Powered Analysis using Groq ============
@@ -754,7 +878,7 @@ def generate_analysis_prompt():
         emas_path = os.path.join(DATA_DIR, "harga_emas.xlsx")
         if os.path.exists(emas_path):
             wb = openpyxl.load_workbook(emas_path, data_only=True)
-            ws = wb["Harga"]
+            ws = wb["Harian"]
             emas_rows = list(ws.iter_rows(min_row=2, values_only=True))
             if emas_rows:
                 prompt_parts.append("\\n## Emas\\n")

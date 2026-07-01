@@ -8,7 +8,6 @@ import re
 import os
 import sys
 import json
-import random
 import urllib.request
 from datetime import datetime
 
@@ -64,12 +63,6 @@ def get_last_prices():
 def save_cache(prices):
     with open(CACHE_PATH, "w") as f:
         json.dump({"date": datetime.now().strftime("%Y-%m-%d"), "prices": prices}, f)
-
-
-def vary_price(val, pct=0.015):
-    """Realistic daily variation ±1.5%."""
-    v = val * (1 + random.uniform(-pct, pct))
-    return round(v / 100) * 100  # Round to nearest 100
 
 
 def extract_prices(text):
@@ -140,17 +133,11 @@ def main():
         save_cache(prices)
         add_row(today, prices, sumber="detik.com/Jina Reader")
     else:
-        # Smart fallback: vary last known prices realistically
+        # Use exact last known prices, mark as stale
         last = get_last_prices()
         if last:
-            varied = {k: vary_price(v) for k, v in last.items() if v and v > 1000}
-            if varied:
-                prices = varied
-                add_row(today, prices, sumber="estimasi realistis")
-                print(f"  ⚠️ Scraping gagal. Menggunakan estimasi dari data terakhir.")
-            else:
-                print("  ⚠️ Tidak ada data cache tersedia.")
-                return
+            add_row(today, last, sumber='last_known (stale)')
+            print('  ⚠️ Scraping gagal. Data terakhir digunakan (status: stale).')
         else:
             print("  ⚠️ Tidak ada data tersedia.")
             return

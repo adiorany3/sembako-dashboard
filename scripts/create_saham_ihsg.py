@@ -96,7 +96,7 @@ def generate_technical_indicators(prices):
     }
 
 def generate_fundamental_metrics(symbol, price):
-    """Generate fundamental metrics"""
+    """Generate fundamental metrics (deterministic)"""
     base_data = BLUECHIP_STOCKS.get(symbol, ('Unknown', 'Unknown', price, 'Unknown'))
     sector = base_data[1]
     
@@ -116,21 +116,19 @@ def generate_fundamental_metrics(symbol, price):
     
     metrics = sector_multipliers.get(sector, {'PER': 15, 'PBV': 2.0, 'ROE': 15})
     
-    # Add variation
-    variation = random.uniform(0.9, 1.1)
-    
-    eps = round(price / (metrics['PER'] * variation), 2)
-    bvps = round(price / (metrics['PBV'] * variation), 2)
+    # No variation - use deterministic values
+    eps = round(price / metrics['PER'], 2)
+    bvps = round(price / metrics['PBV'], 2)
     
     return {
         'sector': sector,
-        'per': round(metrics['PER'] * variation, 1),
-        'pbv': round(metrics['PBV'] * variation, 1),
-        'roe': round(metrics['ROE'] * variation, 1),
+        'per': metrics['PER'],
+        'pbv': metrics['PBV'],
+        'roe': metrics['ROE'],
         'eps': eps,
         'bvps': bvps,
         'market_cap': base_data[3],
-        'recommendation': 'BUY' if metrics['PER'] * variation < 15 else 'HOLD'
+        'recommendation': 'HOLD'
     }
 
 # ==========================================
@@ -160,7 +158,7 @@ def create_ihsg_excel(days_back=30):
     ws1 = wb.active
     ws1.title = 'IHSG'
     
-    headers = ['Tanggal', 'IHSG', 'Change', 'Change %', 'High', 'Low', 'Volume', 'Sentimen']
+    headers = ['Tanggal', 'IHSG', 'Change', 'Change %', 'High', 'Low', 'Volume', 'Sentimen', 'Status']
     for col, header in enumerate(headers, 1):
         cell = ws1.cell(row=1, column=col, value=header)
         cell.fill = header_fill
@@ -173,19 +171,20 @@ def create_ihsg_excel(days_back=30):
     
     for day_offset in range(days_back, -1, -1):
         date = today - timedelta(days=day_offset)
-        # Generate realistic IHSG movement
-        change = random.uniform(-50, 60)
-        ihsg = ihsg_base + sum([random.uniform(-30, 35) for _ in range(days_back - day_offset)]) + change
+        # Use base IHSG (no random)
+        ihsg = ihsg_base
+        change = 0
         
         row_data = [
             date.strftime('%Y-%m-%d'),
             round(ihsg, 2),
             round(change, 2),
-            round((change / ihsg) * 100, 2),
-            round(ihsg + random.uniform(0, 30), 2),
-            round(ihsg - random.uniform(0, 30), 2),
-            f"{random.randint(500, 800)}M",
-            'Netral' if abs(change) < 20 else ('Positif' if change > 0 else 'Negatif')
+            0.0,
+            round(ihsg, 2),
+            round(ihsg, 2),
+            "500M",
+            'Netral',
+            'simulated'
         ]
         
         for col, value in enumerate(row_data, 1):
@@ -195,7 +194,7 @@ def create_ihsg_excel(days_back=30):
                 cell.fill = green_fill
                 cell.font = Font(bold=True, color='FFFFFF')
     
-    for col in range(1, 9):
+    for col in range(1, 10):
         ws1.column_dimensions[get_column_letter(col)].width = 14
     
     # ============================================
@@ -246,7 +245,7 @@ def create_ihsg_excel(days_back=30):
     ws3 = wb.create_sheet('Bluechip')
     
     bluechip_headers = ['Symbol', 'Nama', 'Sektor', 'Harga', 'Daily Chg', 'Daily Chg %',
-                        'RSI', 'Trend', 'Signal', 'Recommendation', 'PER', 'PBV', 'ROE', 'EPS', 'Market Cap']
+                        'RSI', 'Trend', 'Signal', 'Recommendation', 'PER', 'PBV', 'ROE', 'EPS', 'Market Cap', 'Status']
     for col, header in enumerate(bluechip_headers, 1):
         cell = ws3.cell(row=1, column=col, value=header)
         cell.fill = header_fill
@@ -256,13 +255,12 @@ def create_ihsg_excel(days_back=30):
     
     row_num = 2
     for symbol, (name, sector, base_price, mcap) in BLUECHIP_STOCKS.items():
-        # Generate price with variation
-        days_variation = random.uniform(0.85, 1.15)
-        current_price = round(base_price * days_variation / 50) * 50
-        daily_change = random.uniform(-3, 4)
+        # Use base price directly - no variation
+        current_price = base_price
+        daily_change = 0
         
         # Generate price history for RSI
-        prices = [base_price * random.uniform(0.95, 1.05) for _ in range(30)]
+        prices = [base_price * 1.0 for _ in range(30)]
         tech = generate_technical_indicators(prices)
         fund = generate_fundamental_metrics(symbol, current_price)
         
@@ -272,7 +270,7 @@ def create_ihsg_excel(days_back=30):
             sector,
             current_price,
             round(daily_change, 2),
-            round(daily_change / current_price * 100, 2),
+            0.0,
             tech.get('rsi', 50),
             tech.get('trend', 'SIDEWAYS'),
             tech.get('signal', 'HOLD'),
@@ -281,7 +279,8 @@ def create_ihsg_excel(days_back=30):
             fund.get('pbv', 2.0),
             fund.get('roe', 15),
             fund.get('eps', current_price / fund.get('per', 15)),
-            mcap
+            mcap,
+            'simulated'
         ]
         
         for col, value in enumerate(row_data, 1):
@@ -323,7 +322,7 @@ def create_ihsg_excel(days_back=30):
     
     row_num = 2
     for symbol, (name, sector, base_price, mcap) in BLUECHIP_STOCKS.items():
-        prices = [base_price * random.uniform(0.95, 1.05) for _ in range(30)]
+        prices = [base_price * 1.0 for _ in range(30)]
         tech = generate_technical_indicators(prices)
         current_price = prices[-1]
         
@@ -386,23 +385,23 @@ def create_ihsg_excel(days_back=30):
     
     row_num = 2
     for symbol, (name, sector, base_price, mcap) in BLUECHIP_STOCKS.items():
-        prices = [base_price * random.uniform(0.95, 1.05) for _ in range(30)]
+        prices = [base_price * 1.0 for _ in range(30)]
         current_price = prices[-1]
         fund = generate_fundamental_metrics(symbol, current_price)
         
-        # Sector-specific fundamentals
+        # Sector-specific fundamentals - use median values
         if sector == 'Financial':
-            der = round(random.uniform(0.5, 1.5), 2)
-            curr_ratio = round(random.uniform(1.0, 1.5), 2)
-            dividen = round(random.uniform(2, 6), 1)
+            der = 1.0
+            curr_ratio = 1.2
+            dividen = 4.0
         elif sector == 'Mining':
-            der = round(random.uniform(0.3, 0.8), 2)
-            curr_ratio = round(random.uniform(1.5, 2.5), 2)
-            dividen = round(random.uniform(4, 10), 1)
+            der = 0.55
+            curr_ratio = 2.0
+            dividen = 7.0
         else:
-            der = round(random.uniform(0.2, 0.6), 2)
-            curr_ratio = round(random.uniform(1.2, 2.0), 2)
-            dividen = round(random.uniform(1.5, 4.0), 1)
+            der = 0.4
+            curr_ratio = 1.6
+            dividen = 2.5
         
         row_data = [
             symbol,
@@ -511,20 +510,20 @@ def create_ihsg_excel(days_back=30):
     ws7.cell(row=2, column=1, value=f'Last Update: {today}')
     ws7.cell(row=2, column=1).font = Font(italic=True)
     
-    # Key metrics
+    # Key metrics - marked as simulated
     summary_data = [
-        ['IHSG Level', '5,999'],
-        ['IHSG Change', '+1.96%'],
-        ['Top Sector', 'Consumer (+1.21%)'],
-        ['Worst Sector', 'Mining (-2.50%)'],
+        ['IHSG Level', '5,800 (base)'],
+        ['IHSG Change', '0% (base)'],
+        ['Top Sector', 'Consumer'],
+        ['Worst Sector', 'Mining'],
         ['', ''],
-        ['BUY Signals', len([s for s in BLUECHIP_STOCKS if random.random() > 0.6])],
-        ['SELL Signals', len([s for s in BLUECHIP_STOCKS if random.random() > 0.7])],
-        ['HOLD Signals', len([s for s in BLUECHIP_STOCKS if random.random() > 0.5])],
+        ['BUY Signals', '0 (simulated)'],
+        ['SELL Signals', '0 (simulated)'],
+        ['HOLD Signals', str(len(BLUECHIP_STOCKS)) + ' (simulated)'],
         ['', ''],
-        ['Best Buy Today', 'ANTM.JK, KLBF.JK, INTP.JK'],
-        ['Avoid', 'UNVR.JK, HMSP.JK'],
-        ['Speculative', 'PTUN.JK (High Risk/Reward)'],
+        ['Best Buy Today', 'N/A (use update_saham.py)'],
+        ['Avoid', 'N/A (use update_saham.py)'],
+        ['Speculative', 'N/A (use update_saham.py)'],
     ]
     
     for row_num, (label, value) in enumerate(summary_data, 4):

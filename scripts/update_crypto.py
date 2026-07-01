@@ -11,7 +11,7 @@ import os
 import sys
 from datetime import datetime
 
-sys.path.insert(0, os.path.expanduser("~/sembako"))
+sys.path.insert(0, os.path.expanduser("~/sembako/scripts"))
 from create_crypto_excel import add_price_row, add_sentimen_row
 
 HISTORY_PATH = os.path.expanduser("~/sembako/data/crypto_history.json")

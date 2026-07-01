@@ -62,13 +62,7 @@ def get_last_known_prices(ws):
 
 
 def apply_fallback(brent, wti):
-    """Apply ±2% random variation to last known prices as smart fallback."""
-    import random
-    variation = random.uniform(-0.02, 0.02)
-    if brent:
-        brent = round(brent * (1 + variation), 2)
-    if wti:
-        wti = round(wti * (1 + variation), 2)
+    """No variation - use last known prices directly."""
     return brent, wti
 
 

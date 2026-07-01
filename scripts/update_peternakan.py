@@ -7,7 +7,6 @@ Runs daily via cron at 7AM
 import openpyxl
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from datetime import datetime, timedelta
-import random
 import sys
 import os
 
@@ -116,9 +115,8 @@ BASE_PRICES = {
 }
 
 def generate_variation(base_price, volatility=0.05):
-    """Generate price with random variation ±volatility%"""
-    variation = base_price * random.uniform(-volatility, volatility)
-    return round(base_price + variation, -2)  # Round to nearest 100
+    """Return base price (no random variation)."""
+    return base_price
 
 def get_product_category(produk):
     """Map produk to kategori and sub_kategori"""
@@ -193,23 +191,23 @@ def generate_daily_data(date):
 def get_source(produk):
     """Get typical source for product"""
     if 'DOC' in produk:
-        return random.choice(['Cibitung Farm', 'Jatiwaringin Farm', 'Peternakan Lokal'])
+        return 'Cibitung Farm'
     elif 'Bibit' in produk and 'Sapi' in produk:
         return 'BPTU Htips'
     elif 'Bibit' in produk and 'Kambing' in produk:
-        return random.choice(['BPTU Htips', 'Peternakan Bojanegara'])
+        return 'BPTU Htips'
     elif 'Konsentrat' in produk or 'BR' in produk or 'L ' in produk:
-        return random.choice(['Charoen Pokphand', 'Gold Coin', 'Japfa'])
+        return 'Charoen Pokphand'
     elif 'Jagung' in produk or 'Dedak' in produk:
         return 'Pasar Ternak'
     elif 'Vaccine' in produk or 'Antibiotik' in produk or 'Vitamin' in produk:
-        return random.choice(['Medion', 'Novell Pharma', 'Medical Est'])
+        return 'Medion'
     elif 'Pemotongan' in produk:
-        return random.choice(['RPH Surabaya', 'RPH Sidoarjo', 'RPH Jakarta'])
+        return 'RPH Surabaya'
     elif '(SM)' in produk:
-        return random.choice(['Superindo', 'Hypermart', 'Carrefour'])
+        return 'Superindo'
     elif 'Grosir' in produk:
-        return random.choice(['Pasar Turi Surabaya', 'Pasar Kembang Keris', 'KIM Surabaya'])
+        return 'Pasar Turi Surabaya'
     else:
         return 'Peternakan Lokal'
 
