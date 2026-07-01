@@ -279,6 +279,9 @@ async function loadCryptoData() {
         tbody.appendChild(tr);
     });
     
+    // Default sort: Terbaru (desc)
+    sortTable('crypto', 'desc');
+    
     // Update crypto chart
     updateCryptoChart(data);
 }
@@ -315,6 +318,9 @@ async function loadEmasData() {
         `;
         tbody.appendChild(tr);
     });
+    
+    // Default sort: Terbaru (desc)
+    sortTable('emas', 'desc');
     
     // Update emas chart
     updateEmasChart(data);

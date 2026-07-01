@@ -48,6 +48,8 @@ def set_cache(key: str, data) -> None:
 
 
 app = Flask(__name__, template_folder='../web/templates', static_folder='../web/static')
+app.config['TEMPLATES_AUTO_RELOAD'] = True
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 CORS(app)
 
 DATA_DIR = os.path.expanduser("~/sembako/data")
