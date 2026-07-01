@@ -5,7 +5,7 @@ from openpyxl.chart import LineChart, Reference
 from datetime import datetime
 import os
 
-EXCEL_PATH = os.path.expanduser("~/sembako/harga_emas.xlsx")
+EXCEL_PATH = os.path.expanduser("~/sembako/data/harga_emas.xlsx")
 
 def create_or_load_workbook():
     if os.path.exists(EXCEL_PATH):
@@ -76,6 +76,13 @@ def create_new_workbook():
 
 def add_daily_row(tanggal, antam_beli, antam_buyback, antam_pegadaian=0, galeri24=0, ubs_beli=0, ubs_buyback=0):
     wb, ws = create_or_load_workbook()
+    
+    # Check if date already exists
+    for row in ws.iter_rows(min_row=2, max_col=1, values_only=True):
+        if row[0] and str(row[0])[:10] == str(tanggal)[:10]:
+            wb.close()
+            return False  # Skip - already exists
+    
     ca = Alignment(horizontal="center", vertical="center")
     thin = Border(left=Side(style="thin"), right=Side(style="thin"),
                   top=Side(style="thin"), bottom=Side(style="thin"))

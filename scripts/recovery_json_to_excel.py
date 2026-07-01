@@ -45,7 +45,12 @@ def load_crypto_history_to_excel():
         wb.close()
     
     loaded = 0
+    # Dedup JSON: keep latest entry per date
+    seen = {}
     for entry in history:
+        date_str = str(entry.get("date", ""))[:10]
+        seen[date_str] = entry
+    for entry in seen.values():
         date_str = str(entry.get("date", ""))[:10]
         if date_str in existing_dates:
             continue

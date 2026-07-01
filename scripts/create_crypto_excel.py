@@ -86,6 +86,13 @@ def add_price_row(tanggal, waktu, data, sentimen=""):
     data: dict with keys like 'btc_usd', 'btc_idr', 'btc_change', etc.
     """
     wb, ws = create_or_load_workbook()
+    
+    # Check if date already exists (1 row per day, keep latest)
+    for row in ws.iter_rows(min_row=2, max_col=1, values_only=True):
+        if row[0] and str(row[0])[:10] == str(tanggal)[:10]:
+            wb.close()
+            return False  # Skip - already exists
+    
     ca = Alignment(horizontal="center", vertical="center")
     thin = Border(left=Side(style="thin"), right=Side(style="thin"),
                   top=Side(style="thin"), bottom=Side(style="thin"))

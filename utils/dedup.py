@@ -24,9 +24,9 @@ except ImportError:
 # Unique key rules per dataset
 DEDUP_KEYS = {
     'harga_sembako.xlsx':           lambda row: (str(row[0])[:10] if row[0] else '', str(row[24]) if len(row) > 24 else ''),  # Tanggal + Sumber
-    'crypto_monitor.xlsx':           lambda row: (str(row[0])[:10] if row[0] else '', str(row[1]) if len(row) > 1 else ''),  # Tanggal + Waktu
+    'crypto_monitor.xlsx':           lambda row: (str(row[0])[:10] if row[0] else '',),  # Tanggal only (keep latest per day)
     'harga_emas.xlsx':              lambda row: (str(row[0])[:10] if row[0] else '', 'harian'),  # Tanggal
-    'harga_pertanian_ternak.xlsx':  lambda row: (str(row[0])[:10] if row[0] else '', str(row[1]) if len(row) > 1 else ''),  # Tanggal
+    'harga_pertanian_ternak.xlsx':  lambda row: (str(row[0])[:10] if row[0] else '',),  # Tanggal
     'harga_peternakan_lengkap.xlsx': lambda row: (str(row[0])[:10] if row[0] else '', str(row[1]) if len(row) > 1 else '', str(row[3]) if len(row) > 3 else ''),  # Tanggal + Kategori + Produk
     'harga_pakan_ternak.xlsx':      lambda row: (str(row[0])[:10] if row[0] else '',),  # Tanggal
     'kurs_valuta.xlsx':             lambda row: (str(row[0])[:10] if row[0] else '', str(row[1]) if len(row) > 1 else ''),  # Tanggal + Mata uang
@@ -40,7 +40,6 @@ DEDUP_KEYS = {
     'formulasi_pakan_ternak.xlsx':  None,  # Reference data - row hash dedup
     'nutrisi_bahan_pakan_lengkap.xlsx': None,  # Reference data - row hash dedup
     'optimalisasi_pakan.xlsx':      None,  # Reference data - row hash dedup
-    'harga_pertanian_ternak.xlsx':  lambda row: (str(row[0])[:10] if row[0] else '',),  # Tanggal
 }
 
 
