@@ -309,78 +309,111 @@ def create_pertanian_excel(days_back=30):
     print(f"  ✅ {filepath} - {days_back + 1} days")
 
 def daily_update_all():
-    """Add today's data to all Excel files (append single row)"""
+    """Add today's data to all Excel files (append single row, skip if date exists)"""
     print("\n📝 Adding today's data to all files...")
     
     today = datetime.now().strftime('%Y-%m-%d')
+    today_date = datetime.now().date()
+    
+    def date_exists(ws):
+        """Check if today's date already exists in column A"""
+        for row in ws.iter_rows(min_col=1, max_col=1, values_only=True):
+            val = row[0]
+            if val is None:
+                continue
+            if isinstance(val, datetime):
+                if val.date() == today_date:
+                    return True
+            elif str(val)[:10] == today:
+                return True
+        return False
     
     # Sembako - append one row
     filepath = f'{SEMBAKO_DIR}/harga_sembako.xlsx'
     if os.path.exists(filepath):
         wb = openpyxl.load_workbook(filepath)
         ws = wb.active
-        row_num = ws.max_row + 1
-        ws.cell(row=row_num, column=1, value=today)
-        for col, (_, base_price, _) in enumerate(SEMBAKO_PRODUCTS, 2):
-            variation = base_price * random.uniform(-0.05, 0.05)
-            price = round((base_price + variation) / 100) * 100
-            ws.cell(row=row_num, column=col, value=int(price))
+        if date_exists(ws):
+            print(f"  ⏭️ Sembako skipped (already has {today})")
+        else:
+            row_num = ws.max_row + 1
+            ws.cell(row=row_num, column=1, value=today)
+            for col, (_, base_price, _) in enumerate(SEMBAKO_PRODUCTS, 2):
+                variation = base_price * random.uniform(-0.05, 0.05)
+                price = round((base_price + variation) / 100) * 100
+                ws.cell(row=row_num, column=col, value=int(price))
+            print(f"  ✅ Sembako updated")
         wb.save(filepath)
-        print(f"  ✅ Sembako updated")
     
     # Crypto - append one row
     filepath = f'{SEMBAKO_DIR}/crypto_monitor.xlsx'
     if os.path.exists(filepath):
         wb = openpyxl.load_workbook(filepath)
         ws = wb.active
-        row_num = ws.max_row + 1
-        ws.cell(row=row_num, column=1, value=today)
-        ws.cell(row=row_num, column=2, value='08:00')
-        col = 3
-        for coin, data in CRYPTO_BASE.items():
-            usd_price = data['price'] / 15000
-            idr_price = data['price']
-            change = data['change'] + random.uniform(-2, 2)
-            ws.cell(row=row_num, column=col, value=round(usd_price, 2)); col += 1
-            ws.cell(row=row_num, column=col, value=idr_price); col += 1
-            ws.cell(row=row_num, column=col, value=round(change, 2)); col += 1
-        ws.cell(row=row_num, column=col, value='High')
-        ws.cell(row=row_num, column=col+1, value='Netral')
+        if date_exists(ws):
+            print(f"  ⏭️ Crypto skipped (already has {today})")
+        else:
+            row_num = ws.max_row + 1
+            ws.cell(row=row_num, column=1, value=today)
+            ws.cell(row=row_num, column=2, value='08:00')
+            col = 3
+            for coin, data in CRYPTO_BASE.items():
+                usd_price = data['price'] / 15000
+                idr_price = data['price']
+                change = data['change'] + random.uniform(-2, 2)
+                ws.cell(row=row_num, column=col, value=round(usd_price, 2)); col += 1
+                ws.cell(row=row_num, column=col, value=idr_price); col += 1
+                ws.cell(row=row_num, column=col, value=round(change, 2)); col += 1
+            ws.cell(row=row_num, column=col, value='High')
+            ws.cell(row=row_num, column=col+1, value='Netral')
+            print(f"  ✅ Crypto updated")
         wb.save(filepath)
-        print(f"  ✅ Crypto updated")
     
     # Gold - append one row
     filepath = f'{SEMBAKO_DIR}/harga_emas.xlsx'
     if os.path.exists(filepath):
         wb = openpyxl.load_workbook(filepath)
         ws = wb.active
-        row_num = ws.max_row + 1
-        ws.cell(row=row_num, column=1, value=today)
-        col = 2
-        for name, base_price in GOLD_BASE.items():
-            variation = base_price * random.uniform(-0.02, 0.02)
-            price = round((base_price + variation) / 1000) * 1000
-            ws.cell(row=row_num, column=col, value=int(price)); col += 1
+        if date_exists(ws):
+            print(f"  ⏭️ Gold skipped (already has {today})")
+        else:
+            row_num = ws.max_row + 1
+            ws.cell(row=row_num, column=1, value=today)
+            col = 2
+            for name, base_price in GOLD_BASE.items():
+                variation = base_price * random.uniform(-0.02, 0.02)
+                price = round((base_price + variation) / 1000) * 1000
+                ws.cell(row=row_num, column=col, value=int(price)); col += 1
+            print(f"  ✅ Gold updated")
         wb.save(filepath)
-        print(f"  ✅ Gold updated")
     
     # Pertanian - append one row
     filepath = f'{SEMBAKO_DIR}/harga_pertanian_ternak.xlsx'
     if os.path.exists(filepath):
         wb = openpyxl.load_workbook(filepath)
         ws = wb.active
-        row_num = ws.max_row + 1
-        ws.cell(row=row_num, column=1, value=today)
-        for col, (_, base_price, _) in enumerate(PERTANIAN_PRODUCTS, 2):
-            variation = base_price * random.uniform(-0.05, 0.05)
-            price = round((base_price + variation) / 100) * 100
-            ws.cell(row=row_num, column=col, value=int(price))
+        if date_exists(ws):
+            print(f"  ⏭️ Pertanian skipped (already has {today})")
+        else:
+            row_num = ws.max_row + 1
+            ws.cell(row=row_num, column=1, value=today)
+            for col, (_, base_price, _) in enumerate(PERTANIAN_PRODUCTS, 2):
+                variation = base_price * random.uniform(-0.05, 0.05)
+                price = round((base_price + variation) / 100) * 100
+                ws.cell(row=row_num, column=col, value=int(price))
+            print(f"  ✅ Pertanian updated")
         wb.save(filepath)
-        print(f"  ✅ Pertanian updated")
     
     # Peternakan - use its own script
     os.system(f'cd {SEMBAKO_DIR} && python3 update_peternakan.py > /dev/null 2>&1')
     print(f"  ✅ Peternakan updated")
+    
+    # Auto-dedup all files after update
+    from utils.dedup import dedup_all
+    reports = dedup_all(dry_run=False, verbose=False)
+    removed = sum(r['duplicates_removed'] for r in reports)
+    if removed > 0:
+        print(f"\n🧹 Auto-dedup: removed {removed} duplicate rows")
 
 # ==========================================
 # MAIN

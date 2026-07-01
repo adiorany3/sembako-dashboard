@@ -37,6 +37,10 @@ DEDUP_KEYS = {
     'sentimen_berita.xlsx':         lambda row: (str(row[0])[:10] if row[0] else '', str(row[3]) if len(row) > 3 else ''),  # Tanggal + Headline
     'cuaca_yogyakarta.xlsx':        lambda row: (str(row[0])[:10] if row[0] else '', str(row[1]) if len(row) > 1 else ''),  # Tanggal + Lokasi
     'harga_sembako_desktop.xlsx':   lambda row: (str(row[0])[:10] if row[0] else '',),  # Tanggal
+    'formulasi_pakan_ternak.xlsx':  None,  # Reference data - row hash dedup
+    'nutrisi_bahan_pakan_lengkap.xlsx': None,  # Reference data - row hash dedup
+    'optimalisasi_pakan.xlsx':      None,  # Reference data - row hash dedup
+    'harga_pertanian_ternak.xlsx':  lambda row: (str(row[0])[:10] if row[0] else '',),  # Tanggal
 }
 
 

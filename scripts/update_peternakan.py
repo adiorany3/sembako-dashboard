@@ -379,11 +379,19 @@ def update_histori_sheet(wb, date, days_back):
         row_num += 1
 
 def daily_update():
-    """Add today's new data row (for cron job)"""
+    """Add today's new data row (skip if date exists)"""
     print("📝 Adding today's data update...")
     
     wb = openpyxl.load_workbook(EXCEL_PATH)
     ws = wb['Data Utama']
+    
+    # Check if today's data already exists
+    today_str = datetime.now().strftime('%Y-%m-%d')
+    for row in ws.iter_rows(min_row=2, max_col=1, values_only=True):
+        if row[0] and str(row[0])[:10] == today_str:
+            print(f"⏭️ Skipped: {today_str} already exists in Data Utama")
+            wb.close()
+            return
     
     # Find last row
     last_row = ws.max_row + 1
