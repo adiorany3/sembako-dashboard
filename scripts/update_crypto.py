@@ -43,32 +43,50 @@ def fetch_url(url, timeout=15):
     except Exception as e:
         print(f"  Error: {e}")
         return None
-
 def get_ohlc_daily():
-    """Fetch 4h OHLC candles → aggregate daily OHLC per coin.
-    Returns dict: {date: {coin: {open, high, low, close, change_pct}}}"""
+    """Fetch 4h OHLC candles -> aggregate daily OHLC per coin.
+    Returns dict: {date: {coin: {o, h, l, c, change}}}
+    """
     import time as _time
     daily_agg = {}  # {date: {coin: OHLC}}
     
     for coin in COINS:
-        url = f"https://api.coingecko.com/api/v3/coins/{coin}/ohlc?vs_currency=usd&days=7"
-        raw = fetch_url(url)
-        if not raw:
-            print(f"  ⚠️ OHLC gagal: {coin}")
-            continue
-        
-        try:
-            candles = json.loads(raw)
-        except:
-            continue
-        
-        if isinstance(candles, dict) and 'error' in candles:
-            print(f"  ⚠️ OHLC error: {coin} - {candles['error']}")
-            continue
-        
         short = COIN_SHORT[coin]
-        # Aggregate 4h candles → daily
+        
+        # Retry on 429 (up to 3 attempts)
+        candles = None
+        for attempt in range(3):
+            url = f"https://api.coingecko.com/api/v3/coins/{coin}/ohlc?vs_currency=usd&days=7"
+            raw = fetch_url(url)
+            if not raw:
+                _time.sleep(3 * (attempt + 1))
+                continue
+            
+            try:
+                parsed = json.loads(raw)
+            except:
+                _time.sleep(3 * (attempt + 1))
+                continue
+            
+            if isinstance(parsed, dict) and 'error' in parsed:
+                print(f"  ⚠️ OHLC retry {attempt+1}: {coin} - {parsed.get('error', '')}")
+                _time.sleep(3 * (attempt + 1))
+                continue
+            
+            if isinstance(parsed, list) and len(parsed) > 0:
+                candles = parsed
+                break
+            
+            _time.sleep(3 * (attempt + 1))
+        
+        if not candles:
+            print(f"  ❌ OHLC gagal: {coin} (3 retries)")
+            continue
+        
+        # Aggregate 4h candles -> daily
         for c in candles:
+            if len(c) < 5:
+                continue  # skip malformed entries
             ts = datetime.fromtimestamp(c[0] / 1000)
             d = ts.strftime("%Y-%m-%d")
             
@@ -81,17 +99,15 @@ def get_ohlc_daily():
                 daily_agg[d][short]['l'] = min(daily_agg[d][short]['l'], c[3])
                 daily_agg[d][short]['c'] = c[4]  # close = latest candle
         
-        _time.sleep(1.5)  # rate limit
+        _time.sleep(2)  # rate limit - increase to 2s
     
-    # Calculate change% + IDR for each coin per day
+    # Calculate change% for each coin per day
     for d in daily_agg:
         for short, ohlc in daily_agg[d].items():
             if ohlc['o'] > 0:
                 ohlc['change'] = round((ohlc['c'] - ohlc['o']) / ohlc['o'] * 100, 2)
             else:
                 ohlc['change'] = 0
-            # Approximate IDR (daily aggregate doesn't have IDR, use rate)
-            ohlc['idr_close'] = round(ohlc['c'] * 17770)  # rough IDR rate
     
     return daily_agg
 
@@ -223,7 +239,9 @@ def main():
         print("⚠️ Gagal mengambil data OHLC")
         return
     
-    # 2. Get current spot + market cap
+    # 2. Get current spot + market cap (wait after OHLC rate limit)
+    import time as _time
+    _time.sleep(5)
     print("\n💰 Mengambil spot price + market cap...")
     spot = get_prices()
     total_mcap = spot.get("total_mcap", 0) if spot else 0
@@ -245,7 +263,7 @@ def main():
             if short in coins_data:
                 ohlc = coins_data[short]
                 row_data[f"{short}_usd"] = round(ohlc['c'], 2)  # Close as spot
-                row_data[f"{short}_idr"] = ohlc.get('idr_close', 0)
+                row_data[f"{short}_idr"] = 0  # OHLC doesn't have IDR
                 row_data[f"{short}_change"] = ohlc['change']
             else:
                 row_data[f"{short}_usd"] = 0

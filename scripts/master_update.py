@@ -409,6 +409,9 @@ def daily_update_all():
     print(f"  ✅ Peternakan updated")
     
     # Auto-dedup all files after update
+    _parent = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    if _parent not in sys.path:
+        sys.path.insert(0, _parent)
     from utils.dedup import dedup_all
     reports = dedup_all(dry_run=False, verbose=False)
     removed = sum(r['duplicates_removed'] for r in reports)
@@ -417,7 +420,10 @@ def daily_update_all():
     
     # Recovery: reload JSON history → Excel if data missing
     try:
-        from scripts.recovery_json_to_excel import load_crypto_history_to_excel, load_emas_history_to_excel
+        _scripts = os.path.dirname(os.path.abspath(__file__))
+        if _scripts not in sys.path:
+            sys.path.insert(0, _scripts)
+        from recovery_json_to_excel import load_crypto_history_to_excel, load_emas_history_to_excel
         load_crypto_history_to_excel()
         load_emas_history_to_excel()
     except Exception as e:

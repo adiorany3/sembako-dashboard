@@ -9,7 +9,7 @@ import sys
 import json
 from datetime import datetime
 
-sys.path.insert(0, os.path.expanduser("~/sembako"))
+sys.path.insert(0, os.path.expanduser("~/sembako/scripts"))
 from create_emas_excel import add_daily_row, add_detail_row
 
 HISTORY_PATH = os.path.expanduser("~/sembako/data/emas_history.json")

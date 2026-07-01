@@ -1,390 +1,6 @@
 [
   {
     "keyword": "berita ekonomi",
-    "headline": "[RI Makin Banyak Impor, Meroket 22% di Mei 2026](https://finance.detik.com/berita-ekonomi-bisnis/d-8555038/ri-makin-banyak-impor-meroket-22-di-mei-2026)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:00:12.070240"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[4 Toko Online Bakal Pungut Pajak Seller, Ini Daftarnya](https://finance.detik.com/berita-ekonomi-bisnis/d-8555006/4-toko-online-bakal-pungut-pajak-seller-ini-daftarnya)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:00:12.081607"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Ekspor RI Mei 2026 Turun 5,73%, Anjlok karena Perhiasan hingga Besi Baja](https://finance.detik.com/berita-ekonomi-bisnis/d-8555003/ekspor-ri-mei-2026-turun-5-73-anjlok-karena-perhiasan-hingga-besi-baja)",
-    "sentiment": "NEGATIF",
-    "score": -0.8,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:00:12.092508"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[BPS: Juni 2026 Inflasi 0,44%, Dipicu Harga Bensin hingga Tarif Pesawat](https://finance.detik.com/berita-ekonomi-bisnis/d-8554951/bps-juni-2026-inflasi-0-44-dipicu-harga-bensin-hingga-tarif-pesawat)",
-    "sentiment": "NEGATIF",
-    "score": -0.65,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:00:12.102674"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "detikFinance - Berita Ekonomi Bisnis, dan Investasi Hari Ini",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:00:12.779172"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Prabowo: Jadilah Polisi Dekat Rakyat, Gaji Kita dari Rakyat](https://finance.detik.com/berita-ekonomi-bisnis/d-8554838/prabowo-jadilah-polisi-dekat-rakyat-gaji-kita-dari-rakyat)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:00:12.797861"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Prabowo: Tak Ada Pertumbuhan Ekonomi Tanpa Kepastian Hukum](https://finance.detik.com/berita-ekonomi-bisnis/d-8554797/prabowo-tak-ada-pertumbuhan-ekonomi-tanpa-kepastian-hukum)",
-    "sentiment": "POSITIF",
-    "score": 0.65,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:00:12.816394"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Bandara Husein Sastranegara Ditargetkan Beroperasi Lagi 17 September](https://finance.detik.com/berita-ekonomi-bisnis/d-8554712/bandara-husein-sastranegara-ditargetkan-beroperasi-lagi-17-september)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:00:12.834748"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Harga BBM Diesel Shell & BP Turun, Ini Daftarnya](https://finance.detik.com/energi/d-8554652/harga-bbm-diesel-shell-bp-turun-ini-daftarnya)",
-    "sentiment": "NEGATIF",
-    "score": -0.65,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:00:12.859009"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Pertamax Tetap! Ini Daftar BBM Pertamina yang Turun Harga](https://finance.detik.com/energi/d-8554611/pertamax-tetap-ini-daftar-bbm-pertamina-yang-turun-harga)",
-    "sentiment": "NEGATIF",
-    "score": -0.65,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:00:12.889731"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Dana Kelolaan Investasi INA Tembus Rp 146 Triliun](https://finance.detik.com/berita-ekonomi-bisnis/d-8555051/dana-kelolaan-investasi-ina-tembus-rp-146-triliun)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:00:12.907220"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Direktur Pegadaian Beberkan Strategi Kelola Keuangan ke Mahasiswa Andalas](https://finance.detik.com/berita-ekonomi-bisnis/d-8554182/direktur-pegadaian-beberkan-strategi-kelola-keuangan-ke-mahasiswa-andalas)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:00:12.925079"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Beras IR. III (IR 64)](https://finance.detik.com/info-pangan/jakarta/beras-ir-iii-ir-64)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:00:12.942344"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Cabe Merah Keriting](https://finance.detik.com/info-pangan/jakarta/cabe-merah-keriting)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:00:12.960210"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Daging Sapi Murni (Semur)](https://finance.detik.com/info-pangan/jakarta/daging-sapi-murni-semur)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:00:12.992192"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Surplus Dagang RI 72 Bulan Beruntun Tamat! Kini Defisit US$ 1,61 Miliar](https://finance.detik.com/berita-ekonomi-bisnis/d-8555050/surplus-dagang-ri-72-bulan-beruntun-tamat-kini-defisit-us-1-61-miliar)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:00:13.011653"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[RI Makin Banyak Impor, Meroket 22% di Mei 2026](https://finance.detik.com/berita-ekonomi-bisnis/d-8555038/ri-makin-banyak-impor-meroket-22-di-mei-2026)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:00:13.030346"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[4 Toko Online Bakal Pungut Pajak Seller, Ini Daftarnya](https://finance.detik.com/berita-ekonomi-bisnis/d-8555006/4-toko-online-bakal-pungut-pajak-seller-ini-daftarnya)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:00:13.049315"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Ekspor RI Mei 2026 Turun 5,73%, Anjlok karena Perhiasan hingga Besi Baja](https://finance.detik.com/berita-ekonomi-bisnis/d-8555003/ekspor-ri-mei-2026-turun-5-73-anjlok-karena-perhiasan-hingga-besi-baja)",
-    "sentiment": "NEGATIF",
-    "score": -0.8,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:00:13.068814"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[BPS: Juni 2026 Inflasi 0,44%, Dipicu Harga Bensin hingga Tarif Pesawat](https://finance.detik.com/berita-ekonomi-bisnis/d-8554951/bps-juni-2026-inflasi-0-44-dipicu-harga-bensin-hingga-tarif-pesawat)",
-    "sentiment": "NEGATIF",
-    "score": -0.65,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:00:13.088219"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "detikFinance - Berita Ekonomi Bisnis, dan Investasi Hari Ini",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:15:09.531457"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Prabowo: Jadilah Polisi Dekat Rakyat, Gaji Kita dari Rakyat](https://finance.detik.com/berita-ekonomi-bisnis/d-8554838/prabowo-jadilah-polisi-dekat-rakyat-gaji-kita-dari-rakyat)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:15:09.542487"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Prabowo: Tak Ada Pertumbuhan Ekonomi Tanpa Kepastian Hukum](https://finance.detik.com/berita-ekonomi-bisnis/d-8554797/prabowo-tak-ada-pertumbuhan-ekonomi-tanpa-kepastian-hukum)",
-    "sentiment": "POSITIF",
-    "score": 0.65,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:15:09.553090"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Bandara Husein Sastranegara Ditargetkan Beroperasi Lagi 17 September](https://finance.detik.com/berita-ekonomi-bisnis/d-8554712/bandara-husein-sastranegara-ditargetkan-beroperasi-lagi-17-september)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:15:09.563688"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Harga BBM Diesel Shell & BP Turun, Ini Daftarnya](https://finance.detik.com/energi/d-8554652/harga-bbm-diesel-shell-bp-turun-ini-daftarnya)",
-    "sentiment": "NEGATIF",
-    "score": -0.65,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:15:09.574117"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Pertamax Tetap! Ini Daftar BBM Pertamina yang Turun Harga](https://finance.detik.com/energi/d-8554611/pertamax-tetap-ini-daftar-bbm-pertamina-yang-turun-harga)",
-    "sentiment": "NEGATIF",
-    "score": -0.65,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:15:09.584498"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Dana Kelolaan Investasi INA Tembus Rp 146 Triliun](https://finance.detik.com/berita-ekonomi-bisnis/d-8555051/dana-kelolaan-investasi-ina-tembus-rp-146-triliun)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:15:09.594732"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Direktur Pegadaian Beberkan Strategi Kelola Keuangan ke Mahasiswa Andalas](https://finance.detik.com/berita-ekonomi-bisnis/d-8554182/direktur-pegadaian-beberkan-strategi-kelola-keuangan-ke-mahasiswa-andalas)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:15:09.605103"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Beras IR. III (IR 64)](https://finance.detik.com/info-pangan/jakarta/beras-ir-iii-ir-64)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:15:09.615773"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Cabe Merah Keriting](https://finance.detik.com/info-pangan/jakarta/cabe-merah-keriting)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:15:09.625921"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Daging Sapi Murni (Semur)](https://finance.detik.com/info-pangan/jakarta/daging-sapi-murni-semur)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:15:09.636240"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Surplus Dagang RI 72 Bulan Beruntun Tamat! Kini Defisit US$ 1,61 Miliar](https://finance.detik.com/berita-ekonomi-bisnis/d-8555050/surplus-dagang-ri-72-bulan-beruntun-tamat-kini-defisit-us-1-61-miliar)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:15:09.646483"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[RI Makin Banyak Impor, Meroket 22% di Mei 2026](https://finance.detik.com/berita-ekonomi-bisnis/d-8555038/ri-makin-banyak-impor-meroket-22-di-mei-2026)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:15:09.657270"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[4 Toko Online Bakal Pungut Pajak Seller, Ini Daftarnya](https://finance.detik.com/berita-ekonomi-bisnis/d-8555006/4-toko-online-bakal-pungut-pajak-seller-ini-daftarnya)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:15:09.668423"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Ekspor RI Mei 2026 Turun 5,73%, Anjlok karena Perhiasan hingga Besi Baja](https://finance.detik.com/berita-ekonomi-bisnis/d-8555003/ekspor-ri-mei-2026-turun-5-73-anjlok-karena-perhiasan-hingga-besi-baja)",
-    "sentiment": "NEGATIF",
-    "score": -0.8,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:15:09.683348"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[BPS: Juni 2026 Inflasi 0,44%, Dipicu Harga Bensin hingga Tarif Pesawat](https://finance.detik.com/berita-ekonomi-bisnis/d-8554951/bps-juni-2026-inflasi-0-44-dipicu-harga-bensin-hingga-tarif-pesawat)",
-    "sentiment": "NEGATIF",
-    "score": -0.65,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:15:09.694114"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "detikFinance - Berita Ekonomi Bisnis, dan Investasi Hari Ini",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:32:36.897452"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Prabowo: Jadilah Polisi Dekat Rakyat, Gaji Kita dari Rakyat](https://finance.detik.com/berita-ekonomi-bisnis/d-8554838/prabowo-jadilah-polisi-dekat-rakyat-gaji-kita-dari-rakyat)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:32:36.908442"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Prabowo: Tak Ada Pertumbuhan Ekonomi Tanpa Kepastian Hukum](https://finance.detik.com/berita-ekonomi-bisnis/d-8554797/prabowo-tak-ada-pertumbuhan-ekonomi-tanpa-kepastian-hukum)",
-    "sentiment": "POSITIF",
-    "score": 0.65,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:32:36.918877"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Bandara Husein Sastranegara Ditargetkan Beroperasi Lagi 17 September](https://finance.detik.com/berita-ekonomi-bisnis/d-8554712/bandara-husein-sastranegara-ditargetkan-beroperasi-lagi-17-september)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:32:36.929245"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Harga BBM Diesel Shell & BP Turun, Ini Daftarnya](https://finance.detik.com/energi/d-8554652/harga-bbm-diesel-shell-bp-turun-ini-daftarnya)",
-    "sentiment": "NEGATIF",
-    "score": -0.65,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:32:36.939173"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Pertamax Tetap! Ini Daftar BBM Pertamina yang Turun Harga](https://finance.detik.com/energi/d-8554611/pertamax-tetap-ini-daftar-bbm-pertamina-yang-turun-harga)",
-    "sentiment": "NEGATIF",
-    "score": -0.65,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:32:36.949417"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Harga Batu Bara Acuan Juli Naik!](https://finance.detik.com/energi/d-8555183/harga-batu-bara-acuan-juli-naik)",
-    "sentiment": "POSITIF",
-    "score": 0.65,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:32:36.959550"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[B50 Mulai Berlaku Hari Ini, Diresmikan Prabowo Awal Juli](https://finance.detik.com/energi/d-8554850/b50-mulai-berlaku-hari-ini-diresmikan-prabowo-awal-juli)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:32:36.969609"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Tarif Listrik Juli-Agustus-September Nggak Naik!](https://finance.detik.com/energi/d-8554420/tarif-listrik-juli-agustus-september-nggak-naik)",
-    "sentiment": "POSITIF",
-    "score": 0.65,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:32:36.979799"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Beras IR. III (IR 64)](https://finance.detik.com/info-pangan/jakarta/beras-ir-iii-ir-64)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:32:36.990088"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Cabe Merah Keriting](https://finance.detik.com/info-pangan/jakarta/cabe-merah-keriting)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:32:37.000367"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Daging Sapi Murni (Semur)](https://finance.detik.com/info-pangan/jakarta/daging-sapi-murni-semur)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-01T14:32:37.010760"
-  },
-  {
-    "keyword": "berita ekonomi",
     "headline": "[Bina Marga Minta Tambahan Anggaran Rp 54 T, Pagu Dipangkas Nyaris 40%](https://finance.detik.com/infrastruktur/d-8555176/bina-marga-minta-tambahan-anggaran-rp-54-t-pagu-dipangkas-nyaris-40)",
     "sentiment": "NETRAL",
     "score": 0.0,
@@ -3998,5 +3614,389 @@
     "score": 0.0,
     "source": "detik finance",
     "timestamp": "2026-07-01T20:45:23.584151"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "detikFinance - Berita Ekonomi Bisnis, dan Investasi Hari Ini",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:00:17.019019"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Prabowo: Jadilah Polisi Dekat Rakyat, Gaji Kita dari Rakyat](https://finance.detik.com/berita-ekonomi-bisnis/d-8554838/prabowo-jadilah-polisi-dekat-rakyat-gaji-kita-dari-rakyat)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:00:17.030158"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Prabowo: Tak Ada Pertumbuhan Ekonomi Tanpa Kepastian Hukum](https://finance.detik.com/berita-ekonomi-bisnis/d-8554797/prabowo-tak-ada-pertumbuhan-ekonomi-tanpa-kepastian-hukum)",
+    "sentiment": "POSITIF",
+    "score": 0.65,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:00:17.040699"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Bandara Husein Sastranegara Ditargetkan Beroperasi Lagi 17 September](https://finance.detik.com/berita-ekonomi-bisnis/d-8554712/bandara-husein-sastranegara-ditargetkan-beroperasi-lagi-17-september)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:00:17.050900"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Harga BBM Diesel Shell & BP Turun, Ini Daftarnya](https://finance.detik.com/energi/d-8554652/harga-bbm-diesel-shell-bp-turun-ini-daftarnya)",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:00:17.061414"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Pertamax Tetap! Ini Daftar BBM Pertamina yang Turun Harga](https://finance.detik.com/energi/d-8554611/pertamax-tetap-ini-daftar-bbm-pertamina-yang-turun-harga)",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:00:17.072440"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Purbaya Lantik Dirjen Anggaran & Dirjen Kekayaan Baru, Ini Sosoknya](https://finance.detik.com/berita-ekonomi-bisnis/d-8555797/purbaya-lantik-dirjen-anggaran-dirjen-kekayaan-baru-ini-sosoknya)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:00:17.083170"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Purbaya Ancam Potong Anggaran Daerah yang Hambat Investasi](https://finance.detik.com/berita-ekonomi-bisnis/d-8550652/purbaya-ancam-potong-anggaran-daerah-yang-hambat-investasi)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:00:17.093380"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Purbaya Mulai Tarik Dana Rp 300 T dari Bank BUMN](https://finance.detik.com/berita-ekonomi-bisnis/d-8546379/purbaya-mulai-tarik-dana-rp-300-t-dari-bank-bumn)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:00:17.104034"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Beras IR. III (IR 64)](https://finance.detik.com/info-pangan/jakarta/beras-ir-iii-ir-64)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:00:17.114705"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Cabe Merah Keriting](https://finance.detik.com/info-pangan/jakarta/cabe-merah-keriting)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:00:17.125366"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Daging Sapi Murni (Semur)](https://finance.detik.com/info-pangan/jakarta/daging-sapi-murni-semur)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:00:17.135960"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Pertamina Kerja Sama dengan Pupuk Indonesia untuk Dukung Ketahanan Pangan](https://finance.detik.com/berita-ekonomi-bisnis/d-8555820/pertamina-kerja-sama-dengan-pupuk-indonesia-untuk-dukung-ketahanan-pangan)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:00:17.146563"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Drone Buatan Bandung Tembus Pasar Australia dan Korea](https://finance.detik.com/foto-bisnis/d-8555166/drone-buatan-bandung-tembus-pasar-australia-dan-korea)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:00:17.157343"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Alasan INA Masih Genggam Saham Bank BUMN Saat Pasar Gonjang-ganjing](https://finance.detik.com/bursa-dan-valas/d-8555623/alasan-ina-masih-genggam-saham-bank-bumn-saat-pasar-gonjang-ganjing)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:00:17.168167"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Toko Online Pungut Pajak Mulai Agustus, Sistem Sudah Siap?](https://finance.detik.com/berita-ekonomi-bisnis/d-8555604/toko-online-pungut-pajak-mulai-agustus-sistem-sudah-siap)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:00:17.178747"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "detikFinance - Berita Ekonomi Bisnis, dan Investasi Hari Ini",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:15:20.405057"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Prabowo: Jadilah Polisi Dekat Rakyat, Gaji Kita dari Rakyat](https://finance.detik.com/berita-ekonomi-bisnis/d-8554838/prabowo-jadilah-polisi-dekat-rakyat-gaji-kita-dari-rakyat)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:15:20.416303"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Prabowo: Tak Ada Pertumbuhan Ekonomi Tanpa Kepastian Hukum](https://finance.detik.com/berita-ekonomi-bisnis/d-8554797/prabowo-tak-ada-pertumbuhan-ekonomi-tanpa-kepastian-hukum)",
+    "sentiment": "POSITIF",
+    "score": 0.65,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:15:20.427657"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Bandara Husein Sastranegara Ditargetkan Beroperasi Lagi 17 September](https://finance.detik.com/berita-ekonomi-bisnis/d-8554712/bandara-husein-sastranegara-ditargetkan-beroperasi-lagi-17-september)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:15:20.438376"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Harga BBM Diesel Shell & BP Turun, Ini Daftarnya](https://finance.detik.com/energi/d-8554652/harga-bbm-diesel-shell-bp-turun-ini-daftarnya)",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:15:20.448954"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Pertamax Tetap! Ini Daftar BBM Pertamina yang Turun Harga](https://finance.detik.com/energi/d-8554611/pertamax-tetap-ini-daftar-bbm-pertamina-yang-turun-harga)",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:15:20.459254"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Purbaya Lantik Dirjen Anggaran & Dirjen Kekayaan Baru, Ini Sosoknya](https://finance.detik.com/berita-ekonomi-bisnis/d-8555797/purbaya-lantik-dirjen-anggaran-dirjen-kekayaan-baru-ini-sosoknya)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:15:20.469646"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Purbaya Ancam Potong Anggaran Daerah yang Hambat Investasi](https://finance.detik.com/berita-ekonomi-bisnis/d-8550652/purbaya-ancam-potong-anggaran-daerah-yang-hambat-investasi)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:15:20.480321"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Purbaya Mulai Tarik Dana Rp 300 T dari Bank BUMN](https://finance.detik.com/berita-ekonomi-bisnis/d-8546379/purbaya-mulai-tarik-dana-rp-300-t-dari-bank-bumn)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:15:20.490966"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Beras IR. III (IR 64)](https://finance.detik.com/info-pangan/jakarta/beras-ir-iii-ir-64)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:15:20.501668"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Cabe Merah Keriting](https://finance.detik.com/info-pangan/jakarta/cabe-merah-keriting)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:15:20.512119"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Daging Sapi Murni (Semur)](https://finance.detik.com/info-pangan/jakarta/daging-sapi-murni-semur)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:15:20.522730"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Pertamina Kerja Sama dengan Pupuk Indonesia untuk Dukung Ketahanan Pangan](https://finance.detik.com/berita-ekonomi-bisnis/d-8555820/pertamina-kerja-sama-dengan-pupuk-indonesia-untuk-dukung-ketahanan-pangan)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:15:20.533292"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Drone Buatan Bandung Tembus Pasar Australia dan Korea](https://finance.detik.com/foto-bisnis/d-8555166/drone-buatan-bandung-tembus-pasar-australia-dan-korea)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:15:20.543957"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Alasan INA Masih Genggam Saham Bank BUMN Saat Pasar Gonjang-ganjing](https://finance.detik.com/bursa-dan-valas/d-8555623/alasan-ina-masih-genggam-saham-bank-bumn-saat-pasar-gonjang-ganjing)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:15:20.554946"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Toko Online Pungut Pajak Mulai Agustus, Sistem Sudah Siap?](https://finance.detik.com/berita-ekonomi-bisnis/d-8555604/toko-online-pungut-pajak-mulai-agustus-sistem-sudah-siap)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:15:20.565746"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "detikFinance - Berita Ekonomi Bisnis, dan Investasi Hari Ini",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:30:47.996534"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Prabowo: Jadilah Polisi Dekat Rakyat, Gaji Kita dari Rakyat](https://finance.detik.com/berita-ekonomi-bisnis/d-8554838/prabowo-jadilah-polisi-dekat-rakyat-gaji-kita-dari-rakyat)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:30:48.007685"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Prabowo: Tak Ada Pertumbuhan Ekonomi Tanpa Kepastian Hukum](https://finance.detik.com/berita-ekonomi-bisnis/d-8554797/prabowo-tak-ada-pertumbuhan-ekonomi-tanpa-kepastian-hukum)",
+    "sentiment": "POSITIF",
+    "score": 0.65,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:30:48.019291"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Bandara Husein Sastranegara Ditargetkan Beroperasi Lagi 17 September](https://finance.detik.com/berita-ekonomi-bisnis/d-8554712/bandara-husein-sastranegara-ditargetkan-beroperasi-lagi-17-september)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:30:48.029720"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Harga BBM Diesel Shell & BP Turun, Ini Daftarnya](https://finance.detik.com/energi/d-8554652/harga-bbm-diesel-shell-bp-turun-ini-daftarnya)",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:30:48.040223"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Pertamax Tetap! Ini Daftar BBM Pertamina yang Turun Harga](https://finance.detik.com/energi/d-8554611/pertamax-tetap-ini-daftar-bbm-pertamina-yang-turun-harga)",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:30:48.051071"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Penasihat Khusus Presiden Bicara Nasib PT Granito, Singgung Danantara](https://finance.detik.com/berita-ekonomi-bisnis/d-8555948/penasihat-khusus-presiden-bicara-nasib-pt-granito-singgung-danantara)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:30:48.061575"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Polri Ikut Kawal Isu PHK, 4.200 Buruh Bisa Kerja Lagi](https://finance.detik.com/berita-ekonomi-bisnis/d-8555158/polri-ikut-kawal-isu-phk-4-200-buruh-bisa-kerja-lagi)",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:30:48.072400"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Sengketa Pekerja Newcrest, Jadi Preseden Buruk Tata Kelola Divestasi Asing](https://finance.detik.com/berita-ekonomi-bisnis/d-8554362/sengketa-pekerja-newcrest-jadi-preseden-buruk-tata-kelola-divestasi-asing)",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:30:48.082698"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Beras IR. III (IR 64)](https://finance.detik.com/info-pangan/jakarta/beras-ir-iii-ir-64)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:30:48.093263"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Cabe Merah Keriting](https://finance.detik.com/info-pangan/jakarta/cabe-merah-keriting)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:30:48.103913"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Daging Sapi Murni (Semur)](https://finance.detik.com/info-pangan/jakarta/daging-sapi-murni-semur)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:30:48.114427"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Purbaya ke Dirjen Baru: Tidak Semua Permintaan Anggaran Harus Dipenuhi!](https://finance.detik.com/berita-ekonomi-bisnis/d-8555924/purbaya-ke-dirjen-baru-tidak-semua-permintaan-anggaran-harus-dipenuhi)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:30:48.124995"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Surplus Neraca Dagang Terhenti, Purbaya Duga karena Impor Migas Naik](https://finance.detik.com/berita-ekonomi-bisnis/d-8555912/surplus-neraca-dagang-terhenti-purbaya-duga-karena-impor-migas-naik)",
+    "sentiment": "POSITIF",
+    "score": 0.65,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:30:48.135569"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Pertamina Kerja Sama dengan Pupuk Indonesia untuk Dukung Ketahanan Pangan](https://finance.detik.com/berita-ekonomi-bisnis/d-8555820/pertamina-kerja-sama-dengan-pupuk-indonesia-untuk-dukung-ketahanan-pangan)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:30:48.145857"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Purbaya Lantik Dirjen Anggaran & Dirjen Kekayaan Baru, Ini Sosoknya](https://finance.detik.com/berita-ekonomi-bisnis/d-8555797/purbaya-lantik-dirjen-anggaran-dirjen-kekayaan-baru-ini-sosoknya)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-01T21:30:48.156344"
   }
 ]
