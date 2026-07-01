@@ -44,8 +44,60 @@ def fetch_url(url, timeout=15):
         print(f"  Error: {e}")
         return None
 
+def get_ohlc_daily():
+    """Fetch 4h OHLC candles → aggregate daily OHLC per coin.
+    Returns dict: {date: {coin: {open, high, low, close, change_pct}}}"""
+    import time as _time
+    daily_agg = {}  # {date: {coin: OHLC}}
+    
+    for coin in COINS:
+        url = f"https://api.coingecko.com/api/v3/coins/{coin}/ohlc?vs_currency=usd&days=7"
+        raw = fetch_url(url)
+        if not raw:
+            print(f"  ⚠️ OHLC gagal: {coin}")
+            continue
+        
+        try:
+            candles = json.loads(raw)
+        except:
+            continue
+        
+        if isinstance(candles, dict) and 'error' in candles:
+            print(f"  ⚠️ OHLC error: {coin} - {candles['error']}")
+            continue
+        
+        short = COIN_SHORT[coin]
+        # Aggregate 4h candles → daily
+        for c in candles:
+            ts = datetime.fromtimestamp(c[0] / 1000)
+            d = ts.strftime("%Y-%m-%d")
+            
+            if d not in daily_agg:
+                daily_agg[d] = {}
+            if short not in daily_agg[d]:
+                daily_agg[d][short] = {'o': c[1], 'h': c[2], 'l': c[3], 'c': c[4]}
+            else:
+                daily_agg[d][short]['h'] = max(daily_agg[d][short]['h'], c[2])
+                daily_agg[d][short]['l'] = min(daily_agg[d][short]['l'], c[3])
+                daily_agg[d][short]['c'] = c[4]  # close = latest candle
+        
+        _time.sleep(1.5)  # rate limit
+    
+    # Calculate change% + IDR for each coin per day
+    for d in daily_agg:
+        for short, ohlc in daily_agg[d].items():
+            if ohlc['o'] > 0:
+                ohlc['change'] = round((ohlc['c'] - ohlc['o']) / ohlc['o'] * 100, 2)
+            else:
+                ohlc['change'] = 0
+            # Approximate IDR (daily aggregate doesn't have IDR, use rate)
+            ohlc['idr_close'] = round(ohlc['c'] * 17770)  # rough IDR rate
+    
+    return daily_agg
+
+
 def get_prices():
-    """Fetch prices from CoinGecko."""
+    """Fetch current spot prices from CoinGecko."""
     ids = ",".join(COINS)
     url = f"https://api.coingecko.com/api/v3/simple/price?ids={ids}&vs_currencies=usd,idr&include_24hr_change=true&include_market_cap=true"
     
@@ -159,73 +211,109 @@ def main():
     waktu = now.strftime("%H:%M")
     
     print("=" * 55)
-    print("🪙 MONITOR CRYPTO & SENTIMEN")
+    print("🪙 MONITOR CRYPTO & SENTIMEN (OHLC Harian)")
     print(f"📅 {tanggal} {waktu} WIB")
     print("=" * 55)
     
-    # 1. Get prices
-    print("\n💰 Mengambil harga dari CoinGecko...")
-    prices = get_prices()
+    # 1. Get OHLC daily data (Open/High/Low/Close per coin per day)
+    print("\n📊 Mengambil OHLC harian dari CoinGecko...")
+    ohlc_daily = get_ohlc_daily()
     
-    if not prices:
-        print("⚠️ Gagal mengambil harga crypto")
+    if not ohlc_daily:
+        print("⚠️ Gagal mengambil data OHLC")
         return
     
-    # 2. Get news
+    # 2. Get current spot + market cap
+    print("\n💰 Mengambil spot price + market cap...")
+    spot = get_prices()
+    total_mcap = spot.get("total_mcap", 0) if spot else 0
+    
+    # 3. Get news
     print("\n📰 Mengambil berita crypto...")
     news = get_crypto_news()
     print(f"  Ditemukan {len(news)} berita")
     
-    # 3. Analyze sentiment
-    print("\n🔍 Menganalisa sentimen...")
-    sentimen = determine_overall_sentiment(prices, news)
+    # 4. Write daily OHLC rows to Excel (1 baris per hari)
+    sentimen = "NETRAL ⚪"
+    loaded = 0
+    for date in sorted(ohlc_daily.keys()):
+        coins_data = ohlc_daily[date]
+        
+        # Build price dict in format add_price_row expects
+        row_data = {}
+        for short in ['btc', 'eth', 'sol', 'ada', 'doge', 'xrp']:
+            if short in coins_data:
+                ohlc = coins_data[short]
+                row_data[f"{short}_usd"] = round(ohlc['c'], 2)  # Close as spot
+                row_data[f"{short}_idr"] = ohlc.get('idr_close', 0)
+                row_data[f"{short}_change"] = ohlc['change']
+            else:
+                row_data[f"{short}_usd"] = 0
+                row_data[f"{short}_idr"] = 0
+                row_data[f"{short}_change"] = 0
+        row_data["total_mcap"] = total_mcap
+        
+        # Sentimen berdasarkan rata-rata perubahan hari ini
+        changes = [coins_data[s]['change'] for s in coins_data if s in ['btc', 'eth', 'sol', 'ada', 'doge', 'xrp']]
+        avg_change = sum(changes) / len(changes) if changes else 0
+        
+        # News sentiment
+        news_scores = [analyze_sentiment(h)[1] for h in news]
+        avg_news = sum(news_scores) / len(news_scores) if news_scores else 0
+        combined = avg_change * 0.02 + avg_news * 0.5
+        
+        if combined > 0.1:
+            sentimen = "BULLISH 🟢"
+        elif combined < -0.1:
+            sentimen = "BEARISH 🔴"
+        else:
+            sentimen = "NETRAL ⚪"
+        
+        # Write OHLC info: Waktu shows OHLC summary
+        btc = coins_data.get('btc', {})
+        waktu_ohlc = f"O:{btc.get('o',0):.0f} H:{btc.get('h',0):.0f} L:{btc.get('l',0):.0f} C:{btc.get('c',0):.0f}"
+        
+        add_price_row(date, waktu_ohlc, row_data, sentimen)
+        loaded += 1
     
-    # 4. Per-coin sentiment from news
-    coin_sentiments = {}
-    for headline in news:
-        headline_lower = headline.lower()
-        for coin_name, ticker in COIN_MAP.items():
-            if coin_name in headline_lower or ticker.lower() in headline_lower:
-                label, score = analyze_sentiment(headline)
-                if ticker not in coin_sentiments:
-                    coin_sentiments[ticker] = []
-                coin_sentiments[ticker].append((label, score, headline))
+    print(f"\n✅ {loaded} baris OHLC harian ditulis")
     
-    # 5. Save to Excel
-    add_price_row(tanggal, waktu, prices, sentimen)
+    # 5. Save to history (latest close per coin)
+    if ohlc_daily:
+        latest_date = sorted(ohlc_daily.keys())[-1]
+        latest = ohlc_daily[latest_date]
+        history_entry = {
+            "date": latest_date,
+            "time": waktu,
+            "type": "ohlc_daily",
+            "prices": {},
+            "sentiment": sentimen,
+            "news": news[:5]
+        }
+        for short, ohlc in latest.items():
+            history_entry["prices"][f"{short}_usd"] = ohlc['c']
+            history_entry["prices"][f"{short}_change"] = ohlc['change']
+        save_history(latest_date, waktu, history_entry["prices"], sentimen, news)
     
-    for ticker, sentiments in coin_sentiments.items():
-        if sentiments:
-            avg_score = sum(s[1] for s in sentiments) / len(sentiments)
-            label = "BULLISH" if avg_score > 0.1 else "BEARISH" if avg_score < -0.1 else "NETRAL"
-            headline = sentiments[0][2][:80]
-            coin_key = [k for k, v in COIN_MAP.items() if v == ticker][0]
-            short = COIN_SHORT[coin_key]
-            harga = prices.get(f"{short}_usd", 0)
-            change = prices.get(f"{short}_change", 0)
-            add_sentimen_row(tanggal, ticker, harga, change, label, round(avg_score, 2), headline)
-    
-    # 6. Save history
-    save_history(tanggal, waktu, prices, sentimen, news)
-    
-    # 7. Print report
+    # 6. Print report
     print(f"\n{'='*55}")
-    print(f"📊 *Laporan Crypto {tanggal}*\n")
+    print(f"📊 *Laporan Crypto OHLC {tanggal}*\n")
     
     for coin in COINS:
         short = COIN_SHORT[coin]
         ticker = COIN_MAP[coin]
-        usd = prices.get(f"{short}_usd", 0)
-        idr = prices.get(f"{short}_idr", 0)
-        change = prices.get(f"{short}_change", 0)
-        arrow = "🟢" if change > 0 else "🔴" if change < 0 else "⚪"
-        
-        print(f"{arrow} *{ticker}*")
-        print(f"  USD: ${usd:,.2f} | IDR: Rp {idr:,.0f}")
-        print(f"  24h: {change:+.2f}%\n")
+        if short in ohlc_daily.get(tanggal, {}):
+            ohlc = ohlc_daily[tanggal][short]
+            change = ohlc['change']
+            arrow = "🟢" if change > 0 else "🔴" if change < 0 else "⚪"
+            
+            print(f"{arrow} *{ticker}*")
+            print(f"  Open:  ${ohlc['o']:,.2f}")
+            print(f"  High:  ${ohlc['h']:,.2f}")
+            print(f"  Low:   ${ohlc['l']:,.2f}")
+            print(f"  Close: ${ohlc['c']:,.2f}")
+            print(f"  Range: ${ohlc['h']-ohlc['l']:,.2f} ({change:+.2f}%)\n")
     
-    total_mcap_t = prices.get("total_mcap", 0) / 1e12
-    print(f"📊 Total Market Cap: ${total_mcap_t:.2f}T")
     print(f"📈 Sentimen Pasar: *{sentimen}*")
     
     if news:
@@ -236,17 +324,16 @@ def main():
             print(f"  {i}. {emoji} {n[:65]}")
     
     # Save message for cron delivery
-    msg = f"🪙 *Laporan Crypto {tanggal}*\n\n"
+    msg = f"🪙 *Crypto OHLC {tanggal}*\n\n"
     for coin in COINS:
         short = COIN_SHORT[coin]
         ticker = COIN_MAP[coin]
-        usd = prices.get(f"{short}_usd", 0)
-        idr = prices.get(f"{short}_idr", 0)
-        change = prices.get(f"{short}_change", 0)
-        arrow = "🟢" if change > 0 else "🔴" if change < 0 else "⚪"
-        msg += f"{arrow} *{ticker}* ${usd:,.2f} (Rp {idr:,.0f}) [{change:+.2f}%]\n"
+        if short in ohlc_daily.get(tanggal, {}):
+            ohlc = ohlc_daily[tanggal][short]
+            change = ohlc['change']
+            arrow = "🟢" if change > 0 else "🔴" if change < 0 else "⚪"
+            msg += f"{arrow} *{ticker}* C:${ohlc['c']:,.2f} H:${ohlc['h']:,.2f} L:${ohlc['l']:,.2f} [{change:+.2f}%]\n"
     
-    msg += f"\n📊 Market Cap: ${total_mcap_t:.2f}T"
     msg += f"\n📈 Sentimen: *{sentimen}*"
     
     if news:
@@ -254,7 +341,6 @@ def main():
         for i, n in enumerate(news[:3], 1):
             msg += f"{i}. {n[:60]}\n"
     
-    # Write message to file for cron delivery
     with open(os.path.expanduser("~/sembako/crypto_report.txt"), "w") as f:
         f.write(msg)
 
