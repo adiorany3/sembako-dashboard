@@ -175,8 +175,15 @@ def scrape_harga_emas():
 def save_history(tanggal, antam, buyback, pegadaian, galeri24, ubs):
     history = []
     if os.path.exists(HISTORY_PATH):
-        with open(HISTORY_PATH) as f:
-            history = json.load(f)
+        with open(HISTORY_PATH, "r") as f:
+            try:
+                content = f.read().strip()
+                if content:
+                    history = json.loads(content)
+            except json.JSONDecodeError as e:
+                print(f"⚠️ Gagal membaca file JSON: {e}")
+                print("🔄 File akan dibuat ulang...")
+                history = []
     history.append({
         "date": tanggal, "antam_beli": antam, "antam_buyback": buyback,
         "antam_pegadaian": pegadaian, "galeri24": galeri24, "ubs": ubs

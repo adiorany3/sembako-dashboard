@@ -5,7 +5,7 @@ from openpyxl.chart import LineChart, Reference, BarChart
 from datetime import datetime
 import os
 
-EXCEL_PATH = os.path.expanduser("~/sembako/crypto_monitor.xlsx")
+EXCEL_PATH = os.path.expanduser("~/sembako/data/crypto_monitor.xlsx")
 
 COINS = ["bitcoin", "ethereum", "solana", "cardano", "dogecoin", "ripple"]
 COIN_NAMES = {"bitcoin": "BTC", "ethereum": "ETH", "solana": "SOL", 

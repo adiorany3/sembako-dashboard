@@ -414,6 +414,14 @@ def daily_update_all():
     removed = sum(r['duplicates_removed'] for r in reports)
     if removed > 0:
         print(f"\n🧹 Auto-dedup: removed {removed} duplicate rows")
+    
+    # Recovery: reload JSON history → Excel if data missing
+    try:
+        from scripts.recovery_json_to_excel import load_crypto_history_to_excel, load_emas_history_to_excel
+        load_crypto_history_to_excel()
+        load_emas_history_to_excel()
+    except Exception as e:
+        print(f"  ⚠️ Recovery loader error: {e}")
 
 # ==========================================
 # MAIN
