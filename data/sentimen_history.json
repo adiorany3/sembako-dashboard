@@ -1,134 +1,6 @@
 [
   {
     "keyword": "berita ekonomi",
-    "headline": "[Dua Menteri Prabowo Buka Suara soal Heboh Kopdes sampai Gunung](https://finance.detik.com/berita-ekonomi-bisnis/d-8557599/dua-menteri-prabowo-buka-suara-soal-heboh-kopdes-sampai-gunung)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-03T09:45:42.249020"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[PTBA & PNRE Jajaki Kerja Sama Pengembangan PLTS di Lahan Pascatambang](https://finance.detik.com/energi/d-8557694/ptba-pnre-jajaki-kerja-sama-pengembangan-plts-di-lahan-pascatambang)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-03T09:45:42.258762"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Pelatihan Digital Perkuat Kesiapan Tenaga Kerja Indonesia](https://finance.detik.com/foto-bisnis/d-8557452/pelatihan-digital-perkuat-kesiapan-tenaga-kerja-indonesia)",
-    "sentiment": "POSITIF",
-    "score": 0.65,
-    "source": "detik finance",
-    "timestamp": "2026-07-03T09:45:42.268454"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Aturan Pusat Finansial Internasional Indonesia Dikebut Beres Sebelum 22 Juli](https://finance.detik.com/berita-ekonomi-bisnis/d-8557592/aturan-pusat-finansial-internasional-indonesia-dikebut-beres-sebelum-22-juli)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-03T09:45:42.278144"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "detikFinance - Berita Ekonomi Bisnis, dan Investasi Hari Ini",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-03T10:02:03.345685"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Dua Menteri Prabowo Buka Suara soal Heboh Kopdes sampai Gunung](https://finance.detik.com/berita-ekonomi-bisnis/d-8557599/dua-menteri-prabowo-buka-suara-soal-heboh-kopdes-sampai-gunung)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-03T10:02:03.356855"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Aturan Pusat Finansial Internasional Indonesia Dikebut Beres Sebelum 22 Juli](https://finance.detik.com/berita-ekonomi-bisnis/d-8557592/aturan-pusat-finansial-internasional-indonesia-dikebut-beres-sebelum-22-juli)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-03T10:02:03.367289"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Tujuan Besar Pemerintah Bangun Pusat Keuangan Internasional](https://finance.detik.com/berita-ekonomi-bisnis/d-8557553/tujuan-besar-pemerintah-bangun-pusat-keuangan-internasional)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-03T10:02:03.377366"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[KAI Rombak Direksi, Mantan Bos Pelita Air Jadi Direktur Komersial](https://finance.detik.com/berita-ekonomi-bisnis/d-8557440/kai-rombak-direksi-mantan-bos-pelita-air-jadi-direktur-komersial)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-03T10:02:03.387284"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[PT Pos Indonesia Buka Suara soal Kabar Telat Bayar Gaji Karyawan](https://finance.detik.com/berita-ekonomi-bisnis/d-8557334/pt-pos-indonesia-buka-suara-soal-kabar-telat-bayar-gaji-karyawan)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-03T10:02:03.397230"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[KKP Percepat Pembangunan Kampung Nelayan hingga Kawasan Tambak Udang](https://finance.detik.com/berita-ekonomi-bisnis/d-8557721/kkp-percepat-pembangunan-kampung-nelayan-hingga-kawasan-tambak-udang)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-03T10:02:03.407495"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[100 Kampung Nelayan Merah Putih Ditargetkan Operasi Awal 2027](https://finance.detik.com/berita-ekonomi-bisnis/d-8556930/100-kampung-nelayan-merah-putih-ditargetkan-operasi-awal-2027)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-03T10:02:03.417678"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Prabowo Buka Suara soal Polisi dan Tentara Ikut Urus Pangan](https://finance.detik.com/berita-ekonomi-bisnis/d-8545136/prabowo-buka-suara-soal-polisi-dan-tentara-ikut-urus-pangan)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-03T10:02:03.427866"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Beras IR. III (IR 64)](https://finance.detik.com/info-pangan/jakarta/beras-ir-iii-ir-64)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-03T10:02:03.437766"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Cabe Merah Keriting](https://finance.detik.com/info-pangan/jakarta/cabe-merah-keriting)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-03T10:02:03.447997"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Daging Sapi Murni (Semur)](https://finance.detik.com/info-pangan/jakarta/daging-sapi-murni-semur)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-03T10:02:03.458178"
-  },
-  {
-    "keyword": "berita ekonomi",
     "headline": "[MAPA Borong Sports Direct Rp 2,5 T, COCO Rights Issue, dan MTEL Bagi Dividen](https://finance.detik.com/bursa-dan-valas/d-8557753/mapa-borong-sports-direct-rp-2-5-t-coco-rights-issue-dan-mtel-bagi-dividen)",
     "sentiment": "NETRAL",
     "score": 0.0,
@@ -3998,5 +3870,133 @@
     "score": 0.0,
     "source": "detik finance",
     "timestamp": "2026-07-03T16:30:42.920781"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "detikFinance - Berita Ekonomi Bisnis, dan Investasi Hari Ini",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-03T16:47:26.170892"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Terungkap! Danantara Temukan Dugaan Rekayasa Keuangan di Pos Indonesia](https://finance.detik.com/berita-ekonomi-bisnis/d-8558128/terungkap-danantara-temukan-dugaan-rekayasa-keuangan-di-pos-indonesia)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-03T16:47:26.181752"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Koperasi Masuk Bisnis Sawit](https://finance.detik.com/berita-ekonomi-bisnis/d-8557919/koperasi-masuk-bisnis-sawit)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-03T16:47:26.204366"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[240 BUMN Sudah Dipangkas](https://finance.detik.com/berita-ekonomi-bisnis/d-8557804/240-bumn-sudah-dipangkas)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-03T16:47:26.216432"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Dua Menteri Prabowo Buka Suara soal Heboh Kopdes sampai Gunung](https://finance.detik.com/berita-ekonomi-bisnis/d-8557599/dua-menteri-prabowo-buka-suara-soal-heboh-kopdes-sampai-gunung)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-03T16:47:26.228801"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Aturan Pusat Finansial Internasional Indonesia Dikebut Beres Sebelum 22 Juli](https://finance.detik.com/berita-ekonomi-bisnis/d-8557592/aturan-pusat-finansial-internasional-indonesia-dikebut-beres-sebelum-22-juli)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-03T16:47:26.241643"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Deretan Insiden PHK Massal Tokopedia Usai Dicaplok TikTok](https://finance.detik.com/berita-ekonomi-bisnis/d-8558483/deretan-insiden-phk-massal-tokopedia-usai-dicaplok-tiktok)",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik finance",
+    "timestamp": "2026-07-03T16:47:26.251597"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Tokopedia PHK Massal, Asosiasi E-Commerce Buka Suara](https://finance.detik.com/berita-ekonomi-bisnis/d-8558090/tokopedia-phk-massal-asosiasi-e-commerce-buka-suara)",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik finance",
+    "timestamp": "2026-07-03T16:47:26.261556"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Viral Kabar Tokopedia PHK Besar-besaran, TikTok Buka Suara](https://finance.detik.com/berita-ekonomi-bisnis/d-8556401/viral-kabar-tokopedia-phk-besar-besaran-tiktok-buka-suara)",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik finance",
+    "timestamp": "2026-07-03T16:47:26.271430"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Beras IR. III (IR 64)](https://finance.detik.com/info-pangan/jakarta/beras-ir-iii-ir-64)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-03T16:47:26.280969"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Cabe Merah Keriting](https://finance.detik.com/info-pangan/jakarta/cabe-merah-keriting)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-03T16:47:26.290701"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Daging Sapi Murni (Semur)](https://finance.detik.com/info-pangan/jakarta/daging-sapi-murni-semur)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-03T16:47:26.300473"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Pemerintah Pede Inflasi Mulai Reda Bulan Depan](https://finance.detik.com/berita-ekonomi-bisnis/d-8558452/pemerintah-pede-inflasi-mulai-reda-bulan-depan)",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik finance",
+    "timestamp": "2026-07-03T16:47:26.310277"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Jaga Daya Beli Masyarakat, 3 Paket Stimulus Ekonomi Meluncur](https://finance.detik.com/berita-ekonomi-bisnis/d-8558429/jaga-daya-beli-masyarakat-3-paket-stimulus-ekonomi-meluncur)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-03T16:47:26.320271"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Titiek Soeharto Resmikan Gudang BULOG 3.500 Ton di Banjarbaru Kalsel](https://finance.detik.com/berita-ekonomi-bisnis/d-8558418/titiek-soeharto-resmikan-gudang-bulog-3-500-ton-di-banjarbaru-kalsel)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-03T16:47:26.330280"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Video Dukuh Atas Bakal Jadi Sentral Moda Transportasi Jakarta](https://20.detik.com/detikupdate/20260703-260703056/video-dukuh-atas-bakal-jadi-sentral-moda-transportasi-jakarta)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-03T16:47:26.340379"
   }
 ]
