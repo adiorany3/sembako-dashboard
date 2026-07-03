@@ -8,6 +8,29 @@ import json
 import openpyxl
 from datetime import datetime
 import os
+import sys
+
+# Telegram config via env
+TELEGRAM_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "")
+TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID", "")
+
+
+def send_telegram(message):
+    """Kirim notifikasi ke Telegram."""
+    if not TELEGRAM_TOKEN or not TELEGRAM_CHAT_ID:
+        print("Telegram not configured, output to stdout:", file=sys.stderr)
+        print(message)
+        return False
+    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
+    data = {"chat_id": TELEGRAM_CHAT_ID, "text": message, "parse_mode": "Markdown"}
+    try:
+        req = urllib.request.Request(url, data=json.dumps(data).encode('utf-8'),
+                                      headers={"Content-Type": "application/json"})
+        urllib.request.urlopen(req, timeout=10)
+        return True
+    except Exception as e:
+        print(f"Telegram error: {e}", file=sys.stderr)
+        return False
 
 API_URL = "https://api.open-meteo.com/v1/forecast?latitude=-7.7956&longitude=110.3695&current=temperature_2m,relative_humidity_2m,rain,weather_code,wind_speed_10m,apparent_temperature&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weather_code&timezone=Asia/Jakarta"
 
@@ -143,6 +166,9 @@ def main():
     
     report = format_report(weather)
     print(f"\n{report}")
+    
+    # Send to Telegram
+    send_telegram(report)
 
 if __name__ == "__main__":
     main()

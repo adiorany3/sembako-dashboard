@@ -16,8 +16,9 @@ from pathlib import Path
 from datetime import datetime
 import openpyxl
 
-# Add scripts dir to path
+# Add scripts dir to path (may run from ~/.hermes/scripts/ or ~/sembako/scripts/)
 sys.path.insert(0, str(Path(__file__).parent))
+sys.path.insert(0, os.path.expanduser("~/sembako/scripts"))
 from indicators import (
     moving_average, ema, rate_of_change, volatility,
     find_support_resistance, trend_direction, momentum_score,

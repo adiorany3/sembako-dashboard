@@ -136,7 +136,8 @@ def main():
         # Use exact last known prices, mark as stale
         last = get_last_prices()
         if last:
-            add_row(today, last, sumber='last_known (stale)')
+            prices = last
+            add_row(today, prices, sumber='last_known (stale)')
             print('  ⚠️ Scraping gagal. Data terakhir digunakan (status: stale).')
         else:
             print("  ⚠️ Tidak ada data tersedia.")
