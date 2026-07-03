@@ -211,8 +211,8 @@ async function loadSembakoData() {
     // Update overview cards
     document.getElementById('sembako-date').textContent = response.last_update || formatDate(latest.tanggal);
     document.getElementById('mini-beras').textContent = formatCurrency(latest.beras_premium);
-    document.getElementById('mini-telur').textContent = formatCurrency(latest.telur_ras);
-    document.getElementById('mini-ayam').textContent = formatCurrency(latest.ayam_ras);
+    document.getElementById('mini-cabai').textContent = formatCurrency(latest.cabai_merah);
+    document.getElementById('mini-tepung').textContent = formatCurrency(latest.tepung_terigu);
     
     // Fill table
     const tbody = document.getElementById('sembako-tbody');
@@ -253,9 +253,8 @@ async function loadCryptoData() {
     cryptoData = response; // global for AI Summary
     const latest = data[data.length - 1];
     
-    // Update overview cards
-    document.getElementById('crypto-mcap').textContent = latest.market_cap ? 
-        '$' + (latest.market_cap).toFixed(2) + 'T' : '-';
+    // Update overview cards - Sentimen (no market cap)
+    document.getElementById('crypto-mcap').textContent = latest.sentimen || 'NETRAL';
     document.getElementById('mini-btc').textContent = formatUSD(latest.btc_usd);
     document.getElementById('mini-eth').textContent = formatUSD(latest.eth_usd);
     document.getElementById('mini-sol').textContent = formatUSD(latest.sol_usd);
@@ -301,7 +300,7 @@ async function loadEmasData() {
     document.getElementById('emas-price').textContent = formatCurrency(latest.antam_beli);
     document.getElementById('mini-emas-beli').textContent = formatCurrency(latest.antam_beli);
     document.getElementById('mini-emas-back').textContent = formatCurrency(latest.antam_buyback);
-    document.getElementById('mini-spread').textContent = formatPercent(latest.spread_persen);
+    document.getElementById('mini-spread').textContent = formatCurrency(latest.selisih);
     
     // Fill table
     const tbody = document.getElementById('emas-tbody');

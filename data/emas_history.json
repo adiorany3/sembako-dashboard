@@ -1774,5 +1774,13 @@
     "antam_pegadaian": 2673000,
     "galeri24": 2674000,
     "ubs": 2668000
+  },
+  {
+    "date": "2026-07-03",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
   }
 ]
