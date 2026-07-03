@@ -220,8 +220,17 @@ def get_crypto():
                     "sol_usd": row[8],
                     "sol_idr": row[9],
                     "sol_24h": row[10],
-                    "market_cap": row[20],
-                    "sentimen": row[21],
+                    "ada_usd": row[11] if len(row) > 11 else 0,
+                    "ada_idr": row[12] if len(row) > 12 else 0,
+                    "ada_24h": row[13] if len(row) > 13 else 0,
+                    "doge_usd": row[14] if len(row) > 14 else 0,
+                    "doge_idr": row[15] if len(row) > 15 else 0,
+                    "doge_24h": row[16] if len(row) > 16 else 0,
+                    "xrp_usd": row[17] if len(row) > 17 else 0,
+                    "xrp_idr": row[18] if len(row) > 18 else 0,
+                    "xrp_24h": row[19] if len(row) > 19 else 0,
+                    "market_cap": row[20] if len(row) > 20 else 0,
+                    "sentimen": row[21] if len(row) > 21 else "",
                 }
             )
 

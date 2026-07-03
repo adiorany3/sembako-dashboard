@@ -267,13 +267,16 @@ async function loadCryptoData() {
     data.forEach(row => {
         const tr = document.createElement('tr');
         const btc24hClass = row.btc_24h < 0 ? 'text-danger' : 'text-success';
+        const eth24hClass = (row.eth_24h||0) < 0 ? 'text-danger' : 'text-success';
+        const sol24hClass = (row.sol_24h||0) < 0 ? 'text-danger' : 'text-success';
         tr.innerHTML = `
             <td>${formatDate(row.tanggal)}</td>
-            <td style="font-size:11px;white-space:nowrap">${row.waktu || '-'}</td>
             <td>${formatUSD(row.btc_usd)}</td>
             <td class="${btc24hClass}">${formatPercent(row.btc_24h)}</td>
             <td>${formatUSD(row.eth_usd)}</td>
+            <td class="${eth24hClass}">${formatPercent(row.eth_24h)}</td>
             <td>${formatUSD(row.sol_usd)}</td>
+            <td class="${sol24hClass}">${formatPercent(row.sol_24h)}</td>
             <td><span class="badge">${row.sentimen || 'NETRAL'}</span></td>
         `;
         tbody.appendChild(tr);
