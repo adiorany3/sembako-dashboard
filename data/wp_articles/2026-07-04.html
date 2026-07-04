@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Cara Memilih Bibit Ayam Broiler yang Bagus: Panduan untuk Pemula - Catatan Insani</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f5f5; }
+        .card { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+        h1 { color: #1a1a2e; font-size: 20px; }
+        pre { white-space: pre-wrap; word-wrap: break-word; background: #f8f8f8; padding: 12px; border-radius: 6px; font-size: 13px; max-height: 400px; overflow-y: auto; border: 1px solid #eee; }
+        .copy-btn { background: #0073aa; color: #fff; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 14px; margin-top: 8px; }
+        .copy-btn:hover { background: #005a87; }
+        .label { font-weight: bold; color: #555; margin-bottom: 4px; }
+        .success { color: green; font-weight: bold; display: none; margin-left: 10px; }
+        .preview { border: 1px solid #ddd; border-radius: 8px; padding: 16px; background: #fff; }
+    </style>
+</head>
+<body>
+    <h1>Artikel WordPress</h1>
+    <div class="card">
+        <div class="label">Title:</div>
+        <h1 id="title">Cara Memilih Bibit Ayam Broiler yang Bagus: Panduan untuk Pemula</h1>
+        <button class="copy-btn" onclick="copyText('title')">Copy Title</button>
+        <span class="success" id="title-copied">Copied!</span>
+    </div>
+    <div class="card">
+        <div class="label">Category: <strong>Tips Ternak</strong> | Date: <strong>04 July 2026</strong></div>
+    </div>
+    <div class="card">
+        <div class="label">HTML Source (paste this into WordPress editor HTML mode):</div>
+        <pre id="raw">
+<h4>Tanda DOC sehat</h4>
+<ul>
+  <li>Pusar kering, tidak basah/kemerahan.</li>
+  <li>Bulu halus, tidak rontok.</li>
+  <li>Aktif bergerak, responsif terhadap pakan.</li>
+  <li>Mata cerah (tidak sayu) dan kaki normal.</li>
+  <li>Berat relatif seragam (tidak terlalu timpang).</li>
+</ul>
+
+<h4>Hindari DOC bermasalah</h4>
+<ul>
+  <li>Diam lemas, pernapasan cepat/ngorok.</li>
+  <li>Pusar basah & menggumpal.</li>
+  <li>Terlihat kurus ekstrem.</li>
+</ul>
+
+<h4>Setelah sampai kandang</h4>
+<ol>
+  <li>Lakukan brooding sesuai suhu dan kebersihan.</li>
+  <li>Air minum bersih, pakan starter tersedia.</li>
+  <li>Pantau 24 jam pertama (yang lemah cepat ketahuan).</li>
+</ol>
+
+<h4>Kesimpulan</h4>
+<p>Bibit bagus = biaya kesehatan turun. Kuncinya: pilih DOC sehat dan brooding rapi.</p>
+        </pre>
+        <button class="copy-btn" onclick="copyHtml()">📋 Copy HTML Source</button>
+        <span class="success" id="success-text">Copied!</span>
+    </div>
+    <div class="card preview">
+        <div class="label">Preview:</div>
+        
+<h4>Tanda DOC sehat</h4>
+<ul>
+  <li>Pusar kering, tidak basah/kemerahan.</li>
+  <li>Bulu halus, tidak rontok.</li>
+  <li>Aktif bergerak, responsif terhadap pakan.</li>
+  <li>Mata cerah (tidak sayu) dan kaki normal.</li>
+  <li>Berat relatif seragam (tidak terlalu timpang).</li>
+</ul>
+
+<h4>Hindari DOC bermasalah</h4>
+<ul>
+  <li>Diam lemas, pernapasan cepat/ngorok.</li>
+  <li>Pusar basah & menggumpal.</li>
+  <li>Terlihat kurus ekstrem.</li>
+</ul>
+
+<h4>Setelah sampai kandang</h4>
+<ol>
+  <li>Lakukan...
+    </div>
+    <div class="card">
+        <a href="/article?new=1" class="copy-btn" style="background:#28a745;text-decoration:none;display:inline-block;">Generate Artikel Baru</a>
+    </div>
+    <script>
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+        function copyText(id) {
+            var el = document.getElementById(id);
+            var text = el.innerText || el.textContent;
+            var ta = document.createElement("textarea");
+            ta.value = text;
+            ta.style.position = "fixed";
+            ta.style.opacity = "0";
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand("copy");
+            document.body.removeChild(ta);
+            document.getElementById(id + '-copied').style.display = 'inline';
+            setTimeout(function(){
+                document.getElementById(id + '-copied').style.display = 'none';
+            }, 2000);
+        }
+        function copyHtml() {
+            var raw = document.getElementById("raw").textContent;
+            var ta = document.createElement("textarea");
+            ta.value = raw;
+            ta.style.position = "fixed";
+            ta.style.opacity = "0";
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand("copy");
+            document.body.removeChild(ta);
+            document.getElementById('success-text').style.display = 'inline';
+            setTimeout(function(){
+                document.getElementById('success-text').style.display = 'none';
+            }, 2000);
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            var raw = document.getElementById("raw").textContent;
+            var preview = document.querySelector('.preview');
+            if (preview) {
+                preview.innerHTML = '<div style="max-height: 300px; overflow-y: auto; border: 1px solid #ddd; padding: 12px; background: #fafafa;">' + raw + '</div>';
+            }
+        });
+    </script>
+</body>
+</html>

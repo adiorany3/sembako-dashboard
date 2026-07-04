@@ -53,31 +53,31 @@ def get_ohlc_daily():
     for coin in COINS:
         short = COIN_SHORT[coin]
         
-        # Retry on 429 (up to 3 attempts)
+        # Retry on 429 (up to 3 attempts, long backoff for free tier)
         candles = None
         for attempt in range(3):
             url = f"https://api.coingecko.com/api/v3/coins/{coin}/ohlc?vs_currency=usd&days=7"
             raw = fetch_url(url)
             if not raw:
-                _time.sleep(3 * (attempt + 1))
+                _time.sleep(12 * (attempt + 1))
                 continue
-            
+
             try:
                 parsed = json.loads(raw)
             except:
-                _time.sleep(3 * (attempt + 1))
+                _time.sleep(12 * (attempt + 1))
                 continue
-            
+
             if isinstance(parsed, dict) and 'error' in parsed:
                 print(f"  ⚠️ OHLC retry {attempt+1}: {coin} - {parsed.get('error', '')}")
-                _time.sleep(3 * (attempt + 1))
+                _time.sleep(12 * (attempt + 1))
                 continue
-            
+
             if isinstance(parsed, list) and len(parsed) > 0:
                 candles = parsed
                 break
-            
-            _time.sleep(3 * (attempt + 1))
+
+            _time.sleep(12 * (attempt + 1))
         
         if not candles:
             print(f"  ❌ OHLC gagal: {coin} (3 retries)")
@@ -99,7 +99,7 @@ def get_ohlc_daily():
                 daily_agg[d][short]['l'] = min(daily_agg[d][short]['l'], c[3])
                 daily_agg[d][short]['c'] = c[4]  # close = latest candle
         
-        _time.sleep(2)  # rate limit - increase to 2s
+        _time.sleep(10)  # rate limit: free tier ~10-30 req/min
     
     # Calculate change% for each coin per day
     for d in daily_agg:
@@ -241,7 +241,7 @@ def main():
     
     # 2. Get current spot + market cap (wait after OHLC rate limit)
     import time as _time
-    _time.sleep(5)
+    _time.sleep(15)  # cooldown after OHLC calls
     print("\n💰 Mengambil spot price + market cap...")
     spot = get_prices()
     total_mcap = spot.get("total_mcap", 0) if spot else 0
