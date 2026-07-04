@@ -212,8 +212,8 @@ async function loadSembakoData() {
     try {
         document.getElementById('sembako-date').textContent = response.last_update || formatDate(latest.tanggal);
         document.getElementById('mini-beras').textContent = formatCurrency(latest.beras_premium);
-        document.getElementById('mini-cabai').textContent = formatCurrency(latest.cabai_merah);
-        document.getElementById('mini-minyak').textContent = formatCurrency(latest.minyak_goreng || 0);
+        document.getElementById('mini-medium').textContent = formatCurrency(latest.beras_medium);
+        document.getElementById('mini-gas').textContent = latest.gas_elpiji || '-';
     } catch(e) { console.warn('Overview card error:', e); }
     
     // Fill table

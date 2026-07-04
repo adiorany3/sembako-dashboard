@@ -4753,5 +4753,65 @@
       "5 Aplikasi Trading Terbaik di Dunia",
       "Bitcoin Cs Melempem Jelang Pidato Jerome Powell"
     ]
+  },
+  {
+    "date": "2026-07-04",
+    "time": "12:00",
+    "prices": {
+      "btc_usd": 62537.0,
+      "btc_change": 0.76,
+      "doge_usd": 0.077457,
+      "doge_change": 2.08,
+      "xrp_usd": 1.13,
+      "xrp_change": 1.8
+    },
+    "sentiment": "NETRAL \u26aa",
+    "news": [
+      "Begini Cara Membaca Grafik TOTAL2 sebagai Barometer Sentimen Altseason",
+      "Trader Kripto Kostya Kudo Tewas di Lamborghini Saat Pasar Kripto Runtuh",
+      "Bitcoin Tembus Rp 1,9 M",
+      "5 Aplikasi Trading Terbaik di Dunia",
+      "Bitcoin Cs Melempem Jelang Pidato Jerome Powell"
+    ]
+  },
+  {
+    "date": "2026-07-04",
+    "time": "18:00",
+    "prices": {
+      "btc_usd": 62532.0,
+      "btc_change": 0.75,
+      "doge_usd": 0.076851,
+      "doge_change": 1.28,
+      "xrp_usd": 1.14,
+      "xrp_change": 2.7
+    },
+    "sentiment": "NETRAL \u26aa",
+    "news": [
+      "Begini Cara Membaca Grafik TOTAL2 sebagai Barometer Sentimen Altseason",
+      "Trader Kripto Kostya Kudo Tewas di Lamborghini Saat Pasar Kripto Runtuh",
+      "Bitcoin Tembus Rp 1,9 M",
+      "5 Aplikasi Trading Terbaik di Dunia",
+      "Bitcoin Cs Melempem Jelang Pidato Jerome Powell"
+    ]
+  },
+  {
+    "date": "2026-07-04",
+    "time": "22:00",
+    "prices": {
+      "ada_usd": 0.176934,
+      "ada_change": 4.43,
+      "doge_usd": 0.076894,
+      "doge_change": 1.34,
+      "xrp_usd": 1.14,
+      "xrp_change": 2.7
+    },
+    "sentiment": "NETRAL \u26aa",
+    "news": [
+      "Begini Cara Membaca Grafik TOTAL2 sebagai Barometer Sentimen Altseason",
+      "Trader Kripto Kostya Kudo Tewas di Lamborghini Saat Pasar Kripto Runtuh",
+      "Bitcoin Tembus Rp 1,9 M",
+      "5 Aplikasi Trading Terbaik di Dunia",
+      "Bitcoin Cs Melempem Jelang Pidato Jerome Powell"
+    ]
   }
 ]

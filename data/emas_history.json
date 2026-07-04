@@ -1,277 +1,5 @@
 [
   {
-    "date": "2026-06-12",
-    "antam_beli": 2711000,
-    "antam_buyback": 2693000,
-    "antam_pegadaian": 2711000,
-    "galeri24": 2716000,
-    "ubs": 2711000
-  },
-  {
-    "date": "2026-06-13",
-    "antam_beli": 2711000,
-    "antam_buyback": 2693000,
-    "antam_pegadaian": 2711000,
-    "galeri24": 2716000,
-    "ubs": 2711000
-  },
-  {
-    "date": "2026-06-14",
-    "antam_beli": 2711000,
-    "antam_buyback": 2693000,
-    "antam_pegadaian": 2711000,
-    "galeri24": 2716000,
-    "ubs": 2711000
-  },
-  {
-    "date": "2026-06-15",
-    "antam_beli": 2711000,
-    "antam_buyback": 2693000,
-    "antam_pegadaian": 2711000,
-    "galeri24": 2716000,
-    "ubs": 2711000
-  },
-  {
-    "date": "2026-06-16",
-    "antam_beli": 2699000,
-    "antam_buyback": 2681000,
-    "antam_pegadaian": 2699000,
-    "galeri24": 2704000,
-    "ubs": 2699000
-  },
-  {
-    "date": "2026-06-17",
-    "antam_beli": 2690000,
-    "antam_buyback": 2672000,
-    "antam_pegadaian": 2690000,
-    "galeri24": 2695000,
-    "ubs": 2690000
-  },
-  {
-    "date": "2026-06-18",
-    "antam_beli": 2680000,
-    "antam_buyback": 2662000,
-    "antam_pegadaian": 2680000,
-    "galeri24": 2685000,
-    "ubs": 2680000
-  },
-  {
-    "date": "2026-06-19",
-    "antam_beli": 2670000,
-    "antam_buyback": 2652000,
-    "antam_pegadaian": 2670000,
-    "galeri24": 2675000,
-    "ubs": 2670000
-  },
-  {
-    "date": "2026-06-20",
-    "antam_beli": 2665000,
-    "antam_buyback": 2647000,
-    "antam_pegadaian": 2665000,
-    "galeri24": 2670000,
-    "ubs": 2665000
-  },
-  {
-    "date": "2026-06-21",
-    "antam_beli": 2665000,
-    "antam_buyback": 2647000,
-    "antam_pegadaian": 2665000,
-    "galeri24": 2670000,
-    "ubs": 2665000
-  },
-  {
-    "date": "2026-06-22",
-    "antam_beli": 2665000,
-    "antam_buyback": 2647000,
-    "antam_pegadaian": 2665000,
-    "galeri24": 2670000,
-    "ubs": 2665000
-  },
-  {
-    "date": "2026-06-23",
-    "antam_beli": 2660000,
-    "antam_buyback": 2642000,
-    "antam_pegadaian": 2660000,
-    "galeri24": 2665000,
-    "ubs": 2660000
-  },
-  {
-    "date": "2026-06-24",
-    "antam_beli": 2655000,
-    "antam_buyback": 2637000,
-    "antam_pegadaian": 2655000,
-    "galeri24": 2660000,
-    "ubs": 2655000
-  },
-  {
-    "date": "2026-06-25",
-    "antam_beli": 2655000,
-    "antam_buyback": 2637000,
-    "antam_pegadaian": 2655000,
-    "galeri24": 2660000,
-    "ubs": 2655000
-  },
-  {
-    "date": "2026-06-26",
-    "antam_beli": 2655000,
-    "antam_buyback": 2637000,
-    "antam_pegadaian": 2655000,
-    "galeri24": 2660000,
-    "ubs": 2655000
-  },
-  {
-    "date": "2026-06-27",
-    "antam_beli": 2655000,
-    "antam_buyback": 2637000,
-    "antam_pegadaian": 2655000,
-    "galeri24": 2660000,
-    "ubs": 2655000
-  },
-  {
-    "date": "2026-06-28",
-    "antam_beli": 2655000,
-    "antam_buyback": 2637000,
-    "antam_pegadaian": 2655000,
-    "galeri24": 2660000,
-    "ubs": 2655000
-  },
-  {
-    "date": "2026-06-29",
-    "antam_beli": 2655000,
-    "antam_buyback": 2637000,
-    "antam_pegadaian": 2655000,
-    "galeri24": 2660000,
-    "ubs": 2655000
-  },
-  {
-    "date": "2026-06-30",
-    "antam_beli": 2630000,
-    "antam_buyback": 2612000,
-    "antam_pegadaian": 2630000,
-    "galeri24": 2635000,
-    "ubs": 2630000
-  },
-  {
-    "date": "2026-07-01",
-    "antam_beli": 2625000,
-    "antam_buyback": 2607000,
-    "antam_pegadaian": 2625000,
-    "galeri24": 2630000,
-    "ubs": 2625000
-  },
-  {
-    "date": "2026-07-01",
-    "antam_beli": 2673000,
-    "antam_buyback": 2655000,
-    "antam_pegadaian": 2673000,
-    "galeri24": 2674000,
-    "ubs": 2668000
-  },
-  {
-    "date": "2026-07-01",
-    "antam_beli": 2673000,
-    "antam_buyback": 2655000,
-    "antam_pegadaian": 2673000,
-    "galeri24": 2674000,
-    "ubs": 2668000
-  },
-  {
-    "date": "2026-07-01",
-    "antam_beli": 2673000,
-    "antam_buyback": 2655000,
-    "antam_pegadaian": 2673000,
-    "galeri24": 2674000,
-    "ubs": 2668000
-  },
-  {
-    "date": "2026-07-01",
-    "antam_beli": 2673000,
-    "antam_buyback": 2655000,
-    "antam_pegadaian": 2673000,
-    "galeri24": 2674000,
-    "ubs": 2668000
-  },
-  {
-    "date": "2026-07-01",
-    "antam_beli": 2673000,
-    "antam_buyback": 2655000,
-    "antam_pegadaian": 2673000,
-    "galeri24": 2674000,
-    "ubs": 2668000
-  },
-  {
-    "date": "2026-07-01",
-    "antam_beli": 2673000,
-    "antam_buyback": 2655000,
-    "antam_pegadaian": 2673000,
-    "galeri24": 2674000,
-    "ubs": 2668000
-  },
-  {
-    "date": "2026-07-01",
-    "antam_beli": 2673000,
-    "antam_buyback": 2655000,
-    "antam_pegadaian": 2673000,
-    "galeri24": 2674000,
-    "ubs": 2668000
-  },
-  {
-    "date": "2026-07-01",
-    "antam_beli": 2673000,
-    "antam_buyback": 2655000,
-    "antam_pegadaian": 2673000,
-    "galeri24": 2674000,
-    "ubs": 2668000
-  },
-  {
-    "date": "2026-07-01",
-    "antam_beli": 2673000,
-    "antam_buyback": 2655000,
-    "antam_pegadaian": 2673000,
-    "galeri24": 2674000,
-    "ubs": 2668000
-  },
-  {
-    "date": "2026-07-01",
-    "antam_beli": 2673000,
-    "antam_buyback": 2655000,
-    "antam_pegadaian": 2673000,
-    "galeri24": 2674000,
-    "ubs": 2668000
-  },
-  {
-    "date": "2026-07-01",
-    "antam_beli": 2673000,
-    "antam_buyback": 2655000,
-    "antam_pegadaian": 2673000,
-    "galeri24": 2674000,
-    "ubs": 2668000
-  },
-  {
-    "date": "2026-07-01",
-    "antam_beli": 2673000,
-    "antam_buyback": 2655000,
-    "antam_pegadaian": 2673000,
-    "galeri24": 2674000,
-    "ubs": 2668000
-  },
-  {
-    "date": "2026-07-01",
-    "antam_beli": 2673000,
-    "antam_buyback": 2655000,
-    "antam_pegadaian": 2673000,
-    "galeri24": 2674000,
-    "ubs": 2668000
-  },
-  {
-    "date": "2026-07-01",
-    "antam_beli": 2673000,
-    "antam_buyback": 2655000,
-    "antam_pegadaian": 2673000,
-    "galeri24": 2674000,
-    "ubs": 2668000
-  },
-  {
     "date": "2026-07-01",
     "antam_beli": 2673000,
     "antam_buyback": 2655000,
@@ -2417,6 +2145,774 @@
   },
   {
     "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-04",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
+    "antam_beli": 2673000,
+    "antam_buyback": 2655000,
+    "antam_pegadaian": 2673000,
+    "galeri24": 2674000,
+    "ubs": 2668000
+  },
+  {
+    "date": "2026-07-05",
     "antam_beli": 2673000,
     "antam_buyback": 2655000,
     "antam_pegadaian": 2673000,
