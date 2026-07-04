@@ -39,11 +39,20 @@ def main():
         ws.title = "CPO"
         ws.append(["Tanggal", "Harga_MYR", "Harga_IDR", "Perubahan_Persen", "Sumber"])
 
-    # Get last row for change calc
-    last_my = ws.max_row and ws.cell(ws.max_row, 2).value
+    # Get last row for change calc — find most recent date
+    last_my = None
+    for row in range(ws.max_row, 1, -1):
+        if ws.cell(row, 2).value is not None:
+            last_my = ws.cell(row, 2).value
+            # Delete today's entry if exists (re-run safety)
+            if ws.cell(row, 1).value == today:
+                ws.delete_rows(row)
+                last_my = ws.cell(row - 1, 2).value if row > 2 else None
+            break
     pct_change = round((myr - last_my) / last_my * 100, 2) if last_my else 0.0
+    idr = round(myr_per_kg * 18000, 0) if myr_per_kg else 0  # MYR/kg * 18000
 
-    ws.append([today, myr, myr_per_kg, pct_change, source])
+    ws.append([today, myr, idr, pct_change, source])
     wb.save(OUTPUT)
     print(f"✅ CPO price updated: MYR {myr}/tonne ({pct_change:+.2f}%)")
 

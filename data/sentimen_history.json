@@ -5,518 +5,6 @@
     "sentiment": "NETRAL",
     "score": 0.0,
     "source": "detik finance",
-    "timestamp": "2026-07-04T02:47:03.666899"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Prudential Buka Suara soal Nasabah Keluhkan Masalah Klaim Rp 123 Juta](https://finance.detik.com/moneter/d-8559099/prudential-buka-suara-soal-nasabah-keluhkan-masalah-klaim-rp-123-juta)",
-    "sentiment": "NEGATIF",
-    "score": -0.65,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T02:47:03.676361"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Stimulus Industri Kreatif, Pajak Royalti Penulis Jadi 1,5 Persen](https://finance.detik.com/foto-bisnis/d-8558453/stimulus-industri-kreatif-pajak-royalti-penulis-jadi-1-5-persen)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T02:47:03.685658"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Video: Daftar Peraih Anugerah Program Bisnis Terpuji detikBali-Nusra Awards 2026](https://20.detik.com/detikupdate/20260703-260703108/video-daftar-peraih-anugerah-program-bisnis-terpuji-detikbali-nusra-awards-2026-)",
-    "sentiment": "POSITIF",
-    "score": 0.459,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T02:47:03.695158"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "detikFinance - Berita Ekonomi Bisnis, dan Investasi Hari Ini",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:00:52.400594"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Ledakan Pabrik Herbal Makan Korban Jiwa, Kemenperin Turun Tangan](https://finance.detik.com/industri/d-8558901/ledakan-pabrik-herbal-makan-korban-jiwa-kemenperin-turun-tangan)",
-    "sentiment": "NEGATIF",
-    "score": -0.65,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:00:52.410985"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Terungkap! Danantara Temukan Dugaan Rekayasa Keuangan di Pos Indonesia](https://finance.detik.com/berita-ekonomi-bisnis/d-8558128/terungkap-danantara-temukan-dugaan-rekayasa-keuangan-di-pos-indonesia)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:00:52.420807"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Koperasi Masuk Bisnis Sawit](https://finance.detik.com/berita-ekonomi-bisnis/d-8557919/koperasi-masuk-bisnis-sawit)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:00:52.430107"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[240 BUMN Sudah Dipangkas](https://finance.detik.com/berita-ekonomi-bisnis/d-8557804/240-bumn-sudah-dipangkas)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:00:52.439312"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Dua Menteri Prabowo Buka Suara soal Heboh Kopdes sampai Gunung](https://finance.detik.com/berita-ekonomi-bisnis/d-8557599/dua-menteri-prabowo-buka-suara-soal-heboh-kopdes-sampai-gunung)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:00:52.448757"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Alasan Pemerintah Bikin Pusat Finansial Internasional Indonesia (PFII)](https://finance.detik.com/berita-ekonomi-bisnis/d-8559091/alasan-pemerintah-bikin-pusat-finansial-internasional-indonesia-pfii)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:00:52.458108"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Purbaya: Memang Ada Tantangan, Namun Indonesia Tidak Menuju Krisis](https://finance.detik.com/berita-ekonomi-bisnis/d-8559070/purbaya-memang-ada-tantangan-namun-indonesia-tidak-menuju-krisis)",
-    "sentiment": "NEGATIF",
-    "score": -0.65,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:00:52.467421"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Purbaya Cek MBG di Jateng, Diklaim Ciptakan 193 Ribu Lapangan Kerja](https://finance.detik.com/berita-ekonomi-bisnis/d-8559056/purbaya-cek-mbg-di-jateng-diklaim-ciptakan-193-ribu-lapangan-kerja)",
-    "sentiment": "POSITIF",
-    "score": 0.65,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:00:52.477034"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Beras IR. III (IR 64)](https://finance.detik.com/info-pangan/jakarta/beras-ir-iii-ir-64)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:00:52.486254"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Cabe Merah Keriting](https://finance.detik.com/info-pangan/jakarta/cabe-merah-keriting)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:00:52.495609"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Daging Sapi Murni (Semur)](https://finance.detik.com/info-pangan/jakarta/daging-sapi-murni-semur)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:00:52.504730"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[KB Bank Pangkas 662 Pegawai dan 21 Kantor Cabang, Ini Alasannya](https://finance.detik.com/moneter/d-8559102/kb-bank-pangkas-662-pegawai-dan-21-kantor-cabang-ini-alasannya)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:00:52.514094"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Prudential Buka Suara soal Nasabah Keluhkan Masalah Klaim Rp 123 Juta](https://finance.detik.com/moneter/d-8559099/prudential-buka-suara-soal-nasabah-keluhkan-masalah-klaim-rp-123-juta)",
-    "sentiment": "NEGATIF",
-    "score": -0.65,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:00:52.523647"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Stimulus Industri Kreatif, Pajak Royalti Penulis Jadi 1,5 Persen](https://finance.detik.com/foto-bisnis/d-8558453/stimulus-industri-kreatif-pajak-royalti-penulis-jadi-1-5-persen)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:00:52.532954"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Video: Daftar Peraih Anugerah Program Bisnis Terpuji detikBali-Nusra Awards 2026](https://20.detik.com/detikupdate/20260703-260703108/video-daftar-peraih-anugerah-program-bisnis-terpuji-detikbali-nusra-awards-2026-)",
-    "sentiment": "POSITIF",
-    "score": 0.459,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:00:52.542253"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "detikFinance - Berita Ekonomi Bisnis, dan Investasi Hari Ini",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:16:29.934714"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Ledakan Pabrik Herbal Makan Korban Jiwa, Kemenperin Turun Tangan](https://finance.detik.com/industri/d-8558901/ledakan-pabrik-herbal-makan-korban-jiwa-kemenperin-turun-tangan)",
-    "sentiment": "NEGATIF",
-    "score": -0.65,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:16:29.944611"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Terungkap! Danantara Temukan Dugaan Rekayasa Keuangan di Pos Indonesia](https://finance.detik.com/berita-ekonomi-bisnis/d-8558128/terungkap-danantara-temukan-dugaan-rekayasa-keuangan-di-pos-indonesia)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:16:29.953993"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Koperasi Masuk Bisnis Sawit](https://finance.detik.com/berita-ekonomi-bisnis/d-8557919/koperasi-masuk-bisnis-sawit)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:16:29.963324"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[240 BUMN Sudah Dipangkas](https://finance.detik.com/berita-ekonomi-bisnis/d-8557804/240-bumn-sudah-dipangkas)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:16:29.972809"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Dua Menteri Prabowo Buka Suara soal Heboh Kopdes sampai Gunung](https://finance.detik.com/berita-ekonomi-bisnis/d-8557599/dua-menteri-prabowo-buka-suara-soal-heboh-kopdes-sampai-gunung)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:16:29.982423"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Alasan Pemerintah Bikin Pusat Finansial Internasional Indonesia (PFII)](https://finance.detik.com/berita-ekonomi-bisnis/d-8559091/alasan-pemerintah-bikin-pusat-finansial-internasional-indonesia-pfii)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:16:29.991748"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Purbaya: Memang Ada Tantangan, Namun Indonesia Tidak Menuju Krisis](https://finance.detik.com/berita-ekonomi-bisnis/d-8559070/purbaya-memang-ada-tantangan-namun-indonesia-tidak-menuju-krisis)",
-    "sentiment": "NEGATIF",
-    "score": -0.65,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:16:30.001011"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Purbaya Cek MBG di Jateng, Diklaim Ciptakan 193 Ribu Lapangan Kerja](https://finance.detik.com/berita-ekonomi-bisnis/d-8559056/purbaya-cek-mbg-di-jateng-diklaim-ciptakan-193-ribu-lapangan-kerja)",
-    "sentiment": "POSITIF",
-    "score": 0.65,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:16:30.010438"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Beras IR. III (IR 64)](https://finance.detik.com/info-pangan/jakarta/beras-ir-iii-ir-64)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:16:30.019809"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Cabe Merah Keriting](https://finance.detik.com/info-pangan/jakarta/cabe-merah-keriting)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:16:30.029184"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Daging Sapi Murni (Semur)](https://finance.detik.com/info-pangan/jakarta/daging-sapi-murni-semur)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:16:30.038551"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[KB Bank Pangkas 662 Pegawai dan 21 Kantor Cabang, Ini Alasannya](https://finance.detik.com/moneter/d-8559102/kb-bank-pangkas-662-pegawai-dan-21-kantor-cabang-ini-alasannya)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:16:30.048219"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Prudential Buka Suara soal Nasabah Keluhkan Masalah Klaim Rp 123 Juta](https://finance.detik.com/moneter/d-8559099/prudential-buka-suara-soal-nasabah-keluhkan-masalah-klaim-rp-123-juta)",
-    "sentiment": "NEGATIF",
-    "score": -0.65,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:16:30.057923"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Stimulus Industri Kreatif, Pajak Royalti Penulis Jadi 1,5 Persen](https://finance.detik.com/foto-bisnis/d-8558453/stimulus-industri-kreatif-pajak-royalti-penulis-jadi-1-5-persen)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:16:30.067900"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Video: Daftar Peraih Anugerah Program Bisnis Terpuji detikBali-Nusra Awards 2026](https://20.detik.com/detikupdate/20260703-260703108/video-daftar-peraih-anugerah-program-bisnis-terpuji-detikbali-nusra-awards-2026-)",
-    "sentiment": "POSITIF",
-    "score": 0.459,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:16:30.077765"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "detikFinance - Berita Ekonomi Bisnis, dan Investasi Hari Ini",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:30:51.363181"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Ledakan Pabrik Herbal Makan Korban Jiwa, Kemenperin Turun Tangan](https://finance.detik.com/industri/d-8558901/ledakan-pabrik-herbal-makan-korban-jiwa-kemenperin-turun-tangan)",
-    "sentiment": "NEGATIF",
-    "score": -0.65,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:30:51.373295"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Terungkap! Danantara Temukan Dugaan Rekayasa Keuangan di Pos Indonesia](https://finance.detik.com/berita-ekonomi-bisnis/d-8558128/terungkap-danantara-temukan-dugaan-rekayasa-keuangan-di-pos-indonesia)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:30:51.382674"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Koperasi Masuk Bisnis Sawit](https://finance.detik.com/berita-ekonomi-bisnis/d-8557919/koperasi-masuk-bisnis-sawit)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:30:51.392339"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[240 BUMN Sudah Dipangkas](https://finance.detik.com/berita-ekonomi-bisnis/d-8557804/240-bumn-sudah-dipangkas)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:30:51.401806"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Dua Menteri Prabowo Buka Suara soal Heboh Kopdes sampai Gunung](https://finance.detik.com/berita-ekonomi-bisnis/d-8557599/dua-menteri-prabowo-buka-suara-soal-heboh-kopdes-sampai-gunung)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:30:51.411214"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Alasan Pemerintah Bikin Pusat Finansial Internasional Indonesia (PFII)](https://finance.detik.com/berita-ekonomi-bisnis/d-8559091/alasan-pemerintah-bikin-pusat-finansial-internasional-indonesia-pfii)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:30:51.420492"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Purbaya: Memang Ada Tantangan, Namun Indonesia Tidak Menuju Krisis](https://finance.detik.com/berita-ekonomi-bisnis/d-8559070/purbaya-memang-ada-tantangan-namun-indonesia-tidak-menuju-krisis)",
-    "sentiment": "NEGATIF",
-    "score": -0.65,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:30:51.429795"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Purbaya Cek MBG di Jateng, Diklaim Ciptakan 193 Ribu Lapangan Kerja](https://finance.detik.com/berita-ekonomi-bisnis/d-8559056/purbaya-cek-mbg-di-jateng-diklaim-ciptakan-193-ribu-lapangan-kerja)",
-    "sentiment": "POSITIF",
-    "score": 0.65,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:30:51.439214"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Beras IR. III (IR 64)](https://finance.detik.com/info-pangan/jakarta/beras-ir-iii-ir-64)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:30:51.448524"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Cabe Merah Keriting](https://finance.detik.com/info-pangan/jakarta/cabe-merah-keriting)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:30:51.457863"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Daging Sapi Murni (Semur)](https://finance.detik.com/info-pangan/jakarta/daging-sapi-murni-semur)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:30:51.467036"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[KB Bank Pangkas 662 Pegawai dan 21 Kantor Cabang, Ini Alasannya](https://finance.detik.com/moneter/d-8559102/kb-bank-pangkas-662-pegawai-dan-21-kantor-cabang-ini-alasannya)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:30:51.476397"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Prudential Buka Suara soal Nasabah Keluhkan Masalah Klaim Rp 123 Juta](https://finance.detik.com/moneter/d-8559099/prudential-buka-suara-soal-nasabah-keluhkan-masalah-klaim-rp-123-juta)",
-    "sentiment": "NEGATIF",
-    "score": -0.65,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:30:51.485738"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Stimulus Industri Kreatif, Pajak Royalti Penulis Jadi 1,5 Persen](https://finance.detik.com/foto-bisnis/d-8558453/stimulus-industri-kreatif-pajak-royalti-penulis-jadi-1-5-persen)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:30:51.495045"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Video: Daftar Peraih Anugerah Program Bisnis Terpuji detikBali-Nusra Awards 2026](https://20.detik.com/detikupdate/20260703-260703108/video-daftar-peraih-anugerah-program-bisnis-terpuji-detikbali-nusra-awards-2026-)",
-    "sentiment": "POSITIF",
-    "score": 0.459,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:30:51.504324"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "detikFinance - Berita Ekonomi Bisnis, dan Investasi Hari Ini",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:46:01.911487"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Ledakan Pabrik Herbal Makan Korban Jiwa, Kemenperin Turun Tangan](https://finance.detik.com/industri/d-8558901/ledakan-pabrik-herbal-makan-korban-jiwa-kemenperin-turun-tangan)",
-    "sentiment": "NEGATIF",
-    "score": -0.65,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:46:01.922099"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Terungkap! Danantara Temukan Dugaan Rekayasa Keuangan di Pos Indonesia](https://finance.detik.com/berita-ekonomi-bisnis/d-8558128/terungkap-danantara-temukan-dugaan-rekayasa-keuangan-di-pos-indonesia)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:46:01.931746"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Koperasi Masuk Bisnis Sawit](https://finance.detik.com/berita-ekonomi-bisnis/d-8557919/koperasi-masuk-bisnis-sawit)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:46:01.941802"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[240 BUMN Sudah Dipangkas](https://finance.detik.com/berita-ekonomi-bisnis/d-8557804/240-bumn-sudah-dipangkas)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:46:01.951881"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Dua Menteri Prabowo Buka Suara soal Heboh Kopdes sampai Gunung](https://finance.detik.com/berita-ekonomi-bisnis/d-8557599/dua-menteri-prabowo-buka-suara-soal-heboh-kopdes-sampai-gunung)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:46:01.961900"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Alasan Pemerintah Bikin Pusat Finansial Internasional Indonesia (PFII)](https://finance.detik.com/berita-ekonomi-bisnis/d-8559091/alasan-pemerintah-bikin-pusat-finansial-internasional-indonesia-pfii)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:46:01.971915"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Purbaya: Memang Ada Tantangan, Namun Indonesia Tidak Menuju Krisis](https://finance.detik.com/berita-ekonomi-bisnis/d-8559070/purbaya-memang-ada-tantangan-namun-indonesia-tidak-menuju-krisis)",
-    "sentiment": "NEGATIF",
-    "score": -0.65,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:46:01.982133"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Purbaya Cek MBG di Jateng, Diklaim Ciptakan 193 Ribu Lapangan Kerja](https://finance.detik.com/berita-ekonomi-bisnis/d-8559056/purbaya-cek-mbg-di-jateng-diklaim-ciptakan-193-ribu-lapangan-kerja)",
-    "sentiment": "POSITIF",
-    "score": 0.65,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:46:01.992175"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Beras IR. III (IR 64)](https://finance.detik.com/info-pangan/jakarta/beras-ir-iii-ir-64)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:46:02.002131"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Cabe Merah Keriting](https://finance.detik.com/info-pangan/jakarta/cabe-merah-keriting)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:46:02.011932"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[Daging Sapi Murni (Semur)](https://finance.detik.com/info-pangan/jakarta/daging-sapi-murni-semur)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
-    "timestamp": "2026-07-04T03:46:02.022259"
-  },
-  {
-    "keyword": "berita ekonomi",
-    "headline": "[KB Bank Pangkas 662 Pegawai dan 21 Kantor Cabang, Ini Alasannya](https://finance.detik.com/moneter/d-8559102/kb-bank-pangkas-662-pegawai-dan-21-kantor-cabang-ini-alasannya)",
-    "sentiment": "NETRAL",
-    "score": 0.0,
-    "source": "detik finance",
     "timestamp": "2026-07-04T03:46:02.031919"
   },
   {
@@ -3998,5 +3486,517 @@
     "score": 0.0,
     "source": "detik finance",
     "timestamp": "2026-07-04T09:31:31.960212"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "detikFinance - Berita Ekonomi Bisnis, dan Investasi Hari Ini",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T09:45:51.772530"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Ledakan Pabrik Herbal Makan Korban Jiwa, Kemenperin Turun Tangan](https://finance.detik.com/industri/d-8558901/ledakan-pabrik-herbal-makan-korban-jiwa-kemenperin-turun-tangan)",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T09:45:51.783078"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Terungkap! Danantara Temukan Dugaan Rekayasa Keuangan di Pos Indonesia](https://finance.detik.com/berita-ekonomi-bisnis/d-8558128/terungkap-danantara-temukan-dugaan-rekayasa-keuangan-di-pos-indonesia)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T09:45:51.793001"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Koperasi Masuk Bisnis Sawit](https://finance.detik.com/berita-ekonomi-bisnis/d-8557919/koperasi-masuk-bisnis-sawit)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T09:45:51.802671"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[240 BUMN Sudah Dipangkas](https://finance.detik.com/berita-ekonomi-bisnis/d-8557804/240-bumn-sudah-dipangkas)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T09:45:51.812356"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Dua Menteri Prabowo Buka Suara soal Heboh Kopdes sampai Gunung](https://finance.detik.com/berita-ekonomi-bisnis/d-8557599/dua-menteri-prabowo-buka-suara-soal-heboh-kopdes-sampai-gunung)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T09:45:51.822348"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Menkop Ungkap Arahan Prabowo: Koperasi Bisnis Sawit-Bikin Minyak Goreng](https://finance.detik.com/industri/d-8559115/menkop-ungkap-arahan-prabowo-koperasi-bisnis-sawit-bikin-minyak-goreng)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T09:45:51.832168"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Prabowo Ajak Belarusia Kerja Sama Industri Alat Pertanian](https://finance.detik.com/industri/d-8556907/prabowo-ajak-belarusia-kerja-sama-industri-alat-pertanian)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T09:45:51.841818"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Prabowo Mau Tambah Impor Bahan Baku Pupuk dari Belarusia](https://finance.detik.com/industri/d-8556857/prabowo-mau-tambah-impor-bahan-baku-pupuk-dari-belarusia)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T09:45:51.851509"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Beras IR. III (IR 64)](https://finance.detik.com/info-pangan/jakarta/beras-ir-iii-ir-64)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T09:45:51.861463"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Cabe Merah Keriting](https://finance.detik.com/info-pangan/jakarta/cabe-merah-keriting)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T09:45:51.871207"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Daging Sapi Murni (Semur)](https://finance.detik.com/info-pangan/jakarta/daging-sapi-murni-semur)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T09:45:51.881040"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Dua Tetangga Indonesia Naik Kelas Jadi Negara Menengah Atas](https://finance.detik.com/berita-ekonomi-bisnis/d-8559109/dua-tetangga-indonesia-naik-kelas-jadi-negara-menengah-atas)",
+    "sentiment": "POSITIF",
+    "score": 0.65,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T09:45:51.890738"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[DJP Sebut Pencairan JHT Tak Selalu Kena Pajak, Ini Penjelasannya](https://finance.detik.com/moneter/d-8559107/djp-sebut-pencairan-jht-tak-selalu-kena-pajak-ini-penjelasannya)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T09:45:51.900432"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Badai PHK di Tokopedia Usai Dicaplok TikTok](https://finance.detik.com/berita-ekonomi-bisnis/d-8558750/badai-phk-di-tokopedia-usai-dicaplok-tiktok)",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T09:45:51.909902"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Pelatihan Melukis Jadi Bekal Wirausaha Penyandang Disabilitas](https://finance.detik.com/foto-bisnis/d-8558736/pelatihan-melukis-jadi-bekal-wirausaha-penyandang-disabilitas)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T09:45:51.920257"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "detikFinance - Berita Ekonomi Bisnis, dan Investasi Hari Ini",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:39.866304"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Ledakan Pabrik Herbal Makan Korban Jiwa, Kemenperin Turun Tangan](https://finance.detik.com/industri/d-8558901/ledakan-pabrik-herbal-makan-korban-jiwa-kemenperin-turun-tangan)",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:39.885151"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Terungkap! Danantara Temukan Dugaan Rekayasa Keuangan di Pos Indonesia](https://finance.detik.com/berita-ekonomi-bisnis/d-8558128/terungkap-danantara-temukan-dugaan-rekayasa-keuangan-di-pos-indonesia)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:39.905264"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Koperasi Masuk Bisnis Sawit](https://finance.detik.com/berita-ekonomi-bisnis/d-8557919/koperasi-masuk-bisnis-sawit)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:39.924057"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[240 BUMN Sudah Dipangkas](https://finance.detik.com/berita-ekonomi-bisnis/d-8557804/240-bumn-sudah-dipangkas)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:39.940274"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Dua Menteri Prabowo Buka Suara soal Heboh Kopdes sampai Gunung](https://finance.detik.com/berita-ekonomi-bisnis/d-8557599/dua-menteri-prabowo-buka-suara-soal-heboh-kopdes-sampai-gunung)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:39.956662"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Menkop Ungkap Arahan Prabowo: Koperasi Bisnis Sawit-Bikin Minyak Goreng](https://finance.detik.com/industri/d-8559115/menkop-ungkap-arahan-prabowo-koperasi-bisnis-sawit-bikin-minyak-goreng)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:39.973075"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Prabowo Ajak Belarusia Kerja Sama Industri Alat Pertanian](https://finance.detik.com/industri/d-8556907/prabowo-ajak-belarusia-kerja-sama-industri-alat-pertanian)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:39.990697"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Prabowo Mau Tambah Impor Bahan Baku Pupuk dari Belarusia](https://finance.detik.com/industri/d-8556857/prabowo-mau-tambah-impor-bahan-baku-pupuk-dari-belarusia)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:40.011716"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Beras IR. III (IR 64)](https://finance.detik.com/info-pangan/jakarta/beras-ir-iii-ir-64)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:40.028359"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Cabe Merah Keriting](https://finance.detik.com/info-pangan/jakarta/cabe-merah-keriting)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:40.045352"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Daging Sapi Murni (Semur)](https://finance.detik.com/info-pangan/jakarta/daging-sapi-murni-semur)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:40.062765"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Dua Tetangga Indonesia Naik Kelas Jadi Negara Menengah Atas](https://finance.detik.com/berita-ekonomi-bisnis/d-8559109/dua-tetangga-indonesia-naik-kelas-jadi-negara-menengah-atas)",
+    "sentiment": "POSITIF",
+    "score": 0.65,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:40.080320"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[DJP Sebut Pencairan JHT Tak Selalu Kena Pajak, Ini Penjelasannya](https://finance.detik.com/moneter/d-8559107/djp-sebut-pencairan-jht-tak-selalu-kena-pajak-ini-penjelasannya)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:40.105224"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Badai PHK di Tokopedia Usai Dicaplok TikTok](https://finance.detik.com/berita-ekonomi-bisnis/d-8558750/badai-phk-di-tokopedia-usai-dicaplok-tiktok)",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:40.136937"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Pelatihan Melukis Jadi Bekal Wirausaha Penyandang Disabilitas](https://finance.detik.com/foto-bisnis/d-8558736/pelatihan-melukis-jadi-bekal-wirausaha-penyandang-disabilitas)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:40.153948"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "detikFinance - Berita Ekonomi Bisnis, dan Investasi Hari Ini",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:43.389069"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Ledakan Pabrik Herbal Makan Korban Jiwa, Kemenperin Turun Tangan](https://finance.detik.com/industri/d-8558901/ledakan-pabrik-herbal-makan-korban-jiwa-kemenperin-turun-tangan)",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:43.406472"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Terungkap! Danantara Temukan Dugaan Rekayasa Keuangan di Pos Indonesia](https://finance.detik.com/berita-ekonomi-bisnis/d-8558128/terungkap-danantara-temukan-dugaan-rekayasa-keuangan-di-pos-indonesia)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:43.423376"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Koperasi Masuk Bisnis Sawit](https://finance.detik.com/berita-ekonomi-bisnis/d-8557919/koperasi-masuk-bisnis-sawit)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:43.440253"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[240 BUMN Sudah Dipangkas](https://finance.detik.com/berita-ekonomi-bisnis/d-8557804/240-bumn-sudah-dipangkas)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:43.457583"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Dua Menteri Prabowo Buka Suara soal Heboh Kopdes sampai Gunung](https://finance.detik.com/berita-ekonomi-bisnis/d-8557599/dua-menteri-prabowo-buka-suara-soal-heboh-kopdes-sampai-gunung)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:43.474872"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Menkop Ungkap Arahan Prabowo: Koperasi Bisnis Sawit-Bikin Minyak Goreng](https://finance.detik.com/industri/d-8559115/menkop-ungkap-arahan-prabowo-koperasi-bisnis-sawit-bikin-minyak-goreng)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:43.492363"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Prabowo Ajak Belarusia Kerja Sama Industri Alat Pertanian](https://finance.detik.com/industri/d-8556907/prabowo-ajak-belarusia-kerja-sama-industri-alat-pertanian)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:43.509739"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Prabowo Mau Tambah Impor Bahan Baku Pupuk dari Belarusia](https://finance.detik.com/industri/d-8556857/prabowo-mau-tambah-impor-bahan-baku-pupuk-dari-belarusia)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:43.526690"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Beras IR. III (IR 64)](https://finance.detik.com/info-pangan/jakarta/beras-ir-iii-ir-64)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:43.544258"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Cabe Merah Keriting](https://finance.detik.com/info-pangan/jakarta/cabe-merah-keriting)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:43.561700"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Daging Sapi Murni (Semur)](https://finance.detik.com/info-pangan/jakarta/daging-sapi-murni-semur)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:43.579011"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Dua Tetangga Indonesia Naik Kelas Jadi Negara Menengah Atas](https://finance.detik.com/berita-ekonomi-bisnis/d-8559109/dua-tetangga-indonesia-naik-kelas-jadi-negara-menengah-atas)",
+    "sentiment": "POSITIF",
+    "score": 0.65,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:43.596063"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[DJP Sebut Pencairan JHT Tak Selalu Kena Pajak, Ini Penjelasannya](https://finance.detik.com/moneter/d-8559107/djp-sebut-pencairan-jht-tak-selalu-kena-pajak-ini-penjelasannya)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:43.613376"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Badai PHK di Tokopedia Usai Dicaplok TikTok](https://finance.detik.com/berita-ekonomi-bisnis/d-8558750/badai-phk-di-tokopedia-usai-dicaplok-tiktok)",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:43.630134"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Pelatihan Melukis Jadi Bekal Wirausaha Penyandang Disabilitas](https://finance.detik.com/foto-bisnis/d-8558736/pelatihan-melukis-jadi-bekal-wirausaha-penyandang-disabilitas)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:01:43.647136"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "detikFinance - Berita Ekonomi Bisnis, dan Investasi Hari Ini",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:15:52.222190"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Ledakan Pabrik Herbal Makan Korban Jiwa, Kemenperin Turun Tangan](https://finance.detik.com/industri/d-8558901/ledakan-pabrik-herbal-makan-korban-jiwa-kemenperin-turun-tangan)",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:15:52.232862"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Terungkap! Danantara Temukan Dugaan Rekayasa Keuangan di Pos Indonesia](https://finance.detik.com/berita-ekonomi-bisnis/d-8558128/terungkap-danantara-temukan-dugaan-rekayasa-keuangan-di-pos-indonesia)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:15:52.242596"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Koperasi Masuk Bisnis Sawit](https://finance.detik.com/berita-ekonomi-bisnis/d-8557919/koperasi-masuk-bisnis-sawit)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:15:52.252208"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[240 BUMN Sudah Dipangkas](https://finance.detik.com/berita-ekonomi-bisnis/d-8557804/240-bumn-sudah-dipangkas)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:15:52.261879"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Dua Menteri Prabowo Buka Suara soal Heboh Kopdes sampai Gunung](https://finance.detik.com/berita-ekonomi-bisnis/d-8557599/dua-menteri-prabowo-buka-suara-soal-heboh-kopdes-sampai-gunung)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:15:52.271657"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Menkop Ungkap Arahan Prabowo: Koperasi Bisnis Sawit-Bikin Minyak Goreng](https://finance.detik.com/industri/d-8559115/menkop-ungkap-arahan-prabowo-koperasi-bisnis-sawit-bikin-minyak-goreng)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:15:52.281005"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Prabowo Ajak Belarusia Kerja Sama Industri Alat Pertanian](https://finance.detik.com/industri/d-8556907/prabowo-ajak-belarusia-kerja-sama-industri-alat-pertanian)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:15:52.291258"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Prabowo Mau Tambah Impor Bahan Baku Pupuk dari Belarusia](https://finance.detik.com/industri/d-8556857/prabowo-mau-tambah-impor-bahan-baku-pupuk-dari-belarusia)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:15:52.303737"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Beras IR. III (IR 64)](https://finance.detik.com/info-pangan/jakarta/beras-ir-iii-ir-64)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:15:52.313725"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Cabe Merah Keriting](https://finance.detik.com/info-pangan/jakarta/cabe-merah-keriting)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:15:52.323771"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Daging Sapi Murni (Semur)](https://finance.detik.com/info-pangan/jakarta/daging-sapi-murni-semur)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:15:52.333849"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Dua Tetangga Indonesia Naik Kelas Jadi Negara Menengah Atas](https://finance.detik.com/berita-ekonomi-bisnis/d-8559109/dua-tetangga-indonesia-naik-kelas-jadi-negara-menengah-atas)",
+    "sentiment": "POSITIF",
+    "score": 0.65,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:15:52.343565"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[DJP Sebut Pencairan JHT Tak Selalu Kena Pajak, Ini Penjelasannya](https://finance.detik.com/moneter/d-8559107/djp-sebut-pencairan-jht-tak-selalu-kena-pajak-ini-penjelasannya)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:15:52.353613"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Badai PHK di Tokopedia Usai Dicaplok TikTok](https://finance.detik.com/berita-ekonomi-bisnis/d-8558750/badai-phk-di-tokopedia-usai-dicaplok-tiktok)",
+    "sentiment": "NEGATIF",
+    "score": -0.65,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:15:52.363765"
+  },
+  {
+    "keyword": "berita ekonomi",
+    "headline": "[Pelatihan Melukis Jadi Bekal Wirausaha Penyandang Disabilitas](https://finance.detik.com/foto-bisnis/d-8558736/pelatihan-melukis-jadi-bekal-wirausaha-penyandang-disabilitas)",
+    "sentiment": "NETRAL",
+    "score": 0.0,
+    "source": "detik finance",
+    "timestamp": "2026-07-04T10:15:52.373759"
   }
 ]

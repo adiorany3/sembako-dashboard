@@ -167,7 +167,7 @@ def add_row_to_excel(
     sheet_name: Optional[str] = None,
     headers: Optional[List] = None
 ) -> bool:
-    """Append a single row to Excel file."""
+    """Append a single row to Excel file. Skips if date already exists (col 0)."""
     path = get_excel_path(filename)
     
     try:
@@ -187,6 +187,15 @@ def add_row_to_excel(
         if headers and ws.max_row == 0:
             for col, h in enumerate(headers, 1):
                 ws.cell(row=1, column=col, value=h)
+        
+        # Check if date (col 0) already exists — skip duplicate
+        new_date = str(row_data[0])[:10] if row_data[0] else None
+        if new_date:
+            for r in range(2, ws.max_row + 1):
+                existing = str(ws.cell(row=r, column=1).value or '')[:10]
+                if existing == new_date:
+                    wb.close()
+                    return False  # Duplicate — skipped
         
         # Append row
         row_num = ws.max_row + 1
