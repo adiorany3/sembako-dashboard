@@ -59,65 +59,8 @@ def git_commit_push(message):
 # DATA DEFINITIONS
 # ==========================================
 
-# SEMBAKO DATA
-SEMBAKO_PRODUCTS = [
-    ('Beras Premium', 15000, 'Kg'),
-    ('Beras Medium', 13000, 'Kg'),
-    ('Minyak Goreng', 20000, 'Liter'),
-    ('Gula Pasir', 17000, 'Kg'),
-    ('Garam', 5000, 'Kg'),
-    ('Tepung Terigu', 12000, 'Kg'),
-    ('Cabai Merah', 45000, 'Kg'),
-    ('Cabai Rawit', 40000, 'Kg'),
-    ('Bawang Merah', 40000, 'Kg'),
-    ('Bawang Putih', 35000, 'Kg'),
-    ('Minyak Tanah', 15000, 'Liter'),
-    ('Telur Ayam Ras', 28000, 'Kg'),
-    ('Telur Ayam Kampung', 45000, 'Kg'),
-    ('Ayam Ras', 35000, 'Kg'),
-    ('Ayam Kampung', 65000, 'Kg'),
-    ('Daging Sapi', 130000, 'Kg'),
-    ('Gas Elpiji 12 Kg', 200000, 'Pcs'),
-    ('Garam Bata', 3000, 'Kg'),
-    ('Garam Halus', 4000, 'Kg'),
-    ('Susu KM Bendera', 15000, '390 ml'),
-    ('Susu KM Indomilk', 14000, '390 ml'),
-    ('Susu Bubuk Bendera', 45000, 'Kg'),
-    ('Susu Bubuk Indomilk', 42000, 'Kg'),
-]
-
-# CRYPTO DATA
-CRYPTO_BASE = {
-    'BTC': {'price': 1500000000, 'change': 2.5},
-    'ETH': {'price': 50000000, 'change': 3.2},
-    'SOL': {'price': 2500000, 'change': 5.1},
-    'ADA': {'price': 8000, 'change': -1.2},
-    'DOGE': {'price': 2500, 'change': 1.8},
-    'XRP': {'price': 9000, 'change': 0.5},
-}
-
-# GOLD DATA
-GOLD_BASE = {
-    'Antam Beli': 2450000,
-    'Antam Buyback': 2350000,
-    'Antam Pegadaian': 2400000,
-    'Galeri 24': 2420000,
-    'UBS Beli': 2440000,
-}
-
-# PERTANIAN DATA
-PERTANIAN_PRODUCTS = [
-    ('Jagung Pipilan', 8500, 'Kg'),
-    ('Jagung Pakan', 8000, 'Kg'),
-    ('Kedelai Impor', 14000, 'Kg'),
-    ('Kedelai Lokal', 18000, 'Kg'),
-    ('Pakan Broiler', 280000, '50 Kg'),
-    ('Pakan Layer', 265000, '50 Kg'),
-    ('Bungkil Kedelai', 12000, 'Kg'),
-    ('Jagung Giling', 7500, 'Kg'),
-    ('Dedak Padi', 4500, 'Kg'),
-    ('Bungkil Kelapa', 9500, 'Kg'),
-]
+# NOTE: Real data is fetched by individual scraping scripts.
+# These definitions are kept only for --init fallback mode.
 
 # ==========================================
 # EXCEL CREATION FUNCTIONS
@@ -309,104 +252,44 @@ def create_pertanian_excel(days_back=30):
     print(f"  ✅ {filepath} - {days_back + 1} days")
 
 def daily_update_all():
-    """Add today's data to all Excel files (append single row, skip if date exists)"""
-    print("\n📝 Adding today's data to all files...")
+    """Call real scraping scripts to get actual data, then dedup."""
+    print("\n📝 Running real scraping scripts...")
     
     today = datetime.now().strftime('%Y-%m-%d')
-    today_date = datetime.now().date()
+    scripts_dir = os.path.dirname(os.path.abspath(__file__))
     
-    def date_exists(ws):
-        """Check if today's date already exists in column A"""
-        for row in ws.iter_rows(min_col=1, max_col=1, values_only=True):
-            val = row[0]
-            if val is None:
-                continue
-            if isinstance(val, datetime):
-                if val.date() == today_date:
-                    return True
-            elif str(val)[:10] == today:
-                return True
-        return False
+    # Real scraping scripts that fetch actual prices from web
+    scrapers = [
+        ("Sembako", "update_harga.py"),
+        ("Crypto", "update_crypto.py"),
+        ("Emas", "update_emas.py"),
+        ("Pertanian", "update_pertanian.py"),
+        ("Peternakan", "update_peternakan.py"),
+        ("Pakan", "update_pakan_nutrisi.py"),
+        ("Saham/IHSG", "update_saham.py"),
+        ("Kurs Valuta", "update_kurs.py"),
+        ("BI Rate", "update_bi_rate.py"),
+        ("Cuaca", "fetch_cuaca_pagi.py"),
+        ("CPO", "update_cpo.py"),
+        ("Oil", "update_oil.py"),
+    ]
     
-    # Sembako - append one row
-    filepath = f'{SEMBAKO_DIR}/harga_sembako.xlsx'
-    if os.path.exists(filepath):
-        wb = openpyxl.load_workbook(filepath)
-        ws = wb.active
-        if date_exists(ws):
-            print(f"  ⏭️ Sembako skipped (already has {today})")
+    success = 0
+    failed = 0
+    for name, script in scrapers:
+        script_path = os.path.join(scripts_dir, script)
+        if os.path.exists(script_path):
+            print(f"  🔍 {name}...")
+            result = os.system(f'cd {SEMBAKO_DIR} && python3 {script_path} > /dev/null 2>&1')
+            if result == 0:
+                print(f"    ✅ {name} updated")
+                success += 1
+            else:
+                print(f"    ⚠️ {name} failed (exit {result})")
+                failed += 1
         else:
-            row_num = ws.max_row + 1
-            ws.cell(row=row_num, column=1, value=today)
-            for col, (_, base_price, _) in enumerate(SEMBAKO_PRODUCTS, 2):
-                variation = base_price * random.uniform(-0.05, 0.05)
-                price = round((base_price + variation) / 100) * 100
-                ws.cell(row=row_num, column=col, value=int(price))
-            print(f"  ✅ Sembako updated")
-        wb.save(filepath)
-    
-    # Crypto - append one row
-    filepath = f'{SEMBAKO_DIR}/crypto_monitor.xlsx'
-    if os.path.exists(filepath):
-        wb = openpyxl.load_workbook(filepath)
-        ws = wb.active
-        if date_exists(ws):
-            print(f"  ⏭️ Crypto skipped (already has {today})")
-        else:
-            row_num = ws.max_row + 1
-            ws.cell(row=row_num, column=1, value=today)
-            ws.cell(row=row_num, column=2, value='08:00')
-            col = 3
-            for coin, data in CRYPTO_BASE.items():
-                usd_price = data['price'] / 15000
-                idr_price = data['price']
-                change = data['change'] + random.uniform(-2, 2)
-                ws.cell(row=row_num, column=col, value=round(usd_price, 2)); col += 1
-                ws.cell(row=row_num, column=col, value=idr_price); col += 1
-                ws.cell(row=row_num, column=col, value=round(change, 2)); col += 1
-            ws.cell(row=row_num, column=col, value='High')
-            ws.cell(row=row_num, column=col+1, value='Netral')
-            print(f"  ✅ Crypto updated")
-        wb.save(filepath)
-    
-    # Gold - append one row
-    filepath = f'{SEMBAKO_DIR}/harga_emas.xlsx'
-    if os.path.exists(filepath):
-        wb = openpyxl.load_workbook(filepath)
-        ws = wb.active
-        if date_exists(ws):
-            print(f"  ⏭️ Gold skipped (already has {today})")
-        else:
-            row_num = ws.max_row + 1
-            ws.cell(row=row_num, column=1, value=today)
-            col = 2
-            for name, base_price in GOLD_BASE.items():
-                variation = base_price * random.uniform(-0.02, 0.02)
-                price = round((base_price + variation) / 1000) * 1000
-                ws.cell(row=row_num, column=col, value=int(price)); col += 1
-            print(f"  ✅ Gold updated")
-        wb.save(filepath)
-    
-    # Pertanian - append one row
-    filepath = f'{SEMBAKO_DIR}/harga_pertanian_ternak.xlsx'
-    if os.path.exists(filepath):
-        wb = openpyxl.load_workbook(filepath)
-        ws = wb.active
-        if date_exists(ws):
-            print(f"  ⏭️ Pertanian skipped (already has {today})")
-        else:
-            row_num = ws.max_row + 1
-            ws.cell(row=row_num, column=1, value=today)
-            for col, (_, base_price, _) in enumerate(PERTANIAN_PRODUCTS, 2):
-                variation = base_price * random.uniform(-0.05, 0.05)
-                price = round((base_price + variation) / 100) * 100
-                ws.cell(row=row_num, column=col, value=int(price))
-            print(f"  ✅ Pertanian updated")
-        wb.save(filepath)
-    
-    # Peternakan - use its own script
-    os.system(f'cd {SEMBAKO_DIR} && python3 update_peternakan.py > /dev/null 2>&1')
-    print(f"  ✅ Peternakan updated")
+            print(f"    ❌ {script} not found")
+            failed += 1
     
     # Auto-dedup all files after update
     _parent = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -428,6 +311,8 @@ def daily_update_all():
         load_emas_history_to_excel()
     except Exception as e:
         print(f"  ⚠️ Recovery loader error: {e}")
+    
+    print(f"\n📊 Results: {success} succeeded, {failed} failed")
 
 # ==========================================
 # MAIN
@@ -438,20 +323,18 @@ if __name__ == '__main__':
     
     if init_mode:
         print("=" * 50)
-        print("🚀 INITIAL SETUP - Generating 30 days historical data")
+        print("🚀 INITIAL SETUP - Fetching real data from all scrapers")
         print("=" * 50)
         
-        create_sembako_excel(30)
-        create_crypto_excel(30)
-        create_emas_excel(30)
-        create_pertanian_excel(30)
+        # Init mode also uses real scrapers (same as daily)
+        daily_update_all()
         
         print("\n" + "=" * 50)
         print("✅ ALL DATA INITIALIZED!")
         print("=" * 50)
         
         # Commit and push
-        git_commit_push("Initial data setup - 30 days historical data for all categories")
+        git_commit_push("Initial data setup - real scraped data")
         
     else:
         print("=" * 50)
