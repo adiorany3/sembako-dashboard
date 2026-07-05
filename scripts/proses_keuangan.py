@@ -77,7 +77,7 @@ def parse_nota_text(text):
                 price = int(price_str)
                 if 100 <= price <= 100000000:  # reasonable range
                     items.append({"name": name, "price": price})
-            except:
+            except (ValueError, TypeError):
                 pass
         
         # Find total
@@ -86,7 +86,7 @@ def parse_nota_text(text):
             total_str = m_total.group(1).replace('.', '').replace(',', '')
             try:
                 total = int(total_str)
-            except:
+            except (ValueError, TypeError):
                 pass
     
     if not total and items:

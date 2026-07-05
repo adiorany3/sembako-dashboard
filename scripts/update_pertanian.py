@@ -245,7 +245,7 @@ def save_history(data, sources):
         try:
             with open(HISTORY_PATH) as f:
                 history = json.load(f)
-        except:
+        except (json.JSONDecodeError, FileNotFoundError):
             pass
     history.append({
         "date": datetime.now().isoformat(),

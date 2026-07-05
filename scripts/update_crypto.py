@@ -59,25 +59,25 @@ def get_ohlc_daily():
             url = f"https://api.coingecko.com/api/v3/coins/{coin}/ohlc?vs_currency=usd&days=7"
             raw = fetch_url(url)
             if not raw:
-                _time.sleep(12 * (attempt + 1))
+                _time.sleep(20 * (attempt + 1))
                 continue
 
             try:
                 parsed = json.loads(raw)
-            except:
-                _time.sleep(12 * (attempt + 1))
+            except (json.JSONDecodeError, ValueError):
+                _time.sleep(20 * (attempt + 1))
                 continue
 
             if isinstance(parsed, dict) and 'error' in parsed:
                 print(f"  ⚠️ OHLC retry {attempt+1}: {coin} - {parsed.get('error', '')}")
-                _time.sleep(12 * (attempt + 1))
+                _time.sleep(20 * (attempt + 1))
                 continue
 
             if isinstance(parsed, list) and len(parsed) > 0:
                 candles = parsed
                 break
 
-            _time.sleep(12 * (attempt + 1))
+            _time.sleep(20 * (attempt + 1))
         
         if not candles:
             print(f"  ❌ OHLC gagal: {coin} (3 retries)")
@@ -99,7 +99,7 @@ def get_ohlc_daily():
                 daily_agg[d][short]['l'] = min(daily_agg[d][short]['l'], c[3])
                 daily_agg[d][short]['c'] = c[4]  # close = latest candle
         
-        _time.sleep(10)  # rate limit: free tier ~10-30 req/min
+        _time.sleep(18)  # rate limit: free tier ~10-30 req/min, be generous
     
     # Calculate change% for each coin per day
     for d in daily_agg:
@@ -113,15 +113,31 @@ def get_ohlc_daily():
 
 
 def get_prices():
-    """Fetch current spot prices from CoinGecko."""
+    """Fetch current spot prices from CoinGecko with retry."""
+    import time as _time
     ids = ",".join(COINS)
     url = f"https://api.coingecko.com/api/v3/simple/price?ids={ids}&vs_currencies=usd,idr&include_24hr_change=true&include_market_cap=true"
     
-    raw = fetch_url(url)
-    if not raw:
-        return None
+    data = None
+    for attempt in range(3):
+        raw = fetch_url(url)
+        if not raw:
+            _time.sleep(15 * (attempt + 1))
+            continue
+        try:
+            parsed = json.loads(raw)
+            if isinstance(parsed, dict) and 'error' in parsed:
+                print(f"  ⚠️ Spot retry {attempt+1}: {parsed.get('error', '')}")
+                _time.sleep(15 * (attempt + 1))
+                continue
+            data = parsed
+            break
+        except (json.JSONDecodeError, ValueError):
+            _time.sleep(15 * (attempt + 1))
+            continue
     
-    data = json.loads(raw)
+    if not data:
+        return None
     
     result = {}
     total_mcap = 0
@@ -149,7 +165,8 @@ def get_crypto_news():
     try:
         with urllib.request.urlopen(req, timeout=15) as resp:
             html = resp.read().decode("utf-8", errors="ignore")
-    except:
+    except (urllib.error.URLError, OSError) as e:
+        print(f"  ⚠️ News fetch error: {e}")
         return []
     
     raw_titles = re.findall(r'title="([^"]+)"', html)
@@ -241,7 +258,7 @@ def main():
     
     # 2. Get current spot + market cap (wait after OHLC rate limit)
     import time as _time
-    _time.sleep(15)  # cooldown after OHLC calls
+    _time.sleep(30)  # cooldown after OHLC calls
     print("\n💰 Mengambil spot price + market cap...")
     spot = get_prices()
     total_mcap = spot.get("total_mcap", 0) if spot else 0

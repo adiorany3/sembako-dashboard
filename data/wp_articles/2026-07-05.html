@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Cara Membuat Pakan Fermentasi untuk Ternak: Hemat & Efektif - Catatan Insani</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f5f5; }
+        .card { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+        h1 { color: #1a1a2e; font-size: 20px; }
+        pre { white-space: pre-wrap; word-wrap: break-word; background: #f8f8f8; padding: 12px; border-radius: 6px; font-size: 13px; max-height: 400px; overflow-y: auto; border: 1px solid #eee; }
+        .copy-btn { background: #0073aa; color: #fff; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 14px; margin-top: 8px; }
+        .copy-btn:hover { background: #005a87; }
+        .label { font-weight: bold; color: #555; margin-bottom: 4px; }
+        .success { color: green; font-weight: bold; display: none; margin-left: 10px; }
+        .preview { border: 1px solid #ddd; border-radius: 8px; padding: 16px; background: #fff; }
+    </style>
+</head>
+<body>
+    <h1>Artikel WordPress</h1>
+    <div class="card">
+        <div class="label">Title:</div>
+        <h1 id="title">Cara Membuat Pakan Fermentasi untuk Ternak: Hemat & Efektif</h1>
+        <button class="copy-btn" onclick="copyText('title')">Copy Title</button>
+        <span class="success" id="title-copied">Copied!</span>
+    </div>
+    <div class="card">
+        <div class="label">Category: <strong>Optimasi Biaya</strong> | Date: <strong>05 July 2026</strong></div>
+    </div>
+    <div class="card">
+        <div class="label">HTML Source (paste this into WordPress editor HTML mode):</div>
+        <pre id="raw">
+<h4>Mengapa fermentasi membantu</h4>
+<ul>
+  <li>Memperbaiki kualitas pakan (lebih mudah dicerna).</li>
+  <li>Mengurangi bau kotoran karena proses pencernaan lebih efisien.</li>
+  <li>Memanfaatkan bahan lokal lebih maksimal.</li>
+</ul>
+
+<h4>Resep sederhana (unggasan)</h4>
+<ul>
+  <li>Bahan: dedak/bahan berkarbohidrat + sumber protein (misal ampas tahu) + aktivator (EM4/ragi) + air secukupnya.</li>
+  <li>Target: adonan lembap, bukan basah menetes.</li>
+</ul>
+
+<h4>Langkah kerja</h4>
+<ol>
+  <li>Campur bahan kering merata.</li>
+  <li>Larutkan aktivator dengan air hangat, siram ke adonan.</li>
+  <li>Masukkan ke wadah tertutup rapat, padatkan.</li>
+  <li>Fermentasi 24–48 jam (unggas), lalu cek aroma.</li>
+  <li>Pakan siap saat berbau “tape/ragi”, tidak busuk.</li>
+</ol>
+
+<h4>Kesimpulan</h4>
+<p>Fermentasi itu cara murah naikkan kualitas pakan. Mulai dari batch kecil, konsisten cek aroma & kebersihan.</p>
+        </pre>
+        <button class="copy-btn" onclick="copyHtml()">📋 Copy HTML Source</button>
+        <span class="success" id="success-text">Copied!</span>
+    </div>
+    <div class="card preview">
+        <div class="label">Preview:</div>
+        
+<h4>Mengapa fermentasi membantu</h4>
+<ul>
+  <li>Memperbaiki kualitas pakan (lebih mudah dicerna).</li>
+  <li>Mengurangi bau kotoran karena proses pencernaan lebih efisien.</li>
+  <li>Memanfaatkan bahan lokal lebih maksimal.</li>
+</ul>
+
+<h4>Resep sederhana (unggasan)</h4>
+<ul>
+  <li>Bahan: dedak/bahan berkarbohidrat + sumber protein (misal ampas tahu) + aktivator (EM4/ragi) + air secukupnya.</li>
+  <li>Target: adonan lembap, bukan basah menetes.</li>
+</ul>
+
+<h4>Langkah kerja</h4>
+<ol>
+  <li>Camp...
+    </div>
+    <div class="card">
+        <a href="/article?new=1" class="copy-btn" style="background:#28a745;text-decoration:none;display:inline-block;">Generate Artikel Baru</a>
+    </div>
+    <script>
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+        function copyText(id) {
+            var el = document.getElementById(id);
+            var text = el.innerText || el.textContent;
+            var ta = document.createElement("textarea");
+            ta.value = text;
+            ta.style.position = "fixed";
+            ta.style.opacity = "0";
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand("copy");
+            document.body.removeChild(ta);
+            document.getElementById(id + '-copied').style.display = 'inline';
+            setTimeout(function(){
+                document.getElementById(id + '-copied').style.display = 'none';
+            }, 2000);
+        }
+        function copyHtml() {
+            var raw = document.getElementById("raw").textContent;
+            var ta = document.createElement("textarea");
+            ta.value = raw;
+            ta.style.position = "fixed";
+            ta.style.opacity = "0";
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand("copy");
+            document.body.removeChild(ta);
+            document.getElementById('success-text').style.display = 'inline';
+            setTimeout(function(){
+                document.getElementById('success-text').style.display = 'none';
+            }, 2000);
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            var raw = document.getElementById("raw").textContent;
+            var preview = document.querySelector('.preview');
+            if (preview) {
+                preview.innerHTML = '<div style="max-height: 300px; overflow-y: auto; border: 1px solid #ddd; padding: 12px; background: #fafafa;">' + raw + '</div>';
+            }
+        });
+    </script>
+</body>
+</html>

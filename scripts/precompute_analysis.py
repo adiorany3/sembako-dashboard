@@ -49,7 +49,7 @@ def read_sheet(fn, sheet=None):
         if len(rows) < 2: return []
         h = [re.sub(r'\s+', ' ', str(c).strip()) if c else f'c{i}' for i,c in enumerate(rows[0])]
         return [dict(zip(h, row)) for row in rows[1:]]
-    except: return []
+    except Exception: return []
 
 
 def last_row(fn, sheet=None, n=0):
@@ -105,7 +105,7 @@ def load_all_history():
             t = str(r.get("Tanggal", ""))[:10]
             if n and p and t:
                 try: prod_daily[n][t] = float(p)
-                except: pass
+                except (ValueError, TypeError): pass
         # Get last 30 days per key product
         key_products = ["Telur Ayam Ras (Grosir)", "Ayam Broiler Hidup", "Daging Sapi Eceran",
                         "Daging Kambing Eceran", "Telur Ayam Kampung"]
@@ -184,7 +184,7 @@ def load_all_history():
             v = r.get("IHSG") or r.get("Close")
             if v:
                 try: vals.append(float(v))
-                except: pass
+                except (ValueError, TypeError): pass
         if len(vals) >= 2:
             data["saham_ihsg"] = vals
         print(f"  Saham: {len(rows)} rows")
@@ -217,7 +217,7 @@ def load_all_history():
                 if len(vals) >= 2:
                     data["emas_antam"] = vals
                 print(f"  Emas: {len(d)} days history")
-        except: pass
+        except (Exception,): pass
 
     total = sum(len(v) for v in data.values())
     print(f"{ts()} ✅ {len(data)} series, {total} data points total")

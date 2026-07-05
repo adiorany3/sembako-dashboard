@@ -21,7 +21,7 @@ except ImportError:
         try:
             p = int(price)
             return p > 0 and min_price <= p <= max_price, ""
-        except: return False, "Invalid"
+        except (ValueError, TypeError, KeyError): return False, "Invalid"
     
     def validate_date(date_val, max_age_days=365):
         if not date_val: return False, "Empty"
@@ -29,13 +29,13 @@ except ImportError:
             dt = datetime.strptime(str(date_val)[:10], "%Y-%m-%d")
             age = (datetime.now() - dt).days
             return 0 <= age <= max_age_days, ""
-        except: return False, "Invalid"
+        except (ValueError, TypeError, KeyError): return False, "Invalid"
     
     def validate_percentage(pct, max_val=100):
         try:
             p = float(pct)
             return -max_val <= p <= max_val, ""
-        except: return False, "Invalid"
+        except (ValueError, TypeError, KeyError): return False, "Invalid"
 
 DATA_DIR = Path(__file__).parent.parent / "data"
 
@@ -64,7 +64,7 @@ def find_price_column(row):
                 v = float(val)
                 if v > 1000:
                     return i
-            except:
+            except (ValueError, TypeError):
                 pass
     return None
 

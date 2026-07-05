@@ -64,7 +64,7 @@ def parse_prices(text):
             weight_str = m.group(1).replace(',', '.')
             try:
                 weight = float(weight_str)
-            except:
+            except (ValueError, TypeError):
                 continue
             price = int(m.group(2).replace('.', ''))
             

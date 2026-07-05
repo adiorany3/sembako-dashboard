@@ -76,37 +76,51 @@ def add_row(tanggal, data_dict, sumber="Siskaperbapo Jatim"):
     data_dict keys: beras_premium, beras_medium, gula, minyak_curah, minyak_kemasan,
     telur_ras, telur_kampung, ayam_ras, ayam_kampung, sapi,
     cabai_keriting, cabai_rawit, bawang_merah, bawang_putih, garam, elpiji
+    
+    Returns: True if row added, False if date already exists
     """
-    wb, ws = create_or_load_workbook()
-    ca = Alignment(horizontal="center", vertical="center")
-    thin = Border(
-        left=Side(style="thin"), right=Side(style="thin"),
-        top=Side(style="thin"), bottom=Side(style="thin")
-    )
-    
-    row = ws.max_row + 1
-    
-    keys_order = [
-        "beras_premium", "beras_medium", "gula", "minyak_curah", "minyak_kemasan",
-        "telur_ras", "telur_kampung", "ayam_ras", "ayam_kampung", "sapi",
-        "cabai_keriting", "cabai_rawit", "bawang_merah", "bawang_putih", "garam", "elpiji"
-    ]
-    
-    c = ws.cell(row=row, column=1, value=tanggal)
-    c.alignment = ca; c.border = thin
-    
-    for i, key in enumerate(keys_order, 2):
-        val = data_dict.get(key, 0)
-        c = ws.cell(row=row, column=i, value=val)
+    try:
+        wb, ws = create_or_load_workbook()
+        ca = Alignment(horizontal="center", vertical="center")
+        thin = Border(
+            left=Side(style="thin"), right=Side(style="thin"),
+            top=Side(style="thin"), bottom=Side(style="thin")
+        )
+        
+        # Check if date already exists — skip duplicate
+        for r in range(2, ws.max_row + 1):
+            existing = str(ws.cell(row=r, column=1).value or '')[:10]
+            if existing == str(tanggal)[:10]:
+                wb.close()
+                print(f"  ⏭️ Date {tanggal} already exists, skipping")
+                return False
+        
+        row = ws.max_row + 1
+        
+        keys_order = [
+            "beras_premium", "beras_medium", "gula", "minyak_curah", "minyak_kemasan",
+            "telur_ras", "telur_kampung", "ayam_ras", "ayam_kampung", "sapi",
+            "cabai_keriting", "cabai_rawit", "bawang_merah", "bawang_putih", "garam", "elpiji"
+        ]
+        
+        c = ws.cell(row=row, column=1, value=tanggal)
         c.alignment = ca; c.border = thin
-        if val: c.number_format = '#,##0'
-    
-    c = ws.cell(row=row, column=18, value=sumber)
-    c.alignment = ca; c.border = thin
-    
-    wb.save(EXCEL_PATH)
-    print(f"Row added: {tanggal}")
-    return EXCEL_PATH
+        
+        for i, key in enumerate(keys_order, 2):
+            val = data_dict.get(key, 0)
+            c = ws.cell(row=row, column=i, value=val)
+            c.alignment = ca; c.border = thin
+            if val: c.number_format = '#,##0'
+        
+        c = ws.cell(row=row, column=18, value=sumber)
+        c.alignment = ca; c.border = thin
+        
+        wb.save(EXCEL_PATH)
+        print(f"Row added: {tanggal}")
+        return EXCEL_PATH
+    except Exception as e:
+        print(f"  ❌ Error adding row: {e}")
+        return None
 
 if __name__ == "__main__":
     # Data 21 Juni 2026 (dari Siskaperbapo Jatim via detik.com)
