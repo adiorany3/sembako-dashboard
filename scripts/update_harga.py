@@ -51,12 +51,12 @@ def get_last_prices():
                     key = str(h).lower().replace(" ", "_").replace("-", "_")
                     try:
                         prices[key] = int(last[i])
-                        except (ValueError, TypeError):
+                    except (ValueError, TypeError):
                         pass
-                        save_cache(prices)
-                        return prices
-                        except Exception as e:
-                        print(f"  ⚠️ Cache read error: {e}")
+            save_cache(prices)
+            return prices
+    except Exception as e:
+        print(f"  ⚠️ Cache read error: {e}")
     return None
 
 
