@@ -1,0 +1,1 @@
+../scripts/fetch_cuaca_pagi.py

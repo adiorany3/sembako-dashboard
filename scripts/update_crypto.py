@@ -262,6 +262,16 @@ def main():
     print("\n💰 Mengambil spot price + market cap...")
     spot = get_prices()
     total_mcap = spot.get("total_mcap", 0) if spot else 0
+
+    # Get USD/IDR rate for OHLC fallback
+    usd_idr_rate = 0
+    if spot:
+        btc_idr = spot.get("btc_idr", 0)
+        btc_usd = spot.get("btc_usd", 0)
+        if btc_usd > 0:
+            usd_idr_rate = btc_idr / btc_usd
+    if not usd_idr_rate:
+        usd_idr_rate = 17800  # approximate fallback
     
     # 3. Get news
     print("\n📰 Mengambil berita crypto...")
@@ -279,8 +289,9 @@ def main():
         for short in ['btc', 'eth', 'sol', 'ada', 'doge', 'xrp']:
             if short in coins_data:
                 ohlc = coins_data[short]
-                row_data[f"{short}_usd"] = round(ohlc['c'], 2)  # Close as spot
-                row_data[f"{short}_idr"] = 0  # OHLC doesn't have IDR
+                usd_val = round(ohlc['c'], 2)  # Close as spot
+                row_data[f"{short}_usd"] = usd_val
+                row_data[f"{short}_idr"] = round(usd_val * usd_idr_rate, 0) if usd_idr_rate else 0
                 row_data[f"{short}_change"] = ohlc['change']
             else:
                 row_data[f"{short}_usd"] = 0
@@ -326,7 +337,9 @@ def main():
             "news": news[:5]
         }
         for short, ohlc in latest.items():
-            history_entry["prices"][f"{short}_usd"] = ohlc['c']
+            usd_c = ohlc['c']
+            history_entry["prices"][f"{short}_usd"] = usd_c
+            history_entry["prices"][f"{short}_idr"] = round(usd_c * usd_idr_rate, 0) if usd_idr_rate else 0
             history_entry["prices"][f"{short}_change"] = ohlc['change']
         save_history(latest_date, waktu, history_entry["prices"], sentimen, news)
     

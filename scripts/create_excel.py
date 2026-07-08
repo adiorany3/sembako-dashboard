@@ -73,10 +73,21 @@ def create_new_workbook():
 
 def add_row(tanggal, data_dict, sumber="Siskaperbapo Jatim"):
     """
-    data_dict keys: beras_premium, beras_medium, gula, minyak_curah, minyak_kemasan,
-    telur_ras, telur_kampung, ayam_ras, ayam_kampung, sapi,
-    cabai_keriting, cabai_rawit, bawang_merah, bawang_putih, garam, elpiji
-    
+    data_dict keys from update_harga.py:
+      beras_premium, beras_medium, gula, minyak_curah, minyak_kemasan,
+      telur_ras, telur_kampung, ayam_ras, ayam_kampung, sapi,
+      cabai_keriting, cabai_rawit, bawang_merah, bawang_putih, garam, elpiji
+
+    24-col layout (col → header):
+      1=Tanggal, 2=Beras Premium, 3=Beras Medium, 4=Minyak Goreng,
+      5=Gula Pasir, 6=Garam, 7=Tepung Terigu, 8=Cabai Merah,
+      9=Cabai Rawit, 10=Bawang Merah, 11=Bawang Putih, 12=Minyak Tanah,
+      13=Telur Ras, 14=Telur Kampung, 15=Ayam Ras, 16=Ayam Kampung,
+      17=Daging Sapi, 18=Gas Elpiji, 19=Garam Bata, 20=Garam Halus,
+      21=Susu KM Bendera, 22=Susu KM Indomilk, 23=Susu Bubuk Bendera,
+      24=Susu Bubuk Indomilk
+
+    Mapping: scrape_key → col, extra cols stay blank (None).
     Returns: True if row added, False if date already exists
     """
     try:
@@ -86,7 +97,7 @@ def add_row(tanggal, data_dict, sumber="Siskaperbapo Jatim"):
             left=Side(style="thin"), right=Side(style="thin"),
             top=Side(style="thin"), bottom=Side(style="thin")
         )
-        
+
         # Check if date already exists — skip duplicate
         for r in range(2, ws.max_row + 1):
             existing = str(ws.cell(row=r, column=1).value or '')[:10]
@@ -94,27 +105,42 @@ def add_row(tanggal, data_dict, sumber="Siskaperbapo Jatim"):
                 wb.close()
                 print(f"  ⏭️ Date {tanggal} already exists, skipping")
                 return False
-        
+
         row = ws.max_row + 1
-        
-        keys_order = [
-            "beras_premium", "beras_medium", "gula", "minyak_curah", "minyak_kemasan",
-            "telur_ras", "telur_kampung", "ayam_ras", "ayam_kampung", "sapi",
-            "cabai_keriting", "cabai_rawit", "bawang_merah", "bawang_putih", "garam", "elpiji"
-        ]
-        
+
+        # Map scrape keys → 24-col layout columns
+        KEY_TO_COL = {
+            "beras_premium":  2,   # Beras Premium
+            "beras_medium":   3,   # Beras Medium
+            "minyak_curah":   4,   # Minyak Goreng (use curah value as representative)
+            "gula":           5,   # Gula Pasir
+            "garam":          6,   # Garam
+            # col 7 = Tepung Terigu — no scraper, leave None
+            "cabai_keriting": 8,   # Cabai Merah (keriting is subcategory)
+            "cabai_rawit":    9,   # Cabai Rawit
+            "bawang_merah":  10,   # Bawang Merah
+            "bawang_putih":  11,   # Bawang Putih
+            # col 12 = Minyak Tanah — no scraper, leave None
+            "telur_ras":     13,   # Telur Ras
+            "telur_kampung": 14,   # Telur Kampung
+            "ayam_ras":      15,   # Ayam Ras
+            "ayam_kampung":  16,   # Ayam Kampung
+            "sapi":          17,   # Daging Sapi
+            "elpiji":        18,   # Gas Elpiji
+            # cols 19-24: Garam Bata, Garam Halus, Susu KM/Bubuk — no scraper
+        }
+
         c = ws.cell(row=row, column=1, value=tanggal)
         c.alignment = ca; c.border = thin
-        
-        for i, key in enumerate(keys_order, 2):
+
+        for key, col in KEY_TO_COL.items():
             val = data_dict.get(key, 0)
-            c = ws.cell(row=row, column=i, value=val)
+            c = ws.cell(row=row, column=col, value=val)
             c.alignment = ca; c.border = thin
             if val: c.number_format = '#,##0'
-        
-        c = ws.cell(row=row, column=18, value=sumber)
-        c.alignment = ca; c.border = thin
-        
+
+        # Cols 19-24: leave as None (extra columns no scraper yet)
+
         wb.save(EXCEL_PATH)
         print(f"Row added: {tanggal}")
         return EXCEL_PATH
