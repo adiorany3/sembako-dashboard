@@ -1,787 +1,5 @@
 [
   {
-    "date": "2026-07-08T00:02:05.268261",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T00:02:06.371921",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T00:15:48.642775",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T00:30:49.900839",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T00:45:49.307257",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T01:01:33.737041",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T01:45:49.294398",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T02:00:48.616110",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T02:00:49.503434",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T02:15:57.145178",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T02:31:39.110260",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T02:45:51.207239",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T03:00:49.025139",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T03:16:33.573318",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T03:30:48.525863",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T03:46:42.916327",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T04:00:48.104382",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T04:00:49.099180",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T04:15:49.406642",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T04:30:59.875474",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T04:45:48.770056",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T05:01:43.912333",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T05:15:48.645866",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T05:31:29.583433",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T05:45:49.262281",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T06:00:48.554160",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T06:00:49.432602",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T06:30:49.436443",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T06:46:00.338235",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T07:00:49.431743",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T07:15:49.462818",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T07:31:45.249602",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T07:45:54.730343",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T08:01:16.789344",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T08:01:17.459732",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T08:15:49.513048",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T08:30:48.632570",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T08:46:41.797769",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T09:00:59.027436",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T09:16:00.630842",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T09:30:48.675755",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T09:45:49.416724",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T10:00:39.676640",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T10:01:33.221623",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T10:01:35.143883",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
-    "date": "2026-07-08T10:15:49.402460",
-    "prices": {
-      "jagung_pipil": 6494,
-      "jagung_pakan": 6791,
-      "kedelai_impor": 11809,
-      "kedelai_lokal": 9956,
-      "pakan_broiler": 8351,
-      "pakan_layer": 8175,
-      "pakan_bebek": 6978,
-      "bungkil_kedelai": 10037,
-      "jagung_giling": 6237
-    },
-    "sources": [
-      "fallback data terakhir"
-    ]
-  },
-  {
     "date": "2026-07-08T10:31:12.691982",
     "prices": {
       "jagung_pipil": 6494,
@@ -1684,6 +902,788 @@
   },
   {
     "date": "2026-07-08T22:31:25.405819",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-08T22:45:49.118676",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-08T23:00:49.737702",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-08T23:15:50.423335",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-08T23:31:55.353196",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-08T23:45:48.512061",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T00:00:49.143416",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T00:00:49.926376",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T00:15:48.651882",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T00:45:55.470514",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T01:00:49.369960",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T01:15:49.089327",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T01:30:48.856764",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T01:47:04.027740",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T02:00:48.251239",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T02:00:49.205986",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T02:15:48.679110",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T02:30:48.836576",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T02:45:49.330739",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T03:02:16.756510",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T03:15:50.193740",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T03:30:48.919760",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T03:45:48.658785",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T04:01:07.907241",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T04:01:09.618693",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T04:16:44.644587",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T04:30:49.098247",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T04:45:48.873236",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T05:00:48.949516",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T05:17:08.058281",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T05:30:49.304279",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T05:45:49.117859",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T06:00:48.903905",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T06:00:49.983233",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T06:16:07.140312",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T06:31:56.258488",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T06:45:49.218198",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T07:00:49.754570",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T07:15:48.743935",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T07:31:53.705596",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T07:46:04.902680",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T08:00:48.421085",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T08:00:49.198555",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T08:15:48.935446",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T08:28:10.235150",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T08:30:48.936996",
+    "prices": {
+      "jagung_pipil": 6494,
+      "jagung_pakan": 6791,
+      "kedelai_impor": 11809,
+      "kedelai_lokal": 9956,
+      "pakan_broiler": 8351,
+      "pakan_layer": 8175,
+      "pakan_bebek": 6978,
+      "bungkil_kedelai": 10037,
+      "jagung_giling": 6237
+    },
+    "sources": [
+      "fallback data terakhir"
+    ]
+  },
+  {
+    "date": "2026-07-09T08:41:09.087985",
     "prices": {
       "jagung_pipil": 6494,
       "jagung_pakan": 6791,
