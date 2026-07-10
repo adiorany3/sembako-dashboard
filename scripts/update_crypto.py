@@ -16,7 +16,7 @@ from create_crypto_excel import add_price_row, add_sentimen_row
 
 HISTORY_PATH = os.path.expanduser("~/sembako/data/crypto_history.json")
 
-COINS = ["bitcoin", "ethereum", "solana", "cardano", "dogecoin", "ripple"]
+COINS = ["bitcoin", "ethereum", "solana"]
 COIN_MAP = {"bitcoin": "BTC", "ethereum": "ETH", "solana": "SOL",
             "cardano": "ADA", "dogecoin": "DOGE", "ripple": "XRP"}
 COIN_SHORT = {"bitcoin": "btc", "ethereum": "eth", "solana": "sol",
@@ -53,31 +53,31 @@ def get_ohlc_daily():
     for coin in COINS:
         short = COIN_SHORT[coin]
         
-        # Retry on 429 (up to 3 attempts, long backoff for free tier)
+        # Retry on 429 (up to 3 attempts, short backoff)
         candles = None
         for attempt in range(3):
             url = f"https://api.coingecko.com/api/v3/coins/{coin}/ohlc?vs_currency=usd&days=7"
             raw = fetch_url(url)
             if not raw:
-                _time.sleep(20 * (attempt + 1))
+                _time.sleep(5 * (attempt + 1))
                 continue
 
             try:
                 parsed = json.loads(raw)
             except (json.JSONDecodeError, ValueError):
-                _time.sleep(20 * (attempt + 1))
+                _time.sleep(5 * (attempt + 1))
                 continue
 
             if isinstance(parsed, dict) and 'error' in parsed:
                 print(f"  ⚠️ OHLC retry {attempt+1}: {coin} - {parsed.get('error', '')}")
-                _time.sleep(20 * (attempt + 1))
+                _time.sleep(5 * (attempt + 1))
                 continue
 
             if isinstance(parsed, list) and len(parsed) > 0:
                 candles = parsed
                 break
 
-            _time.sleep(20 * (attempt + 1))
+            _time.sleep(5 * (attempt + 1))
         
         if not candles:
             print(f"  ❌ OHLC gagal: {coin} (3 retries)")
@@ -99,7 +99,7 @@ def get_ohlc_daily():
                 daily_agg[d][short]['l'] = min(daily_agg[d][short]['l'], c[3])
                 daily_agg[d][short]['c'] = c[4]  # close = latest candle
         
-        _time.sleep(18)  # rate limit: free tier ~10-30 req/min, be generous
+        _time.sleep(8)  # rate limit: free tier ~10-30 req/min
     
     # Calculate change% for each coin per day
     for d in daily_agg:
@@ -122,18 +122,18 @@ def get_prices():
     for attempt in range(3):
         raw = fetch_url(url)
         if not raw:
-            _time.sleep(15 * (attempt + 1))
+            _time.sleep(3 * (attempt + 1))
             continue
         try:
             parsed = json.loads(raw)
             if isinstance(parsed, dict) and 'error' in parsed:
                 print(f"  ⚠️ Spot retry {attempt+1}: {parsed.get('error', '')}")
-                _time.sleep(15 * (attempt + 1))
+                _time.sleep(3 * (attempt + 1))
                 continue
             data = parsed
             break
         except (json.JSONDecodeError, ValueError):
-            _time.sleep(15 * (attempt + 1))
+            _time.sleep(3 * (attempt + 1))
             continue
     
     if not data:
@@ -258,7 +258,7 @@ def main():
     
     # 2. Get current spot + market cap (wait after OHLC rate limit)
     import time as _time
-    _time.sleep(30)  # cooldown after OHLC calls
+    _time.sleep(5)  # cooldown after OHLC calls
     print("\n💰 Mengambil spot price + market cap...")
     spot = get_prices()
     total_mcap = spot.get("total_mcap", 0) if spot else 0
