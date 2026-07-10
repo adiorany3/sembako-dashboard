@@ -409,10 +409,11 @@ def detect_cpo_alerts():
         if len(data) < 2:
             continue
 
-        # Find CPO column
+        # Find CPO column (Harga_MYR or Harga_IDR)
         cpo_idx = None
         for i, h in enumerate(header):
-            if h and "cpo" in str(h).lower():
+            h_str = str(h).lower() if h else ""
+            if "harga" in h_str and ("myr" in h_str or "idr" in h_str):
                 cpo_idx = i
                 break
 

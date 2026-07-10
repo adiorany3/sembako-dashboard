@@ -309,7 +309,10 @@ def get_pertanian():
 @app.route("/api/keuangan")
 def get_keuangan():
     """Get financial data."""
-    data, last_update = load_excel_data("keuangan.xlsx")
+    try:
+        data, last_update = load_excel_data("keuangan.xlsx")
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
     if not data:
         return jsonify({"error": "Data not found"}), 404
 

@@ -16,6 +16,14 @@ document.addEventListener('DOMContentLoaded', function() {
     updateTime();
     setInterval(updateTime, 1000);
     setInterval(loadAllData, 30000); // Refresh every 30 seconds
+    // Peternakan filter buttons (setup once, not on every refresh)
+    document.querySelectorAll('#peternakan .filter-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            document.querySelectorAll('#peternakan .filter-btn').forEach(b => b.classList.remove('active'));
+            e.target.classList.add('active');
+            renderPeternakanTable(e.target.dataset.filter);
+        });
+    });
 });
 
 // ============ Tab Navigation ============
@@ -115,10 +123,13 @@ function switchTab(tabName) {
     tabButtons.forEach(btn => btn.classList.remove('active'));
     
     // Show selected tab
-    document.getElementById(tabName).classList.add('active');
+    const el = document.getElementById(tabName);
+    if (!el) return;
+    el.classList.add('active');
     
     // Mark button as active
-    document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+    const btn = document.querySelector(`[data-tab="${tabName}"]`);
+    if (btn) btn.classList.add('active');
 }
 
 // ============ API Functions ============
@@ -151,12 +162,12 @@ async function loadAllData() {
         checkHealth()
     ]);
     // Auto-fetch AI analysis & populate Summary + Recommendations
-    fetchAiAnalysis();
+    try { await openAiAnalysis(); } catch(e) { console.log('AI analysis skipped:', e.message); }
 }
 
 // ============ Format Functions ============
 function formatCurrency(value) {
-    if (!value) return '-';
+    if (value == null || isNaN(value)) return '-';
     return new Intl.NumberFormat('id-ID', {
         style: 'currency',
         currency: 'IDR',
@@ -166,12 +177,12 @@ function formatCurrency(value) {
 }
 
 function formatIDR(value) {
-    if (!value) return '-';
+    if (value == null || isNaN(value)) return '-';
     return new Intl.NumberFormat('id-ID').format(Math.round(value));
 }
 
 function formatUSD(value) {
-    if (!value) return '-';
+    if (value == null || isNaN(value)) return '-';
     return new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
@@ -181,7 +192,7 @@ function formatUSD(value) {
 }
 
 function formatPercent(value) {
-    if (!value) return '-';
+    if (value == null || isNaN(value)) return '-';
     return (value > 0 ? '+' : '') + value.toFixed(2) + '%';
 }
 
@@ -372,19 +383,10 @@ async function loadPeternakanData() {
     peternakanData = response.data;
     
     // Fill table
-    renderPeternakanTable('all');
-    
-    // Setup filter buttons
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            e.target.classList.add('active');
-            renderPeternakanTable(e.target.dataset.filter);
-        });
-    });
+    renderPeternakanTable('all', true);
 }
 
-function renderPeternakanTable(filter) {
+function renderPeternakanTable(filter, initial=false) {
     const tbody = document.getElementById('peternakan-tbody');
     tbody.innerHTML = '';
     
@@ -473,7 +475,7 @@ async function loadSentimenData() {
         tr.innerHTML = `
             <td>${formatDate(row.tanggal)} ${row.waktu || ''}</td>
             <td>${row.keyword || '-'}</td>
-            <td>${row.headline.substring(0, 70)}...</td>
+            <td>${(row.headline || '').substring(0, 70)}...</td>
             <td style="color: ${sentimentColor}; font-weight: bold;">${row.sentimen} (${row.score})</td>
         `;
         tbody.appendChild(tr);

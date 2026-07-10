@@ -31,14 +31,14 @@ def create_new_workbook():
     headers = [
         "Tanggal",
         "Beras Premium\n(Rp/kg)", "Beras Medium\n(Rp/kg)",
-        "Gula Putih\n(Rp/kg)", "Minyak Goreng\nCurah (Rp/kg)",
-        "Minyak Goreng\nKemasan (Rp/ltr)",
+        "Minyak Goreng\nCurah (Rp/kg)", "Gula Putih\n(Rp/kg)",
+        "Garam Halus\n(Rp/kg)", "Tepung Terigu\n(Rp/kg)",
         "Telur Ayam Ras\n(Rp/kg)", "Telur Ayam Kampung\n(Rp/kg)",
         "Daging Ayam Ras\n(Rp/kg)", "Daging Ayam Kampung\n(Rp/kg)",
         "Daging Sapi\n(Rp/kg)",
         "Cabai Merah\nKeriting (Rp/kg)", "Cabai Rawit\nMerah (Rp/kg)",
         "Bawang Merah\n(Rp/kg)", "Bawang Putih\n(Rp/kg)",
-        "Garam Halus\n(Rp/kg)", "Gas Elpiji\n(Rp)",
+        "Minyak Tanah\n(Rp/kg)", "Gas Elpiji\n(Rp)",
         "Sumber"
     ]
     
