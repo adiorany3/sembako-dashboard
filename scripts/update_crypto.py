@@ -43,6 +43,8 @@ def fetch_url(url, timeout=15):
     except Exception as e:
         print(f"  Error: {e}")
         return None
+
+
 def get_ohlc_daily():
     """Fetch 4h OHLC candles -> aggregate daily OHLC per coin.
     Returns dict: {date: {coin: {o, h, l, c, change}}}
@@ -53,34 +55,34 @@ def get_ohlc_daily():
     for coin in COINS:
         short = COIN_SHORT[coin]
         
-        # Retry on 429 (up to 5 attempts, long backoff for free tier)
+        # Retry on 429 (up to 3 attempts)
         candles = None
-        for attempt in range(5):
+        for attempt in range(3):
             url = f"https://api.coingecko.com/api/v3/coins/{coin}/ohlc?vs_currency=usd&days=7"
-            raw = fetch_url(url)
+            raw = fetch_url(url, timeout=10)
             if not raw:
-                _time.sleep(15 * (attempt + 1))
+                _time.sleep(5 * (attempt + 1))
                 continue
 
             try:
                 parsed = json.loads(raw)
             except (json.JSONDecodeError, ValueError):
-                _time.sleep(15 * (attempt + 1))
+                _time.sleep(5 * (attempt + 1))
                 continue
 
             if isinstance(parsed, dict) and 'error' in parsed:
                 print(f"  ⚠️ OHLC retry {attempt+1}: {coin} - {parsed.get('error', '')}")
-                _time.sleep(15 * (attempt + 1))
+                _time.sleep(5 * (attempt + 1))
                 continue
 
             if isinstance(parsed, list) and len(parsed) > 0:
                 candles = parsed
                 break
 
-            _time.sleep(15 * (attempt + 1))
+            _time.sleep(5 * (attempt + 1))
         
         if not candles:
-            print(f"  ❌ OHLC gagal: {coin} (5 retries)")
+            print(f"  ❌ OHLC gagal: {coin} (3 retries)")
             continue
         
         # Aggregate 4h candles -> daily
@@ -99,8 +101,8 @@ def get_ohlc_daily():
                 daily_agg[d][short]['l'] = min(daily_agg[d][short]['l'], c[3])
                 daily_agg[d][short]['c'] = c[4]  # close = latest candle
         
-        # Longer sleep between coins — free tier needs 20-30s cooldown
-        _time.sleep(22)
+        # Cooldown between coins
+        _time.sleep(3)
     
     # Calculate change% for each coin per day
     for d in daily_agg:
