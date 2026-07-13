@@ -133,13 +133,27 @@ def add_row(tanggal, data_dict, sumber="Siskaperbapo Jatim"):
         c = ws.cell(row=row, column=1, value=tanggal)
         c.alignment = ca; c.border = thin
 
+        # Get last known values for NULL columns (fallback)
+        last_row = ws.max_row - 1 if ws.max_row > 1 else None
+        
         for key, col in KEY_TO_COL.items():
             val = data_dict.get(key, 0)
-            c = ws.cell(row=row, column=col, value=val)
+            # Fallback to last known if empty
+            if (val is None or val == 0 or val == '') and last_row:
+                last_val = ws.cell(row=last_row, column=col).value
+                if last_val:
+                    val = last_val
+            c = ws.cell(row=row, column=col, value=val if val else None)
             c.alignment = ca; c.border = thin
             if val: c.number_format = '#,##0'
 
-        # Cols 19-24: leave as None (extra columns no scraper yet)
+        # Cols 19-24: copy from last row if available (no scraper for these)
+        for col in range(19, 25):
+            if last_row:
+                last_val = ws.cell(row=last_row, column=col).value
+                c = ws.cell(row=row, column=col, value=last_val)
+                c.alignment = ca; c.border = thin
+                if last_val: c.number_format = '#,##0'
 
         wb.save(EXCEL_PATH)
         print(f"Row added: {tanggal}")
