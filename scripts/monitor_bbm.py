@@ -53,25 +53,35 @@ UNCONFIRMED_PATTERNS = [
 
 # Keyword yang menunjukkan perubahan PASTI
 CONFIRMED_NAIK_PATTERNS = [
-    r'\bharga\s+naik\b',
-    r'\bnaik\s+harga\b',
-    r'\bkenaikan\s+harga\b',
-    r'\bptalite\s+naik\b',
-    r'\bpertalite\s+naik\b',
-    r'\bpertamax\s+naik\b',
+    r'\bnaik\s+(?:harga|yang|dengan|menjadi)?\b',
+    r'\bkenaikan\s+(?:harga|yang)?\b',
+    r'\b(?!tak\s+akan)(?!tidak\s+akan)(?!tidak\s+juga)(?!tidak\s+pernah)(?:harga\s+)?naik\b',
     r'\bmelorot\b',
     r'\bmeroket\b',
     r'\bmelebihi\s+rc\b',
 ]
 
 CONFIRMED_TURUN_PATTERNS = [
-    r'\bharga\s+turun\b',
-    r'\bturun\s+harga\b',
-    r'\bpenurunan\s+harga\b',
-    r'\bpertalite\s+turun\b',
-    r'\bpertamax\s+turun\b',
+    r'\bturun\s+(?:harga|yang|dengan)?\b',
+    r'\bpenurunan\s+(?:harga|yang)?\b',
+    r'\b(?!tak\s+akan)(?!tidak\s+akan)(?!tidak\s+juga)(?!tidak\s+pernah)(?:harga\s+)?turun\b',
     r'\blebih\s+murah\b',
     r'\bharga\s+lebih\s+murah\b',
+]
+
+# Negative patterns — override any "naik/turun" detection
+NEGATIVE_PATTERNS = [
+    r'tidak\s+akan',
+    r'tak\s+kan',
+    r'takkan',
+    r'tidak\s+jadi',
+    r'batal',
+    r'diundur',
+    r'dinaikkan',
+    r'ditunda',
+    r'sempat\s+dinaikkan',
+    r'encana\s+din',
+    r'belum\x20pasti',
 ]
 
 def fetch_url(url, timeout=15):
@@ -188,16 +198,17 @@ def is_unconfirmed_news(headline_lower):
 
 def is_confirmed_change(headline_lower):
     """Check if headline indicates CONFIRMED price change."""
+    # First check for NEGATIVE patterns (will override any naik/turun detection)
+    for pattern in NEGATIVE_PATTERNS:
+        if re.search(pattern, headline_lower):
+            return None  # Explicitly says TIDAK NAIK / TIDAK TURUN
+    
     # Must have "naik" or "turun" context
     has_change_context = any(
         re.search(p, headline_lower) for p in CONFIRMED_NAIK_PATTERNS + CONFIRMED_TURUN_PATTERNS
     )
     if not has_change_context:
         return None  # No clear change signal
-    
-    # Must NOT have unconfirmed signals
-    if is_unconfirmed_news(headline_lower):
-        return None
     
     # Check if it's a "naik" or "turun" pattern
     for p in CONFIRMED_NAIK_PATTERNS:
