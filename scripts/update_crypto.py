@@ -53,34 +53,34 @@ def get_ohlc_daily():
     for coin in COINS:
         short = COIN_SHORT[coin]
         
-        # Retry on 429 (up to 3 attempts, short backoff)
+        # Retry on 429 (up to 5 attempts, long backoff for free tier)
         candles = None
-        for attempt in range(3):
+        for attempt in range(5):
             url = f"https://api.coingecko.com/api/v3/coins/{coin}/ohlc?vs_currency=usd&days=7"
             raw = fetch_url(url)
             if not raw:
-                _time.sleep(5 * (attempt + 1))
+                _time.sleep(15 * (attempt + 1))
                 continue
 
             try:
                 parsed = json.loads(raw)
             except (json.JSONDecodeError, ValueError):
-                _time.sleep(5 * (attempt + 1))
+                _time.sleep(15 * (attempt + 1))
                 continue
 
             if isinstance(parsed, dict) and 'error' in parsed:
                 print(f"  ⚠️ OHLC retry {attempt+1}: {coin} - {parsed.get('error', '')}")
-                _time.sleep(5 * (attempt + 1))
+                _time.sleep(15 * (attempt + 1))
                 continue
 
             if isinstance(parsed, list) and len(parsed) > 0:
                 candles = parsed
                 break
 
-            _time.sleep(5 * (attempt + 1))
+            _time.sleep(15 * (attempt + 1))
         
         if not candles:
-            print(f"  ❌ OHLC gagal: {coin} (3 retries)")
+            print(f"  ❌ OHLC gagal: {coin} (5 retries)")
             continue
         
         # Aggregate 4h candles -> daily
@@ -99,7 +99,8 @@ def get_ohlc_daily():
                 daily_agg[d][short]['l'] = min(daily_agg[d][short]['l'], c[3])
                 daily_agg[d][short]['c'] = c[4]  # close = latest candle
         
-        _time.sleep(8)  # rate limit: free tier ~10-30 req/min
+        # Longer sleep between coins — free tier needs 20-30s cooldown
+        _time.sleep(22)
     
     # Calculate change% for each coin per day
     for d in daily_agg:
@@ -155,44 +156,88 @@ def get_prices():
     return result
 
 def get_crypto_news():
-    """Scrape crypto news from detik.com (only today's news)."""
-    url = "https://www.detik.com/search/searchall?query=crypto+bitcoin+ethereum&siteid=2&result_type=latest"
-    headers = {
-        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36",
-        "Accept": "text/html",
-    }
-    req = urllib.request.Request(url, headers=headers)
-    try:
-        with urllib.request.urlopen(req, timeout=15) as resp:
-            html = resp.read().decode("utf-8", errors="ignore")
-    except (urllib.error.URLError, OSError) as e:
-        print(f"  ⚠️ News fetch error: {e}")
-        return []
-    
-    raw_titles = re.findall(r'title="([^"]+)"', html)
-    skip = ['detikcom', 'WIB', 'MENU', 'Beranda', 'Login', 'Daftar', 'Terpopuler',
-            'Koleksi', 'Selengkapnya', 'search', 'img-title']
-    
-    # Outdated/seasonal patterns to skip
-    outdated_patterns = [
-        r'\b202[0-5]\b',  # 2020-2025
-        r'\bRamadhan\b', r'\bRamadan\b', r'\bLebaran\b', r'\bMudik\b',
-        r'\bjelang\s*ramadan\b', r'\b sebelum ramadan\b',
-    ]
-    
+    """Scrape crypto news from multiple RSS sources for fresh content."""
     news = []
-    for t in raw_titles:
-        t = t.strip()
-        if len(t) < 15: continue
-        if any(s.lower() in t.lower() for s in skip): continue
-        if re.match(r'\w+,\s+\d{1,2}\s+\w+\s+\d{4}', t): continue
-        
-        # Skip outdated headlines
-        t_lower = t.lower()
-        if any(re.search(p, t_lower) for p in outdated_patterns):
-            continue
-        
-        news.append(t)
+    seen_titles = set()
+    
+    # Source 1: CoinGecko trending (always fresh)
+    trending_url = "https://api.coingecko.com/api/v3/search/trending"
+    try:
+        raw = fetch_url(trending_url)
+        if raw:
+            data = json.loads(raw)
+            for item in data.get("coins", [])[:5]:
+                coin = item.get("item", {})
+                name = coin.get("name", "")
+                symbol = coin.get("symbol", "")
+                score = coin.get("score", 0)
+                if name and name.lower() not in seen_titles:
+                    news.append(f"🔥 Trending: {name} ({symbol}) — rank #{score+1} on CoinGecko")
+                    seen_titles.add(name.lower())
+    except Exception:
+        pass
+    
+    # Source 2: CoinDesk RSS (always fresh)
+    rss_url = "https://www.coindesk.com/arc/outboundfeeds/rss/"
+    try:
+        raw = fetch_url(rss_url)
+        if raw:
+            # Parse RSS XML
+            titles = re.findall(r'<title><!\[CDATA\[(.+?)\]\]></title>', raw)
+            if not titles:
+                titles = re.findall(r'<title>(.+?)</title>', raw)
+            links = re.findall(r'<link>(.+?)</link>', raw)
+            for i, t in enumerate(titles[:15]):
+                t = t.strip()
+                if len(t) < 15:
+                    continue
+                t_lower = t.lower()
+                if t_lower in seen_titles:
+                    continue
+                seen_titles.add(t_lower)
+                news.append(t)
+    except Exception:
+        pass
+    
+    # Source 3: CryptoSlate RSS
+    cs_url = "https://cryptoslate.com/feed/"
+    try:
+        raw = fetch_url(cs_url)
+        if raw:
+            titles = re.findall(r'<title><!\[CDATA\[(.+?)\]\]></title>', raw)
+            if not titles:
+                titles = re.findall(r'<title>(.+?)</title>', raw)
+            for t in titles[:10]:
+                t = t.strip()
+                if len(t) < 15:
+                    continue
+                t_lower = t.lower()
+                if t_lower in seen_titles:
+                    continue
+                seen_titles.add(t_lower)
+                news.append(t)
+    except Exception:
+        pass
+
+    # Source 4: Fallback — Google News RSS for "crypto bitcoin" (last 24h)
+    gn_url = "https://news.google.com/rss/search?q=crypto+bitcoin+ethereum+when:1d&hl=id"
+    try:
+        raw = fetch_url(gn_url)
+        if raw:
+            titles = re.findall(r'<title><!\[CDATA\[(.+?)\]\]></title>', raw)
+            if not titles:
+                titles = re.findall(r'<title>(.+?)</title>', raw)
+            for t in titles[:10]:
+                t = t.strip()
+                if len(t) < 15:
+                    continue
+                t_lower = t.lower()
+                if t_lower in seen_titles:
+                    continue
+                seen_titles.add(t_lower)
+                news.append(t)
+    except Exception:
+        pass
     
     return news[:10]
 
