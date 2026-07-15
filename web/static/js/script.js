@@ -548,54 +548,55 @@ function updateTime() {
 }
 
 // ============ Chart Functions ============
-function getChartOptions(isMobile) {
+function getChartOptions(isMobile, opts) {
+    opts = opts || {};
     return {
         responsive: true,
         maintainAspectRatio: false,
-        interaction: {
-            mode: 'index',
-            intersect: false,
-        },
+        interaction: { mode: 'index', intersect: false },
         plugins: {
             legend: {
                 display: true,
                 position: 'top',
                 labels: {
-                    boxWidth: isMobile ? 10 : 12,
-                    padding: isMobile ? 8 : 15,
-                    font: {
-                        size: isMobile ? 10 : 12
-                    }
+                    boxWidth: isMobile ? 10 : 14,
+                    padding: isMobile ? 10 : 20,
+                    usePointStyle: true,
+                    pointStyle: 'circle',
+                    font: { size: isMobile ? 11 : 13, weight: '500' }
                 }
             },
             tooltip: {
                 enabled: true,
-                titleFont: {
-                    size: isMobile ? 11 : 13
-                },
-                bodyFont: {
-                    size: isMobile ? 10 : 12
-                }
+                backgroundColor: 'rgba(15,23,42,0.9)',
+                titleFont: { size: isMobile ? 11 : 13, weight: '600' },
+                bodyFont: { size: isMobile ? 10 : 12 },
+                padding: 10,
+                cornerRadius: 8,
+                displayColors: true,
+                boxPadding: 4
             }
         },
         scales: {
             y: {
-                beginAtZero: true,
-                grid: { color: 'rgba(0,0,0,0.05)' },
+                beginAtZero: opts.beginAtZero !== false,
+                grid: { color: 'rgba(0,0,0,0.04)', drawBorder: false },
+                border: { display: false },
                 ticks: {
-                    font: {
-                        size: isMobile ? 9 : 11
-                    },
-                    maxTicksLimit: isMobile ? 5 : 8
+                    font: { size: isMobile ? 10 : 12 },
+                    maxTicksLimit: isMobile ? 5 : 6,
+                    padding: 8,
+                    callback: opts.yFmt || undefined
                 }
             },
             x: {
                 grid: { display: false },
+                border: { display: false },
                 ticks: {
-                    font: {
-                        size: isMobile ? 9 : 11
-                    },
-                    maxRotation: isMobile ? 45 : 0
+                    font: { size: isMobile ? 9 : 11 },
+                    maxRotation: 0,
+                    autoSkip: true,
+                    maxTicksLimit: isMobile ? 5 : 8
                 }
             }
         }
@@ -607,163 +608,126 @@ function isMobileDevice() {
 }
 
 function updateCryptoChart(data) {
-    const labels = data.map(d => formatDate(d.tanggal));
-    const btcChanges = data.map(d => d.btc_24h || 0);
-    const ethChanges = data.map(d => d.eth_24h || 0);
-    const solChanges = data.map(d => d.sol_24h || 0);
-    
+    // Take last 7 days
+    const last7 = data.slice(-7);
+    const labels = last7.map(d => formatDate(d.tanggal));
+    const btc = last7.map(d => d.btc_usd || 0);
+    const eth = last7.map(d => d.eth_usd || 0);
+
     const ctx = document.getElementById('cryptoChart');
     if (!ctx) return;
-    
+
     if (cryptoChart) cryptoChart.destroy();
-    
     const isMobile = isMobileDevice();
-    
+
     cryptoChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: labels,
+            labels,
             datasets: [
                 {
-                    label: 'BTC 24h %',
-                    data: btcChanges,
+                    label: 'BTC (USD)',
+                    data: btc,
                     borderColor: '#f7931a',
-                    backgroundColor: 'rgba(247, 147, 26, 0.1)',
-                    tension: 0.4,
+                    backgroundColor: 'rgba(247,147,26,0.08)',
+                    borderWidth: 2.5,
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    pointBackgroundColor: '#f7931a',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    tension: 0.3,
                     fill: true,
+                    yAxisID: 'y'
                 },
                 {
-                    label: 'ETH 24h %',
-                    data: ethChanges,
+                    label: 'ETH (USD)',
+                    data: eth,
                     borderColor: '#627eea',
-                    backgroundColor: 'rgba(98, 126, 234, 0.1)',
-                    tension: 0.4,
+                    backgroundColor: 'rgba(98,126,234,0.08)',
+                    borderWidth: 2.5,
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    pointBackgroundColor: '#627eea',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    tension: 0.3,
                     fill: true,
-                },
-                {
-                    label: 'SOL 24h %',
-                    data: solChanges,
-                    borderColor: '#14f195',
-                    backgroundColor: 'rgba(20, 241, 149, 0.1)',
-                    tension: 0.4,
-                    fill: true,
+                    yAxisID: 'y1'
                 }
             ]
         },
-        options: getChartOptions(isMobile)
+        options: getChartOptions(isMobile, {
+            yFmt: v => '$' + (v / 1000).toFixed(0) + 'K'
+        })
     });
+
+    // Add second Y axis for ETH
+    cryptoChart.options.scales.y1 = {
+        position: 'right',
+        grid: { drawOnChartArea: false },
+        border: { display: false },
+        ticks: {
+            font: { size: isMobile ? 10 : 12 },
+            color: '#627eea',
+            callback: v => '$' + (v / 1000).toFixed(0) + 'K'
+        }
+    };
+    cryptoChart.options.scales.y.ticks.color = '#f7931a';
+    cryptoChart.update();
 }
 
 function updateEmasChart(data) {
-    const labels = data.map(d => formatDate(d.tanggal));
-    const antamBeli = data.map(d => d.antam_beli || 0);
-    const antamBuyback = data.map(d => d.antam_buyback || 0);
-    const ubs = data.map(d => d.ubs_beli || 0);
-    
+    const last30 = data.slice(-30);
+    const labels = last30.map(d => formatDate(d.tanggal));
+    const antamBeli = last30.map(d => d.antam_beli || 0);
+    const antamBuyback = last30.map(d => d.antam_buyback || 0);
+
     const ctx = document.getElementById('emasChart');
     if (!ctx) return;
-    
+
     if (emasChart) emasChart.destroy();
-    
     const isMobile = isMobileDevice();
-    
+
     emasChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: labels,
+            labels,
             datasets: [
                 {
                     label: 'Antam Beli',
                     data: antamBeli,
-                    borderColor: '#ffd700',
-                    backgroundColor: 'rgba(255, 215, 0, 0.1)',
-                    tension: 0.4,
-                    fill: true,
+                    borderColor: '#eab308',
+                    backgroundColor: 'rgba(234,179,8,0.06)',
+                    borderWidth: 2.5,
+                    pointRadius: 3,
+                    pointHoverRadius: 5,
+                    pointBackgroundColor: '#eab308',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    tension: 0.3,
+                    fill: true
                 },
                 {
                     label: 'Antam Buyback',
                     data: antamBuyback,
-                    borderColor: '#daa520',
-                    backgroundColor: 'rgba(218, 165, 32, 0.1)',
-                    tension: 0.4,
-                    fill: true,
-                },
-                {
-                    label: 'UBS Beli',
-                    data: ubs,
-                    borderColor: '#c0a060',
-                    backgroundColor: 'rgba(192, 160, 96, 0.1)',
-                    tension: 0.4,
-                    fill: true,
+                    borderColor: '#a16207',
+                    backgroundColor: 'transparent',
+                    borderWidth: 2,
+                    borderDash: [5, 3],
+                    pointRadius: 2,
+                    pointHoverRadius: 4,
+                    pointBackgroundColor: '#a16207',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    tension: 0.3,
+                    fill: false
                 }
             ]
         },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            interaction: {
-                mode: 'index',
-                intersect: false,
-            },
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'top',
-                    labels: {
-                        boxWidth: isMobile ? 10 : 12,
-                        padding: isMobile ? 8 : 15,
-                        font: {
-                            size: isMobile ? 10 : 12
-                        }
-                    }
-                },
-                tooltip: {
-                    enabled: true,
-                    titleFont: {
-                        size: isMobile ? 11 : 13
-                    },
-                    bodyFont: {
-                        size: isMobile ? 10 : 12
-                    },
-                    callbacks: {
-                        label: function(context) {
-                            let label = context.dataset.label || '';
-                            if (label) {
-                                label += ': ';
-                            }
-                            if (context.parsed.y !== null) {
-                                label += 'Rp ' + context.parsed.y.toLocaleString('id-ID');
-                            }
-                            return label;
-                        }
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: { color: 'rgba(0,0,0,0.05)' },
-                    ticks: {
-                        font: {
-                            size: isMobile ? 9 : 11
-                        },
-                        maxTicksLimit: isMobile ? 5 : 8,
-                        callback: function(value) {
-                            return 'Rp ' + (value / 1000000).toFixed(0) + 'M';
-                        }
-                    }
-                },
-                x: {
-                    grid: { display: false },
-                    ticks: {
-                        font: {
-                            size: isMobile ? 9 : 11
-                        },
-                        maxRotation: isMobile ? 45 : 0
-                    }
-                }
-            }
-        }
+        options: getChartOptions(isMobile, {
+            yFmt: v => 'Rp ' + (v / 1000000).toFixed(1) + 'jt'
+        })
     });
 }
 
@@ -1089,51 +1053,29 @@ const chartInstances = {};
 function renderLineChart(canvasId, dataArray, datasets) {
     const canvas = document.getElementById(canvasId);
     if (!canvas || dataArray.length === 0) return;
-    // Destroy old instance
-    if (chartInstances[canvasId]) {
-        chartInstances[canvasId].destroy();
-    }
-    const labels = dataArray.map(d => d.tanggal ? d.tanggal.slice(5) : ''); // MM-DD
+    if (chartInstances[canvasId]) chartInstances[canvasId].destroy();
+    const isMobile = isMobileDevice();
+    const labels = dataArray.map(d => d.tanggal ? formatDate(d.tanggal) : '');
     const lines = datasets.map(ds => ({
         label: ds.label,
         data: dataArray.map(d => d[ds.key]),
         borderColor: ds.color,
-        backgroundColor: ds.color + '20',
-        fill: true,
-        tension: 0.3,
+        backgroundColor: ds.color + '15',
+        borderWidth: 2.5,
         pointRadius: dataArray.length > 30 ? 0 : 3,
+        pointHoverRadius: 5,
+        pointBackgroundColor: ds.color,
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+        fill: true,
+        tension: 0.3
     }));
     chartInstances[canvasId] = new Chart(canvas.getContext('2d'), {
         type: 'line',
         data: { labels, datasets: lines },
-        options: {
-            responsive: true,
-            plugins: { legend: { labels: { color: '#94a3b8' } } },
-            scales: {
-                x: { ticks: { color: '#94a3b8', maxTicksLimit: 10 }, grid: { color: '#1e293b' } },
-                y: { ticks: { color: '#94a3b8' }, grid: { color: '#1e293b' } }
-            }
-        }
+        options: getChartOptions(isMobile)
     });
 }
-
-// ============ Dark Mode ============
-
-function toggleDarkMode() {
-    document.body.classList.toggle('light-mode');
-    const isLight = document.body.classList.contains('light-mode');
-    localStorage.setItem('theme', isLight ? 'light' : 'dark');
-    document.getElementById('dark-toggle').textContent = isLight ? '☀️' : '🌙';
-}
-
-// Load saved theme
-(function() {
-    const saved = localStorage.getItem('theme');
-    if (saved === 'light') {
-        document.body.classList.add('light-mode');
-        setTimeout(() => { const btn = document.getElementById('dark-toggle'); if(btn) btn.textContent = '☀️'; }, 100);
-    }
-})();
 
 // ============ Auto-Refresh Countdown ============
 
