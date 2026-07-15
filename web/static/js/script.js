@@ -161,8 +161,7 @@ async function loadAllData() {
         loadAlertsData(),
         checkHealth()
     ]);
-    // Auto-fetch AI analysis & populate Summary + Recommendations
-    try { await openAiAnalysis(); } catch(e) { console.log('AI analysis skipped:', e.message); }
+    // AI analysis only on button click, not auto (save tokens)
 }
 
 // ============ Format Functions ============

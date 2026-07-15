@@ -2,605 +2,707 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <meta name="theme-color" content="#667eea">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="description" content="Dashboard Bot Adioranye - Real-time data for Sembako, Crypto, Emas, Pertanian, Peternakan, Saham & Keuangan">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a">
     <title>Dashboard Monitoring - adioranye</title>
     <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
-    <link rel="stylesheet" href="/static/css/style.css?v=2.0">
-    <link rel="stylesheet" href="/static/css/extras.css?v=2.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+/* ===== RESET & BASE ===== */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f1f5f9;--surface:#fff;--surface2:#f8fafc;
+  --text:#1e293b;--text2:#64748b;--text3:#94a3b8;
+  --border:#e2e8f0;--border2:#cbd5e1;
+  --primary:#3b82f6;--primary-bg:#eff6ff;
+  --green:#22c55e;--green-bg:#f0fdf4;
+  --red:#ef4444;--red-bg:#fef2f2;
+  --orange:#f59e0b;--orange-bg:#fffbeb;
+  --purple:#8b5cf6;--purple-bg:#f5f3ff;
+  --sidebar-w:220px;--header-h:56px;
+  --radius:10px;--shadow:0 1px 3px rgba(0,0,0,.08);
+}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.5;font-size:14px}
+a{color:var(--primary);text-decoration:none}
+
+/* ===== HEADER ===== */
+.header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:100}
+.header-left{display:flex;align-items:center;gap:12px}
+.header-left h1{font-size:16px;font-weight:700;color:var(--text)}
+.header-left .badge{font-size:11px;padding:2px 8px;border-radius:99px;background:var(--green-bg);color:var(--green);font-weight:600}
+.header-right{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--text2)}
+.header-right .time{font-variant-numeric:tabular-nums}
+.dark-toggle{background:none;border:1px solid var(--border);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:14px;transition:all .2s}
+.dark-toggle:hover{background:var(--surface2)}
+
+/* ===== SIDEBAR ===== */
+.sidebar{position:fixed;top:var(--header-h);left:0;bottom:0;width:var(--sidebar-w);background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:12px 0;z-index:90;transition:transform .3s}
+.nav-group{margin-bottom:4px}
+.nav-group-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);padding:12px 20px 6px;user-select:none}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 20px;cursor:pointer;color:var(--text2);font-size:13px;font-weight:500;transition:all .15s;border-left:3px solid transparent}
+.nav-item:hover{background:var(--surface2);color:var(--text)}
+.nav-item.active{background:var(--primary-bg);color:var(--primary);border-left-color:var(--primary);font-weight:600}
+.nav-item i{width:18px;text-align:center;font-size:14px;opacity:.7}
+.nav-item.active i{opacity:1}
+
+/* ===== MAIN ===== */
+.main{margin-left:var(--sidebar-w);margin-top:var(--header-h);padding:24px;min-height:calc(100vh - var(--header-h))}
+
+/* ===== TAB CONTENT ===== */
+.tab-content{display:none;animation:fadeUp .3s ease}
+.tab-content.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== PAGE HEADER ===== */
+.page-header{margin-bottom:24px}
+.page-header h2{font-size:22px;font-weight:700;margin-bottom:4px}
+.page-header p{color:var(--text2);font-size:13px}
+
+/* ===== CARDS GRID ===== */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:24px}
+.stat-card{background:var(--surface);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);border:1px solid var(--border);position:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.stat-card.blue::before{background:var(--primary)}
+.stat-card.green::before{background:var(--green)}
+.stat-card.red::before{background:var(--red)}
+.stat-card.orange::before{background:var(--orange)}
+.stat-card.purple::before{background:var(--purple)}
+.stat-card.gold::before{background:#eab308}
+.stat-label{font-size:12px;color:var(--text2);margin-bottom:4px;font-weight:500}
+.stat-value{font-size:24px;font-weight:700;color:var(--text);line-height:1.2}
+.stat-sub{font-size:12px;color:var(--text3);margin-top:4px}
+.stat-change{display:inline-flex;align-items:center;gap:3px;font-size:12px;font-weight:600;padding:2px 6px;border-radius:4px}
+.stat-change.up{color:var(--green);background:var(--green-bg)}
+.stat-change.down{color:var(--red);background:var(--red-bg)}
+.mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.mini-item{background:var(--surface2);border-radius:6px;padding:8px 10px;text-align:center}
+.mini-item .mini-label{font-size:10px;color:var(--text3);display:block}
+.mini-item .mini-val{font-size:13px;font-weight:600;color:var(--text);display:block}
+
+/* ===== TABLE CARD ===== */
+.table-card{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--border);margin-bottom:24px;overflow:hidden}
+.table-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px}
+.table-header h3{font-size:15px;font-weight:600}
+.table-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.table-controls input[type="date"]{font-size:12px;padding:6px 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface2);color:var(--text)}
+.filter-btn{font-size:12px;padding:6px 12px;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--text2);cursor:pointer;font-weight:500;transition:all .15s}
+.filter-btn:hover{border-color:var(--primary);color:var(--primary)}
+.filter-btn.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.table-scroll{overflow-x:auto;max-height:600px;overflow-y:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead{position:sticky;top:0;z-index:2}
+th{background:var(--surface2);font-weight:600;color:var(--text2);text-align:left;padding:10px 14px;border-bottom:2px solid var(--border);white-space:nowrap;font-size:12px;text-transform:uppercase;letter-spacing:.03em}
+td{padding:10px 14px;border-bottom:1px solid var(--border);white-space:nowrap}
+tr:hover td{background:var(--surface2)}
+.loading-cell{text-align:center;padding:40px;color:var(--text3);font-style:italic}
+.val-pos{color:var(--green);font-weight:600}
+.val-neg{color:var(--red);font-weight:600}
+
+/* ===== CHART CARD ===== */
+.chart-card{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--border);padding:20px;margin-bottom:24px}
+.chart-card h3{font-size:15px;font-weight:600;margin-bottom:16px}
+.chart-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:16px;margin-bottom:24px}
+
+/* ===== SEARCH ===== */
+.search-box{font-size:13px;padding:7px 12px;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--text);width:200px}
+.search-box:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+
+/* ===== BADGES ===== */
+.badge-sent{display:inline-block;padding:3px 8px;border-radius:4px;font-size:11px;font-weight:600}
+.badge-pos{background:var(--green-bg);color:var(--green)}
+.badge-neg{background:var(--red-bg);color:var(--red)}
+.badge-neu{background:#f1f5f9;color:#64748b}
+
+/* ===== AI ANALYSIS ===== */
+.ai-btn{background:var(--primary);color:#fff;border:none;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
+.ai-btn:hover{opacity:.9;transform:translateY(-1px)}
+.ai-result{background:var(--surface2);border-radius:8px;padding:20px;margin-top:16px;line-height:1.8;white-space:pre-wrap;font-size:13px;max-height:500px;overflow-y:auto;border:1px solid var(--border)}
+
+/* ===== SEKTOR LIST ===== */
+.sektor-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)}
+.sektor-item:last-child{border:none}
+.sektor-name{font-size:13px;font-weight:500}
+.sektor-val{font-size:13px;font-weight:600}
+
+/* ===== DARK MODE ===== */
+body.dark{--bg:#0f172a;--surface:#1e293b;--surface2:#273548;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;--border:#334155;--border2:#475569;--primary:#60a5fa;--primary-bg:#1e3a5f;--green:#4ade80;--green-bg:#14532d;--red:#f87171;--red-bg:#7f1d1d;--orange:#fbbf24;--orange-bg:#78350f;--purple:#a78bfa;--purple-bg:#3b0764}
+body.dark .header{background:var(--surface);border-color:var(--border)}
+body.dark .sidebar{background:var(--surface);border-color:var(--border)}
+
+/* ===== FOOTER ===== */
+.footer{text-align:center;padding:20px;color:var(--text3);font-size:12px;margin-top:24px}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%);width:240px;z-index:200}
+  .sidebar.open{transform:translateX(0)}
+  .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:190}
+  .sidebar-overlay.show{display:block}
+  .main{margin-left:0}
+  .menu-toggle{display:flex!important}
+  .chart-row{grid-template-columns:1fr}
+  .cards-grid{grid-template-columns:1fr 1fr}
+  .header-left h1{font-size:14px}
+  .search-box{width:140px}
+}
+.menu-toggle{display:none;background:none;border:1px solid var(--border);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:16px}
+    </style>
 </head>
 <body>
-    <div class="container-fluid">
-        <!-- Header -->
-        <header class="header">
-            <div class="header-content">
-                <div class="logo">
-                    <h1>📊 Dashboard Bot Adioranye</h1>
-                    <p class="subtitle">Real-time data monitoring for sembako, crypto, emas, pertanian & keuangan</p>
-                </div>
-                <div class="header-info">
-                    <span id="refresh-countdown"></span>
-                    <span id="current-time"></span>
-                    <button id="dark-toggle" class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
-                    <span id="health-status" class="status-badge status-ok">● Online</span>
-                </div>
+
+<!-- HEADER -->
+<header class="header">
+    <div class="header-left">
+        <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+        <h1>📊 Dashboard Monitoring</h1>
+        <span class="badge">LIVE</span>
+    </div>
+    <div class="header-right">
+        <span id="health-status"><i class="fas fa-circle" style="font-size:8px;color:var(--green)"></i> Online</span>
+        <span class="time" id="current-time">--:--</span>
+        <button class="dark-toggle" onclick="toggleDarkMode()" title="Toggle dark mode">🌙</button>
+    </div>
+</header>
+
+<!-- SIDEBAR OVERLAY (mobile) -->
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+<!-- SIDEBAR NAV -->
+<nav class="sidebar" id="sidebar">
+    <!-- Overview -->
+    <div class="nav-group">
+        <div class="nav-group-label">Ringkasan</div>
+        <div class="nav-item active" data-tab="overview"><i class="fas fa-th-large"></i> Overview</div>
+    </div>
+
+    <!-- Harga Pokok -->
+    <div class="nav-group">
+        <div class="nav-group-label">Harga Pokok</div>
+        <div class="nav-item" data-tab="sembako"><i class="fas fa-shopping-cart"></i> Sembako</div>
+        <div class="nav-item" data-tab="pakan"><i class="fas fa-seedling"></i> Pakan</div>
+        <div class="nav-item" data-tab="pertanian"><i class="fas fa-tractor"></i> Pertanian</div>
+        <div class="nav-item" data-tab="peternakan"><i class="fas fa-drumstick-bite"></i> Peternakan</div>
+    </div>
+
+    <!-- Pasar Keuangan -->
+    <div class="nav-group">
+        <div class="nav-group-label">Pasar Keuangan</div>
+        <div class="nav-item" data-tab="crypto"><i class="fab fa-bitcoin"></i> Crypto</div>
+        <div class="nav-item" data-tab="emas"><i class="fas fa-coins"></i> Emas</div>
+        <div class="nav-item" data-tab="saham"><i class="fas fa-chart-line"></i> Saham</div>
+        <div class="nav-item" data-tab="kurs"><i class="fas fa-exchange-alt"></i> Kurs</div>
+    </div>
+
+    <!-- Komoditas -->
+    <div class="nav-group">
+        <div class="nav-group-label">Komoditas</div>
+        <div class="nav-item" data-tab="minyak"><i class="fas fa-oil-can"></i> Minyak</div>
+        <div class="nav-item" data-tab="cpo"><i class="fas fa-leaf"></i> CPO</div>
+    </div>
+
+    <!-- Makro -->
+    <div class="nav-group">
+        <div class="nav-group-label">Makro & Kebijakan</div>
+        <div class="nav-item" data-tab="bi-rate"><i class="fas fa-landmark"></i> BI Rate</div>
+        <div class="nav-item" data-tab="alerts"><i class="fas fa-exclamation-triangle"></i> Alerts</div>
+    </div>
+
+    <!-- Analisis -->
+    <div class="nav-group">
+        <div class="nav-group-label">Analisis</div>
+        <div class="nav-item" data-tab="sentimen"><i class="fas fa-newspaper"></i> Sentimen</div>
+        <div class="nav-item" data-tab="ai-analysis"><i class="fas fa-robot"></i> AI Analysis</div>
+    </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+<!-- ============ OVERVIEW ============ -->
+<section class="tab-content active" id="overview">
+    <div class="page-header">
+        <h2>Ringkasan Pasar</h2>
+        <p>Data real-time semua komponen monitoring</p>
+    </div>
+
+    <div class="cards-grid">
+        <!-- Sembako -->
+        <div class="stat-card blue">
+            <div class="stat-label">🛒 Sembako (Beras Premium)</div>
+            <div class="stat-value" id="mini-beras">-</div>
+            <div class="stat-sub">Update: <span id="sembako-date">-</span></div>
+            <div class="mini-grid">
+                <div class="mini-item"><span class="mini-label">Medium</span><span class="mini-val" id="mini-medium">-</span></div>
+                <div class="mini-item"><span class="mini-label">Gas LPG</span><span class="mini-val" id="mini-gas">-</span></div>
+                <div class="mini-item"><span class="mini-label">Telur</span><span class="mini-val" id="mini-telur">-</span></div>
             </div>
-        </header>
+        </div>
 
-        <!-- Navigation Tabs -->
-        <nav class="tabs-nav">
-            <button class="tab-btn active" data-tab="overview">📈 Overview</button>
-            <button class="tab-btn" data-tab="sembako">🛒 Sembako</button>
-            <button class="tab-btn" data-tab="crypto">🪙 Crypto</button>
-            <button class="tab-btn" data-tab="emas">💰 Emas</button>
-            <button class="tab-btn" data-tab="pertanian">🌾 Pertanian</button>
-            <button class="tab-btn" data-tab="peternakan">🐔 Peternakan</button>
-            <button class="tab-btn" data-tab="pakan">🌽 Pakan</button>
-            <button class="tab-btn" data-tab="saham">📈 Saham</button>
-            <button class="tab-btn" data-tab="kurs">💱 Kurs</button>
-            <button class="tab-btn" data-tab="minyak">🛢️ Minyak</button>
-            <button class="tab-btn" data-tab="bi-rate">🏦 BI Rate</button>
-            <button class="tab-btn" data-tab="cpo">🌴 CPO</button>
-            <button class="tab-btn" data-tab="sentimen">📰 Berita</button>
-            <button class="tab-btn" data-tab="alerts">🚨 Alerts</button>
-            <button class="tab-btn" data-tab="ai-analysis">🤖 AI</button>
-        </nav>
+        <!-- Crypto -->
+        <div class="stat-card orange">
+            <div class="stat-label">🪙 Bitcoin (USD)</div>
+            <div class="stat-value" id="mini-btc">-</div>
+            <div class="stat-sub">Market Cap: <span id="crypto-mcap">-</span></div>
+            <div class="mini-grid">
+                <div class="mini-item"><span class="mini-label">ETH</span><span class="mini-val" id="mini-eth">-</span></div>
+                <div class="mini-item"><span class="mini-label">SOL</span><span class="mini-val" id="mini-sol">-</span></div>
+                <div class="mini-item"><span class="mini-label">ADA</span><span class="mini-val" id="mini-ada">-</span></div>
+            </div>
+        </div>
 
-        <!-- Content Area -->
-        <main class="main-content">
-            
-            <!-- Overview Tab -->
-            <section class="tab-content active" id="overview">
-                <div class="cards-grid">
-                    <!-- Sembako Card -->
-                    <div class="card card-sembako">
-                        <div class="card-header">
-                            <h3>🛒 Harga Sembako</h3>
-                            <i class="fas fa-chevron-right"></i>
-                        </div>
-                        <div class="card-body">
-                            <p class="card-label">Last Update</p>
-                            <p id="sembako-date" class="card-value">-</p>
-                            <div class="card-mini-items">
-                                <div class="mini-item">
-                                    <span>Beras Prem</span>
-                                    <span id="mini-beras" class="mini-value">-</span>
-                                </div>
-                                <div class="mini-item">
-                                    <span>Beras Med</span>
-                                    <span id="mini-medium" class="mini-value">-</span>
-                                </div>
-                                <div class="mini-item">
-                                    <span>Gas Elpiji</span>
-                                    <span id="mini-gas" class="mini-value">-</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <!-- Emas -->
+        <div class="stat-card gold">
+            <div class="stat-label">💰 Emas Antam 1gr</div>
+            <div class="stat-value" id="emas-price">-</div>
+            <div class="stat-sub">Buyback: <span id="mini-emas-back">-</span></div>
+            <div class="mini-grid">
+                <div class="mini-item"><span class="mini-label">Beli</span><span class="mini-val" id="mini-emas-beli">-</span></div>
+                <div class="mini-item"><span class="mini-label">Spread</span><span class="mini-val" id="mini-spread">-</span></div>
+                <div class="mini-item"><span class="mini-label">UBS</span><span class="mini-val" id="mini-ubs">-</span></div>
+            </div>
+        </div>
 
-                    <!-- Crypto Card -->
-                    <div class="card card-crypto">
-                        <div class="card-header">
-                            <h3>🪙 Crypto Today</h3>
-                            <i class="fas fa-chevron-right"></i>
-                        </div>
-                        <div class="card-body">
-                            <p class="card-label">Market Cap</p>
-                            <p id="crypto-mcap" class="card-value">-</p>
-                            <div class="card-mini-items">
-                                <div class="mini-item">
-                                    <span>BTC</span>
-                                    <span id="mini-btc" class="mini-value">-</span>
-                                </div>
-                                <div class="mini-item">
-                                    <span>ETH</span>
-                                    <span id="mini-eth" class="mini-value">-</span>
-                                </div>
-                                <div class="mini-item">
-                                    <span>SOL</span>
-                                    <span id="mini-sol" class="mini-value">-</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <!-- IHSG -->
+        <div class="stat-card green">
+            <div class="stat-label">📈 IHSG</div>
+            <div class="stat-value" id="overview-ihsg">-</div>
+            <div class="stat-sub" id="overview-ihsg-sub">-</div>
+        </div>
 
-                    <!-- Emas Card -->
-                    <div class="card card-emas">
-                        <div class="card-header">
-                            <h3>💰 Harga Emas</h3>
-                            <i class="fas fa-chevron-right"></i>
-                        </div>
-                        <div class="card-body">
-                            <p class="card-label">Antam 1gr</p>
-                            <p id="emas-price" class="card-value">-</p>
-                            <div class="card-mini-items">
-                                <div class="mini-item">
-                                    <span>Beli</span>
-                                    <span id="mini-emas-beli" class="mini-value">-</span>
-                                </div>
-                                <div class="mini-item">
-                                    <span>Buyback</span>
-                                    <span id="mini-emas-back" class="mini-value">-</span>
-                                </div>
-                                <div class="mini-item">
-                                    <span>Spread</span>
-                                    <span id="mini-spread" class="mini-value">-</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <!-- Kurs -->
+        <div class="stat-card purple">
+            <div class="stat-label">💱 USD/IDR</div>
+            <div class="stat-value" id="overview-usd">-</div>
+            <div class="stat-sub">EUR: <span id="overview-eur">-</span> | SGD: <span id="overview-sgd">-</span></div>
+        </div>
 
-                <!-- Charts Section -->
-                <div class="charts-section">
-                    <div class="chart-container">
-                        <h3>📈 Crypto 24h Changes</h3>
-                        <canvas id="cryptoChart"></canvas>
-                    </div>
-                    <div class="chart-container">
-                        <h3>💰 Emas Price Trend</h3>
-                        <canvas id="emasChart"></canvas>
-                    </div>
-                </div>
-            </section>
+        <!-- Minyak -->
+        <div class="stat-card red">
+            <div class="stat-label">🛢️ Minyak Brent</div>
+            <div class="stat-value" id="overview-brent">-</div>
+            <div class="stat-sub">WTI: <span id="overview-wti">-</span></div>
+        </div>
+    </div>
 
-            <!-- Sembako Tab -->
-            <section class="tab-content" id="sembako">
-                <div class="data-table">
-                    <h2>🛒 Harga Sembako Terbaru</h2>
-                    <div style="overflow-x: auto;">
-                    <table id="sembako-table">
-                        <thead>
-                            <tr>
-                                <th>Tanggal</th>
-                                <th>Beras Prem</th>
-                                <th>Beras Med</th>
-                                <th>Minyak Gor</th>
-                                <th>Gula</th>
-                                <th>Garam Bata</th>
-                                <th>Cabai Merah</th>
-                                <th>Cabai Rawit</th>
-                                <th>Bawang Merah</th>
-                                <th>Bawang Putih</th>
-                                <th>Telur Ras</th>
-                                <th>Telur Kamp</th>
-                                <th>Ayam Ras</th>
-                                <th>Ayam Kamp</th>
-                                <th>Daging Sapi</th>
-                                <th>Gas Elpiji</th>
-                                <th>Susu KM Bend</th>
-                                <th>Susu KM Indo</th>
-                            </tr>
-                        </thead>
-                        <tbody id="sembako-tbody">
-                            <tr><td colspan="18" class="loading">Loading...</td></tr>
-                        </tbody>
-                    </table>
-                    </div>
-                </div>
-            </section>
+    <!-- Charts -->
+    <div class="chart-row">
+        <div class="chart-card">
+            <h3>📈 Crypto 7 Hari</h3>
+            <canvas id="cryptoChart"></canvas>
+        </div>
+        <div class="chart-card">
+            <h3>💰 Emas 30 Hari</h3>
+            <canvas id="emasChart"></canvas>
+        </div>
+    </div>
+</section>
 
-            <!-- Crypto Tab -->
-            <section class="tab-content" id="crypto">
-                <div class="data-table">
-                    <div class="table-controls">
-                        <button class="filter-btn active" data-sort="desc">Terbaru</button>
-                        <button class="filter-btn" data-sort="asc">Terlama</button>
-                        <input type="date" id="crypto-date-start" placeholder="Dari tanggal">
-                        <input type="date" id="crypto-date-end" placeholder="Sampai tanggal">
-                    </div>
-                    <h2>🪙 Harga Crypto (OHLC)</h2>
-                    <table id="crypto-table">
-                        <thead>
-                            <tr>
-                                <th>Tanggal</th>
-                                <th>BTC (USD)</th>
-                                <th>BTC 24h</th>
-                                <th>ETH (USD)</th>
-                                <th>ETH 24h</th>
-                                <th>SOL (USD)</th>
-                                <th>SOL 24h</th>
-                                <th>Sentimen</th>
-                            </tr>
-                        </thead>
-                        <tbody id="crypto-tbody">
-                            <tr><td colspan="8" class="loading">Loading...</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
+<!-- ============ SEMBAKO ============ -->
+<section class="tab-content" id="sembako">
+    <div class="page-header"><h2>🛒 Harga Sembako</h2><p>Harga kebutuhan pokok harian</p></div>
+    <div class="table-card">
+        <div class="table-header">
+            <h3>Data Harga</h3>
+            <div class="table-controls">
+                <input type="text" class="search-box" placeholder="🔍 Cari..." id="sembako-search" oninput="searchTable('sembako')">
+                <button class="filter-btn active" data-sort="desc" onclick="sortTable('sembako','desc',this)">Terbaru</button>
+                <button class="filter-btn" data-sort="asc" onclick="sortTable('sembako','asc',this)">Terlama</button>
+            </div>
+        </div>
+        <div class="table-scroll">
+            <table><thead><tr>
+                <th>Tanggal</th><th>Beras Prem</th><th>Beras Med</th><th>Minyak Gor</th><th>Gula</th>
+                <th>Cabai Merah</th><th>Cabai Rawit</th><th>Bawang Merah</th><th>Bawang Putih</th>
+                <th>Telur Ras</th><th>Ayam Ras</th><th>Ayam Kamp</th><th>Daging Sapi</th><th>Gas Elpiji</th>
+            </tr></thead>
+            <tbody id="sembako-tbody"><tr><td colspan="14" class="loading-cell">Loading...</td></tr></tbody></table>
+        </div>
+    </div>
+</section>
 
-            <!-- Emas Tab -->
-            <section class="tab-content" id="emas">
-                <div class="data-table">
-                    <div class="table-controls">
-                        <button class="filter-btn active" data-sort="desc">Terbaru</button>
-                        <button class="filter-btn" data-sort="asc">Terlama</button>
-                        <input type="date" id="emas-date-start" placeholder="Dari tanggal">
-                        <input type="date" id="emas-date-end" placeholder="Sampai tanggal">
-                    </div>
-                    <h2>💰 Harga Emas</h2>
-                    <table id="emas-table">
-                        <thead>
-                            <tr>
-                                <th>Tanggal</th>
-                                <th>Antam Beli</th>
-                                <th>Antam Buyback</th>
-                                <th>Pegadaian</th>
-                                <th>Galeri24</th>
-                                <th>UBS Beli</th>
-                                <th>Selisih</th>
-                                <th>Spread %</th>
-                            </tr>
-                        </thead>
-                        <tbody id="emas-tbody">
-                            <tr><td colspan="8" class="loading">Loading...</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
+<!-- ============ PAKAN ============ -->
+<section class="tab-content" id="pakan">
+    <div class="page-header"><h2>🌽 Harga Bahan Pakan</h2><p>Harga bahan pakan ternak</p></div>
+    <div class="table-card">
+        <div class="table-header">
+            <h3>Data Harga Pakan</h3>
+            <div class="table-controls">
+                <input type="text" class="search-box" placeholder="🔍 Cari..." id="pakan-search" oninput="searchTable('pakan')">
+                <button class="filter-btn active" data-sort="desc" onclick="sortTable('pakan','desc',this)">Terbaru</button>
+                <button class="filter-btn" data-sort="asc" onclick="sortTable('pakan','asc',this)">Terlama</button>
+            </div>
+        </div>
+        <div class="table-scroll">
+            <table><thead><tr>
+                <th>Tanggal</th><th>Jagung</th><th>Bungkil Kedelai</th><th>Dedak Padi</th>
+                <th>Tepung Ikan</th><th>Pollard</th><th>Molases</th><th>Bungkil Kelapa</th>
+                <th>Bungkil Sawit</th><th>Ampas Tahu</th><th>Onggok</th><th>Sorgum</th>
+            </tr></thead>
+            <tbody id="pakan-tbody"><tr><td colspan="12" class="loading-cell">Loading...</td></tr></tbody></table>
+        </div>
+    </div>
+</section>
 
-            <!-- Pertanian Tab -->
-            <section class="tab-content" id="pertanian">
-                <div class="data-table">
-                    <h2>🌾 Harga Pertanian & Ternak</h2>
-                    <table id="pertanian-table">
-                        <thead>
-                            <tr>
-                                <th>Tanggal</th>
-                                <th>Jagung Pipil</th>
-                                <th>Jagung Pakan</th>
-                                <th>Kedelai Impor</th>
-                                <th>Kedelai Lokal</th>
-                                <th>Pakan Broiler</th>
-                                <th>Pakan Layer</th>
-                                <th>Bungkil Kedelai</th>
-                                <th>Jagung Giling</th>
-                            </tr>
-                        </thead>
-                        <tbody id="pertanian-tbody">
-                            <tr><td colspan="9" class="loading">Loading...</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
+<!-- ============ PERTANIAN ============ -->
+<section class="tab-content" id="pertanian">
+    <div class="page-header"><h2>🌾 Harga Pertanian</h2><p>Harga komoditas pertanian dan bahan pakan</p></div>
+    <div class="table-card">
+        <div class="table-header">
+            <h3>Data Pertanian</h3>
+            <div class="table-controls">
+                <input type="text" class="search-box" placeholder="🔍 Cari..." id="pertanian-search" oninput="searchTable('pertanian')">
+                <button class="filter-btn active" data-sort="desc" onclick="sortTable('pertanian','desc',this)">Terbaru</button>
+                <button class="filter-btn" data-sort="asc" onclick="sortTable('pertanian','asc',this)">Terlama</button>
+            </div>
+        </div>
+        <div class="table-scroll">
+            <table><thead><tr>
+                <th>Tanggal</th><th>Jagung Pipil</th><th>Jagung Pakan</th><th>Kedelai Impor</th>
+                <th>Kedelai Lokal</th><th>Pakan Broiler</th><th>Pakan Layer</th>
+                <th>Bungkil Kedelai</th><th>Jagung Giling</th>
+            </tr></thead>
+            <tbody id="pertanian-tbody"><tr><td colspan="9" class="loading-cell">Loading...</td></tr></tbody></table>
+        </div>
+    </div>
+</section>
 
-            <!-- Peternakan Tab -->
-            <section class="tab-content" id="peternakan">
-                <div class="data-table">
-                    <h2>🐔 Data Peternakan (Hulu → Hilir)</h2>
-                    <div class="filter-buttons">
-                        <button class="filter-btn active" data-filter="all">Semua</button>
-                        <button class="filter-btn" data-filter="HULU">Hulu</button>
-                        <button class="filter-btn" data-filter="INDUSTRI">Industri</button>
-                        <button class="filter-btn" data-filter="HILIR">Hilir</button>
-                        <button class="filter-btn" data-filter="ANALISIS">Analisis</button>
-                    </div>
-                    <table id="peternakan-table">
-                        <thead>
-                            <tr>
-                                <th>Kategori</th>
-                                <th>Sub Kategori</th>
-                                <th>Produk</th>
-                                <th>Harga (Rp)</th>
-                                <th>Satuan</th>
-                                <th>Sumber</th>
-                            </tr>
-                        </thead>
-                        <tbody id="peternakan-tbody">
-                            <tr><td colspan="6" class="loading">Loading...</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
+<!-- ============ PETERNAKAN ============ -->
+<section class="tab-content" id="peternakan">
+    <div class="page-header"><h2>🐔 Data Peternakan</h2><p>Hulu → Industri → Hilir</p></div>
+    <div class="table-card">
+        <div class="table-header">
+            <h3>Semua Data</h3>
+            <div class="table-controls">
+                <button class="filter-btn active" onclick="filterPeternakan('all',this)">Semua</button>
+                <button class="filter-btn" onclick="filterPeternakan('HULU',this)">Hulu</button>
+                <button class="filter-btn" onclick="filterPeternakan('INDUSTRI',this)">Industri</button>
+                <button class="filter-btn" onclick="filterPeternakan('HILIR',this)">Hilir</button>
+                <button class="filter-btn" onclick="filterPeternakan('ANALISIS',this)">Analisis</button>
+            </div>
+        </div>
+        <div class="table-scroll">
+            <table><thead><tr>
+                <th>Kategori</th><th>Sub Kategori</th><th>Produk</th><th>Harga (Rp)</th><th>Satuan</th><th>Sumber</th>
+            </tr></thead>
+            <tbody id="peternakan-tbody"><tr><td colspan="6" class="loading-cell">Loading...</td></tr></tbody></table>
+        </div>
+    </div>
+</section>
 
-            <!-- Pakan Tab -->
-            <section class="tab-content" id="pakan">
-                <div class="dashboard-grid">
-                    <div class="card" style="grid-column: 1/-1;">
-                        <h2>🌽 Harga Bahan Pakan Ternak</h2>
-                        <div id="pakan-update" class="last-update">Loading...</div>
-                        <div class="table-responsive">
-                            <table class="data-table" id="pakan-table">
-                                <thead>
-                                    <tr>
-                                        <th>Tanggal</th>
-                                        <th>Jagung Pipilan</th>
-                                        <th>Bungkil Kedelai</th>
-                                        <th>Dedak Padi</th>
-                                        <th>Tepung Ikan</th>
-                                        <th>Pollard</th>
-                                        <th>Biji Kapuk</th>
-                                        <th>Tepung Darah</th>
-                                        <th>Tepung Tulang</th>
-                                        <th>Molases</th>
-                                        <th>Bungkil Kelapa</th>
-                                        <th>Gaplek</th>
-                                        <th>Bungkil Sawit</th>
-                                        <th>Ampas Tahu</th>
-                                        <th>Tepung Bulu Ayam</th>
-                                        <th>Kulit Kentang</th>
-                                        <th>Onggok</th>
-                                        <th>Bungkil Kacang Tanah</th>
-                                        <th>Dedak Halus</th>
-                                        <th>Sorgum</th>
-                                        <th>Menir</th>
-                                        <th>Corn Gluten</th>
-                                        <th>Rice Polish</th>
-                                        <th>Mung Bean Husk</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="pakan-tbody">
-                                    <tr><td colspan="24" class="loading">Loading...</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </section>
+<!-- ============ CRYPTO ============ -->
+<section class="tab-content" id="crypto">
+    <div class="page-header"><h2>🪙 Crypto Market</h2><p>Data OHLC harian BTC, ETH, SOL</p></div>
+    <div class="table-card">
+        <div class="table-header">
+            <h3>Harga OHLC</h3>
+            <div class="table-controls">
+                <button class="filter-btn active" onclick="sortTable('crypto','desc',this)">Terbaru</button>
+                <button class="filter-btn" onclick="sortTable('crypto','asc',this)">Terlama</button>
+                <input type="date" id="crypto-date-start" onchange="filterByDate('crypto')">
+                <input type="date" id="crypto-date-end" onchange="filterByDate('crypto')">
+            </div>
+        </div>
+        <div class="table-scroll">
+            <table><thead><tr>
+                <th>Tanggal</th><th>BTC (USD)</th><th>BTC 24h</th><th>ETH (USD)</th><th>ETH 24h</th>
+                <th>SOL (USD)</th><th>SOL 24h</th><th>Sentimen</th>
+            </tr></thead>
+            <tbody id="crypto-tbody"><tr><td colspan="8" class="loading-cell">Loading...</td></tr></tbody></table>
+        </div>
+    </div>
+</section>
 
-            <!-- Saham Tab -->
-            <section class="tab-content" id="saham">
-                <div class="dashboard-grid">
-                    <!-- IHSG Summary -->
-                    <div class="card">
-                        <h3>📊 IHSG (Jakarta Composite)</h3>
-                        <div id="ihsg-summary">
-                            <div class="metric-large">
-                                <span class="metric-value" id="ihsg-value">-</span>
-                                <span class="metric-change" id="ihsg-change">-</span>
-                            </div>
-                            <div class="metric-row">
-                                <span>High:</span> <span id="ihsg-high">-</span>
-                                <span>Low:</span> <span id="ihsg-low">-</span>
-                            </div>
-                        </div>
-                    </div>
+<!-- ============ EMAS ============ -->
+<section class="tab-content" id="emas">
+    <div class="page-header"><h2>💰 Harga Emas</h2><p>Antam, Pegadaian, Galeri24, UBS</p></div>
+    <div class="table-card">
+        <div class="table-header">
+            <h3>Riwayat Harga</h3>
+            <div class="table-controls">
+                <button class="filter-btn active" onclick="sortTable('emas','desc',this)">Terbaru</button>
+                <button class="filter-btn" onclick="sortTable('emas','asc',this)">Terlama</button>
+                <input type="date" id="emas-date-start" onchange="filterByDate('emas')">
+                <input type="date" id="emas-date-end" onchange="filterByDate('emas')">
+            </div>
+        </div>
+        <div class="table-scroll">
+            <table><thead><tr>
+                <th>Tanggal</th><th>Antam Beli</th><th>Antam Buyback</th><th>Pegadaian</th>
+                <th>Galeri24</th><th>UBS</th><th>Selisih</th><th>Spread %</th>
+            </tr></thead>
+            <tbody id="emas-tbody"><tr><td colspan="8" class="loading-cell">Loading...</td></tr></tbody></table>
+        </div>
+    </div>
+</section>
 
-                    <!-- Sektor Performance -->
-                    <div class="card">
-                        <h3>🏢 Sektor Performance</h3>
-                        <div id="sektor-list" class="sektor-list">
-                            <div class="loading">Loading...</div>
-                        </div>
-                    </div>
+<!-- ============ SAHAM ============ -->
+<section class="tab-content" id="saham">
+    <div class="page-header"><h2>📈 Saham Indonesia</h2><p>IHSG, Bluechip LQ45, Sektor</p></div>
 
-                    <!-- Watchlist Saham Turun -->
-                    <div class="card">
-                        <h3>🔴 Watchlist - Turun & Potensi</h3>
-                        <table class="data-table compact">
-                            <thead>
-                                <tr>
-                                    <th>Symbol</th>
-                                    <th>Nama</th>
-                                    <th>Harga</th>
-                                    <th>RSI</th>
-                                    <th>Rec</th>
-                                </tr>
-                            </thead>
-                            <tbody id="watchlist-tbody">
-                                <tr><td colspan="5" class="loading">Loading...</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Bluechip Table -->
-                <div class="data-table">
-                    <h3>💹 Saham Bluechip LQ45</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Symbol</th>
-                                <th>Nama</th>
-                                <th>Sektor</th>
-                                <th>Harga</th>
-                                <th>Change</th>
-                                <th>RSI</th>
-                                <th>Trend</th>
-                                <th>Signal</th>
-                                <th>Rec</th>
-                            </tr>
-                        </thead>
-                        <tbody id="bluechip-tbody">
-                            <tr><td colspan="9" class="loading">Loading...</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <!-- Sentimen Berita Tab -->
-            <section class="tab-content" id="sentimen">
-                <div class="dashboard-grid">
-                    <div class="card" style="grid-column: 1/-1;">
-                        <h2>📰 Berita Terkini & Sentimen</h2>
-                        <div class="table-responsive">
-                            <table class="data-table" id="sentimen-table">
-                                <thead>
-                                    <tr>
-                                        <th>Tanggal & Waktu</th>
-                                        <th>Keyword</th>
-                                        <th>Headline</th>
-                                        <th>Sentimen & Skor</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="sentimen-tbody">
-                                    <tr><td colspan="4" class="loading">Loading...</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Kurs Tab -->
-            <section class="tab-content" id="kurs">
-                <div class="cards-grid">
-                    <div class="card card-kurs">
-                        <div class="card-header"><h3>💱 Kurs USD/IDR</h3></div>
-                        <div class="card-body">
-                            <p class="card-label">Last Update</p>
-                            <p id="kurs-date" class="card-value">-</p>
-                            <div class="card-mini-items">
-                                <div class="mini-item"><span>🇺🇸 USD</span><span id="kurs-usd" class="mini-value">-</span></div>
-                                <div class="mini-item"><span>🇪🇺 EUR</span><span id="kurs-eur" class="mini-value">-</span></div>
-                                <div class="mini-item"><span>🇸🇬 SGD</span><span id="kurs-sgd" class="mini-value">-</span></div>
-                                <div class="mini-item"><span>🇲🇾 MYR</span><span id="kurs-myr" class="mini-value">-</span></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="chart-container">
-                    <h3>💱 Kurs Trend</h3>
-                    <canvas id="kursChart"></canvas>
-                </div>
-            </section>
-
-            <!-- Minyak Tab -->
-            <section class="tab-content" id="minyak">
-                <div class="cards-grid">
-                    <div class="card card-minyak">
-                        <div class="card-header"><h3>🛢️ Minyak Mentah</h3></div>
-                        <div class="card-body">
-                            <p class="card-label">Last Update</p>
-                            <p id="minyak-date" class="card-value">-</p>
-                            <div class="card-mini-items">
-                                <div class="mini-item"><span>Brent</span><span id="minyak-brent" class="mini-value">-</span></div>
-                                <div class="mini-item"><span>WTI</span><span id="minyak-wti" class="mini-value">-</span></div>
-                                <div class="mini-item"><span>Selisih</span><span id="minyak-selisih" class="mini-value">-</span></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="chart-container">
-                    <h3>🛢️ Minyak Trend</h3>
-                    <canvas id="minyakChart"></canvas>
-                </div>
-            </section>
-
-            <!-- BI Rate Tab -->
-            <section class="tab-content" id="bi-rate">
-                <div class="cards-grid">
-                    <div class="card card-bi">
-                        <div class="card-header"><h3>🏦 Bank Indonesia</h3></div>
-                        <div class="card-body">
-                            <p class="card-label">Last Update</p>
-                            <p id="bi-date" class="card-value">-</p>
-                            <div class="card-mini-items">
-                                <div class="mini-item"><span>BI Rate</span><span id="bi-rate-val" class="mini-value">-</span></div>
-                                <div class="mini-item"><span>Inflasi MoM</span><span id="bi-mom" class="mini-value">-</span></div>
-                                <div class="mini-item"><span>Inflasi YoY</span><span id="bi-yoy" class="mini-value">-</span></div>
-                                <div class="mini-item"><span>IHK</span><span id="bi-ihk" class="mini-value">-</span></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="chart-container">
-                    <h3>🏦 Inflasi Trend</h3>
-                    <canvas id="biChart"></canvas>
-                </div>
-            </section>
-
-            <!-- CPO Tab -->
-            <section class="tab-content" id="cpo">
-                <div class="cards-grid">
-                    <div class="card card-cpo">
-                        <div class="card-header"><h3>🌴 CPO (Kelapa Sawit)</h3></div>
-                        <div class="card-body">
-                            <p class="card-label">Last Update</p>
-                            <p id="cpo-date" class="card-value">-</p>
-                            <div class="card-mini-items">
-                                <div class="mini-item"><span>MYR/ton</span><span id="cpo-myr" class="mini-value">-</span></div>
-                                <div class="mini-item"><span>IDR/kg</span><span id="cpo-idr" class="mini-value">-</span></div>
-                                <div class="mini-item"><span>Perubahan</span><span id="cpo-chg" class="mini-value">-</span></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="chart-container">
-                    <h3>🌴 CPO Trend</h3>
-                    <canvas id="cpoChart"></canvas>
-                </div>
-            </section>
-
-            <!-- Alerts Tab -->
-            <section class="tab-content" id="alerts">
-                <div class="dashboard-grid">
-                    <div class="card" style="grid-column: 1/-1;">
-                        <h2>🚨 Price Alerts</h2>
-                        <p class="subtitle">Perubahan harga signifikan yang terdeteksi</p>
-                        <div id="alerts-list">
-                            <p class="hint">Belum ada alerts. Alerts akan muncul saat ada perubahan harga signifikan.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- AI Analysis Tab -->
-            <section class="tab-content" id="ai-analysis">
-                <div class="card">
-                    <h3>🤖 AI Market Analysis (Powered by Groq)</h3>
-                    <p class="subtitle">Analisis otomatis dari semua data market menggunakan AI</p>
-                    <button class="btn btn-primary" onclick="openAiAnalysis()">🔍 Get AI Analysis</button>
-                    <div id="ai-analysis-content" class="ai-result">
-                        <p class="hint">Klik tombol di atas untuk mendapatkan analisis AI</p>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h3>📊 Market Summary</h3>
-                    <div class="summary-grid">
-                        <div class="summary-item">
-                            <span class="summary-label">IHSG</span>
-                            <span class="summary-value" id="ai-ihsg">-</span>
-                        </div>
-                        <div class="summary-item">
-                            <span class="summary-label">Top Mover</span>
-                            <span class="summary-value" id="ai-top-mover">-</span>
-                        </div>
-                        <div class="summary-item">
-                            <span class="summary-label">BTC</span>
-                            <span class="summary-value" id="ai-btc">-</span>
-                        </div>
-                        <div class="summary-item">
-                            <span class="summary-label">Emas 1gr</span>
-                            <span class="summary-value" id="ai-emas">-</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h3>💡 Quick Recommendations</h3>
-                    <div id="ai-recommendations">
-                        <p class="hint">Dapatkan AI Analysis untuk melihat rekomendasi</p>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <p>📊 Dashboard Bot Adioranye v1.0 | Last updated: <span id="footer-time">-</span></p>
-        </footer>
-
-        <!-- AI Analysis Modal -->
-        <div id="ai-modal" class="modal">
-            <div class="modal-content">
-                <span class="modal-close" onclick="closeAiModal()">&times;</span>
-                <h2>🤖 AI Market Analysis</h2>
-                <div id="ai-loading" class="loading">Mengambil analisis dari Groq AI...</div>
-                <div id="ai-result"></div>
-                <button class="btn" onclick="refreshAiAnalysis()">🔄 Refresh Analysis</button>
+    <div class="cards-grid">
+        <div class="stat-card green">
+            <div class="stat-label">📊 IHSG</div>
+            <div class="stat-value" id="ihsg-value">-</div>
+            <div class="stat-sub"><span id="ihsg-change">-</span></div>
+            <div class="mini-grid">
+                <div class="mini-item"><span class="mini-label">High</span><span class="mini-val" id="ihsg-high">-</span></div>
+                <div class="mini-item"><span class="mini-label">Low</span><span class="mini-val" id="ihsg-low">-</span></div>
+                <div class="mini-item"><span class="mini-label">Vol</span><span class="mini-val" id="ihsg-vol">-</span></div>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-    <script src="/static/js/script.js?v=2.0"></script>
+    <div class="table-card">
+        <div class="table-header">
+            <h3>Saham Bluechip LQ45</h3>
+        </div>
+        <div class="table-scroll">
+            <table><thead><tr>
+                <th>Symbol</th><th>Nama</th><th>Sektor</th><th>Harga</th><th>Change</th>
+                <th>RSI</th><th>Trend</th><th>Signal</th><th>Rec</th>
+            </tr></thead>
+            <tbody id="bluechip-tbody"><tr><td colspan="9" class="loading-cell">Loading...</td></tr></tbody></table>
+        </div>
+    </div>
+
+    <div class="table-card">
+        <div class="table-header"><h3>🔴 Watchlist</h3></div>
+        <div class="table-scroll">
+            <table><thead><tr>
+                <th>Symbol</th><th>Nama</th><th>Harga</th><th>RSI</th><th>Rec</th>
+            </tr></thead>
+            <tbody id="watchlist-tbody"><tr><td colspan="5" class="loading-cell">Loading...</td></tr></tbody></table>
+        </div>
+    </div>
+</section>
+
+<!-- ============ KURS ============ -->
+<section class="tab-content" id="kurs">
+    <div class="page-header"><h2>💱 Kurs Valuta Asing</h2><p>USD, EUR, SGD, MYR terhadap Rupiah</p></div>
+    <div class="cards-grid">
+        <div class="stat-card blue">
+            <div class="stat-label">🇺🇸 USD/IDR</div>
+            <div class="stat-value" id="kurs-usd">-</div>
+            <div class="stat-sub">Update: <span id="kurs-date">-</span></div>
+            <div class="mini-grid">
+                <div class="mini-item"><span class="mini-label">🇪🇺 EUR</span><span class="mini-val" id="kurs-eur">-</span></div>
+                <div class="mini-item"><span class="mini-label">🇸🇬 SGD</span><span class="mini-val" id="kurs-sgd">-</span></div>
+                <div class="mini-item"><span class="mini-label">🇲🇾 MYR</span><span class="mini-val" id="kurs-myr">-</span></div>
+            </div>
+        </div>
+    </div>
+    <div class="chart-card">
+        <h3>💱 Kurs Trend</h3>
+        <canvas id="kursChart"></canvas>
+    </div>
+</section>
+
+<!-- ============ MINYAK ============ -->
+<section class="tab-content" id="minyak">
+    <div class="page-header"><h2>🛢️ Minyak Mentah</h2><p>Brent & WTI Crude Oil</p></div>
+    <div class="cards-grid">
+        <div class="stat-card red">
+            <div class="stat-label">🛢️ Brent Crude</div>
+            <div class="stat-value" id="minyak-brent">-</div>
+            <div class="stat-sub">Update: <span id="minyak-date">-</span></div>
+            <div class="mini-grid">
+                <div class="mini-item"><span class="mini-label">WTI</span><span class="mini-val" id="minyak-wti">-</span></div>
+                <div class="mini-item"><span class="mini-label">Selisih</span><span class="mini-val" id="minyak-selisih">-</span></div>
+            </div>
+        </div>
+    </div>
+    <div class="chart-card">
+        <h3>🛢️ Minyak Trend</h3>
+        <canvas id="minyakChart"></canvas>
+    </div>
+</section>
+
+<!-- ============ BI RATE ============ -->
+<section class="tab-content" id="bi-rate">
+    <div class="page-header"><h2>🏦 Bank Indonesia</h2><p>Suku Bunga Acuan & Inflasi</p></div>
+    <div class="cards-grid">
+        <div class="stat-card purple">
+            <div class="stat-label">🏦 BI Rate</div>
+            <div class="stat-value" id="bi-rate-val">-</div>
+            <div class="stat-sub">Update: <span id="bi-date">-</span></div>
+            <div class="mini-grid">
+                <div class="mini-item"><span class="mini-label">Inflasi MoM</span><span class="mini-val" id="bi-mom">-</span></div>
+                <div class="mini-item"><span class="mini-label">Inflasi YoY</span><span class="mini-val" id="bi-yoy">-</span></div>
+                <div class="mini-item"><span class="mini-label">IHK</span><span class="mini-val" id="bi-ihk">-</span></div>
+            </div>
+        </div>
+    </div>
+    <div class="chart-card">
+        <h3>📉 Inflasi Trend</h3>
+        <canvas id="biChart"></canvas>
+    </div>
+</section>
+
+<!-- ============ CPO ============ -->
+<section class="tab-content" id="cpo">
+    <div class="page-header"><h2>🌴 CPO (Kelapa Sawit)</h2><p>Harga CPO Malaysia & Indonesia</p></div>
+    <div class="cards-grid">
+        <div class="stat-card orange">
+            <div class="stat-label">🌴 CPO MYR/ton</div>
+            <div class="stat-value" id="cpo-myr">-</div>
+            <div class="stat-sub">Update: <span id="cpo-date">-</span></div>
+            <div class="mini-grid">
+                <div class="mini-item"><span class="mini-label">IDR/kg</span><span class="mini-val" id="cpo-idr">-</span></div>
+                <div class="mini-item"><span class="mini-label">% Change</span><span class="mini-val" id="cpo-chg">-</span></div>
+            </div>
+        </div>
+    </div>
+    <div class="chart-card">
+        <h3>🌴 CPO Trend</h3>
+        <canvas id="cpoChart"></canvas>
+    </div>
+</section>
+
+<!-- ============ ALERTS ============ -->
+<section class="tab-content" id="alerts">
+    <div class="page-header"><h2>🚨 Price Alerts</h2><p>Perubahan harga signifikan</p></div>
+    <div class="table-card">
+        <div class="table-header"><h3>Alerts</h3></div>
+        <div id="alerts-list" style="padding:20px;color:var(--text3)">Belum ada alerts</div>
+    </div>
+</section>
+
+<!-- ============ SENTIMEN ============ -->
+<section class="tab-content" id="sentimen">
+    <div class="page-header"><h2>📰 Sentimen Berita</h2><p>Analisis sentimen otomatis dari berita terkini</p></div>
+    <div class="table-card">
+        <div class="table-header">
+            <h3>Berita Terkini</h3>
+            <div class="table-controls">
+                <input type="text" class="search-box" placeholder="🔍 Cari berita..." id="sentimen-search" oninput="searchTable('sentimen')">
+            </div>
+        </div>
+        <div class="table-scroll">
+            <table><thead><tr>
+                <th>Waktu</th><th>Keyword</th><th>Headline</th><th>Sentimen</th><th>Skor</th><th>Sumber</th>
+            </tr></thead>
+            <tbody id="sentimen-tbody"><tr><td colspan="6" class="loading-cell">Loading...</td></tr></tbody></table>
+        </div>
+    </div>
+</section>
+
+<!-- ============ AI ANALYSIS ============ -->
+<section class="tab-content" id="ai-analysis">
+    <div class="page-header"><h2>🤖 AI Market Analysis</h2><p>Powered by Groq — Analisis otomatis dari seluruh data market</p></div>
+
+    <div class="cards-grid">
+        <div class="stat-card blue">
+            <div class="stat-label">IHSG</div>
+            <div class="stat-value" id="ai-ihsg">-</div>
+        </div>
+        <div class="stat-card orange">
+            <div class="stat-label">Top Mover</div>
+            <div class="stat-value" id="ai-top-mover" style="font-size:16px">-</div>
+        </div>
+        <div class="stat-card gold">
+            <div class="stat-label">BTC</div>
+            <div class="stat-value" id="ai-btc">-</div>
+        </div>
+        <div class="stat-card purple">
+            <div class="stat-label">Emas 1gr</div>
+            <div class="stat-value" id="ai-emas">-</div>
+        </div>
+    </div>
+
+    <div class="table-card">
+        <div class="table-header">
+            <h3>Analisis AI</h3>
+            <button class="ai-btn" onclick="openAiAnalysis()">🔍 Run Analysis</button>
+        </div>
+        <div id="ai-analysis-content" class="ai-result" style="margin:0;border:none;border-radius:0">
+            Klik tombol untuk menjalankan analisis
+        </div>
+    </div>
+
+    <div class="table-card">
+        <div class="table-header"><h3>💡 Rekomendasi</h3></div>
+        <div id="ai-recommendations" style="padding:20px;color:var(--text3)">
+            Jalankan analisis untuk melihat rekomendasi
+        </div>
+    </div>
+</section>
+
+</div><!-- /main -->
+
+<!-- FOOTER -->
+<div class="footer">📊 Dashboard Monitoring adioranye v2.0 &middot; <span id="footer-time">-</span></div>
+
+<!-- AI Modal -->
+<div id="ai-modal" class="modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;display:none;align-items:center;justify-content:center">
+    <div style="background:var(--surface);border-radius:12px;padding:24px;max-width:700px;width:90%;max-height:80vh;overflow-y:auto;position:relative">
+        <span onclick="closeAiModal()" style="position:absolute;top:12px;right:16px;cursor:pointer;font-size:24px;color:var(--text3)">&times;</span>
+        <h2 style="margin-bottom:16px">🤖 AI Market Analysis</h2>
+        <div id="ai-loading" class="loading-cell" style="display:none">Mengambil analisis dari Groq AI...</div>
+        <div id="ai-result" style="white-space:pre-wrap;font-size:13px;line-height:1.7"></div>
+        <button class="ai-btn" onclick="refreshAiAnalysis()" style="margin-top:16px">🔄 Refresh</button>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+<script src="/static/js/script.js?v=2.0"></script>
+<script>
+// ===== SIDEBAR NAVIGATION =====
+document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', function() {
+        const tab = this.dataset.tab;
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        this.classList.add('active');
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        const el = document.getElementById(tab);
+        if (el) el.classList.add('active');
+        // Close mobile sidebar
+        document.getElementById('sidebar').classList.remove('open');
+        document.getElementById('sidebar-overlay').classList.remove('show');
+    });
+});
+
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('sidebar-overlay').classList.toggle('show');
+}
+
+// ===== DARK MODE =====
+function toggleDarkMode() {
+    document.body.classList.toggle('dark');
+    localStorage.setItem('darkMode', document.body.classList.contains('dark'));
+}
+if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark');
+
+// ===== SEARCH TABLE =====
+function searchTable(prefix) {
+    const q = document.getElementById(prefix + '-search')?.value.toLowerCase() || '';
+    const tbody = document.getElementById(prefix + '-tbody');
+    if (!tbody) return;
+    Array.from(tbody.querySelectorAll('tr')).forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = !q || text.includes(q) ? '' : 'none';
+    });
+}
+
+// ===== FILTER PETERNAKAN =====
+function filterPeternakan(cat, btn) {
+    document.querySelectorAll('#peternakan .filter-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    const rows = document.querySelectorAll('#peternakan-tbody tr');
+    rows.forEach(row => {
+        if (cat === 'all') { row.style.display = ''; return; }
+        const kategori = row.cells[0]?.textContent.trim().toUpperCase();
+        row.style.display = kategori === cat ? '' : 'none';
+    });
+}
+
+// ===== TIME UPDATE =====
+function updateTime() {
+    const now = new Date();
+    const t = now.toLocaleTimeString('id-ID', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    document.getElementById('current-time').textContent = t;
+    document.getElementById('footer-time').textContent = now.toLocaleString('id-ID');
+}
+</script>
 </body>
 </html>
