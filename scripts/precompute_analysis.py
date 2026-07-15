@@ -830,6 +830,7 @@ def build_rule_analysis(history, indicators, correlations, anomalies, seasonal, 
 def call_groq(prompt, data_text):
     """Call Groq API with comprehensive data context."""
     import urllib.request
+    import urllib.error
     if not GROQ_API_KEY:
         return ""
 
@@ -882,9 +883,19 @@ Penting: Gunakan angka spesifik dari data. Jangan generalisasi."""
         },
     )
 
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        result = json.loads(resp.read())
-        return result["choices"][0]["message"]["content"]
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            result = json.loads(resp.read())
+            return result["choices"][0]["message"]["content"]
+    except urllib.error.HTTPError as e:
+        if e.code == 403:
+            print(f"{ts()} ⚠️ Groq 403 Forbidden — API key expired/invalid, using rule-based fallback")
+        else:
+            print(f"{ts()} ⚠️ Groq HTTP {e.code} — using rule-based fallback")
+        return ""
+    except Exception as e:
+        print(f"{ts()} ⚠️ Groq error: {e} — using rule-based fallback")
+        return ""
 
 
 def main():
@@ -943,7 +954,7 @@ def main():
         "generated_at": datetime.now().strftime("%d %b %Y, %H:%M"),
         "timestamp": datetime.now().isoformat(),
         "cached": False,
-        "refresh_in_seconds": 28800,
+        "refresh_in_seconds": 18000,  # 5 hours = cron interval
         "indicators_count": len(indicators),
         "correlations_count": len(correlations),
         "anomalies_count": len(anomalies),

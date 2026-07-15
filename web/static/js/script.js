@@ -414,10 +414,6 @@ async function loadPakanData() {
     if (!response || !response.data || response.data.length === 0) return;
 
     const data = response.data;
-    const latest = data[data.length - 1];
-
-    // Update last update
-    document.getElementById('pakan-update').textContent = response.last_update || formatDate(latest.tanggal);
 
     // Fill table
     const tbody = document.getElementById('pakan-tbody');
@@ -776,15 +772,21 @@ function renderIHSGSummary() {
 
     const latest = ihsgData[ihsgData.length - 1];
 
-    document.getElementById('ihsg-value').textContent = latest.ihsg ? latest.ihsg.toLocaleString('id-ID') : '-';
-    document.getElementById('ihsg-change').textContent = latest.change_pct ? (latest.change_pct > 0 ? '+' : '') + latest.change_pct + '%' : '-';
-    document.getElementById('ihsg-change').className = 'metric-change ' + (latest.change_pct > 0 ? 'positive' : 'negative');
-    document.getElementById('ihsg-high').textContent = latest.high ? latest.high.toLocaleString('id-ID') : '-';
-    document.getElementById('ihsg-low').textContent = latest.low ? latest.low.toLocaleString('id-ID') : '-';
+    function num(v) { return v != null ? Number(v).toLocaleString('id-ID') : '-'; }
+
+    const ihsgEl = document.getElementById('overview-ihsg');
+    const subEl = document.getElementById('overview-ihsg-sub');
+    if (ihsgEl) ihsgEl.textContent = num(latest.ihsg);
+    if (subEl) {
+        const chg = latest.change_pct != null ? (latest.change_pct > 0 ? '+' : '') + Number(latest.change_pct).toFixed(2) + '%' : '-';
+        const cls = latest.change_pct > 0 ? 'val-pos' : latest.change_pct < 0 ? 'val-neg' : '';
+        subEl.innerHTML = `<span class="${cls}">${chg}</span> · H: ${num(latest.high)} L: ${num(latest.low)}`;
+    }
 }
 
 function renderSektorList() {
     const container = document.getElementById('sektor-list');
+    if (!container) return; // element may not exist in HTML
     const sektorData = sahamData.sektor || [];
     if (sektorData.length === 0) {
         container.innerHTML = '<div class="loading">No data</div>';
