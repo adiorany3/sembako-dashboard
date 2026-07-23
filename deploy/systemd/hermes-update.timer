@@ -1,0 +1,10 @@
+[Unit]
+Description=Hermes Data Update Timer (every 2 hours)
+
+[Timer]
+OnCalendar=*:0/2
+Persistent=true
+RandomizedDelaySec=300
+
+[Install]
+WantedBy=timers.target

@@ -10,8 +10,16 @@ config.py
 .venv/
 logs/
 *.egg-info/
+# Runtime data (not committed)
+/data/analysis.db
+/sembako/
 # Data files in root only (keep data/ folder tracked)
 /*.xlsx
 /*.json
 /*.txt
 !README*
+!HERMES_SERVER_PRD.md
+!CHANGELOG_HERMES.md
+!BACKUP_MANIFEST.example.json
+!*.example.json
+!*.example

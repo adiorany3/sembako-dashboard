@@ -1,0 +1,20 @@
+[Unit]
+Description=Hermes Sembako Dashboard
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=hermes
+Group=hermes
+WorkingDirectory=/opt/hermes/sembako-dashboard
+EnvironmentFile=/etc/hermes-dashboard/hermes-dashboard.env
+ExecStart=/opt/hermes/sembako-dashboard/.venv/bin/gunicorn --workers 2 --bind 127.0.0.1:5000 --timeout 120 --access-logfile /var/log/hermes-dashboard/access.log --error-logfile /var/log/hermes-dashboard/error.log core.app:app
+Restart=always
+RestartSec=5
+TimeoutStopSec=30
+PrivateTmp=true
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

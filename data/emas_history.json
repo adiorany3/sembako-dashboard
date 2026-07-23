@@ -856,22 +856,6 @@
     "ubs": 2655000
   },
   {
-    "date": "2026-07-20",
-    "antam_beli": 2660000,
-    "antam_buyback": 2660000,
-    "antam_pegadaian": 2660000,
-    "galeri24": 2661000,
-    "ubs": 2655000
-  },
-  {
-    "date": "2026-07-20",
-    "antam_beli": 2660000,
-    "antam_buyback": 2660000,
-    "antam_pegadaian": 2660000,
-    "galeri24": 2661000,
-    "ubs": 2655000
-  },
-  {
     "date": "2026-07-21",
     "antam_beli": 2660000,
     "antam_buyback": 2660000,
@@ -2609,6 +2593,22 @@
   },
   {
     "date": "2026-07-22",
+    "antam_beli": 2640000,
+    "antam_buyback": 2633000,
+    "antam_pegadaian": 2640000,
+    "galeri24": 2641000,
+    "ubs": 2635000
+  },
+  {
+    "date": "2026-07-23",
+    "antam_beli": 2640000,
+    "antam_buyback": 2633000,
+    "antam_pegadaian": 2640000,
+    "galeri24": 2641000,
+    "ubs": 2635000
+  },
+  {
+    "date": "2026-07-23",
     "antam_beli": 2640000,
     "antam_buyback": 2633000,
     "antam_pegadaian": 2640000,

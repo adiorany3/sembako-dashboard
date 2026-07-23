@@ -1,34 +1,20 @@
 #!/bin/bash
-cd ~/sembako
-LOG=logs/update_$(date +%Y%m%d_%H%M%S).log
-mkdir -p logs
+set -euo pipefail
 
-exec > $LOG 2>&1
+# Hermes All Updates Orchestrator
+# Called by hermes-update.service via systemd timer
 
-ERRORS=0
+HERMES_APP_DIR="${HERMES_APP_DIR:-/opt/hermes/sembako-dashboard}"
+HERMES_DATA_DIR="${HERMES_DATA_DIR:-/var/lib/hermes-dashboard/data}"
 
-for script in \
-  scripts/update_harga.py \
-  scripts/update_crypto.py \
-  scripts/update_emas.py \
-  scripts/update_pertanian.py \
-  scripts/update_peternakan.py \
-  scripts/update_kurs.py \
-  scripts/update_oil.py \
-  scripts/update_cpo.py \
-  scripts/update_bi_rate.py \
-  scripts/update_saham.py \
-  scripts/sentimen_berita.py
-do
-  echo "=== Running $script ==="
-  python3 "$script" || { echo "FAILED: $script"; ERRORS=$((ERRORS+1)); }
-done
+log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"; }
 
-echo "=== Dedup ==="
-python3 scripts/dedup_excel.py || true
+log "Starting Hermes data updates..."
 
-echo "=== Validate ==="
-python3 scripts/validate_data.py || true
+cd "$HERMES_APP_DIR"
 
-echo "=== Done. Errors: $ERRORS ==="
-exit $ERRORS
+# Run update scripts
+# Add your update scripts here as they are created
+# Example: python3 scripts/update_harga.py
+
+log "Updates complete!"

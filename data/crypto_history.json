@@ -1,58 +1,6 @@
 [
   {
     "date": "2026-07-19",
-    "time": "05:00",
-    "prices": {
-      "btc_usd": 64522.0,
-      "btc_idr": 1157679061.0,
-      "btc_change": 0.69,
-      "eth_usd": 1856.87,
-      "eth_idr": 33316691.0,
-      "eth_change": 0.6,
-      "sol_usd": 75.33,
-      "sol_idr": 1351600.0,
-      "sol_change": 0.55,
-      "ada_usd": 0.165784,
-      "ada_idr": 2975.0,
-      "ada_change": -0.04
-    },
-    "sentiment": "NETRAL \u26aa",
-    "news": [
-      "\ud83d\udd25 Trending: ADI (ADI) \u2014 rank #1 on CoinGecko",
-      "\ud83d\udd25 Trending: Solana (SOL) \u2014 rank #2 on CoinGecko",
-      "\ud83d\udd25 Trending: Bittensor (TAO) \u2014 rank #3 on CoinGecko",
-      "\ud83d\udd25 Trending: Cash Cat (CASHCAT) \u2014 rank #4 on CoinGecko",
-      "\ud83d\udd25 Trending: Pudgy Penguins (PENGU) \u2014 rank #5 on CoinGecko"
-    ]
-  },
-  {
-    "date": "2026-07-19",
-    "time": "05:15",
-    "prices": {
-      "btc_usd": 64522.0,
-      "btc_idr": 1157678912.0,
-      "btc_change": 0.69,
-      "eth_usd": 1856.87,
-      "eth_idr": 33316686.0,
-      "eth_change": 0.6,
-      "sol_usd": 75.33,
-      "sol_idr": 1351600.0,
-      "sol_change": 0.55,
-      "ada_usd": 0.165784,
-      "ada_idr": 2975.0,
-      "ada_change": -0.04
-    },
-    "sentiment": "NETRAL \u26aa",
-    "news": [
-      "\ud83d\udd25 Trending: Pudgy Penguins (PENGU) \u2014 rank #1 on CoinGecko",
-      "\ud83d\udd25 Trending: Cash Cat (CASHCAT) \u2014 rank #2 on CoinGecko",
-      "\ud83d\udd25 Trending: Solana (SOL) \u2014 rank #3 on CoinGecko",
-      "\ud83d\udd25 Trending: Ondo (ONDO) \u2014 rank #4 on CoinGecko",
-      "\ud83d\udd25 Trending: ADI (ADI) \u2014 rank #5 on CoinGecko"
-    ]
-  },
-  {
-    "date": "2026-07-19",
     "time": "05:30",
     "prices": {
       "btc_usd": 64522.0,
@@ -9391,6 +9339,58 @@
       "\ud83d\udd25 Trending: Ondo (ONDO) \u2014 rank #3 on CoinGecko",
       "\ud83d\udd25 Trending: Hyperliquid (HYPE) \u2014 rank #4 on CoinGecko",
       "\ud83d\udd25 Trending: Canton (CC) \u2014 rank #5 on CoinGecko"
+    ]
+  },
+  {
+    "date": "2026-07-23",
+    "time": "08:15",
+    "prices": {
+      "btc_usd": 66083.0,
+      "btc_idr": 1184568932.0,
+      "btc_change": 0.18,
+      "eth_usd": 1933.16,
+      "eth_idr": 34652804.0,
+      "eth_change": 0.39,
+      "sol_usd": 77.84,
+      "sol_idr": 1395319.0,
+      "sol_change": 0.41,
+      "ada_usd": 0.173954,
+      "ada_idr": 3118.0,
+      "ada_change": 0.73
+    },
+    "sentiment": "NETRAL \u26aa",
+    "news": [
+      "\ud83d\udd25 Trending: Zama (ZAMA) \u2014 rank #1 on CoinGecko",
+      "\ud83d\udd25 Trending: Pudgy Penguins (PENGU) \u2014 rank #2 on CoinGecko",
+      "\ud83d\udd25 Trending: Ondo (ONDO) \u2014 rank #3 on CoinGecko",
+      "\ud83d\udd25 Trending: Hyperliquid (HYPE) \u2014 rank #4 on CoinGecko",
+      "\ud83d\udd25 Trending: Uniswap (UNI) \u2014 rank #5 on CoinGecko"
+    ]
+  },
+  {
+    "date": "2026-07-23",
+    "time": "08:30",
+    "prices": {
+      "btc_usd": 66083.0,
+      "btc_idr": 1184312601.0,
+      "btc_change": 0.18,
+      "eth_usd": 1933.16,
+      "eth_idr": 34645306.0,
+      "eth_change": 0.39,
+      "sol_usd": 77.84,
+      "sol_idr": 1395017.0,
+      "sol_change": 0.41,
+      "ada_usd": 0.173954,
+      "ada_idr": 3118.0,
+      "ada_change": 0.73
+    },
+    "sentiment": "NETRAL \u26aa",
+    "news": [
+      "\ud83d\udd25 Trending: Zama (ZAMA) \u2014 rank #1 on CoinGecko",
+      "\ud83d\udd25 Trending: Pudgy Penguins (PENGU) \u2014 rank #2 on CoinGecko",
+      "\ud83d\udd25 Trending: Ondo (ONDO) \u2014 rank #3 on CoinGecko",
+      "\ud83d\udd25 Trending: Hyperliquid (HYPE) \u2014 rank #4 on CoinGecko",
+      "\ud83d\udd25 Trending: Ethereum (ETH) \u2014 rank #5 on CoinGecko"
     ]
   }
 ]

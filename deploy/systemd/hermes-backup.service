@@ -1,0 +1,16 @@
+[Unit]
+Description=Hermes Backup Service
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=hermes
+Group=hermes
+WorkingDirectory=/opt/hermes/sembako-dashboard
+EnvironmentFile=/etc/hermes-dashboard/hermes-dashboard.env
+ExecStart=/opt/hermes/sembako-dashboard/scripts/backup.sh
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

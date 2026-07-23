@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "created_at": "YYYY-MM-DDTHH:MM:SS+07:00",
+  "hostname": "hermes-vps-01",
+  "repository": "adiorany3/sembako-dashboard",
+  "branch": "main",
+  "commit": "abc123def456",
+  "app_dir": "/opt/hermes/sembako-dashboard",
+  "data_dir": "/var/lib/hermes-dashboard/data",
+  "state_dir": "/home/hermes/.hermes",
+  "timezone": "Asia/Jakarta",
+  "archives": [
+    {
+      "name": "hermes-state-YYYYMMDD_HHMMSS.tar.zst.age",
+      "sha256": "<checksum>"
+    },
+    {
+      "name": "dashboard-data-YYYYMMDD_HHMMSS.tar.zst.age",
+      "sha256": "<checksum>"
+    },
+    {
+      "name": "server-config-YYYYMMDD_HHMMSS.tar.zst.age",
+      "sha256": "<checksum>"
+    }
+  ]
+}
