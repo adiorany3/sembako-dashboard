@@ -127,6 +127,7 @@ def add_row(tanggal, data_dict, sumber="Siskaperbapo Jatim"):
             "ayam_kampung":  16,   # Ayam Kampung
             "sapi":          17,   # Daging Sapi
             "elpiji":        18,   # Gas Elpiji
+            "gas_elpiji":    18,   # alias from cache
             # cols 19-24: Garam Bata, Garam Halus, Susu KM/Bubuk — no scraper
         }
 
@@ -137,19 +138,20 @@ def add_row(tanggal, data_dict, sumber="Siskaperbapo Jatim"):
         last_row = ws.max_row - 1 if ws.max_row > 1 else None
         
         for key, col in KEY_TO_COL.items():
-            val = data_dict.get(key, 0)
-            # Fallback to last known if empty
-            if (val is None or val == 0 or val == '') and last_row:
+            val = data_dict.get(key)
+            # Fallback to last known if genuinely missing (not provided)
+            if (val is None or val == '') and last_row:
                 last_val = ws.cell(row=last_row, column=col).value
-                if last_val:
+                if last_val is not None and last_val != 0:
                     val = last_val
-            c = ws.cell(row=row, column=col, value=val if val else None)
+            c = ws.cell(row=row, column=col, value=val if val is not None else None)
             c.alignment = ca; c.border = thin
-            if val: c.number_format = '#,##0'
+            if val is not None and val != '': c.number_format = '#,##0'
 
         # Cols 19-24: copy from last row if available (no scraper for these)
-        for col in range(19, 25):
-            if last_row:
+        # Use hardcoded default for gas_elpiji if missing (HET government price)
+        if last_row:
+            for col in range(19, 25):
                 last_val = ws.cell(row=last_row, column=col).value
                 c = ws.cell(row=row, column=col, value=last_val)
                 c.alignment = ca; c.border = thin

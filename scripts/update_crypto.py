@@ -16,7 +16,7 @@ from create_crypto_excel import add_price_row, add_sentimen_row
 
 HISTORY_PATH = os.path.expanduser("~/sembako/data/crypto_history.json")
 
-COINS = ["bitcoin", "ethereum", "solana"]
+COINS = ["bitcoin", "ethereum", "solana", "cardano"]
 COIN_MAP = {"bitcoin": "BTC", "ethereum": "ETH", "solana": "SOL",
             "cardano": "ADA", "dogecoin": "DOGE", "ripple": "XRP"}
 COIN_SHORT = {"bitcoin": "btc", "ethereum": "eth", "solana": "sol",

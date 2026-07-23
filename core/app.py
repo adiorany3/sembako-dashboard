@@ -13,9 +13,32 @@ from datetime import datetime
 from flask import Flask, render_template, jsonify, send_from_directory, request
 from flask_cors import CORS
 import sys
+import os
+
+# Fix: Add parent directory to sys.path for 'core' module imports
+# When running as `python3 /root/sembako/core/app.py`, sys.path[0] = /root/sembako/core
+# We need /root/sembako in the path to import 'core' module
+_script_dir = os.path.dirname(os.path.abspath(__file__))
+_parent_dir = os.path.dirname(_script_dir)
+if _parent_dir not in sys.path:
+    sys.path.insert(0, _parent_dir)
 
 CACHE_DIR = os.path.expanduser("~/.hermes/cache")
 os.makedirs(CACHE_DIR, exist_ok=True)
+
+# Load GROQ_API_KEY from config.py into os.environ so providers.py can read it
+# Check both parent dir (/root/sembako) and app.py dir (/root/sembako/core)
+if not os.environ.get("GROQ_API_KEY"):
+    for _config_dir in ["/root/sembako", "/root/sembako/core"]:
+        _config_path = os.path.join(_config_dir, "config.py")
+        if os.path.exists(_config_path):
+            import importlib.util
+            spec = importlib.util.spec_from_file_location("config", _config_path)
+            _config = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(_config)
+            if hasattr(_config, "GROQ_API_KEY") and _config.GROQ_API_KEY and len(_config.GROQ_API_KEY) > 10:
+                os.environ["GROQ_API_KEY"] = _config.GROQ_API_KEY
+                break
 
 
 def _cache_path(key: str) -> str:
@@ -1086,6 +1109,183 @@ function copyRaw(){{
 }}
 </script></body></html>"""
     return "No article yet. Click Generate.", 204, {"Content-Type": "text/plain"}
+# ============ Multi-Agent AI Analysis ============
+
+import uuid
+
+@app.route("/api/ai/analyze", methods=["POST"])
+def ai_analyze():
+    """Start persistent analysis job. Body: {mode: quick|full|macro|risk}"""
+    from core.ai.job_runner import get_runner
+    from core.ai.analysis_store import get_store
+
+    # Rate limit check
+    client_ip = request.remote_addr or "unknown"
+    if not _check_ai_rate_limit(client_ip):
+        return jsonify({
+            "error": "Terlalu banyak permintaan. Coba lagi dalam 1 menit.",
+            "error_code": "AI_RATE_LIMITED",
+        }), 429
+
+    store = get_store()
+    mode = (request.json or {}).get("mode", "full")
+    if mode not in ("quick", "full", "macro", "risk"):
+        return jsonify({
+            "error": "mode tidak valid",
+            "error_code": "AI_CONFIG_MISSING",
+        }), 400
+
+    # Idempotency: check for active job (not cancelled/failed)
+    existing = store.get_active_job()
+    if existing and existing["status"] in ("RUNNING", "PARTIAL"):
+        return jsonify({"active_job_id": existing["id"], "status": existing["status"],
+                         "message": "Job aktif sedang berjalan"})
+
+    # Check provider availability
+    try:
+        from core.ai.providers import get_provider_manager
+        mgr = get_provider_manager()
+        if not mgr.is_available():
+            return jsonify({
+                "error": mgr._router_manager._init_error or "AI provider tidak dikonfigurasi",
+                "error_code": "AI_CONFIG_MISSING",
+            }), 503
+    except Exception:
+        pass
+
+    job = store.create_job(mode=mode)
+    job_id = job["id"]
+    runner = get_runner()
+    runner.start_job(job_id)
+    return jsonify({"job_id": job_id, "status": "QUEUED"})
+
+
+@app.route("/api/ai/jobs/<job_id>")
+def ai_job_detail(job_id):
+    """Get job status with agent tasks."""
+    from core.ai.analysis_store import get_store
+    store = get_store()
+    job = store.get_job(job_id)
+    if not job:
+        return jsonify({"error": "Job tidak ditemukan"}), 404
+    agents = store.get_agent_tasks(job_id)
+    return jsonify({"job": job, "agents": agents})
+
+
+@app.route("/api/ai/jobs/<job_id>/cancel", methods=["POST"])
+def ai_job_cancel(job_id):
+    """Cancel a running job."""
+    from core.ai.job_runner import get_runner
+    runner = get_runner()
+    runner.cancel_job(job_id)
+    return jsonify({"status": "cancelled"})
+
+
+@app.route("/api/ai/jobs/<job_id>/retry-failed", methods=["POST"])
+def ai_job_retry_failed(job_id):
+    """Retry failed/skipped agents in a job."""
+    from core.ai.job_runner import get_runner
+    runner = get_runner()
+    runner.retry_failed(job_id)
+    return jsonify({"status": "retrying"})
+
+
+@app.route("/api/ai/history")
+def ai_history():
+    """List past analyses (newest first)."""
+    from core.ai.analysis_store import get_store
+    store = get_store()
+    items = store.get_history(limit=30)
+    return jsonify(items)
+
+
+@app.route("/api/ai/history/<job_id>")
+def ai_history_detail(job_id):
+    """Get full job result by ID."""
+    from core.ai.analysis_store import get_store
+    store = get_store()
+    job = store.get_job(job_id)
+    if not job:
+        return jsonify({"error": "Analisis tidak ditemukan"}), 404
+    agents = store.get_agent_tasks(job_id)
+    return jsonify({"job": job, "agents": agents})
+
+
+@app.route("/api/ai/provider-status")
+def ai_provider_status():
+    """Check all AI router health via 9Router system."""
+    import threading as _threading
+
+    try:
+        from core.ai.providers import get_provider_manager
+    except Exception as e:
+        return jsonify({
+            "available": False,
+            "error": f"AI module load error: {e}",
+            "error_code": "AI_SERVICE_INTERNAL_ERROR",
+            "routers": {},
+            "healthy_count": 0,
+            "total_count": 0,
+        })
+
+    mgr = get_provider_manager()
+
+    if not mgr.is_available():
+        return jsonify({
+            "available": False,
+            "error": mgr._router_manager._init_error or "AI not configured",
+            "error_code": "AI_CONFIG_MISSING",
+            "routers": {},
+            "healthy_count": 0,
+            "total_count": 9,
+            "config": {
+                "has_api_key": bool(os.environ.get("AI_ROUTER_API_KEY") or os.environ.get("GROQ_API_KEY")),
+                "base_url": os.environ.get("AI_ROUTER_BASE_URL", "(not set)"),
+            },
+        })
+
+    # Health check with timeout
+    result = [None]
+
+    def do_check():
+        try:
+            result[0] = mgr.health_check_all()
+        except Exception as e:
+            result[0] = {"error": str(e), "error_code": "AI_SERVICE_INTERNAL_ERROR"}
+
+    t = _threading.Thread(target=do_check, daemon=True)
+    t.start()
+    t.join(20)
+
+    if t.is_alive() or result[0] is None:
+        return jsonify({
+            "available": False,
+            "error": "Health check timeout (20s)",
+            "error_code": "AI_TIMEOUT",
+            "routers": {},
+            "healthy_count": 0,
+            "total_count": 9,
+        })
+
+    return jsonify(result[0])
+
+
+# --- Rate Limiting for AI endpoints ---
+_ai_rate_limit = {}  # ip -> [timestamps]
+AI_RATE_LIMIT_MAX = 5  # max requests
+AI_RATE_LIMIT_WINDOW = 60  # seconds
+
+def _check_ai_rate_limit(ip):
+    now = time.time()
+    timestamps = _ai_rate_limit.get(ip, [])
+    timestamps = [t for t in timestamps if now - t < AI_RATE_LIMIT_WINDOW]
+    if len(timestamps) >= AI_RATE_LIMIT_MAX:
+        return False
+    timestamps.append(now)
+    _ai_rate_limit[ip] = timestamps
+    return True
+
+
 if __name__ == "__main__":
     # Production mode - disable debug for stability
     app.run(host="0.0.0.0", port=5000, debug=False, use_reloader=False)

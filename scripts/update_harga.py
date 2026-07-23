@@ -143,6 +143,10 @@ def main():
             print("  ⚠️ Tidak ada data tersedia.")
             return
 
+    # Hardcoded fallback: Gas Elpiji 3kg = HET Rp 20,000 (harga pemerintah, jarang berubah)
+    if not prices.get('elpiji'):
+        prices['elpiji'] = 20000
+
     def fmt(k, label):
         v = prices.get(k, 0)
         return f"  {label}: Rp {v:,}/kg" if v else f"  {label}: -"

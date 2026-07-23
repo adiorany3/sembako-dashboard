@@ -223,7 +223,8 @@ async function loadSembakoData() {
         document.getElementById('sembako-date').textContent = response.last_update || formatDate(latest.tanggal);
         document.getElementById('mini-beras').textContent = formatCurrency(latest.beras_premium);
         document.getElementById('mini-medium').textContent = formatCurrency(latest.beras_medium);
-        document.getElementById('mini-gas').textContent = latest.gas_elpiji || '-';
+        document.getElementById('mini-gas').textContent = latest.gas_elpiji ? formatCurrency(latest.gas_elpiji) : 'Data belum tersedia';
+        document.getElementById('mini-telur').textContent = latest.telur_ras ? formatCurrency(latest.telur_ras) : 'Data belum tersedia';
     } catch(e) { console.warn('Overview card error:', e); }
     
     // Fill table
@@ -271,6 +272,7 @@ async function loadCryptoData() {
         document.getElementById('mini-btc').textContent = formatUSD(latest.btc_usd);
         document.getElementById('mini-eth').textContent = formatUSD(latest.eth_usd);
         document.getElementById('mini-sol').textContent = formatUSD(latest.sol_usd);
+        document.getElementById('mini-ada').textContent = latest.ada_usd ? formatUSD(latest.ada_usd) : 'Data belum tersedia';
     } catch(e) { console.warn('Crypto overview error:', e); }
     
     // Fill table
@@ -316,6 +318,7 @@ async function loadEmasData() {
         document.getElementById('mini-emas-beli').textContent = formatCurrency(latest.antam_beli);
         document.getElementById('mini-emas-back').textContent = formatCurrency(latest.antam_buyback);
         document.getElementById('mini-spread').textContent = formatCurrency(latest.selisih);
+        document.getElementById('mini-ubs').textContent = latest.ubs_beli ? formatCurrency(latest.ubs_beli) : 'Data belum tersedia';
     } catch(e) { console.warn('Emas overview error:', e); }
     
     // Fill table
@@ -858,119 +861,333 @@ function renderBluechipTable() {
     });
 }
 
-// ============ AI Analysis (Groq) ============
-let aiAnalysisCache = null;
-let aiAnalysisTime = null;
+// ============ AI Analysis (Persistent Job System) ============
+let aiPollInterval = null;
+let currentAiMode = 'quick';
+let currentAiJobId = null;
 
-async function openAiAnalysis() {
-    const content = document.getElementById('ai-analysis-content');
-    const loading = '<div class="loading">🤖 Mengambil analisis dari Groq AI...</div>';
-    content.innerHTML = loading;
+function setAiMode(mode) {
+    currentAiMode = mode;
+    document.querySelectorAll('.ai-mode-btn').forEach(b => b.classList.remove('active'));
+    const btn = document.querySelector(`.ai-mode-btn[data-mode="${mode}"]`);
+    if (btn) btn.classList.add('active');
+}
+function cancelCurrentAiJob() {
+    if (currentAiJobId) cancelAiJob(currentAiJobId);
+}
 
+// --- Provider Status (9Router) ---
+const ROUTER_LABELS = {r1:'GPT-4o',r2:'GPT-4o Mini',r3:'Claude 3.5',r4:'Claude 3 Haiku',r5:'Llama 70B',r6:'Llama 8B',r7:'Gemini Flash',r8:'DeepSeek R1',r9:'Mixtral'};
+const ROUTER_SC = {HEALTHY:'#22c55e',DEGRADED:'#eab308',RATE_LIMITED:'#a855f7',TIMEOUT:'#f97316',AUTH_ERROR:'#ef4444',INVALID_RESPONSE:'#ef4444',UNAVAILABLE:'#ef4444',CHECKING:'#94a3b8',DISABLED:'#64748b'};
+let _aiProviderData = null;
+async function loadAiProviderStatus() {
+    const el = document.getElementById('ai-provider-status');
+    if (!el) return;
     try {
-        const response = await fetch('/api/ai-analysis');
-        const data = await response.json();
-
-        if (data.status === 'success') {
-            // Format the analysis text
-            let formatted = data.analysis;
-            formatted = formatted.replace(/\n/g, '<br>');
-            formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-            formatted = formatted.replace(/#{1,3}\s*(.*)/g, '<h4>$1</h4>');
-            formatted = formatted.replace(/- (.*)/g, '• $1<br>');
-
-            content.innerHTML = `
-                <div class="ai-analysis-box">
-                    <div class="ai-meta">
-                        <span class="ai-badge">🤖 Groq Llama 3.1 8B</span>
-                        <span class="ai-time">${data.timestamp}</span>
-                    </div>
-                    <div class="ai-text">${formatted}</div>
-                </div>
-            `;
-
-            aiAnalysisCache = data.analysis;
-            aiAnalysisTime = data.timestamp;
-
-            // Update summary items
-            updateAISummary();
-        } else {
-            content.innerHTML = `<div class="error">Error: ${data.error}</div>`;
+        const resp = await fetch('/api/ai/provider-status');
+        const data = await resp.json();
+        _aiProviderData = data;
+        if (!data.available && data.error) {
+            const code = data.error_code || '';
+            el.innerHTML = `<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+                <span style="color:#ef4444">●</span>
+                <span>Sistem AI: <strong>${data.error}</strong> ${code ? '<code style="font-size:11px;color:var(--text3)">'+code+'</code>' : ''}</span>
+                <button onclick="loadAiProviderStatus()" style="background:var(--accent);color:#fff;border:none;padding:4px 12px;border-radius:4px;cursor:pointer;font-size:12px">Coba Lagi</button>
+            </div>`;
+            disableAiStart();
+            return;
         }
-    } catch (e) {
-        content.innerHTML = `<div class="error">Gagal mengambil data: ${e.message}</div>`;
+        const routers = data.routers || {};
+        const hc = data.healthy_count || 0;
+        const tc = data.total_count || 9;
+        const ar = data.active_model || '-';
+        let html = `<span style="font-size:12px;color:var(--text3)">Router: <strong style="color:${hc>0?'#22c55e':'#ef4444'}">${hc}/${tc}</strong> sehat</span>`;
+        if (ar) html += ` · <span style="font-size:11px;color:var(--text3)">Aktif: <strong>${ar}</strong></span>`;
+        html += `<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:6px">`;
+        for (const [rid, info] of Object.entries(routers)) {
+            const sc = ROUTER_SC[info.status] || '#64748b';
+            const label = ROUTER_LABELS[rid] || rid;
+            const lat = info.latency_ms ? info.latency_ms.toFixed(0)+'ms' : '';
+            const err = info.error_code ? ` title="${info.error_code}: ${info.sanitized_error_message||''}"` : '';
+            html += `<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border:1px solid ${sc}33;border-radius:12px;font-size:11px;cursor:default"${err}>
+                <span style="color:${sc};font-size:10px">●</span>${label}${lat ? ' '+lat : ''}
+            </span>`;
+        }
+        html += `</div>`;
+        html += `<button onclick="loadAiProviderStatus()" style="background:var(--bg);color:var(--text3);border:1px solid var(--border);padding:4px 12px;border-radius:4px;cursor:pointer;font-size:12px;margin-top:6px">⟳ Periksa Ulang</button>`;
+        el.innerHTML = html;
+        if (hc > 0) enableAiStart(); else {
+            disableAiStart();
+            const b = document.getElementById('ai-start-btn');
+            if (b) b.title = 'Tidak ada router sehat. Periksa konfigurasi AI_ROUTER_API_KEY.';
+        }
+    } catch(e) {
+        el.innerHTML = `<span style="color:#ef4444">Gagal memeriksa: ${e.message}</span> <button onclick="loadAiProviderStatus()" style="background:var(--accent);color:#fff;border:none;padding:4px 12px;border-radius:4px;cursor:pointer;font-size:12px">Coba Lagi</button>`;
+        disableAiStart();
+    }
+}
+function disableAiStart() { const b=document.getElementById('ai-start-btn'); if(b){b.disabled=true;b.style.opacity='0.5';} }
+function enableAiStart() { const b=document.getElementById('ai-start-btn'); if(b){b.disabled=false;b.style.opacity='1';b.title='Mulai analisis';} }
+
+// --- Start Analysis ---
+async function startAiAnalysis(mode) {
+    const btn = document.getElementById('ai-start-btn');
+    if (btn) { btn.disabled = true; btn.textContent = 'Memulai...'; }
+    try {
+        const resp = await fetch('/api/ai/analyze', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({mode})
+        });
+        const data = await resp.json();
+        if (data.active_job_id) {
+            showAiNotification('Job aktif sedang berjalan ('+data.status+').', 'warning');
+            startAiProgressPolling(data.active_job_id);
+            if (btn) { btn.disabled = false; btn.textContent = '🚀 Mulai Analisis'; }
+            return;
+        }
+        if (data.job_id) {
+            startAiProgressPolling(data.job_id);
+        } else if (data.error) {
+            const errMsg = data.error_code ? data.error + ' [' + data.error_code + ']' : data.error;
+            showAiNotification(errMsg, 'error');
+            if (btn) { btn.disabled = false; btn.textContent = '🚀 Mulai Analisis'; }
+        }
+    } catch(e) {
+        showAiNotification('Gagal memulai: ' + e.message, 'error');
+        if (btn) { btn.disabled = false; btn.textContent = '🚀 Mulai Analisis'; }
     }
 }
 
-async function refreshAiAnalysis() {
-    openAiAnalysis();
+// --- Progress Polling ---
+function startAiProgressPolling(jobId) {
+    if (aiPollInterval) clearInterval(aiPollInterval);
+    currentAiJobId = jobId;
+    showAiProgressPanel(true);
+    const cancelBtn = document.getElementById('ai-cancel-btn');
+    if (cancelBtn) cancelBtn.style.display = 'inline-block';
+    aiPollInterval = setInterval(() => pollAiJob(jobId), 2000);
+    pollAiJob(jobId);
+}
+async function pollAiJob(jobId) {
+    try {
+        const resp = await fetch('/api/ai/jobs/' + jobId);
+        const data = await resp.json();
+        if (data.error) return;
+        const job = data.job;
+        const agents = data.agents || [];
+        updateAiProgressUI(job, agents);
+        if (['COMPLETED','FAILED','CANCELLED','PARTIAL'].includes(job.status)) {
+            if (aiPollInterval) { clearInterval(aiPollInterval); aiPollInterval = null; }
+            showAiProgressPanel(false);
+            const cancelBtn = document.getElementById('ai-cancel-btn');
+            if (cancelBtn) cancelBtn.style.display = 'none';
+            currentAiJobId = null;
+            if (job.status === 'COMPLETED') {
+                showAiNotification('Analisis selesai!', 'success');
+                displayAiResult(job);
+            } else if (job.status === 'PARTIAL') {
+                showAiNotification('Analisis sebagian selesai. Ada agent gagal.', 'warning');
+                displayAiResult(job);
+            } else if (job.status === 'FAILED') {
+                const errCode = job.error_code ? ' [' + job.error_code + ']' : '';
+                showAiNotification('Analisis gagal: ' + (job.error_message||'') + errCode, 'error');
+            } else {
+                showAiNotification('Analisis dibatalkan.', 'info');
+            }
+            loadAiHistory();
+            const btn = document.getElementById('ai-start-btn');
+            if (btn) { btn.disabled = false; btn.textContent = '🚀 Mulai Analisis'; btn.style.opacity='1'; }
+        }
+    } catch(e) {}
+}
+function showAiProgressPanel(show) {
+    const a = document.getElementById('ai-agent-status');
+    const p = document.getElementById('ai-progress');
+    if (a) a.style.display = show ? 'flex' : 'none';
+    if (p) p.style.display = show ? 'block' : 'none';
+}
+function updateAiProgressUI(job, agents) {
+    const bar = document.getElementById('ai-progress-bar');
+    const text = document.getElementById('ai-progress-text');
+    if (bar) bar.style.width = (job.progress||0)+'%';
+    const done = agents.filter(a=>a.status==='COMPLETED').length;
+    const run = agents.filter(a=>a.status==='RUNNING').length;
+    if (text) text.textContent = job.status + ' · ' + (job.progress||0).toFixed(0) + '% · ' + done + '/' + agents.length + ' selesai';
+    const st = document.getElementById('ai-agent-status');
+    if (!st) return;
+    const icons = {PENDING:'○',QUEUED:'○',RUNNING:'●',WAITING_PROVIDER:'⏳',RETRYING:'↻',COMPLETED:'✓',FAILED:'✗',SKIPPED:'⊘',CANCELLED:'⊘'};
+    const cols = {PENDING:'var(--text3)',QUEUED:'var(--text3)',RUNNING:'var(--accent)',WAITING_PROVIDER:'#eab308',RETRYING:'#f97316',COMPLETED:'#22c55e',FAILED:'#ef4444',SKIPPED:'var(--text3)',CANCELLED:'var(--text3)'};
+    st.innerHTML = agents.map(a => {
+        const ic = icons[a.status]||'?';
+        const co = cols[a.status]||'var(--text3)';
+        const att = a.attempt_count>1 ? ' ('+a.attempt_count+'/'+a.max_attempts+')' : '';
+        const step = a.current_step ? ' · '+a.current_step : '';
+        return `<span style="color:${co};padding:3px 8px;border:1px solid ${co}33;border-radius:12px;font-size:11px;white-space:nowrap">${ic} ${a.agent_type}${att}${step}</span>`;
+    }).join('');
 }
 
-function updateAISummary() {
-    // IHSG
-    const ihsgEl = document.getElementById('ai-ihsg');
-    if (sahamData.ihsg && sahamData.ihsg.length > 0) {
-        const latest = sahamData.ihsg[sahamData.ihsg.length - 1];
-        ihsgEl.textContent = latest.ihsg ? Number(latest.ihsg).toLocaleString() : '-';
-    }
+// --- Cancel / Retry ---
+async function cancelAiJob(jobId) {
+    await fetch('/api/ai/jobs/'+jobId+'/cancel', {method:'POST'});
+    showAiNotification('Analisis dibatalkan.', 'info');
+    if (aiPollInterval) { clearInterval(aiPollInterval); aiPollInterval = null; }
+    showAiProgressPanel(false);
+    loadAiHistory();
+}
+async function retryFailedAgents(jobId) {
+    await fetch('/api/ai/jobs/'+jobId+'/retry-failed', {method:'POST'});
+    showAiNotification('Mencoba ulang agent gagal...', 'info');
+    startAiProgressPolling(jobId);
+}
 
-    // BTC
-    const btcEl = document.getElementById('ai-btc');
-    if (cryptoData && cryptoData.data && cryptoData.data.length) {
-        const cv = cryptoData.data[cryptoData.data.length - 1];
-        if (cv.btc_usd) btcEl.textContent = '$' + Number(cv.btc_usd).toLocaleString(undefined, {maximumFractionDigits: 0});
+// --- History ---
+async function loadAiHistory() {
+    const el = document.getElementById('ai-history-list');
+    if (!el) return;
+    try {
+        const resp = await fetch('/api/ai/history');
+        const items = await resp.json();
+        if (!items.length) {
+            el.innerHTML = '<div style="color:var(--text3);padding:8px;font-size:13px">Belum ada riwayat analisis.</div>';
+            return;
+        }
+        let html = '';
+        items.forEach(item => {
+            const d = item.duration_ms ? (item.duration_ms/1000).toFixed(1)+'s' : '-';
+            const conf = item.confidence_score!=null ? (item.confidence_score*100).toFixed(0)+'%' : '-';
+            const q = item.data_quality_score!=null ? (item.data_quality_score*100).toFixed(0)+'%' : '-';
+            const badges = {COMPLETED:'✓',FAILED:'✗',RUNNING:'●',PARTIAL:'◐',CANCELLED:'⊘',QUEUED:'○',RETRYING:'↻',PREPARING_DATA:'○',WAITING_PROVIDER:'⏳'};
+            const badge = badges[item.status] || '?';
+            const running = ['RUNNING','QUEUED','PREPARING_DATA','VALIDATING_DATA','RETRYING','WAITING_PROVIDER'].includes(item.status);
+            const ac = item.agent_completed||0;
+            const at = item.agent_total||0;
+            const router = item.router_used || item.router || '-';
+            const errCode = item.error_code ? '<code style="font-size:10px;color:#ef4444">'+item.error_code+'</code>' : '';
+            const errMsg = item.error_message ? ' · '+item.error_message.substring(0,60) : '';
+            const canRetry = item.status==='FAILED'||item.status==='PARTIAL';
+            html += `<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--border);font-size:12px">
+                <span style="font-size:16px;min-width:20px;text-align:center">${badge}</span>
+                <div style="flex:1;min-width:0">
+                    <div style="font-weight:600">${item.created_at ? new Date(item.created_at).toLocaleString('id-ID') : '-'} · ${(item.mode||'').toUpperCase()}</div>
+                    <div style="color:var(--text3);font-size:11px">${item.status} · ${d} · Router: ${router} · Agent: ${ac}/${at}${errCode}${errMsg}</div>
+                </div>
+                ${running ? `<button onclick="startAiProgressPolling('${item.id}')" style="background:var(--accent);color:#fff;border:none;padding:3px 8px;border-radius:4px;cursor:pointer;font-size:11px">Lihat Progres</button>` : ''}
+                ${canRetry ? `<button onclick="retryFailedAgents('${item.id}')" style="background:#f97316;color:#fff;border:none;padding:3px 8px;border-radius:4px;cursor:pointer;font-size:11px">Coba Ulang</button>` : ''}
+                ${item.status==='FAILED' && item.can_continue ? `<button onclick="startAiProgressPolling('${item.id}')" style="background:var(--accent);color:#fff;border:none;padding:3px 8px;border-radius:4px;cursor:pointer;font-size:11px">Lanjutkan</button>` : ''}
+            </div>`;
+        });
+        el.innerHTML = html;
+    } catch(e) {
+        el.innerHTML = `<div style="color:#ef4444;padding:8px;font-size:13px">Gagal memuat riwayat: ${e.message} <button onclick="loadAiHistory()" style="background:var(--accent);color:#fff;border:none;padding:2px 8px;border-radius:4px;cursor:pointer;font-size:11px">Coba Lagi</button></div>`;
     }
+}
 
-    // Emas
-    const emasEl = document.getElementById('ai-emas');
-    if (emasData && emasData.data && emasData.data.length) {
-        const ev = emasData.data[emasData.data.length - 1];
-        if (ev.antam_beli) emasEl.textContent = 'Rp' + Number(ev.antam_beli).toLocaleString();
-    }
+// --- Display Result ---
+function displayAiResult(job) {
+    const scoresEl = document.getElementById('ai-scores');
+    const resultsCard = document.getElementById('ai-results-card');
+    if (scoresEl) scoresEl.style.display = 'grid';
+    if (resultsCard) resultsCard.style.display = 'block';
+    const q = document.getElementById('ai-quality-score');
+    const c = document.getElementById('ai-confidence-score');
+    const s = document.getElementById('ai-status-text');
+    const d = document.getElementById('ai-duration');
+    if (q) q.textContent = job.data_quality_score!=null ? (job.data_quality_score*100).toFixed(0)+'%' : '-';
+    if (c) c.textContent = job.confidence_score!=null ? (job.confidence_score*100).toFixed(0)+'%' : '-';
+    if (s) s.textContent = job.status || '-';
+    if (d) d.textContent = job.duration_ms ? (job.duration_ms/1000).toFixed(1)+'s' : '-';
+    showAiTab('summary');
+}
 
-    // Top Mover — find biggest % change from sembako
-    const moverEl = document.getElementById('ai-top-mover');
-    if (sembakoData && sembakoData.data && sembakoData.data.length > 1) {
-        const rows = sembakoData.data;
-        if (rows.length >= 2) {
-            const curr = rows[rows.length - 1];
-            const prev = rows[rows.length - 2];
-            let topName = '-', topChg = 0;
-            const keys = Object.keys(curr).filter(k => k !== 'Tanggal' && prev[k] && curr[k]);
-            for (const k of keys) {
-                const c = Number(curr[k]), p = Number(prev[k]);
-                if (p > 0) {
-                    const chg = ((c - p) / p) * 100;
-                    if (Math.abs(chg) > Math.abs(topChg)) { topChg = chg; topName = k.replace(/_/g, ' '); }
+// --- Tab Renderer ---
+let _aiLastResult = null;
+function showAiTab(tab) {
+    document.querySelectorAll('.ai-tab').forEach(t => t.classList.remove('active'));
+    const btn = document.querySelector(`.ai-tab[onclick*="'${tab}'"]`);
+    if (btn) btn.classList.add('active');
+    const el = document.getElementById('ai-tab-content');
+    if (!el) return;
+    // Try cached result first
+    if (_aiLastResult) { renderAiTab(el, tab, _aiLastResult); return; }
+    // Fetch latest job
+    fetch('/api/ai/history').then(r=>r.json()).then(items => {
+        if (!items.length) { el.innerHTML = '<div style="color:var(--text3);padding:20px;text-align:center">Tidak ada data analisis. Mulai analisis pertama Anda.</div>'; return; }
+        const job = items[0];
+        return fetch('/api/ai/history/' + job.id).then(r=>r.json());
+    }).then(data => {
+        if (!data) return;
+        const result = typeof data.job.result === 'string' ? JSON.parse(data.job.result) : (data.job.result || {});
+        const agents = data.agents || [];
+        _aiLastResult = {result, agents};
+        renderAiTab(el, tab, _aiLastResult);
+    }).catch(() => { el.innerHTML = '<div style="color:var(--text3);padding:20px;text-align:center">Gagal memuat.</div>'; });
+}
+function renderAiTab(el, tab, ctx) {
+    const {result, agents} = ctx;
+    if (tab === 'agents') {
+        if (!agents.length) { el.innerHTML = '<div style="color:var(--text3);padding:20px">Tidak ada data agent.</div>'; return; }
+        el.innerHTML = agents.map(a => {
+            const dur = a.duration_ms ? (a.duration_ms/1000).toFixed(1)+'s' : '-';
+            const err = a.error_message ? `<div style="color:#ef4444;font-size:12px;margin-top:4px">❌ ${a.error_message}</div>` : '';
+            const out = a.output ? `<div style="color:var(--text3);font-size:11px;margin-top:4px;max-height:200px;overflow:auto;white-space:pre-wrap;border-top:1px solid var(--border);padding-top:4px">${aiFormatText(typeof a.output === 'string' ? a.output.substring(0,500) : JSON.stringify(a.output).substring(0,500))}</div>` : '';
+            return `<div style="padding:10px 0;border-bottom:1px solid var(--border);font-size:13px">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                    <strong>${a.agent_type}</strong>
+                    <span style="font-size:11px;color:var(--text3)">${a.status} · ${a.attempt_count||0}/${a.max_attempts||3} attempts · ${(a.provider_id||'-')}/${(a.model_id||'-')} · ${dur}</span>
+                </div>${err}${out}
+            </div>`;
+        }).join('');
+    } else {
+        let content;
+        if (tab === 'summary') {
+            content = result.summary || result.final_summary || 'Ringkasan belum tersedia.';
+        } else if (tab === 'data') {
+            content = 'Data snapshot tersimpan di job. Klik tab Detail Agent untuk melihat output per-agent.';
+        } else {
+            content = result[tab] || result[tab+'_analysis'] || result[tab+'_assessment'] || null;
+            if (!content && typeof result === 'object') {
+                // Try to find matching key
+                for (const k of Object.keys(result)) {
+                    if (k.toLowerCase().includes(tab.toLowerCase())) { content = result[k]; break; }
                 }
             }
-            moverEl.textContent = topName + (topChg !== 0 ? ' ' + (topChg > 0 ? '↑' : '↓') + Math.abs(topChg).toFixed(1) + '%' : '');
         }
+        el.innerHTML = `<div style="white-space:pre-wrap;font-size:13px;line-height:1.6">${content ? aiFormatText(content) : '<span style="color:var(--text3)">Bagian ini belum tersedia.</span>'}</div>`;
     }
+}
+function aiFormatText(t) {
+    if (!t) return '';
+    if (typeof t !== 'string') t = JSON.stringify(t, null, 2);
+    return t.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/#{1,3}\s*(.*)/g,'<h4 style="margin:12px 0 4px">$1</h4>').replace(/- (.*)/g,'• $1<br>');
+}
 
-    // Extract recommendations from analysis markdown
-    if (aiAnalysisCache) {
-        const recEl = document.getElementById('ai-recommendations');
-        const sections = aiAnalysisCache.split(/\n/);
-        let inRec = false;
-        let recLines = [];
-        for (const line of sections) {
-            if (/💡\s*Rekomendasi/.test(line)) { inRec = true; continue; }
-            if (/^##/.test(line) && inRec) break; // next section
-            if (inRec && line.trim()) recLines.push(line);
-        }
-        if (recLines.length > 0) {
-            recEl.innerHTML = recLines.map(l => {
-                const bold = l.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-                const bullet = bold.replace(/^[-•]\s*/, '• ');
-                return bullet.startsWith('  ') ? '<div style="padding-left:1rem;color:#888;font-size:0.85em">' + bullet.trim() + '</div>' : '<div style="margin-bottom:0.4em">' + bullet + '</div>';
-            }).join('');
-        }
-    }
+// --- Notifications ---
+function showAiNotification(msg, type) {
+    const el = document.getElementById('ai-agent-status');
+    if (!el) return;
+    const colors = {success:'#22c55e',error:'#ef4444',warning:'#eab308',info:'var(--accent)'};
+    const badge = document.createElement('div');
+    badge.style.cssText = 'padding:6px 12px;border-radius:6px;font-size:12px;border:1px solid '+(colors[type]||colors.info)+';margin-bottom:4px';
+    badge.textContent = msg;
+    el.prepend(badge);
+    setTimeout(() => badge.remove(), 8000);
+}
+
+// --- Init ---
+function initAiAnalysis() {
+    loadAiProviderStatus();
+    loadAiHistory();
+    // Resume any active job
+    fetch('/api/ai/history').then(r=>r.json()).then(items => {
+        const active = items.find(i => ['RUNNING','QUEUED','PREPARING_DATA','VALIDATING_DATA','RETRYING','WAITING_PROVIDER'].includes(i.status));
+        if (active) startAiProgressPolling(active.id);
+    }).catch(() => {});
 }
 
 function closeAiModal() {
-    document.getElementById('ai-modal').style.display = 'none';
+    const m = document.getElementById('ai-modal');
+    if (m) m.style.display = 'none';
 }
 
 // ============ NEW TABS: Kurs, Minyak, BI Rate, CPO, Alerts ============
@@ -979,11 +1196,18 @@ async function loadKursData() {
     const data = await fetchData('kurs');
     if (!data || !data.data || data.data.length === 0) return;
     const latest = data.data[data.data.length - 1];
+    // Tab section
     document.getElementById('kurs-date').textContent = latest.tanggal || '-';
     document.getElementById('kurs-usd').textContent = 'Rp ' + formatIDR(latest.usd_idr);
     document.getElementById('kurs-eur').textContent = 'Rp ' + formatIDR(latest.eur_idr);
     document.getElementById('kurs-sgd').textContent = 'Rp ' + formatIDR(latest.sgd_idr);
     document.getElementById('kurs-myr').textContent = 'Rp ' + formatIDR(latest.myr_idr);
+    // Overview cards
+    try {
+        document.getElementById('overview-usd').textContent = 'Rp ' + formatIDR(latest.usd_idr);
+        document.getElementById('overview-eur').textContent = 'Rp ' + formatIDR(latest.eur_idr);
+        document.getElementById('overview-sgd').textContent = 'Rp ' + formatIDR(latest.sgd_idr);
+    } catch(e) {}
     // Chart
     renderLineChart('kursChart', data.data, [
         {key: 'usd_idr', label: 'USD/IDR', color: '#4CAF50'},
@@ -995,10 +1219,16 @@ async function loadMinyakData() {
     const data = await fetchData('minyak');
     if (!data || !data.data || data.data.length === 0) return;
     const latest = data.data[data.data.length - 1];
+    // Tab section
     document.getElementById('minyak-date').textContent = latest.tanggal || '-';
     document.getElementById('minyak-brent').textContent = '$' + (latest.brent || '-');
     document.getElementById('minyak-wti').textContent = '$' + (latest.wti || '-');
     document.getElementById('minyak-selisih').textContent = '$' + (latest.selisih || '-');
+    // Overview cards
+    try {
+        document.getElementById('overview-brent').textContent = '$' + (latest.brent || '-');
+        document.getElementById('overview-wti').textContent = '$' + (latest.wti || '-');
+    } catch(e) {}
     renderLineChart('minyakChart', data.data, [
         {key: 'brent', label: 'Brent', color: '#FF5722'},
         {key: 'wti', label: 'WTI', color: '#FF9800'},
